@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<HAProject version="0.1.1094.24498">
+<HAProject version="0.1.1094.30068">
   <HAClass Type="FolderGreen" Text="Girl:Girl" IsExpanded="true" IsSelected="false" AllowDrag="true">
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
@@ -2552,8 +2552,9 @@ return Encoding.ASCII;
             <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="91" SelectionLength="0">using System;
+              <Source SelectionStart="49" SelectionLength="0">using System;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 </Source>
@@ -2567,7 +2568,7 @@ using System.Xml.Serialization;
 &lt;/summary&gt;
 </Comment>
               <Source SelectionStart="0" SelectionLength="0" />
-              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
+              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
@@ -2606,7 +2607,7 @@ return ret;
                   <HAObject Type="Private" Text="dataType:Type" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="132" SelectionLength="0">object ret = null;
+                <Source SelectionStart="67" SelectionLength="0">object ret = null;
 XmlSerializer xs = new XmlSerializer(dataType);
 string path = this.DataPath;
 if (!path.EndsWith(@"\")) path += @"\";
@@ -2629,16 +2630,75 @@ catch
 fs.Close();
 return ret;</Source>
               </HAFunc>
+              <HAFunc Type="Public" Text="LoadString:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="fileName:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="290" SelectionLength="0">string path = this.DataPath;
+if (!path.EndsWith(@"\")) path += @"\";
+FileStream fs;
+try
+{
+	fs = new FileStream(path + fileName, FileMode.Open);
+}
+catch
+{
+	return null;
+}
+StreamReader sr = new StreamReader(fs, Encoding.UTF8);
+string ret = sr.ReadToEnd();
+sr.Close();
+fs.Close();
+return ret;
+</Source>
+              </HAFunc>
               <HAFunc Type="Public" Text="Save" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments>
                   <HAObject Type="Private" Text="fileName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
                   <HAObject Type="Private" Text="data:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="102" SelectionLength="0">XmlSerializer xs = new XmlSerializer(data.GetType());
-StreamWriter sw = new StreamWriter(DataPath + @"\" + fileName);
+                <Source SelectionStart="213" SelectionLength="0">string path = this.DataPath;
+if (!path.EndsWith(@"\")) path += @"\";
+
+XmlSerializer xs = new XmlSerializer(data.GetType());
+StreamWriter sw = new StreamWriter(path + fileName);
 xs.Serialize(sw, data);
-sw.Close();</Source>
+sw.Close();
+</Source>
+              </HAFunc>
+              <HAFunc Type="Public" Text="SaveString" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="fileName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                  <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="129" SelectionLength="0">string path = this.DataPath;
+if (!path.EndsWith(@"\")) path += @"\";
+
+StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
+sw.Write(text);
+sw.Close();
+</Source>
+              </HAFunc>
+              <HAFunc Type="Public" Text="SearchFolder:static string" IsExpanded="false" IsSelected="true" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="folder:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="268" SelectionLength="0">DirectoryInfo di = new FileInfo(Application.ExecutablePath).Directory;
+
+for (; di != null &amp;&amp; di.Exists; di = di.Parent)
+{
+	string path = di.FullName;
+	if (!path.EndsWith(@"\\")) path += @"\\";
+	path += folder;
+	if (Directory.Exists(path)) return path;
+}
+
+return null;
+</Source>
               </HAFunc>
             </HAFunc>
           </Body>
@@ -2650,7 +2710,7 @@ sw.Close();</Source>
             </HAFunc>
           </Footer>
         </HAClass>
-        <HAClass Type="Public" Text="Document" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAClass Type="Public" Text="Document" IsExpanded="false" IsSelected="true" AllowDrag="true">
           <HAObject Type="Public" Text="FullName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Public" Text="Changed:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
           <Header>
@@ -2697,7 +2757,7 @@ return true;
               <HAFunc Type="Public" Text="Save:virtual bool" IsExpanded="false" IsSelected="true" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="37" SelectionLength="0">this.Changed = false;
+                <Source SelectionStart="35" SelectionLength="0">this.Changed = false;
 return true;
 </Source>
               </HAFunc>
@@ -4303,7 +4363,7 @@ this.SelectionColor = c;
             </HAFunc>
           </Footer>
         </HAClass>
-        <HAClass Type="Public" Text="CodeEditor:ExRichTextBox" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <HAClass Type="Public" Text="CodeEditor:ExRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
           <HAObject Type="Public" Text="Parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
           <Header>
             <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
