@@ -155,7 +155,7 @@ namespace Girl.HierArch
 		{
 			HAType t = this.Type;
 			string target = path;
-			if (!target.EndsWith("\\")) target += "\\";
+			if (!target.EndsWith(@"\")) target += @"\";
 			target += new ObjectParser(this.Text).Name;
 			
 			if (t == HAType.Comment)
@@ -306,8 +306,8 @@ namespace Girl.HierArch
 		private void GenerateText(string target)
 		{
 			FileStream fs;
-			StreamWriter sw;
-			MethodInfo mi;
+			HierArchWriter haw;
+			AppDomain domain;
 
 			try
 			{
@@ -318,40 +318,41 @@ namespace Girl.HierArch
 				return;
 			}
 			
+			haw = null;
+			domain = null;
 			try
 			{
-				//sw = new Plugin(fs);
-				sw = new StreamWriter(fs, Encoding.Default);
+				string dll = string.Format(@"{0}\{1}.dll",
+					HADoc.UserPluginDir, this.Type.ToString());
+				if (File.Exists(dll))
+				{
+					AppDomainSetup setup = new AppDomainSetup();
+					setup.ApplicationBase = HADoc.UserPluginDir;
+					domain = AppDomain.CreateDomain(this.Type.ToString(), null, setup);
+					haw = domain.CreateInstanceFromAndUnwrap(
+						dll, "Plugin", false,
+						BindingFlags.Default, null,
+						new object[] {fs},
+						null, null, null) as HierArchWriter;
+				}
 			}
-			catch
+			catch (Exception ex)
 			{
-				sw = new StreamWriter(fs, Encoding.Default);
+				MessageBox.Show(ex.ToString());
 			}
-			try
-			{
-				mi = sw.GetType().GetMethod("WriteTitle");
-			}
-			catch
-			{
-				mi = null;
-			}
-			if (mi != null)
-			{
-				mi.Invoke(sw, new object[]{this.Text});
-			}
-			else
-			{
-				sw.WriteLine("  **** {0} ****", this.Text);
-			}
+			if (haw == null) haw = new HierArchWriter(fs, Encoding.Default);
+			
+			haw.WriteTitle(this.Type, this.Text);
 			
 			int i = 1;
 			foreach (Object obj in this.Body.Nodes)
 			{
-				(obj as HAFuncNode).GenerateText(sw, i.ToString(), this.Type == HAType.TextBlue);
+				(obj as HAFuncNode).GenerateText(haw, i.ToString(), this.Type == HAType.TextBlue);
 				i++;
 			}
-			sw.Close();
-			fs.Close();
+			haw.Close();
+			fs .Close();
+			if (domain != null) AppDomain.Unload(domain);
 		}
 
 		#endregion

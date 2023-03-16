@@ -174,7 +174,16 @@ namespace Girl.Windows.Forms
 
 		public virtual void Copy()
 		{
-			if (this.target is TextBoxBase)
+			if (this.target is RichTextBox)
+			{
+				RichTextBox rtb = this.target as RichTextBox;
+				if (rtb.SelectionLength > 0)
+				{
+					Clipboard.SetDataObject(
+						new DataObject(DataFormats.Rtf, rtb.SelectedRtf));
+				}
+			}
+			else if (this.target is TextBoxBase)
 			{
 				(this.target as TextBoxBase).Copy();
 			}

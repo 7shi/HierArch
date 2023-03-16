@@ -1,8 +1,9 @@
 using System;
 using System.IO;
 using System.Text;
+using Girl.HierArch;
 
-public class Plugin : StreamWriter
+public class Plugin : HierArchWriter
 {
 	/// <summary>
 	/// コンストラクタです。
@@ -15,7 +16,7 @@ public class Plugin : StreamWriter
 	/// <summary>
 	/// タイトルを出力します。
 	/// </summary>
-	public void WriteTitle(string text)
+	public override void WriteTitle(HAType type, string text)
 	{
 		// ここの中を適宜書き換えてください。
 		WriteLine("  **** {0} ****", text);
@@ -24,7 +25,7 @@ public class Plugin : StreamWriter
 	/// <summary>
 	/// 各項目を出力します。
 	/// </summary>
-	public void WriteNode(string chapter, string text, string comment, string source)
+	public override void WriteNode(HAType type, string chapter, string text, string comment, string source)
 	{
 		// ここの中を適宜書き換えてください。
 		
@@ -39,6 +40,27 @@ public class Plugin : StreamWriter
 		WriteLine();
 		
 		// 内容を出力します。
-		WriteLine(source);
+		StringReader sr = new StringReader(source);
+		string line;
+		// 1行ずつ調べます。
+		while ((line = sr.ReadLine()) != null)
+		{
+			// 空行なら
+			if (line == "")
+			{
+				// 改行します。
+				WriteLine();
+			}
+			// それ以外は
+			else
+			{
+				// そのまま出力します。
+				Write(line);
+			}
+		}
+		sr.Close();
+		
+		// 最後に改行します。
+		WriteLine();
 	}
 }

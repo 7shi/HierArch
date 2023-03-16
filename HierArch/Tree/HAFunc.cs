@@ -191,6 +191,7 @@ namespace Girl.HierArch
 						this.SourceTextBox.DetectUrls = true;
 					}
 					this.SourceTextBox.Enabled = true;
+					this.SourceTextBox.Clear();
 					this.SourceTextBox.Code = this.TargetNode.Source;
 					this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
 					this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;

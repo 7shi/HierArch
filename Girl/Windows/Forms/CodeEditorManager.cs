@@ -367,12 +367,12 @@ namespace Girl.Windows.Forms
 
 		private void InsertText(TextBoxBase textBox, string text)
 		{
-			//RichTextBox rtb = textBox as RichTextBox;
-			//if (rtb != null)
-			//{
-			//	rtb.SelectionColor = rtb.ForeColor;
-			//	rtb.SelectionFont  = rtb.Font;
-			//}
+			RichTextBox rtb = textBox as RichTextBox;
+			if (rtb != null)
+			{
+				rtb.SelectionColor = rtb.ForeColor;
+				rtb.SelectionFont  = rtb.Font;
+			}
 			textBox.SelectedText = text;
 		}
 

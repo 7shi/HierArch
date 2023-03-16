@@ -2546,7 +2546,7 @@ return Encoding.ASCII;
             <Source SelectionStart="0" SelectionLength="0" />
           </HAFunc>
         </Footer>
-        <HAClass Type="Public" Text="ApplicationDataManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAClass Type="Public" Text="ApplicationDataManager" IsExpanded="false" IsSelected="true" AllowDrag="true">
           <HAObject Type="Private" Text="dataPath:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
           <Header>
             <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
@@ -2687,12 +2687,12 @@ sw.Close();
                   <HAObject Type="Private" Text="folder:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="268" SelectionLength="0">DirectoryInfo di = new FileInfo(Application.ExecutablePath).Directory;
+                <Source SelectionStart="266" SelectionLength="0">DirectoryInfo di = new FileInfo(Application.ExecutablePath).Directory;
 
 for (; di != null &amp;&amp; di.Exists; di = di.Parent)
 {
 	string path = di.FullName;
-	if (!path.EndsWith(@"\\")) path += @"\\";
+	if (!path.EndsWith(@"\")) path += @"\";
 	path += folder;
 	if (Directory.Exists(path)) return path;
 }
@@ -2710,7 +2710,7 @@ return null;
             </HAFunc>
           </Footer>
         </HAClass>
-        <HAClass Type="Public" Text="Document" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <HAClass Type="Public" Text="Document" IsExpanded="false" IsSelected="false" AllowDrag="true">
           <HAObject Type="Public" Text="FullName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Public" Text="Changed:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
           <Header>
@@ -3051,12 +3051,12 @@ for (i = 0; i &lt; len; i++)
           <HAObject Type="Private" Text="target:Control" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Private" Text="forms:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <Header>
-            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
               <Arguments />
-              <Comment SelectionStart="56" SelectionLength="0">このクラスは[STAThread]でのみ正常動作します。
+              <Comment SelectionStart="54" SelectionLength="0">このクラスは[STAThread]でのみ正常動作します。
 [MTAThread]では使用しないでください。
 </Comment>
-              <Source SelectionStart="211" SelectionLength="0">using System;
+              <Source SelectionStart="194" SelectionLength="0">using System;
 using System.Collections;
 using System.Windows.Forms;
 
@@ -3232,16 +3232,25 @@ this.CheckStatus();
                 <HAFunc Type="Public" Text="Cut:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
                   <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="77" SelectionLength="0">if (this.target is TextBoxBase)
+                  <Source SelectionStart="73" SelectionLength="0">if (this.target is TextBoxBase)
 {
 	(this.target as TextBoxBase).Cut();
 }
 </Source>
                 </HAFunc>
-                <HAFunc Type="Public" Text="Copy:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <HAFunc Type="Public" Text="Copy:virtual" IsExpanded="false" IsSelected="true" AllowDrag="true">
                   <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="78" SelectionLength="0">if (this.target is TextBoxBase)
+                  <Source SelectionStart="279" SelectionLength="0">if (this.target is RichTextBox)
+{
+	RichTextBox rtb = this.target as RichTextBox;
+	if (rtb.SelectionLength &gt; 0)
+	{
+		Clipboard.SetDataObject(
+			new DataObject(DataFormats.Rtf, rtb.SelectedRtf));
+	}
+}
+else if (this.target is TextBoxBase)
 {
 	(this.target as TextBoxBase).Copy();
 }
@@ -3920,18 +3929,18 @@ textBox.SelectionStart = sp;
 textBox.SelectionLength = nlen;
 </Source>
                 </HAFunc>
-                <HAFunc Type="Private" Text="InsertText" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <HAFunc Type="Private" Text="InsertText" IsExpanded="false" IsSelected="true" AllowDrag="true">
                   <Arguments>
                     <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                     <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
                   </Arguments>
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="180" SelectionLength="0">//RichTextBox rtb = textBox as RichTextBox;
-//if (rtb != null)
-//{
-//	rtb.SelectionColor = rtb.ForeColor;
-//	rtb.SelectionFont  = rtb.Font;
-//}
+                  <Source SelectionStart="161" SelectionLength="0">RichTextBox rtb = textBox as RichTextBox;
+if (rtb != null)
+{
+	rtb.SelectionColor = rtb.ForeColor;
+	rtb.SelectionFont  = rtb.Font;
+}
 textBox.SelectedText = text;
 </Source>
                 </HAFunc>
@@ -3979,7 +3988,7 @@ else if (e.KeyCode == Keys.Tab &amp;&amp; this.SmartTab &amp;&amp; (e.Shift || t
 }
 </Source>
                 </HAFunc>
-                <HAFunc Type="Private" Text="textBox_KeyPress" IsExpanded="false" IsSelected="true" AllowDrag="true">
+                <HAFunc Type="Private" Text="textBox_KeyPress" IsExpanded="false" IsSelected="false" AllowDrag="true">
                   <Arguments>
                     <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
                     <HAObject Type="Private" Text="e:KeyPressEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
@@ -4045,7 +4054,7 @@ using System.Windows.Forms;
           <Body>
             <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="true" AllowDrag="false">
               <Arguments />
-              <Comment SelectionStart="48" SelectionLength="0">&lt;summary&gt;
+              <Comment SelectionStart="45" SelectionLength="0">&lt;summary&gt;
 TextBoxBase を操作するクラスです。
 &lt;/summary&gt;
 </Comment>
@@ -4156,7 +4165,7 @@ using System.Windows.Forms;
             </HAFunc>
           </Header>
           <Body>
-            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="true" AllowDrag="false">
               <Arguments />
               <Comment SelectionStart="43" SelectionLength="0">&lt;summary&gt;
 スタイル付き文字列の追加が簡単な RichTextBox です。
@@ -4266,13 +4275,13 @@ this.AppendLine();
 </Source>
                   </HAFunc>
                 </HAFunc>
-                <HAFunc Type="Public" Text="InsertText" IsExpanded="true" IsSelected="true" AllowDrag="true">
+                <HAFunc Type="Public" Text="InsertText" IsExpanded="true" IsSelected="false" AllowDrag="true">
                   <Arguments>
                     <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
                     <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                   </Arguments>
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="147" SelectionLength="0">if (text.Length &lt; 1) return;
+                  <Source SelectionStart="141" SelectionLength="0">if (text.Length &lt; 1) return;
 
 Color c = this.SelectionColor;
 this.SelectionColor = color;
@@ -4387,7 +4396,7 @@ using Girl.Rtf;
 &lt;/summary&gt;
 </Comment>
               <Source SelectionStart="0" SelectionLength="0" />
-              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
+              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
@@ -4450,7 +4459,7 @@ foreach (char ch in this.Text)
 return sb.ToString();
 </Source>
               </HAFunc>
-              <HAFunc Type="Public" Text="set_Code:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <HAFunc Type="Public" Text="set_Code:string" IsExpanded="false" IsSelected="true" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
                 <Source SelectionStart="601" SelectionLength="0">if (this.Parser == null || value == null)

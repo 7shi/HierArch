@@ -21,21 +21,45 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F987151AEAC045F8B0D147CD786447FA"
+        "MsmKey" = "8:_3D18131A02784161B34375B7EBBED676"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:hierarchc:\\documents and settings\\tino\\my documents\\visual studio projects\\hierarch\\hierarch\\obj\\debug\\hierarch.exe"
+        "MsmSig" = "8:C:\\DOCUMENTS AND SETTINGS\\TINO\\MY DOCUMENTS\\VISUAL STUDIO PROJECTS\\HIERARCH\\PLUGIN\\TEXT.CS"
         }
         "Entry"
         {
-        "MsmKey" = "8:_FB4DA59475E14618B74242BEAEAE4ED6"
+        "MsmKey" = "8:_45B3ADBF04959B1FE6DA41FC3924B048"
+        "OwnerKey" = "8:_F987151AEAC045F8B0D147CD786447FA"
+        "MsmSig" = "8:hierarchlibc:\\documents and settings\\tino\\my documents\\visual studio projects\\hierarch\\hierarchlib\\obj\\debug\\hierarchlib.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_77F3502011CA4B24970A4FB890AD3BAA"
         "OwnerKey" = "8:_2888412EBBEDCB74408E2F1617ABD24B"
         "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
         }
         "Entry"
         {
-        "MsmKey" = "8:_FB4DA59475E14618B74242BEAEAE4ED6"
+        "MsmKey" = "8:_77F3502011CA4B24970A4FB890AD3BAA"
+        "OwnerKey" = "8:_45B3ADBF04959B1FE6DA41FC3924B048"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_77F3502011CA4B24970A4FB890AD3BAA"
         "OwnerKey" = "8:_F987151AEAC045F8B0D147CD786447FA"
         "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C69BC8EF6832453CBFB12C7A5106DA3D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\DOCUMENTS AND SETTINGS\\TINO\\MY DOCUMENTS\\VISUAL STUDIO PROJECTS\\HIERARCH\\PLUGIN\\TEXTBLUE.CS"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F987151AEAC045F8B0D147CD786447FA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:hierarchc:\\documents and settings\\tino\\my documents\\visual studio projects\\hierarch\\hierarch\\obj\\debug\\hierarch.exe"
         }
     }
     "Configurations"
@@ -93,7 +117,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Girl, Version=1.0.1043.36489, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:Girl, Version=1.0.1108.8539, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_2888412EBBEDCB74408E2F1617ABD24B"
@@ -118,6 +142,77 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_3D18131A02784161B34375B7EBBED676"
+            {
+            "SourcePath" = "8:..\\Plugin\\Text.cs"
+            "TargetName" = "8:Text.cs"
+            "Tag" = "8:"
+            "Folder" = "8:_C5E3F3C356E4415BAA1A877250318D44"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_45B3ADBF04959B1FE6DA41FC3924B048"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:HierArchLib, Version=1.0.1108.8358, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_45B3ADBF04959B1FE6DA41FC3924B048"
+                    {
+                    "Name" = "8:HierArchLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:HierArchLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_9E3CA33DC5CB422C8AED01FFAEE0B47B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_C69BC8EF6832453CBFB12C7A5106DA3D"
+            {
+            "SourcePath" = "8:..\\Plugin\\TextBlue.cs"
+            "TargetName" = "8:TextBlue.cs"
+            "Tag" = "8:"
+            "Folder" = "8:_C5E3F3C356E4415BAA1A877250318D44"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }
@@ -193,6 +288,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{461E96AF-1495-11D3-8D6C-00A0C9CFCEE6}:_C5E3F3C356E4415BAA1A877250318D44"
+                    {
+                    "Name" = "8:Plugin"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_BDCBF3A625E54B55BA0892FEAA03BCCC"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{777C097F-0ED8-11D3-8D6C-00A0C9CFCEE6}:_EEBAB365D7544F758C24C0FAA86C91EA"
@@ -365,7 +471,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:HierArch"
         "ProductCode" = "8:{5BCC35D5-5377-4FF4-A614-A76481209B0F}"
-        "PackageCode" = "8:{D46F7C80-0E83-4306-AA12-DD331F029EA1}"
+        "PackageCode" = "8:{CC590AAD-2682-42BA-856A-E2D50A77D9E2}"
         "UpgradeCode" = "8:{5B6CAD24-4D00-47B0-9CC1-A659D6BF7E15}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -391,7 +497,7 @@
         }
         "MergeModule"
         {
-            "{AC8774A4-3E09-11D3-8E14-00C04F6837D0}:_FB4DA59475E14618B74242BEAEAE4ED6"
+            "{AC8774A4-3E09-11D3-8E14-00C04F6837D0}:_77F3502011CA4B24970A4FB890AD3BAA"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

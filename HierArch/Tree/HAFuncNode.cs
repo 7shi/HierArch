@@ -484,35 +484,14 @@ namespace Girl.HierArch
 			fs.Close();
 		}
 
-		public void GenerateText(StreamWriter sw, string chapter, bool concat)
+		public void GenerateText(HierArchWriter haw, string chapter, bool concat)
 		{
-			MethodInfo mi;
-
-			try
-			{
-				mi = sw.GetType().GetMethod("WriteNode");
-			}
-			catch
-			{
-				mi = null;
-			}
-			if (mi != null)
-			{
-				mi.Invoke(sw, new object[]{chapter, this.Text, this.Comment, this.Source});
-			}
-			else
-			{
-				sw.WriteLine();
-				sw.WriteLine();
-				sw.WriteLine(string.Format("  {0} {1}", chapter, this.Text));
-				sw.WriteLine();
-				sw.WriteLine(this.Source);
-			}
+			haw.WriteNode(this.Type, chapter, this.Text, this.Comment, this.Source);
 			
 			int i = 1;
 			foreach (TreeNode n in this.Nodes)
 			{
-				(n as HAFuncNode).GenerateText(sw, chapter + "." + i.ToString(), concat);
+				(n as HAFuncNode).GenerateText(haw, chapter + "." + i.ToString(), concat);
 				i++;
 			}
 		}

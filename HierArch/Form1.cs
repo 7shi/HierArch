@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
@@ -18,7 +19,7 @@ namespace Girl.HierArch
 		private static ViewData m_Data2;
 		private static ArrayList m_Forms = new ArrayList();
 
-		private HADoc m_Doc = new HADoc();
+		private HADoc document = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
 		private string m_sCaption;
 		public System.Windows.Forms.ToolBar toolBar1;
@@ -97,6 +98,11 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem cmEditSelectAll;
 		private System.Windows.Forms.MenuItem mnuOptionSeparator1;
 		private System.Windows.Forms.MenuItem mnuOptionEditPlugin;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage tabPage1;
+		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
+		private Girl.Windows.Forms.LinkRichTextBox lrtOutput;
+		private System.Windows.Forms.MenuItem mnuViewOutput;
 		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
 		public Form1()
@@ -145,9 +151,12 @@ namespace Girl.HierArch
 			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartHome       , this.mnuOptionSmartHome       );
 			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartParenthesis, this.mnuOptionSmartParenthesis);
 
-			this.m_Doc.ClassTreeView = view1.tvClass;
+			this.document.ClassTreeView = view1.tvClass;
 			this.view1.txtComment.ContextMenu = this.cmEdit;
 			this.view1.txtSource .ContextMenu = this.cmEdit;
+
+			// 出力タブを非表示にします。
+			this.mnuViewOutput_Click(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -227,6 +236,7 @@ namespace Girl.HierArch
 			this.mnuViewObject = new System.Windows.Forms.MenuItem();
 			this.mnuViewSeparator2 = new System.Windows.Forms.MenuItem();
 			this.mnuViewComment = new System.Windows.Forms.MenuItem();
+			this.mnuViewOutput = new System.Windows.Forms.MenuItem();
 			this.mnuCode = new System.Windows.Forms.MenuItem();
 			this.mnuBuildGenerate = new System.Windows.Forms.MenuItem();
 			this.mnuBuildBuild = new System.Windows.Forms.MenuItem();
@@ -251,6 +261,12 @@ namespace Girl.HierArch
 			this.cmEditDelete = new System.Windows.Forms.MenuItem();
 			this.cmEditSeparator2 = new System.Windows.Forms.MenuItem();
 			this.cmEditSelectAll = new System.Windows.Forms.MenuItem();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.lrtOutput = new Girl.Windows.Forms.LinkRichTextBox();
+			this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
+			this.tabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolBar1
@@ -334,7 +350,7 @@ namespace Girl.HierArch
 			// tbBuildGenerate
 			// 
 			this.tbBuildGenerate.ImageIndex = 8;
-			this.tbBuildGenerate.ToolTipText = "コード生成";
+			this.tbBuildGenerate.ToolTipText = "コード生成 (F8)";
 			// 
 			// tbBuildBuild
 			// 
@@ -378,7 +394,7 @@ namespace Girl.HierArch
 			this.view1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.view1.Location = new System.Drawing.Point(0, 25);
 			this.view1.Name = "view1";
-			this.view1.Size = new System.Drawing.Size(712, 442);
+			this.view1.Size = new System.Drawing.Size(712, 311);
 			this.view1.TabIndex = 2;
 			// 
 			// mainMenu1
@@ -487,6 +503,7 @@ namespace Girl.HierArch
 			// mnuEditCopy
 			// 
 			this.mnuEditCopy.Index = 4;
+			this.mnuEditCopy.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
 			this.mnuEditCopy.Text = "コピー(&C)";
 			// 
 			// mnuEditPaste
@@ -523,7 +540,8 @@ namespace Girl.HierArch
 																					this.mnuViewArg,
 																					this.mnuViewObject,
 																					this.mnuViewSeparator2,
-																					this.mnuViewComment});
+																					this.mnuViewComment,
+																					this.mnuViewOutput});
 			this.mnuView.Text = "表示(&V)";
 			// 
 			// mnuViewToolBar
@@ -590,6 +608,13 @@ namespace Girl.HierArch
 			this.mnuViewComment.Text = "注釈(&E)";
 			this.mnuViewComment.Click += new System.EventHandler(this.mnuViewComment_Click);
 			// 
+			// mnuViewOutput
+			// 
+			this.mnuViewOutput.Checked = true;
+			this.mnuViewOutput.Index = 10;
+			this.mnuViewOutput.Text = "出力(&U)";
+			this.mnuViewOutput.Click += new System.EventHandler(this.mnuViewOutput_Click);
+			// 
 			// mnuCode
 			// 
 			this.mnuCode.Index = 3;
@@ -602,6 +627,7 @@ namespace Girl.HierArch
 			// mnuBuildGenerate
 			// 
 			this.mnuBuildGenerate.Index = 0;
+			this.mnuBuildGenerate.Shortcut = System.Windows.Forms.Shortcut.F8;
 			this.mnuBuildGenerate.Text = "コード生成(&G)";
 			this.mnuBuildGenerate.Click += new System.EventHandler(this.mnuBuildGenerate_Click);
 			// 
@@ -657,7 +683,6 @@ namespace Girl.HierArch
 			// 
 			// mnuOptionEditPlugin
 			// 
-			this.mnuOptionEditPlugin.Enabled = false;
 			this.mnuOptionEditPlugin.Index = 5;
 			this.mnuOptionEditPlugin.Text = "プラグイン編集(&D)";
 			this.mnuOptionEditPlugin.Click += new System.EventHandler(this.mnuOptionEditPlugin_Click);
@@ -740,18 +765,65 @@ namespace Girl.HierArch
 			this.cmEditSelectAll.Index = 8;
 			this.cmEditSelectAll.Text = "すべて選択(&A)";
 			// 
+			// tabControl1
+			// 
+			this.tabControl1.Controls.AddRange(new System.Windows.Forms.Control[] {
+																					  this.tabPage1});
+			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.tabControl1.Location = new System.Drawing.Point(0, 339);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(712, 128);
+			this.tabControl1.TabIndex = 3;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.AddRange(new System.Windows.Forms.Control[] {
+																				   this.lrtOutput});
+			this.tabPage1.Location = new System.Drawing.Point(4, 21);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Size = new System.Drawing.Size(704, 103);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "出力";
+			// 
+			// lrtOutput
+			// 
+			this.lrtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lrtOutput.LinkColor = System.Drawing.Color.Blue;
+			this.lrtOutput.Name = "lrtOutput";
+			this.lrtOutput.ReadOnly = true;
+			this.lrtOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
+			this.lrtOutput.Size = new System.Drawing.Size(704, 103);
+			this.lrtOutput.TabIndex = 0;
+			this.lrtOutput.Text = "";
+			this.lrtOutput.WordWrap = false;
+			// 
+			// opaqueSplitter1
+			// 
+			this.opaqueSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.opaqueSplitter1.Location = new System.Drawing.Point(0, 336);
+			this.opaqueSplitter1.Name = "opaqueSplitter1";
+			this.opaqueSplitter1.Opaque = true;
+			this.opaqueSplitter1.Size = new System.Drawing.Size(712, 3);
+			this.opaqueSplitter1.TabIndex = 4;
+			this.opaqueSplitter1.TabStop = false;
+			// 
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(712, 489);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.view1,
+																		  this.opaqueSplitter1,
+																		  this.tabControl1,
 																		  this.toolBar1,
 																		  this.statusBar1});
 			this.Menu = this.mainMenu1;
 			this.Name = "Form1";
 			this.Text = "HierArch";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
+			this.tabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -891,6 +963,14 @@ namespace Girl.HierArch
 				= !this.view1.txtComment.Visible;
 		}
 
+		private void mnuViewOutput_Click(object sender, System.EventArgs e)
+		{
+			this.tabControl1.Visible
+				= this.opaqueSplitter1.Visible
+				= this.mnuViewOutput.Checked
+				= !this.mnuViewOutput.Checked;
+		}
+
 		#endregion
 
 		private void mnuBuildGenerate_Click(object sender, System.EventArgs e)
@@ -898,7 +978,7 @@ namespace Girl.HierArch
 			string path;
 			try
 			{
-				path = Path.GetDirectoryName(this.m_Doc.FullName);
+				path = Path.GetDirectoryName(this.document.FullName);
 			}
 			catch
 			{
@@ -909,18 +989,26 @@ namespace Girl.HierArch
 
 			Cursor cur = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
+			this.document.Make();
 			this.view1.GenerateAll(path);
 			Cursor.Current = cur;
 		}
 
 		private void mnuOptionEditPlugin_Click(object sender, System.EventArgs e)
 		{
-			//if (!Form1.pluginEditor.Visible) Form1.pluginEditor.Show();
+			Cursor cur = Cursor.Current;
+			Cursor.Current = Cursors.WaitCursor;
+			this.document.Make();
+			Process.Start("explorer", HADoc.UserPluginDir);
+			Cursor.Current = cur;
 		}
 
 		private void menuHelpHomePage_Click(object sender, System.EventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://www.egroups.co.jp/files/miscprj-dev/HierArch/");
+			Cursor cur = Cursor.Current;
+			Cursor.Current = Cursors.WaitCursor;
+			Process.Start("http://www.egroups.co.jp/files/miscprj-dev/HierArch/");
+			Cursor.Current = cur;
 		}
 
 		private void mnuHelpAbout_Click(object sender, System.EventArgs e)
@@ -946,7 +1034,7 @@ namespace Girl.HierArch
 
 		public bool Open()
 		{
-			openFileDialog1.FileName = m_Doc.FullName;
+			openFileDialog1.FileName = document.FullName;
 			if(openFileDialog1.ShowDialog(this) == DialogResult.Cancel)
 			{
 				view1.Focus();
@@ -954,7 +1042,7 @@ namespace Girl.HierArch
 			}
 
 			Form1 target = this;
-			if(m_Doc.Changed || m_Doc.FullName != "")
+			if(document.Changed || document.FullName != "")
 			{
 				target = CreateForm();
 				target.Show();
@@ -964,8 +1052,8 @@ namespace Girl.HierArch
 
 		public bool Open(string fn)
 		{
-			m_Doc.FullName = fn;
-			bool ret = m_Doc.Open();
+			document.FullName = fn;
+			bool ret = document.Open();
 			SetCaption();
 			SetDocument();
 			view1.Focus();
@@ -974,31 +1062,31 @@ namespace Girl.HierArch
 
 		public bool Save()
 		{
-			if(m_Doc.FullName == "") return SaveAs();
+			if(document.FullName == "") return SaveAs();
 
-			bool ret = m_Doc.Save();
+			bool ret = document.Save();
 			SetCaption();
 			return ret;
 		}
 
 		public bool SaveAs()
 		{
-			saveFileDialog1.FileName = m_Doc.FullName;
+			saveFileDialog1.FileName = document.FullName;
 			DialogResult res = saveFileDialog1.ShowDialog(this);
 			view1.Focus();
 			if(res == DialogResult.Cancel) return false;
 
-			m_Doc.FullName = saveFileDialog1.FileName;
-			bool ret = m_Doc.Save();
+			document.FullName = saveFileDialog1.FileName;
+			bool ret = document.Save();
 			SetCaption();
 			return ret;
 		}
 
 		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if(m_Doc.Changed)
+			if(document.Changed)
 			{
-				string msg = string.Format("ファイル {0} の内容は変更されています。\r\n\r\n変更を保存しますか?", m_Doc.Name);
+				string msg = string.Format("ファイル {0} の内容は変更されています。\r\n\r\n変更を保存しますか?", document.Name);
 				DialogResult res = MessageBox.Show(this, msg, m_sCaption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
 				if(res == DialogResult.Yes)
 				{
@@ -1013,20 +1101,20 @@ namespace Girl.HierArch
 
 		public void SetDocument()
 		{
-			view1.SetDocument(m_Doc);
+			view1.SetDocument(document);
 		}
 
 		public void SetCaption()
 		{
-			statusBar1.Text = m_Doc.FullName;
-			Text = m_Doc.Name + " - " + m_sCaption + (m_Doc.Changed ? "*" : "");
+			statusBar1.Text = document.FullName;
+			Text = document.Name + " - " + m_sCaption + (document.Changed ? "*" : "");
 		}
 
 		private void view1_Changed(object sender, System.EventArgs e)
 		{
-			if(m_Doc.Changed) return;
+			if(document.Changed) return;
 
-			m_Doc.Changed = true;
+			document.Changed = true;
 			SetCaption();
 		}
 

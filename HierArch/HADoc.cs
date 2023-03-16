@@ -2,6 +2,9 @@
 // 編集は必ずそちらを通すようにして、直接書き換えないでください。
 
 using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -23,6 +26,8 @@ namespace Girl.HierArch
 		public HADoc()
 		{
 			this.ClassTreeView = null;
+			
+			this.InitUserPlugin();
 		}
 
 		public string ShortName
@@ -185,8 +190,98 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return "2003/01/06 22:33:07";
+				return "2003/01/13 5:01:27";
 			}
 		}
+
+		#region Plugin
+
+		public static string UserDir
+		{
+			get
+			{
+				string ret = Environment.GetFolderPath(
+					Environment.SpecialFolder.Personal) + @"\HierArch";
+				if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
+				return ret;
+			}
+		}
+
+		public static string UserPluginDir
+		{
+			get
+			{
+				string ret = HADoc.UserDir + @"\Plugin";
+				if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
+				return ret;
+			}
+		}
+
+		public static string SysPluginDir
+		{
+			get
+			{
+				return ApplicationDataManager.SearchFolder("Plugin");
+			}
+		}
+
+		private void InitUserPlugin()
+		{
+			string dir1 = HADoc.SysPluginDir;
+			if (dir1 == null) return;
+			
+			string dir2 = HADoc.UserPluginDir;
+			
+			DirectoryInfo di = new DirectoryInfo(dir1);
+			foreach (FileInfo fi in di.GetFiles("*.cs"))
+			{
+				string source = dir2 + @"\" + fi.Name;
+				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
+			}
+			
+			string dll = dir2 + @"\HierArchLib.dll";
+			if (File.Exists(dll)) return;
+			
+			DirectoryInfo di2 = new FileInfo(Application.ExecutablePath).Directory;
+			File.Copy(di2.FullName + @"\HierArchLib.dll", dll);
+		}
+
+		public void Make()
+		{
+			this.InitUserPlugin();
+			
+			DirectoryInfo di = new DirectoryInfo(HADoc.UserPluginDir);
+			foreach (FileInfo fi in di.GetFiles("*.cs"))
+			{
+				string source = fi.FullName;
+				string dll = source.Substring(0, source.Length - 2) + "dll";
+				if (File.Exists(dll))
+				{
+					DateTime dt1 = fi.LastWriteTime;
+					DateTime dt2 = File.GetLastWriteTime(dll);
+					if (dt1 <= dt2) continue;
+				}
+				this.Compile(source, dll);
+			}
+		}
+
+		public CompilerResults Compile(string source, string dll)
+		{
+			Microsoft.CSharp.CSharpCodeProvider codeProvider =
+				new Microsoft.CSharp.CSharpCodeProvider();
+			ICodeCompiler icc = codeProvider.CreateCompiler();
+			CompilerParameters parameters = new CompilerParameters();
+			parameters.GenerateExecutable = true;
+			parameters.ReferencedAssemblies.AddRange(new string[]
+				{
+					"System.dll", HADoc.UserPluginDir + @"\HierArchLib.dll"
+				});
+			parameters.OutputAssembly = dll;
+			parameters.CompilerOptions = "/target:library";
+			
+			return icc.CompileAssemblyFromFile(parameters, source);
+		}
+
+		#endregion
 	}
 }

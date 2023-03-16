@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Girl", "Girl\Girl.csproj", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierArchLib", "HierArchLib\HierArchLib.csproj", "{E94400D0-807D-4A6C-9763-18E652FBD44D}"
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		ConfigName.0 = Debug
@@ -26,6 +28,10 @@ Global
 		{9084494D-A49E-4CA4-A433-8411E47A7176}.Release.Build.0 = Release|.NET
 		{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}.Debug.ActiveCfg = Debug
 		{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}.Release.ActiveCfg = Release
+		{E94400D0-807D-4A6C-9763-18E652FBD44D}.Debug.ActiveCfg = Debug|.NET
+		{E94400D0-807D-4A6C-9763-18E652FBD44D}.Debug.Build.0 = Debug|.NET
+		{E94400D0-807D-4A6C-9763-18E652FBD44D}.Release.ActiveCfg = Release|.NET
+		{E94400D0-807D-4A6C-9763-18E652FBD44D}.Release.Build.0 = Release|.NET
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

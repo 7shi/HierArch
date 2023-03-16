@@ -123,7 +123,7 @@ namespace Girl.Windows.Forms
 			for (; di != null && di.Exists; di = di.Parent)
 			{
 				string path = di.FullName;
-				if (!path.EndsWith(@"\\")) path += @"\\";
+				if (!path.EndsWith(@"\")) path += @"\";
 				path += folder;
 				if (Directory.Exists(path)) return path;
 			}

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<HAProject version="0.1.1094.30068">
-  <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="false" AllowDrag="true">
+<HAProject version="0.1.1108.8648">
+  <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="true" AllowDrag="true">
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
         <Arguments />
@@ -21,7 +21,7 @@
         <HAFunc Type="Text" Text="プログラミング" IsExpanded="false" IsSelected="true" AllowDrag="true">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="5" SelectionLength="0">パーサが変
+          <Source SelectionStart="217" SelectionLength="0">パーサが変
 括弧閉じの通過が変
 コンストラクタでのbaseサポート
 メンバの初期化
@@ -50,12 +50,6 @@ XmlDocViewerとの統合とリフレクション
           <Source SelectionStart="28" SelectionLength="0">リンクのサポート
 部分ファイルの分割
 中央管理システム
-</Source>
-        </HAFunc>
-        <HAFunc Type="Text" Text="テキスト生成" IsExpanded="false" IsSelected="false" AllowDrag="true">
-          <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="7" SelectionLength="0">プラグイン化
 </Source>
         </HAFunc>
       </HAFunc>
@@ -104,13 +98,16 @@ XmlDocViewerとの統合とリフレクション
         <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
     </Footer>
-    <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="true" AllowDrag="true">
+    <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="false" AllowDrag="true">
       <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="true" AllowDrag="true" />
       <Header>
         <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="122" SelectionLength="0">using System;
+          <Source SelectionStart="197" SelectionLength="0">using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -133,7 +130,9 @@ using Girl.Windows.Forms;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-            <Source SelectionStart="27" SelectionLength="0">this.ClassTreeView = null;
+            <Source SelectionStart="51" SelectionLength="0">this.ClassTreeView = null;
+
+this.InitUserPlugin();
 </Source>
           </HAFunc>
           <HAFunc Type="Public" Text="get_ShortName:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
@@ -292,11 +291,102 @@ return true;
 </Source>
             </HAFunc>
           </HAFunc>
-          <HAFunc Type="Public" Text="get_BuildDateTime:static string" IsExpanded="false" IsSelected="true" AllowDrag="true">
+          <HAFunc Type="Public" Text="get_BuildDateTime:static string" IsExpanded="false" IsSelected="false" AllowDrag="true">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="25" SelectionLength="0">return "__DATETIME_NOW";
 </Source>
+          </HAFunc>
+          <HAFunc Type="Folder" Text="Plugin" IsExpanded="true" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="0" SelectionLength="0" />
+            <HAFunc Type="Public" Text="get_UserDir:static string" IsExpanded="true" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="165" SelectionLength="0">string ret = Environment.GetFolderPath(
+	Environment.SpecialFolder.Personal) + @"\HierArch";
+if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
+return ret;
+</Source>
+              <HAFunc Type="Public" Text="get_UserPluginDir:static string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="115" SelectionLength="0">string ret = __CLASS.UserDir + @"\Plugin";
+if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
+return ret;
+</Source>
+              </HAFunc>
+            </HAFunc>
+            <HAFunc Type="Public" Text="get_SysPluginDir:static string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="54" SelectionLength="0">return ApplicationDataManager.SearchFolder("Plugin");
+</Source>
+            </HAFunc>
+            <HAFunc Type="Private" Text="InitUserPlugin" IsExpanded="false" IsSelected="true" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="496" SelectionLength="0">string dir1 = __CLASS.SysPluginDir;
+if (dir1 == null) return;
+
+string dir2 = __CLASS.UserPluginDir;
+
+DirectoryInfo di = new DirectoryInfo(dir1);
+foreach (FileInfo fi in di.GetFiles("*.cs"))
+{
+	string source = dir2 + @"\" + fi.Name;
+	if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
+}
+
+string dll = dir2 + @"\HierArchLib.dll";
+if (File.Exists(dll)) return;
+
+DirectoryInfo di2 = new FileInfo(Application.ExecutablePath).Directory;
+File.Copy(di2.FullName + @"\HierArchLib.dll", dll);
+</Source>
+            </HAFunc>
+            <HAFunc Type="Public" Text="Make" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="391" SelectionLength="0">this.InitUserPlugin();
+
+DirectoryInfo di = new DirectoryInfo(__CLASS.UserPluginDir);
+foreach (FileInfo fi in di.GetFiles("*.cs"))
+{
+	string source = fi.FullName;
+	string dll = source.Substring(0, source.Length - 2) + "dll";
+	if (File.Exists(dll))
+	{
+		DateTime dt1 = fi.LastWriteTime;
+		DateTime dt2 = File.GetLastWriteTime(dll);
+		if (dt1 &lt;= dt2) continue;
+	}
+	this.Compile(source, dll);
+}
+</Source>
+            </HAFunc>
+            <HAFunc Type="Public" Text="Compile:CompilerResults" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments>
+                <HAObject Type="Private" Text="source:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                <HAObject Type="Private" Text="dll:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+              </Arguments>
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="342" SelectionLength="0">Microsoft.CSharp.CSharpCodeProvider codeProvider =
+	new Microsoft.CSharp.CSharpCodeProvider();
+ICodeCompiler icc = codeProvider.CreateCompiler();
+CompilerParameters parameters = new CompilerParameters();
+parameters.GenerateExecutable = true;
+parameters.ReferencedAssemblies.AddRange(new string[]
+	{
+		"System.dll", __CLASS.UserPluginDir + @"\HierArchLib.dll"
+	});
+parameters.OutputAssembly = dll;
+parameters.CompilerOptions = "/target:library";
+
+return icc.CompileAssemblyFromFile(parameters, source);
+</Source>
+            </HAFunc>
           </HAFunc>
         </HAFunc>
       </Body>
@@ -1036,9 +1126,9 @@ while (xr.Read())
                   <HAObject Type="Private" Text="path:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="636" SelectionLength="0">HAType t = this.Type;
+                <Source SelectionStart="561" SelectionLength="0">HAType t = this.Type;
 string target = path;
-if (!target.EndsWith("\\")) target += "\\";
+if (!target.EndsWith(@"\")) target += @"\";
 target += new ObjectParser(this.Text).Name;
 
 if (t == HAType.Comment)
@@ -1176,7 +1266,7 @@ cw.WriteCodes("// ", n.Source);
                     <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                   </Arguments>
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="292" SelectionLength="0">if (!this.IsFolder)
+                  <Source SelectionStart="278" SelectionLength="0">if (!this.IsFolder)
 {
 	if (this.Parent != null)
 	{
@@ -1198,10 +1288,10 @@ cw.WriteCodes("// ", n.Source);
                   <HAObject Type="Private" Text="target:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <HAObject Type="Private" Text="fs:FileStream" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                <HAObject Type="Private" Text="sw:StreamWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                <HAObject Type="Private" Text="mi:MethodInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                <HAObject Type="Private" Text="haw:HierArchWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                <HAObject Type="Private" Text="domain:AppDomain" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="181" SelectionLength="0">try
+                <Source SelectionStart="935" SelectionLength="0">try
 {
 	fs = new FileStream(target, FileMode.Create);
 }
@@ -1210,40 +1300,41 @@ catch
 	return;
 }
 
+haw = null;
+domain = null;
 try
 {
-	//sw = new Plugin(fs);
-	sw = new StreamWriter(fs, Encoding.Default);
+	string dll = string.Format(@"{0}\{1}.dll",
+		HADoc.UserPluginDir, this.Type.ToString());
+	if (File.Exists(dll))
+	{
+		AppDomainSetup setup = new AppDomainSetup();
+		setup.ApplicationBase = HADoc.UserPluginDir;
+		domain = AppDomain.CreateDomain(this.Type.ToString(), null, setup);
+		haw = domain.CreateInstanceFromAndUnwrap(
+			dll, "Plugin", false,
+			BindingFlags.Default, null,
+			new object[] {fs},
+			null, null, null) as HierArchWriter;
+	}
 }
-catch
+catch (Exception ex)
 {
-	sw = new StreamWriter(fs, Encoding.Default);
+	MessageBox.Show(ex.ToString());
 }
-try
-{
-	mi = sw.GetType().GetMethod("WriteTitle");
-}
-catch
-{
-	mi = null;
-}
-if (mi != null)
-{
-	mi.Invoke(sw, new object[]{this.Text});
-}
-else
-{
-	sw.WriteLine("  **** {0} ****", this.Text);
-}
+if (haw == null) haw = new HierArchWriter(fs, Encoding.Default);
+
+haw.WriteTitle(this.Type, this.Text);
 
 int i = 1;
 foreach (Object obj in this.Body.Nodes)
 {
-	(obj as HAFuncNode).GenerateText(sw, i.ToString(), this.Type == HAType.TextBlue);
+	(obj as HAFuncNode).GenerateText(haw, i.ToString(), this.Type == HAType.TextBlue);
 	i++;
 }
-sw.Close();
-fs.Close();
+haw.Close();
+fs .Close();
+if (domain != null) AppDomain.Unload(domain);
 </Source>
               </HAFunc>
             </HAFunc>
@@ -1397,7 +1488,7 @@ mnuType.Enabled = mnuAppend.Enabled = mnuInsert.Enabled
               <Source SelectionStart="33" SelectionLength="0">return new HAFuncNode("新しい関数");
 </Source>
             </HAFunc>
-            <HAFunc Type="Public" Text="StoreData" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <HAFunc Type="Public" Text="StoreData" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
               <Source SelectionStart="525" SelectionLength="0">if (this.TargetNode == null) return;
@@ -1432,10 +1523,10 @@ if (this.SourceTextBox  != null)
 }
 </Source>
             </HAFunc>
-            <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="true" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="309" SelectionLength="0">if (this.TargetNode != null)
+              <Source SelectionStart="0" SelectionLength="0">if (this.TargetNode != null)
 {
 	if (this.ArgTreeView    != null) this.ArgTreeView   .SetView(this.TargetNode.Args);
 	if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(this.TargetNode.Objects);
@@ -1463,6 +1554,7 @@ if (this.SourceTextBox  != null)
 			this.SourceTextBox.DetectUrls = true;
 		}
 		this.SourceTextBox.Enabled = true;
+		this.SourceTextBox.Clear();
 		this.SourceTextBox.Code = this.TargetNode.Source;
 		this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
 		this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
@@ -2150,37 +2242,17 @@ fs.Close();
               </HAFunc>
               <HAFunc Type="Public" Text="GenerateText" IsExpanded="false" IsSelected="true" AllowDrag="true">
                 <Arguments>
-                  <HAObject Type="Private" Text="sw:StreamWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                  <HAObject Type="Private" Text="haw:HierArchWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                   <HAObject Type="Private" Text="chapter:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                  <HAObject Type="Private" Text="concat:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                  <HAObject Type="Private" Text="concat:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
                 </Arguments>
-                <HAObject Type="Private" Text="mi:MethodInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="453" SelectionLength="0">try
-{
-	mi = sw.GetType().GetMethod("WriteNode");
-}
-catch
-{
-	mi = null;
-}
-if (mi != null)
-{
-	mi.Invoke(sw, new object[]{chapter, this.Text, this.Comment, this.Source});
-}
-else
-{
-	sw.WriteLine();
-	sw.WriteLine();
-	sw.WriteLine(string.Format("  {0} {1}", chapter, this.Text));
-	sw.WriteLine();
-	sw.WriteLine(this.Source);
-}
+                <Source SelectionStart="206" SelectionLength="0">haw.WriteNode(this.Type, chapter, this.Text, this.Comment, this.Source);
 
 int i = 1;
 foreach (TreeNode n in this.Nodes)
 {
-	(n as HAFuncNode).GenerateText(sw, chapter + "." + i.ToString(), concat);
+	(n as HAFuncNode).GenerateText(haw, chapter + "." + i.ToString(), concat);
 	i++;
 }
 </Source>
@@ -2359,7 +2431,7 @@ while (xr.Read())
           <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="160" SelectionLength="0">using System;
+            <Source SelectionStart="153" SelectionLength="0">using System;
 using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
@@ -2699,7 +2771,7 @@ foreach (TreeNode n in this.Nodes)
                   <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="265" SelectionLength="0">HAType t = this.Type;
+                <Source SelectionStart="251" SelectionLength="0">HAType t = this.Type;
 if (t == HAType.Comment)
 {
 	return;

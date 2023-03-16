@@ -87,6 +87,11 @@
                     AssemblyName = "Girl"
                     HintPath = "..\Girl\bin\Debug\Girl.dll"
                 />
+                <Reference
+                    Name = "HierArchLib"
+                    Project = "{E94400D0-807D-4A6C-9763-18E652FBD44D}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
