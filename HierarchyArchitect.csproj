@@ -82,12 +82,6 @@
                     AssemblyName = "System.Xml"
                     HintPath = "..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
                 />
-                <Reference
-                    Name = "MagicLibrary"
-                    AssemblyName = "MagicLibrary"
-                    HintPath = "..\..\..\..\..\Program Files\Crownwood Consulting Ltd\Magic Library 1.7\Bin\MagicLibrary.dll"
-                    Private = "True"
-                />
             </References>
         </Build>
         <Files>
@@ -274,7 +268,18 @@
                     BuildAction = "Content"
                 />
                 <File
+                    RelPath = "Parser\ObjectParser.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <Folder RelPath = "Scripts\" />
+                <File
                     RelPath = "Girl\ApplicationDataManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\CodeWriter.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -48,6 +48,7 @@ namespace Girl.HierarchyArchitect
 			}
 			xr.Close();
 			fs.Close();
+			this.ClassTreeView.ApplyState();
 			Changed = false;
 			return true;
 		}

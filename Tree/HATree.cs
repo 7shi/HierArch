@@ -12,9 +12,10 @@ namespace Girl.HierarchyArchitect
 	/// </summary>
 	public class HATree : DnDTreeView
 	{
+		public event EventHandler Changed;
 		private System.ComponentModel.IContainer components;
 		public System.Windows.Forms.ImageList imageList1;
-		public bool IgnoreChange = false;
+		public bool IgnoreChanged = false;
 
 		private void InitializeComponent()
 		{
@@ -61,6 +62,7 @@ namespace Girl.HierarchyArchitect
 			mnuEtc, mnuEtcComment, mnuEtcSmile;
 
 		public System.Collections.Hashtable menuType = new System.Collections.Hashtable();
+		public EventHandler MenuNodeTypeHandler = null;
 
 		private void MakeMenu()
 		{
@@ -69,39 +71,39 @@ namespace Girl.HierarchyArchitect
 			mnuInsert = new MenuItem("前に追加(&I)", new EventHandler(this.MenuNodeInsert_Click));
 			mnuDelete = new MenuItem("削除(&D)"    , new EventHandler(this.MenuNodeDelete_Click));
 
-			EventHandler eh = new EventHandler(this.MenuNodeType_Click);
+			MenuNodeTypeHandler = new EventHandler(this.MenuNodeType_Click);
 
 			this.mnuAccess = new MenuItem("アクセス制御(&A)", new MenuItem[]
 				{
-					this.mnuAccessPublic    = new MenuItem("&Public", eh),
-					this.mnuAccessProtected = new MenuItem("P&rotected", eh),
-					this.mnuAccessPrivate   = new MenuItem("Pr&ivate", eh)
+					this.mnuAccessPublic    = new MenuItem("&Public", MenuNodeTypeHandler),
+					this.mnuAccessProtected = new MenuItem("P&rotected", MenuNodeTypeHandler),
+					this.mnuAccessPrivate   = new MenuItem("Pr&ivate", MenuNodeTypeHandler)
                 });
 
 			this.mnuFolder = new MenuItem("フォルダ(&F)", new MenuItem[]
 				{
-					this.mnuFolderNormal = new MenuItem("標準(&N)", eh),
-					this.mnuFolderRed    = new MenuItem("赤色(&R)", eh),
-					this.mnuFolderBlue   = new MenuItem("青色(&B)", eh),
-					this.mnuFolderGreen  = new MenuItem("緑色(&G)", eh),
-					this.mnuFolderGray   = new MenuItem("灰色(&Y)", eh),
-					this.mnuFolderBrown  = new MenuItem("茶色(&W)", eh)
+					this.mnuFolderNormal = new MenuItem("標準(&N)", MenuNodeTypeHandler),
+					this.mnuFolderRed    = new MenuItem("赤色(&R)", MenuNodeTypeHandler),
+					this.mnuFolderBlue   = new MenuItem("青色(&B)", MenuNodeTypeHandler),
+					this.mnuFolderGreen  = new MenuItem("緑色(&G)", MenuNodeTypeHandler),
+					this.mnuFolderGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler),
+					this.mnuFolderBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler)
 				});
 
 			this.mnuText = new MenuItem("テキスト(&T)", new MenuItem[]
 				{
-					this.mnuTextNormal = new MenuItem("標準(&N)", eh),
-					this.mnuTextRed    = new MenuItem("赤色(&R)", eh),
-					this.mnuTextBlue   = new MenuItem("青色(&B)", eh),
-					this.mnuTextGreen  = new MenuItem("緑色(&G)", eh),
-					this.mnuTextGray   = new MenuItem("灰色(&Y)", eh),
-					this.mnuTextBrown  = new MenuItem("茶色(&W)", eh)
+					this.mnuTextNormal = new MenuItem("標準(&N)", MenuNodeTypeHandler),
+					this.mnuTextRed    = new MenuItem("赤色(&R)", MenuNodeTypeHandler),
+					this.mnuTextBlue   = new MenuItem("青色(&B)", MenuNodeTypeHandler),
+					this.mnuTextGreen  = new MenuItem("緑色(&G)", MenuNodeTypeHandler),
+					this.mnuTextGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler),
+					this.mnuTextBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler)
 				});
 
 			this.mnuEtc = new MenuItem("その他(&E)", new MenuItem[]
 				{
-					this.mnuEtcComment = new MenuItem("注釈(&C)", eh),
-					this.mnuEtcSmile   = new MenuItem("人物(&H)", eh)
+					this.mnuEtcComment = new MenuItem("注釈(&C)", MenuNodeTypeHandler),
+					this.mnuEtcSmile   = new MenuItem("人物(&H)", MenuNodeTypeHandler)
 				});
 
 			menuType.Add(this.mnuAccessPublic   , HAType.Public);
@@ -126,7 +128,17 @@ namespace Girl.HierarchyArchitect
 		protected virtual void MenuNodeType_Click(object sender, System.EventArgs e)
 		{
 			HATreeNode n = (HATreeNode)this.SelectedNode;
-			if (n != null && n.AllowDrag) n.Type = (HAType)menuType[sender];
+			HAType type = (HAType)menuType[sender];
+			if (n != null && n.AllowDrag && n.Type != type)
+			{
+				n.Type = type;
+				this.OnChanged(this, EventArgs.Empty);
+				this.OnNodeTypeChanged(this, EventArgs.Empty);
+			}
+		}
+
+		protected virtual void OnNodeTypeChanged(object sender, EventArgs e)
+		{
 		}
 
 		protected virtual void MenuNodeChild_Click(object sender, System.EventArgs e)
@@ -145,6 +157,7 @@ namespace Girl.HierarchyArchitect
 			n.EnsureVisible();
 			this.SelectedNode = n;
 			n.BeginEdit();
+			this.OnChanged(this, EventArgs.Empty);
 		}
 
 		protected virtual void MenuNodeAppend_Click(object sender, System.EventArgs e)
@@ -163,6 +176,7 @@ namespace Girl.HierarchyArchitect
 			n.EnsureVisible();
 			this.SelectedNode = n;
 			n.BeginEdit();
+			this.OnChanged(this, EventArgs.Empty);
 		}
 
 		protected virtual void MenuNodeInsert_Click(object sender, System.EventArgs e)
@@ -182,6 +196,7 @@ namespace Girl.HierarchyArchitect
 			n.EnsureVisible();
 			this.SelectedNode = n;
 			n.BeginEdit();
+			this.OnChanged(this, EventArgs.Empty);
 		}
 
 		protected virtual void MenuNodeDelete_Click(object sender, System.EventArgs e)
@@ -194,9 +209,40 @@ namespace Girl.HierarchyArchitect
 			tc.Remove(n);
 			if (p != null && tc.Count < 1) p.SetIcon();
 			if (this.Nodes.Count < 1) this.SetState();
+			this.OnChanged(this, EventArgs.Empty);
 		}
 
 		#endregion
+
+		protected override void OnKeyPress(System.Windows.Forms.KeyPressEventArgs e)
+		{
+			bool flag = true;
+			char k = e.KeyChar;
+			if ('A' <= k && k <= 'Z') k += (char)32;
+			if (e.KeyChar == 'c' && this.mnuChild.Enabled)
+			{
+				this.MenuNodeChild_Click(this, EventArgs.Empty);
+			}
+			else if (e.KeyChar == 'a' && this.mnuAppend.Enabled)
+			{
+				this.MenuNodeAppend_Click(this, EventArgs.Empty);
+			}
+			else if (e.KeyChar == 'i' && this.mnuInsert.Enabled)
+			{
+				this.MenuNodeInsert_Click(this, EventArgs.Empty);
+			}
+			else if (e.KeyChar == 'e')
+			{
+				HATreeNode n = this.SelectedNode as HATreeNode;
+				n.BeginEdit();
+			}
+			else
+			{
+				flag = false;
+			}
+			e.Handled = flag;
+			base.OnKeyPress(e);
+		}
 
 		protected override void OnCreateControl()
 		{
@@ -258,6 +304,11 @@ namespace Girl.HierarchyArchitect
 				if (n is HATreeNode) ((HATreeNode)n).ApplyState();
 			}
 		}
+
+		public virtual void OnChanged(object sender, System.EventArgs e)
+		{
+			if (!this.IgnoreChanged && this.Changed != null) Changed(sender, e);
+		}
 	}
 
 	/// <summary>
@@ -271,12 +322,12 @@ namespace Girl.HierarchyArchitect
 
 		public HATreeNode()
 		{
-			Type = HAType.Public;
+			this.Type = HAType.Public;
 		}
 
 		public HATreeNode(string text) : base(text)
 		{
-			Type = HAType.Public;
+			this.Type = HAType.Public;
 		}
 
 		public virtual string XmlName
@@ -299,17 +350,27 @@ namespace Girl.HierarchyArchitect
 		{
 			get
 			{
-				return m_Type;
+				return this.m_Type;
 			}
 
 			set
 			{
-				m_Type = value;
-				SetIcon();
+				this.m_Type = value;
+				this.SetIcon();
 			}
 		}
 
-		public virtual void SetIcon()
+		public bool IsObject
+		{
+			get
+			{
+				return (this.m_Type == HAType.Public
+					|| this.m_Type == HAType.Protected
+					|| this.m_Type == HAType.Private);
+			}
+		}
+
+		public override void SetIcon()
 		{
 			int t = (int)m_Type;
 			if (m_Type.ToString().StartsWith("Folder"))

@@ -66,9 +66,7 @@ namespace Girl.HierarchyArchitect
 		protected override void SetState()
 		{
 			HAMemberNode n = this.SelectedNode as HAMemberNode;
-			bool flag = (n != null);
-			mnuType  .Enabled = flag;
-			mnuDelete.Enabled = flag;
+			mnuType  .Enabled = mnuDelete.Enabled = (n != null);
 		}
 
 		protected override HATreeNode NewNode
@@ -81,7 +79,7 @@ namespace Girl.HierarchyArchitect
 
 		public void SetView(ArrayList list)
 		{
-			this.IgnoreChange = true;
+			this.IgnoreChanged = true;
 			this.SelectedNode = null;
 			this.Nodes.Clear();
 			if (list != null)
@@ -108,8 +106,8 @@ namespace Girl.HierarchyArchitect
 				this.Enabled = false;
 				this.BackColor = System.Drawing.SystemColors.ControlLight;
 			}
-			this.IgnoreChange = false;
 			this.SetState();
+			this.IgnoreChanged = false;
 		}
 
 		#region XML
@@ -131,6 +129,7 @@ namespace Girl.HierarchyArchitect
 						dn.EnsureVisible();
 						SelectedNode = dn;
 						first = false;
+						this.OnChanged(this, new EventArgs());
 					}
 				}
 			}

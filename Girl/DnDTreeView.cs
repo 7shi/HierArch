@@ -80,7 +80,7 @@ namespace Girl.Windows.Forms
 		}
 
 		#endregion
-        
+
 		#region Mouse Events
 
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -116,8 +116,10 @@ namespace Girl.Windows.Forms
 			DragDropEffects result = DoDragDrop(sw.ToString(), DragDropEffects.All);
 			if (result == DragDropEffects.Move)
 			{
+				DnDTreeNode p = m_ndDrag.Parent as DnDTreeNode;
 				m_ndDrag.Remove();
-				TreeNode n = SelectedNode;
+				if (p != null) p.SetIcon();
+				DnDTreeNode n = SelectedNode as DnDTreeNode;
 				if (n != null) n.EnsureVisible();
 			}
 
@@ -300,19 +302,19 @@ namespace Girl.Windows.Forms
 
 			Cursor curOrig = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
-			TreeNode n = null;
+			DnDTreeNode n = null;
 			int index = -1;
 			switch (m_DragStatus)
 			{
 				case DragStatus.Previous:
-					n = m_ndDragTarget.Parent;
+					n = m_ndDragTarget.Parent as DnDTreeNode;
 					index = m_ndDragTarget.Index;
 					break;
 				case DragStatus.Child:
-					n = m_ndDragTarget;
+					n = m_ndDragTarget as DnDTreeNode;
 					break;
 				case DragStatus.Next:
-					n = m_ndDragTarget.Parent;
+					n = m_ndDragTarget.Parent as DnDTreeNode;
 					index = m_ndDragTarget.Index + 1;
 					break;
 			}
@@ -325,6 +327,7 @@ namespace Girl.Windows.Forms
 			xr.Close();
 			sr.Close();
 			m_DragStatus = DragStatus.None;
+			if (n != null) n.SetIcon();
 			Cursor.Current = curOrig;
 		}
 
@@ -492,6 +495,10 @@ namespace Girl.Windows.Forms
 			DnDTreeNode ret = (DnDTreeNode)base.Clone();
 			ret.AllowDrag = this.AllowDrag;
 			return ret;
+		}
+
+		public virtual void SetIcon()
+		{
 		}
 
 		#region XML

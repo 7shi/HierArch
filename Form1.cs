@@ -52,6 +52,16 @@ namespace Girl.HierarchyArchitect
 		public System.Windows.Forms.MenuItem mnuViewStatusBar;
 		private System.Windows.Forms.MenuItem mnuHelp;
 		private System.Windows.Forms.MenuItem mnuHelpAbout;
+		private System.Windows.Forms.MenuItem mnuViewSeparator1;
+		private System.Windows.Forms.MenuItem mnuViewClass;
+		private System.Windows.Forms.MenuItem mnuViewFunc;
+		private System.Windows.Forms.MenuItem mnuViewMember;
+		private System.Windows.Forms.MenuItem mnuViewArg;
+		private System.Windows.Forms.MenuItem mnuViewObject;
+		private System.Windows.Forms.MenuItem mnuViewSeparator2;
+		private System.Windows.Forms.MenuItem mnuViewComment;
+		private System.Windows.Forms.MenuItem mnuCode;
+		private System.Windows.Forms.MenuItem mnuCodeGenerateAll;
 		private System.ComponentModel.IContainer components;
 
 		public Form1()
@@ -64,26 +74,26 @@ namespace Girl.HierarchyArchitect
 			//
 			// TODO: InitializeComponent 呼び出しの後に、コンストラクタ コードを追加してください。
 			//
-			m_sCaption = Text;
-			SetCaption();
-			SetDocument();
-			view1.Changed += new System.EventHandler(view1_Changed);
+			this.m_sCaption = Text;
+			this.SetCaption();
+			this.SetDocument();
+			this.view1.Changed += new System.EventHandler(view1_Changed);
 
 			// ツールバーのボタンをメニューの項目に対応させます。
 			// ここで定義した情報は toolBar1_ButtonClick() で使用されます。
-			tbFileNew  .Tag = mnuFileNew;
-			tbFileOpen .Tag = mnuFileOpen;
-			tbFileSave .Tag = mnuFileSave;
-			tbEditCut  .Tag = mnuEditCut;
-			tbEditCopy .Tag = mnuEditCopy;
-			tbEditPaste.Tag = mnuEditPaste;
+			this.tbFileNew  .Tag = mnuFileNew;
+			this.tbFileOpen .Tag = mnuFileOpen;
+			this.tbFileSave .Tag = mnuFileSave;
+			this.tbEditCut  .Tag = mnuEditCut;
+			this.tbEditCopy .Tag = mnuEditCopy;
+			this.tbEditPaste.Tag = mnuEditPaste;
 
 			// View メニューの項目とコントロールを対応させます。
 			// ここで定義した情報は mnuViewItem_Click() で使用されます。
-			m_tblView.Add(mnuViewToolBar  , toolBar1  );
-			m_tblView.Add(mnuViewStatusBar, statusBar1);
+			this.m_tblView.Add(mnuViewToolBar  , toolBar1  );
+			this.m_tblView.Add(mnuViewStatusBar, statusBar1);
 
-			m_Doc.ClassTreeView = view1.tvClass;
+			this.m_Doc.ClassTreeView = view1.tvClass;
 		}
 
 		/// <summary>
@@ -142,6 +152,16 @@ namespace Girl.HierarchyArchitect
 			this.mnuView = new System.Windows.Forms.MenuItem();
 			this.mnuViewToolBar = new System.Windows.Forms.MenuItem();
 			this.mnuViewStatusBar = new System.Windows.Forms.MenuItem();
+			this.mnuViewSeparator1 = new System.Windows.Forms.MenuItem();
+			this.mnuViewClass = new System.Windows.Forms.MenuItem();
+			this.mnuViewFunc = new System.Windows.Forms.MenuItem();
+			this.mnuViewMember = new System.Windows.Forms.MenuItem();
+			this.mnuViewArg = new System.Windows.Forms.MenuItem();
+			this.mnuViewObject = new System.Windows.Forms.MenuItem();
+			this.mnuViewSeparator2 = new System.Windows.Forms.MenuItem();
+			this.mnuViewComment = new System.Windows.Forms.MenuItem();
+			this.mnuCode = new System.Windows.Forms.MenuItem();
+			this.mnuCodeGenerateAll = new System.Windows.Forms.MenuItem();
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
@@ -161,7 +181,7 @@ namespace Girl.HierarchyArchitect
 			this.toolBar1.ImageList = this.imageList1;
 			this.toolBar1.Name = "toolBar1";
 			this.toolBar1.ShowToolTips = true;
-			this.toolBar1.Size = new System.Drawing.Size(392, 25);
+			this.toolBar1.Size = new System.Drawing.Size(712, 25);
 			this.toolBar1.TabIndex = 0;
 			this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
 			// 
@@ -211,21 +231,28 @@ namespace Girl.HierarchyArchitect
 			// 
 			// statusBar1
 			// 
-			this.statusBar1.Location = new System.Drawing.Point(0, 291);
+			this.statusBar1.Location = new System.Drawing.Point(0, 467);
 			this.statusBar1.Name = "statusBar1";
-			this.statusBar1.Size = new System.Drawing.Size(392, 22);
+			this.statusBar1.Size = new System.Drawing.Size(712, 22);
 			this.statusBar1.TabIndex = 1;
+			// 
+			// openFileDialog1
+			// 
+			this.openFileDialog1.DefaultExt = "haprj";
+			this.openFileDialog1.Filter = "Hierarchy Architect プロジェクト (*.haprj)|*.haprj|すべてのファイル (*.*)|*.*";
 			// 
 			// saveFileDialog1
 			// 
+			this.saveFileDialog1.DefaultExt = "haprj";
 			this.saveFileDialog1.FileName = "doc1";
+			this.saveFileDialog1.Filter = "Hierarchy Architect プロジェクト (*.haprj)|*.haprj|すべてのファイル (*.*)|*.*";
 			// 
 			// view1
 			// 
 			this.view1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.view1.Location = new System.Drawing.Point(0, 25);
 			this.view1.Name = "view1";
-			this.view1.Size = new System.Drawing.Size(392, 266);
+			this.view1.Size = new System.Drawing.Size(712, 442);
 			this.view1.TabIndex = 2;
 			// 
 			// mainMenu1
@@ -234,6 +261,7 @@ namespace Girl.HierarchyArchitect
 																					  this.mnuFile,
 																					  this.mnuEdit,
 																					  this.mnuView,
+																					  this.mnuCode,
 																					  this.mnuHelp});
 			// 
 			// mnuFile
@@ -329,7 +357,15 @@ namespace Girl.HierarchyArchitect
 			this.mnuView.Index = 2;
 			this.mnuView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					this.mnuViewToolBar,
-																					this.mnuViewStatusBar});
+																					this.mnuViewStatusBar,
+																					this.mnuViewSeparator1,
+																					this.mnuViewClass,
+																					this.mnuViewFunc,
+																					this.mnuViewMember,
+																					this.mnuViewArg,
+																					this.mnuViewObject,
+																					this.mnuViewSeparator2,
+																					this.mnuViewComment});
 			this.mnuView.Text = "表示(&V)";
 			// 
 			// mnuViewToolBar
@@ -344,9 +380,74 @@ namespace Girl.HierarchyArchitect
 			this.mnuViewStatusBar.Text = "ステータスバー(&S)";
 			this.mnuViewStatusBar.Click += new System.EventHandler(this.mnuViewItem_Click);
 			// 
+			// mnuViewSeparator1
+			// 
+			this.mnuViewSeparator1.Index = 2;
+			this.mnuViewSeparator1.Text = "-";
+			// 
+			// mnuViewClass
+			// 
+			this.mnuViewClass.Checked = true;
+			this.mnuViewClass.Index = 3;
+			this.mnuViewClass.Text = "クラス(&C)";
+			this.mnuViewClass.Click += new System.EventHandler(this.mnuViewClass_Click);
+			// 
+			// mnuViewFunc
+			// 
+			this.mnuViewFunc.Checked = true;
+			this.mnuViewFunc.Index = 4;
+			this.mnuViewFunc.Text = "関数(&F)";
+			this.mnuViewFunc.Click += new System.EventHandler(this.mnuViewFunc_Click);
+			// 
+			// mnuViewMember
+			// 
+			this.mnuViewMember.Checked = true;
+			this.mnuViewMember.Index = 5;
+			this.mnuViewMember.Text = "メンバ(&M)";
+			this.mnuViewMember.Click += new System.EventHandler(this.mnuViewMember_Click);
+			// 
+			// mnuViewArg
+			// 
+			this.mnuViewArg.Checked = true;
+			this.mnuViewArg.Index = 6;
+			this.mnuViewArg.Text = "引数(&A)";
+			this.mnuViewArg.Click += new System.EventHandler(this.mnuViewArg_Click);
+			// 
+			// mnuViewObject
+			// 
+			this.mnuViewObject.Checked = true;
+			this.mnuViewObject.Index = 7;
+			this.mnuViewObject.Text = "変数(&O)";
+			this.mnuViewObject.Click += new System.EventHandler(this.mnuViewObject_Click);
+			// 
+			// mnuViewSeparator2
+			// 
+			this.mnuViewSeparator2.Index = 8;
+			this.mnuViewSeparator2.Text = "-";
+			// 
+			// mnuViewComment
+			// 
+			this.mnuViewComment.Checked = true;
+			this.mnuViewComment.Index = 9;
+			this.mnuViewComment.Text = "注釈(&E)";
+			this.mnuViewComment.Click += new System.EventHandler(this.mnuViewComment_Click);
+			// 
+			// mnuCode
+			// 
+			this.mnuCode.Index = 3;
+			this.mnuCode.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					this.mnuCodeGenerateAll});
+			this.mnuCode.Text = "コード(&C)";
+			// 
+			// mnuCodeGenerateAll
+			// 
+			this.mnuCodeGenerateAll.Index = 0;
+			this.mnuCodeGenerateAll.Text = "全生成(&A)";
+			this.mnuCodeGenerateAll.Click += new System.EventHandler(this.mnuCodeGenerateAll_Click);
+			// 
 			// mnuHelp
 			// 
-			this.mnuHelp.Index = 3;
+			this.mnuHelp.Index = 4;
 			this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					this.mnuHelpAbout});
 			this.mnuHelp.Text = "ヘルプ(&H)";
@@ -360,7 +461,7 @@ namespace Girl.HierarchyArchitect
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(392, 313);
+			this.ClientSize = new System.Drawing.Size(712, 489);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.view1,
 																		  this.statusBar1,
@@ -430,32 +531,32 @@ namespace Girl.HierarchyArchitect
 
 		private void mnuFileNew_Click(object sender, System.EventArgs e)
 		{
-			CreateForm().Show();
+			Form1.CreateForm().Show();
 		}
 
 		private void mnuFileOpen_Click(object sender, System.EventArgs e)
 		{
-			Open();
+			this.Open();
 		}
 
 		private void mnuFileSave_Click(object sender, System.EventArgs e)
 		{
-			Save();
+			this.Save();
 		}
 
 		private void mnuFileSaveAs_Click(object sender, System.EventArgs e)
 		{
-			SaveAs();
+			this.SaveAs();
 		}
 
 		private void mnuFileClose_Click(object sender, System.EventArgs e)
 		{
-			Close();
+			this.Close();
 		}
 
 		private void mnuFileExit_Click(object sender, System.EventArgs e)
 		{
-			Exit();
+			Form1.Exit();
 		}
 
 		private void mnuViewItem_Click(object sender, System.EventArgs e)
@@ -466,6 +567,68 @@ namespace Girl.HierarchyArchitect
 			bool st = !((Control)target).Visible;
 			((Control)target).Visible = st;
 			((MenuItem)sender).Checked = st;
+		}
+
+		#region Visibility
+
+		private void mnuViewClass_Click(object sender, System.EventArgs e)
+		{
+			bool v = this.mnuViewClass.Checked = !this.view1.tabClass.Visible;
+			this.view1.SetPanel1(v, this.view1.tabFunc.Visible);
+		}
+
+		private void mnuViewFunc_Click(object sender, System.EventArgs e)
+		{
+			bool v = this.mnuViewFunc.Checked = !this.view1.tabFunc.Visible;
+			this.view1.SetPanel1(this.view1.tabClass.Visible, v);
+		}
+
+		private void mnuViewMember_Click(object sender, System.EventArgs e)
+		{
+			bool v = this.mnuViewMember.Checked = !this.view1.tabMember.Visible;
+			this.view1.SetPanel3(v, this.view1.tabArg.Visible, this.view1.tabObject.Visible);
+		}
+
+		private void mnuViewArg_Click(object sender, System.EventArgs e)
+		{
+			bool v = this.mnuViewArg.Checked = !this.view1.tabArg.Visible;
+			this.view1.SetPanel3(this.view1.tabMember.Visible, v, this.view1.tabObject.Visible);
+		}
+
+		private void mnuViewObject_Click(object sender, System.EventArgs e)
+		{
+			bool v = this.mnuViewObject.Checked = !this.view1.tabObject.Visible;
+			this.view1.SetPanel3(this.view1.tabMember.Visible, this.view1.tabArg.Visible, v);
+		}
+
+		private void mnuViewComment_Click(object sender, System.EventArgs e)
+		{
+			this.view1.txtComment.Visible
+				= this.view1.opaqueSplitter4.Visible
+				= this.mnuViewComment.Checked
+				= !this.view1.txtComment.Visible;
+		}
+
+		#endregion
+
+		private void mnuCodeGenerateAll_Click(object sender, System.EventArgs e)
+		{
+			string path;
+			try
+			{
+				path = Path.GetDirectoryName(this.m_Doc.FullName);
+			}
+			catch
+			{
+				MessageBox.Show(this, "プロジェクトを保存してください。", this.m_sCaption,
+					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				return;
+			}
+
+			Cursor cur = Cursor.Current;
+			Cursor.Current = Cursors.WaitCursor;
+			this.view1.GenerateAll(path);
+			Cursor.Current = cur;
 		}
 
 		private void mnuHelpAbout_Click(object sender, System.EventArgs e)

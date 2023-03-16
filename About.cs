@@ -13,9 +13,7 @@ namespace Girl.HierarchyArchitect
 	{
 		public System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.LinkLabel linkLabel1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
@@ -62,9 +60,7 @@ namespace Girl.HierarchyArchitect
 		{
 			this.label1 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
-			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.label2 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
@@ -83,23 +79,11 @@ namespace Girl.HierarchyArchitect
 			// button1
 			// 
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(165, 288);
+			this.button1.Location = new System.Drawing.Point(165, 232);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(80, 24);
 			this.button1.TabIndex = 0;
 			this.button1.Text = "OK";
-			// 
-			// linkLabel1
-			// 
-			this.linkLabel1.LinkArea = new System.Windows.Forms.LinkArea(0, 17);
-			this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((System.Byte)(0)), ((System.Byte)(0)), ((System.Byte)(255)));
-			this.linkLabel1.Location = new System.Drawing.Point(16, 224);
-			this.linkLabel1.Name = "linkLabel1";
-			this.linkLabel1.Size = new System.Drawing.Size(384, 16);
-			this.linkLabel1.TabIndex = 2;
-			this.linkLabel1.TabStop = true;
-			this.linkLabel1.Text = "Magic Version 1.7";
-			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
 			// 
 			// label2
 			// 
@@ -108,14 +92,6 @@ namespace Girl.HierarchyArchitect
 			this.label2.Size = new System.Drawing.Size(384, 16);
 			this.label2.TabIndex = 3;
 			this.label2.Text = "このソフトウェアはパブリックドメインです。";
-			// 
-			// label3
-			// 
-			this.label3.Location = new System.Drawing.Point(16, 248);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(384, 16);
-			this.label3.TabIndex = 4;
-			this.label3.Text = "Copyright (c) Crownwood Consulting Limited 2002. All rights reserved";
 			// 
 			// label4
 			// 
@@ -161,16 +137,14 @@ namespace Girl.HierarchyArchitect
 			// 
 			this.AcceptButton = this.button1;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(410, 327);
+			this.ClientSize = new System.Drawing.Size(410, 271);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.label8,
 																		  this.label7,
 																		  this.label6,
 																		  this.label5,
 																		  this.label4,
-																		  this.label3,
 																		  this.label2,
-																		  this.linkLabel1,
 																		  this.button1,
 																		  this.label1});
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -184,10 +158,5 @@ namespace Girl.HierarchyArchitect
 
 		}
 		#endregion
-
-		private void linkLabel1_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start("http://www.dotnetmagic.com/");
-		}
 	}
 }

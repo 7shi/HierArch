@@ -30,19 +30,29 @@ namespace Girl.HierarchyArchitect
 			this.HideSelection = false;
 			this.LabelEdit = true;
 		}
-	
+
+		private MenuItem mnuType, mnuTypeObject;
+
 		public HAObject()
 		{
 			InitializeComponent();
 
 			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
 				{
+					mnuType = new MenuItem("種類変更(&T)", new MenuItem[]
+						{
+							this.mnuTypeObject = new MenuItem("変数(&O)", MenuNodeTypeHandler),
+							this.mnuFolder,
+							this.mnuEtc
+						}),
+					new MenuItem("-"),
 					this.mnuChild,
 					this.mnuAppend,
 					this.mnuInsert,
 					new MenuItem("-"),
 					this.mnuDelete
 				});
+			menuType.Add(this.mnuTypeObject, HAType.Private);
 
 			this.ImageList = this.imageList1;
 		}
@@ -56,7 +66,8 @@ namespace Girl.HierarchyArchitect
 
 		protected override void SetState()
 		{
-			mnuDelete.Enabled = (this.SelectedNode != null);
+			HAObjectNode n = this.SelectedNode as HAObjectNode;
+			mnuType  .Enabled = mnuDelete.Enabled = (n != null);
 		}
 
 		protected override HATreeNode NewNode
@@ -71,7 +82,7 @@ namespace Girl.HierarchyArchitect
 
 		public void SetView(ArrayList list)
 		{
-			this.IgnoreChange = true;
+			this.IgnoreChanged = true;
 			this.SelectedNode = null;
 			this.Nodes.Clear();
 			if (list != null)
@@ -98,8 +109,8 @@ namespace Girl.HierarchyArchitect
 				this.Enabled = false;
 				this.BackColor = System.Drawing.SystemColors.ControlLight;
 			}
-			this.IgnoreChange = false;
 			this.SetState();
+			this.IgnoreChanged = false;
 		}
 
 		#region XML
@@ -121,6 +132,7 @@ namespace Girl.HierarchyArchitect
 						dn.EnsureVisible();
 						SelectedNode = dn;
 						first = false;
+						this.OnChanged(this, new EventArgs());
 					}
 				}
 			}
@@ -161,14 +173,11 @@ namespace Girl.HierarchyArchitect
 
 		public override void SetIcon()
 		{
-			switch (this.m_Type)
+			if (this.IsObject)
 			{
-				case HAType.Public:
-				case HAType.Protected:
-				case HAType.Private:
-					this.SelectedImageIndex = (int)HAType.PointRed;
-					this.ImageIndex         = (int)HAType.Point;
-					return;
+				this.SelectedImageIndex = (int)HAType.PointRed;
+				this.ImageIndex         = (int)HAType.Point;
+				return;
 			}
 			base.SetIcon();
 		}

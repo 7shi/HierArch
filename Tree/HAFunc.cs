@@ -3,6 +3,7 @@ using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
+using Girl.Code;
 using Girl.Windows.Forms;
 
 namespace Girl.HierarchyArchitect
@@ -17,6 +18,8 @@ namespace Girl.HierarchyArchitect
 		public HAObject ObjectTreeView = null;
 		public TextBox CommentTextBox = null;
 		public TextBox SourceTextBox  = null;
+		public HAFuncNode Header, Body, Footer;
+		public HAClassNode OwnerClass = null;
 
 		private void InitializeComponent()
 		{
@@ -35,6 +38,8 @@ namespace Girl.HierarchyArchitect
 			this.LabelEdit = true;
 
 		}
+
+		private MenuItem mnuType;
 	
 		public HAFunc()
 		{
@@ -42,6 +47,14 @@ namespace Girl.HierarchyArchitect
 
 			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
 				{
+					mnuType = new MenuItem("種類変更(&T)", new MenuItem[]
+						{
+							this.mnuAccess,
+							this.mnuFolder,
+							this.mnuText,
+							this.mnuEtc
+						}),
+					new MenuItem("-"),
 					this.mnuChild,
 					this.mnuAppend,
 					this.mnuInsert,
@@ -50,6 +63,25 @@ namespace Girl.HierarchyArchitect
 				});
 
 			this.ImageList = this.imageList1;
+		}
+
+		protected override void MenuNodeChild_Click(object sender, System.EventArgs e)
+		{
+			HATreeNode p = (HATreeNode)this.SelectedNode;
+			if (p == null) return;
+
+			HATreeNode n = this.NewNode;
+			if (p == this.Header || p == this.Footer)
+			{
+				n.Text = "新しい項目";
+				n.Type = HAType.Text;
+			}
+			p.Nodes.Add(n);
+			p.SetIcon();
+			n.EnsureVisible();
+			this.SelectedNode = n;
+			n.BeginEdit();
+			this.OnChanged(this, EventArgs.Empty);
 		}
 
 		protected override void StartDrag()
@@ -61,7 +93,8 @@ namespace Girl.HierarchyArchitect
 
 		protected override void SetState()
 		{
-			mnuDelete.Enabled = (this.TargetNode != null && this.TargetNode.AllowDrag);
+			HAFuncNode n = this.SelectedNode as HAFuncNode;
+			mnuType.Enabled = mnuAppend.Enabled = mnuInsert.Enabled = mnuDelete.Enabled = (n != null && n.AllowDrag);
 		}
 
 		protected override HATreeNode NewNode
@@ -94,8 +127,18 @@ namespace Girl.HierarchyArchitect
 				if (n is HAObjectNode) this.TargetNode.Objects.Add(n.Clone());
 			}
 
-			if (this.CommentTextBox != null) this.TargetNode.Comment = this.CommentTextBox.Text;
-			if (this.SourceTextBox  != null) this.TargetNode.Source  = this.SourceTextBox .Text;
+			if (this.CommentTextBox != null)
+			{
+				this.TargetNode.Comment                = this.CommentTextBox.Text;
+				this.TargetNode.CommentSelectionStart  = this.CommentTextBox.SelectionStart;
+				this.TargetNode.CommentSelectionLength = this.CommentTextBox.SelectionLength;
+			}
+			if (this.SourceTextBox  != null)
+			{
+				this.TargetNode.Source                = this.SourceTextBox .Text;
+				this.TargetNode.SourceSelectionStart  = this.SourceTextBox.SelectionStart;
+				this.TargetNode.SourceSelectionLength = this.SourceTextBox.SelectionLength;
+			}
 		}
 
 		public void SetView()
@@ -108,11 +151,15 @@ namespace Girl.HierarchyArchitect
 				{
 					this.CommentTextBox.Enabled = true;
 					this.CommentTextBox.Text = this.TargetNode.Comment;
+					this.CommentTextBox.SelectionStart  = this.TargetNode.CommentSelectionStart;
+					this.CommentTextBox.SelectionLength = this.TargetNode.CommentSelectionLength;
 				}
 				if (this.SourceTextBox != null)
 				{
 					this.SourceTextBox.Enabled = true;
 					this.SourceTextBox.Text = this.TargetNode.Source;
+					this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
+					this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
 				}
 			}
 			else
@@ -123,62 +170,81 @@ namespace Girl.HierarchyArchitect
 				{
 					this.CommentTextBox.Enabled = false;
 					this.CommentTextBox.Text = "";
+					this.CommentTextBox.SelectionStart  = 0;
+					this.CommentTextBox.SelectionLength = 0;
 				}
 				if (this.SourceTextBox != null)
 				{
 					this.SourceTextBox.Enabled = false;
 					this.SourceTextBox.Text = "";
+					this.SourceTextBox.SelectionStart  = 0;
+					this.SourceTextBox.SelectionLength = 0;
 				}
 			}
 		}
 
-		public void SetView(ArrayList list)
+		public void SetView(HAClassNode cls)
 		{
-			this.IgnoreChange = true;
+			this.IgnoreChanged = true;
 			this.SelectedNode = null;
 			this.TargetNode = null;
 			this.SetView();
 			this.Nodes.Clear();
-			if (list != null)
+			if (cls != null)
 			{
 				this.Enabled = true;
 				this.BackColor = System.Drawing.SystemColors.Window;
-				if (list.Count > 0)
+				this.BeginUpdate();
+				this.Header = cls.Header.Clone() as HAFuncNode;
+				this.Body   = cls.Body  .Clone() as HAFuncNode;
+				this.Footer = cls.Footer.Clone() as HAFuncNode;
+				if (this.OwnerClass.Type == HAType.Public
+					|| this.OwnerClass.Type == HAType.Protected
+					|| this.OwnerClass.Type == HAType.Private)
 				{
-					this.BeginUpdate();
-					foreach (Object obj in list)
-					{
-						if (obj is HAFuncNode) this.Nodes.Add((HAFuncNode)((HAFuncNode)obj).Clone());
-					}
-					this.ApplyState();
-					if (this.SelectedNode != null)
-					{
-						this.SelectedNode.EnsureVisible();
-						this.TargetNode = this.SelectedNode as HAFuncNode;
-						this.SetView();
-					}
-					this.EndUpdate();
+					this.Nodes.Add(this.Header);
+					this.Nodes.Add(this.Body);
+					this.Nodes.Add(this.Footer);
 				}
+				else
+				{
+					this.Nodes.Add(this.Body);
+				}
+				this.ApplyState();
+				if (this.SelectedNode == null && this.Nodes.Count > 0)
+				{
+					this.SelectedNode = this.Nodes[0];
+				}
+				if (this.SelectedNode != null)
+				{
+					this.SelectedNode.EnsureVisible();
+					this.TargetNode = this.SelectedNode as HAFuncNode;
+					this.SetView();
+				}
+				this.EndUpdate();
 			}
 			else
 			{
 				this.Enabled = false;
 				this.BackColor = System.Drawing.SystemColors.ControlLight;
+				this.Header = this.Body = this.Footer = null;
 			}
-			this.IgnoreChange = false;
 			this.SetState();
+			this.IgnoreChanged = false;
 		}
 
 		protected override void OnAfterSelect(System.Windows.Forms.TreeViewEventArgs e)
 		{
 			base.OnAfterSelect(e);
-			if (this.IgnoreChange) return;
+			if (this.IgnoreChanged) return;
 
 			this.StoreData();
 			if (this.TargetNode == e.Node) return;
 
 			this.TargetNode = (HAFuncNode)e.Node;
+			this.IgnoreChanged = true;
 			this.SetView();
+			this.IgnoreChanged = false;
 		}
 
 		#region XML
@@ -200,6 +266,7 @@ namespace Girl.HierarchyArchitect
 						dn.EnsureVisible();
 						SelectedNode = dn;
 						first = false;
+						this.OnChanged(this, new EventArgs());
 					}
 				}
 			}
@@ -217,6 +284,10 @@ namespace Girl.HierarchyArchitect
 		public ArrayList Objects = new ArrayList();
 		public string Comment = "";
 		public string Source  = "";
+		public int CommentSelectionStart  = 0;
+		public int CommentSelectionLength = 0;
+		public int SourceSelectionStart   = 0;
+		public int SourceSelectionLength  = 0;
 
 		public HAFuncNode()
 		{
@@ -244,11 +315,15 @@ namespace Girl.HierarchyArchitect
 
 		public override object Clone()
 		{
-			HAFuncNode ret = (HAFuncNode)base.Clone();
-			ret.Args    = (ArrayList)this.Args.Clone();
-			ret.Objects = (ArrayList)this.Objects.Clone();
+			HAFuncNode ret = base.Clone() as HAFuncNode;
+			ret.Args    = this.Args.Clone() as ArrayList;
+			ret.Objects = this.Objects.Clone() as ArrayList;
 			ret.Comment = this.Comment;
 			ret.Source  = this.Source;
+			ret.CommentSelectionStart  = this.CommentSelectionStart;
+			ret.CommentSelectionLength = this.CommentSelectionLength;
+			ret.SourceSelectionStart   = this.SourceSelectionStart;
+			ret.SourceSelectionLength  = this.SourceSelectionLength;
 			return ret;
 		}
 
@@ -271,10 +346,14 @@ namespace Girl.HierarchyArchitect
 			}
 
 			xw.WriteStartElement("Comment");
+			xw.WriteAttributeString("SelectionStart" , XmlConvert.ToString(this.CommentSelectionStart));
+			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.CommentSelectionLength));
 			xw.WriteString(this.Comment);
 			xw.WriteEndElement();
 
 			xw.WriteStartElement("Source");
+			xw.WriteAttributeString("SelectionStart" , XmlConvert.ToString(this.SourceSelectionStart));
+			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.SourceSelectionLength));
 			xw.WriteString(this.Source);
 			xw.WriteEndElement();
 		}
@@ -305,13 +384,88 @@ namespace Girl.HierarchyArchitect
 			}
 			else if (xr.Name == "Comment" && xr.NodeType == XmlNodeType.Element)
 			{
+				this.CommentSelectionStart  = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
+				this.CommentSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
 				if (!xr.IsEmptyElement && xr.Read()) this.Comment = xr.ReadString();
 			}
 			else if (xr.Name == "Source" && xr.NodeType == XmlNodeType.Element)
 			{
+				this.SourceSelectionStart  = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
+				this.SourceSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
 				if (!xr.IsEmptyElement && xr.Read()) this.Source = xr.ReadString();
 			}
 		} 
+
+		#endregion
+
+		#region Generation
+
+		public void Generate(CodeWriter cw, HAType classType)
+		{
+			HAType t = this.Type;
+			if (this.IsObject)
+			{
+				this.GenerateFunc(cw);
+			}
+			else if (t.ToString().StartsWith("Folder"))
+			{
+				cw.WriteBlankLine();
+				cw.WriteCode("#region " + this.Text);
+			}
+
+			foreach (TreeNode n in this.Nodes)
+			{
+				(n as HAFuncNode).Generate(cw, classType);
+			}
+
+			if (t.ToString().StartsWith("Folder"))
+			{
+				cw.WriteBlankLine();
+				cw.WriteCode("#endregion");
+			}
+		}
+
+		private void GenerateFunc(CodeWriter cw)
+		{
+			cw.WriteBlankLine();
+			if (this.Comment != "") cw.WriteCodes("/// ", this.Comment);
+
+			string code = this.Type.ToString().ToLower()
+				+ " " + new ObjectParser(this.Text).FunctionDeclaration + "(";
+			bool first = true;
+			foreach (Object obj in this.Args)
+			{
+				HAObjectNode n = obj as HAObjectNode;
+				if (n == null || !n.IsObject) continue;
+
+				if (!first)
+				{
+					code += ", ";
+				}
+				else
+				{
+					first = false;
+				}
+				code += new ObjectParser(n.Text).ObjectDeclaration;
+			}
+			code += ")";
+
+			cw.WriteStartBlock(cw.ReplaceKeywords(code));
+			cw.SetStart();
+			foreach (Object obj in this.Objects)
+			{
+				HAObjectNode n = obj as HAObjectNode;
+				if (n == null || !n.IsObject) continue;
+
+				cw.WriteCode(new ObjectParser(n.Text).ObjectDeclaration + ";");
+			}
+			if (this.Source != "")
+			{
+				cw.WriteBlankLine();
+				cw.WriteCodes(cw.ReplaceKeywords(this.Source));
+			}
+			cw.WriteEndBlock();
+		}
 
 		#endregion
 	}
