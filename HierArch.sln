@@ -1,18 +1,29 @@
 Microsoft Visual Studio Solution File, Format Version 7.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierArch", "HierArch\HierArch.csproj", "{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Girl", "Girl\Girl.csproj", "{9084494D-A49E-4CA4-A433-8411E47A7176}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		ConfigName.0 = Debug
 		ConfigName.1 = Release
 	EndGlobalSection
 	GlobalSection(ProjectDependencies) = postSolution
+		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.0 = {9084494D-A49E-4CA4-A433-8411E47A7176}
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
 		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Debug.ActiveCfg = Debug|.NET
 		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Debug.Build.0 = Debug|.NET
 		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Release.ActiveCfg = Release|.NET
 		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Release.Build.0 = Release|.NET
+		{9084494D-A49E-4CA4-A433-8411E47A7176}.Debug.ActiveCfg = Debug|.NET
+		{9084494D-A49E-4CA4-A433-8411E47A7176}.Debug.Build.0 = Debug|.NET
+		{9084494D-A49E-4CA4-A433-8411E47A7176}.Release.ActiveCfg = Release|.NET
+		{9084494D-A49E-4CA4-A433-8411E47A7176}.Release.Build.0 = Release|.NET
+		{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}.Debug.ActiveCfg = Debug
+		{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}.Release.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

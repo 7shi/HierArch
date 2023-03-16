@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Girl.Windows.Forms;
@@ -73,31 +74,92 @@ namespace Girl.HierArch
 		public override bool Save()
 		{
 			this.ClassTreeView.StoreData();
+			bool ret = false;
+			string lfn = this.FullName.ToLower();
+			if (lfn.EndsWith(".haprj"))
+			{
+				ret = SaveHAPrj();
+			}
+			else if (lfn.EndsWith(".hds"))
+			{
+				ret = SaveHds();
+			}
+			else
+			{
+				MessageBox.Show("保存できないファイルの種類です。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+			if (ret) Changed = false;
+			return ret;
+		}
+
+		private bool SaveHAPrj()
+		{
 			FileStream fs;
 			try
 			{
-				fs = new FileStream(FullName, FileMode.Create);
+				fs = new FileStream(this.FullName, FileMode.Create);
 			}
 			catch
 			{
 				return false;
 			}
-			// UTF-8 決め打ち
 			XmlTextWriter xw = new XmlTextWriter(fs, null);
 			xw.Formatting = Formatting.Indented;
 			xw.WriteStartDocument();
 			xw.WriteStartElement("HAProject");
 			xw.WriteAttributeString("version" , Application.ProductVersion);
-			foreach (TreeNode n in ClassTreeView.Nodes)
+			foreach (TreeNode n in this.ClassTreeView.Nodes)
 			{
-				if (n is HAClassNode) ((HAClassNode)n).ToXml(xw);
+				(n as HAClassNode).ToXml(xw);
 			}
 			xw.WriteEndElement();
 			xw.WriteEndDocument();
 			xw.Flush();
 			xw.Close();
 			fs.Close();
-			Changed = false;
+			return true;
+		}
+
+		private bool SaveHds()
+		{
+			HAClassNode n = this.ClassTreeView.SelectedNode as HAClassNode;
+			if (n == null)
+			{
+				MessageBox.Show("クラスが選択されていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return false;
+			}
+
+			if (MessageBox.Show("HDS 形式では現在開かれているクラスだけが保存されます。", "確認",
+				MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
+			{
+				return false;
+			}
+
+			FileStream fs;
+			try
+			{
+				fs = new FileStream(this.FullName, FileMode.Create);
+			}
+			catch
+			{
+				return false;
+			}
+			StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+			sw.NewLine = "\n";
+			XmlTextWriter xw = new XmlTextWriter(sw);
+			xw.Formatting = Formatting.Indented;
+			xw.WriteStartDocument();
+			xw.WriteStartElement("hds");
+			xw.WriteAttributeString("version" , "0.3.5");
+			foreach (TreeNode nn in n.Body.Nodes)
+			{
+				(nn as HAFuncNode).ToHds(xw);
+			}
+			xw.WriteEndElement();
+			xw.WriteEndDocument();
+			xw.Flush();
+			xw.Close();
+			fs.Close();
 			return true;
 		}
 	}

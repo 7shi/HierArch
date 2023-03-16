@@ -82,6 +82,11 @@
                     AssemblyName = "System.Xml"
                     HintPath = "..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
                 />
+                <Reference
+                    Name = "Girl"
+                    AssemblyName = "Girl"
+                    HintPath = "..\Girl\bin\Debug\Girl.dll"
+                />
             </References>
         </Build>
         <Files>
@@ -269,72 +274,6 @@
                 />
                 <File
                     RelPath = "Parser\ObjectParser.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <Folder RelPath = "Scripts\" />
-                <File
-                    RelPath = "Girl\ApplicationDataManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\CodeWriter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\DnDTreeView.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\DnDTreeView.resx"
-                    DependentUpon = "DnDTreeView.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Girl\Document.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\ExTreeView.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\ExTreeView.resx"
-                    DependentUpon = "ExTreeView.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Girl\InternalScrollBar.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\MouseWheelMessageFilter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\OpaqueSplitter.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\OpaqueSplitter.resx"
-                    DependentUpon = "OpaqueSplitter.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Girl\Win32API.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\WindowSize.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

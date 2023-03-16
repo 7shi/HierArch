@@ -328,6 +328,37 @@ namespace Girl.HierArch
 			}
 		}
 
+		public string Color
+		{
+			get
+			{
+				switch (this.Type)
+				{
+					case HAType.FolderBlue:
+					case HAType.FolderBule_Open:
+					case HAType.TextBlue:
+						return "blue";
+					case HAType.FolderBrown:
+					case HAType.FolderBrown_Open:
+					case HAType.TextBrown:
+						return "brown";
+					case HAType.FolderGray:
+					case HAType.FolderGray_Open:
+					case HAType.TextGray:
+						return "gray";
+					case HAType.FolderGreen:
+					case HAType.FolderGreen_Open:
+					case HAType.TextGreen:
+						return "green";
+					case HAType.FolderRed:
+					case HAType.FolderRed_Open:
+					case HAType.TextRed:
+						return "red";
+				}
+				return "";
+			}
+		}
+
 		public override object Clone()
 		{
 			HAFuncNode ret = base.Clone() as HAFuncNode;
@@ -410,6 +441,25 @@ namespace Girl.HierArch
 				if (!xr.IsEmptyElement && xr.Read()) this.Source = xr.ReadString();
 			}
 		} 
+
+		public void ToHds(XmlTextWriter xw)
+		{
+			xw.WriteStartElement("node");
+			xw.WriteAttributeString("title", this.Text);
+			if (this.m_IsExpanded) xw.WriteAttributeString("open", "true");
+			string c = this.Color;
+			if (c != "") xw.WriteAttributeString("icon", c);
+			xw.WriteStartElement("para");
+			xw.WriteString("\n" + this.Source.Replace("\r\n", "\n"));
+			xw.WriteEndElement();
+
+			foreach (TreeNode n in this.Nodes)
+			{
+				(n as HAFuncNode).ToHds(xw);
+			}
+
+			xw.WriteEndElement();
+		}
 
 		public void FromHds(XmlTextReader xr)
 		{

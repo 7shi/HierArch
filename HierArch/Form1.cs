@@ -245,7 +245,7 @@ namespace Girl.HierArch
 			// 
 			this.saveFileDialog1.DefaultExt = "haprj";
 			this.saveFileDialog1.FileName = "doc1";
-			this.saveFileDialog1.Filter = "HierArch プロジェクト (*.haprj)|*.haprj|すべてのファイル (*.*)|*.*";
+			this.saveFileDialog1.Filter = "HierArch プロジェクト (*.haprj)|*.haprj|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
 			// 
 			// view1
 			// 
