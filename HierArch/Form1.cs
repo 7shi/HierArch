@@ -18,6 +18,7 @@ namespace Girl.HierArch
 		public WindowSizeMonitor sizeMonitor;
 		private static ViewData viewData;
 		private static ArrayList forms = new ArrayList();
+		public static HAAccountManager AccountManager = new HAAccountManager();
 
 		private HADoc document = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
@@ -103,6 +104,9 @@ namespace Girl.HierArch
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
 		private Girl.Windows.Forms.LinkRichTextBox lrtOutput;
 		private System.Windows.Forms.MenuItem mnuViewOutput;
+		private System.Windows.Forms.MenuItem mnuProject;
+		private System.Windows.Forms.MenuItem mnuProjectUpload;
+		private System.Windows.Forms.MenuItem mnuProjectDownload;
 		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
 		public Form1()
@@ -239,6 +243,9 @@ namespace Girl.HierArch
 			this.mnuViewSeparator2 = new System.Windows.Forms.MenuItem();
 			this.mnuViewComment = new System.Windows.Forms.MenuItem();
 			this.mnuViewOutput = new System.Windows.Forms.MenuItem();
+			this.mnuProject = new System.Windows.Forms.MenuItem();
+			this.mnuProjectDownload = new System.Windows.Forms.MenuItem();
+			this.mnuProjectUpload = new System.Windows.Forms.MenuItem();
 			this.mnuCode = new System.Windows.Forms.MenuItem();
 			this.mnuBuildGenerate = new System.Windows.Forms.MenuItem();
 			this.mnuBuildBuild = new System.Windows.Forms.MenuItem();
@@ -405,6 +412,7 @@ namespace Girl.HierArch
 																					  this.mnuFile,
 																					  this.mnuEdit,
 																					  this.mnuView,
+																					  this.mnuProject,
 																					  this.mnuCode,
 																					  this.menuItem1,
 																					  this.mnuHelp});
@@ -617,9 +625,27 @@ namespace Girl.HierArch
 			this.mnuViewOutput.Text = "出力(&U)";
 			this.mnuViewOutput.Click += new System.EventHandler(this.mnuViewOutput_Click);
 			// 
+			// mnuProject
+			// 
+			this.mnuProject.Index = 3;
+			this.mnuProject.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					   this.mnuProjectDownload,
+																					   this.mnuProjectUpload});
+			this.mnuProject.Text = "プロジェクト(&P)";
+			// 
+			// mnuProjectDownload
+			// 
+			this.mnuProjectDownload.Index = 0;
+			this.mnuProjectDownload.Text = "ダウンロード(&D)";
+			// 
+			// mnuProjectUpload
+			// 
+			this.mnuProjectUpload.Index = 1;
+			this.mnuProjectUpload.Text = "アップロード(&U)";
+			// 
 			// mnuCode
 			// 
-			this.mnuCode.Index = 3;
+			this.mnuCode.Index = 4;
 			this.mnuCode.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					this.mnuBuildGenerate,
 																					this.mnuBuildBuild,
@@ -648,7 +674,7 @@ namespace Girl.HierArch
 			// 
 			// menuItem1
 			// 
-			this.menuItem1.Index = 4;
+			this.menuItem1.Index = 5;
 			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.mnuOptionSmartEnter,
 																					  this.mnuOptionSmartTab,
@@ -691,7 +717,7 @@ namespace Girl.HierArch
 			// 
 			// mnuHelp
 			// 
-			this.mnuHelp.Index = 5;
+			this.mnuHelp.Index = 6;
 			this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					this.mnuHelpHomePage,
 																					this.mnuHelpAbout});
@@ -820,6 +846,7 @@ namespace Girl.HierArch
 																		  this.tabControl1,
 																		  this.toolBar1,
 																		  this.statusBar1});
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Menu = this.mainMenu1;
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
@@ -842,6 +869,7 @@ namespace Girl.HierArch
 
 			ApplicationDataManager adm = new ApplicationDataManager();
 			Form1.viewData = ViewData.Load(adm);
+			Form1.AccountManager.Load(adm);
 
 			Form1 f;
 			if (args.GetLength(0) < 1)
@@ -861,6 +889,7 @@ namespace Girl.HierArch
 			Application.Run();
 
 			Form1.viewData.Save(adm);
+			Form1.AccountManager.Save(adm);
 		}
 
 		private static Form1 CreateForm()

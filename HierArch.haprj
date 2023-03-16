@@ -1,10 +1,10 @@
-<?xml version="1.0"?>
-<HAProject version="0.1.1114.31272">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAProject version="0.1.1122.2552">
   <HAViewInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <X>1315</X>
-    <Y>25</Y>
-    <Width>873</Width>
-    <Height>630</Height>
+    <X>1625</X>
+    <Y>11</Y>
+    <Width>981</Width>
+    <Height>736</Height>
     <State>Normal</State>
     <ShowClass>true</ShowClass>
     <ShowFunc>true</ShowFunc>
@@ -12,12 +12,12 @@
     <ShowMember>true</ShowMember>
     <ShowArg>true</ShowArg>
     <ShowObject>true</ShowObject>
-    <LeftPanelWidth>216</LeftPanelWidth>
+    <LeftPanelWidth>235</LeftPanelWidth>
     <ClassHeight>184</ClassHeight>
     <CommentHeight>111</CommentHeight>
     <RightPanelWidth>176</RightPanelWidth>
     <MemberHeight>160</MemberHeight>
-    <ObjectHeight>262</ObjectHeight>
+    <ObjectHeight>360</ObjectHeight>
   </HAViewInfo>
   <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="false" AllowDrag="true">
     <Header>
@@ -121,7 +121,7 @@ XmlDocViewerとの統合とリフレクション
       <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="false" AllowDrag="true" />
       <HAObject Type="Public" Text="ViewInfo:HAViewInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" />
       <Header>
-        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="229" SelectionLength="0">using System;
@@ -166,12 +166,12 @@ if (p &lt; 0) return ret;
 return ret.Substring(0, p);
 </Source>
           </HAFunc>
-          <HAFunc Type="Public" Text="Open:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true">
+          <HAFunc Type="Public" Text="Open:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
             <Arguments />
             <HAObject Type="Private" Text="xr:XmlTextReader" IsExpanded="false" IsSelected="true" AllowDrag="true" />
             <HAObject Type="Private" Text="n:HAClassNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="1075" SelectionLength="0">try
+            <Source SelectionStart="92" SelectionLength="0">try
 {
 	xr = new XmlTextReader(this.FullName);
 }
@@ -459,7 +459,7 @@ return icc.CompileAssemblyFromFile(parameters, source);
         </HAObject>
       </HAObject>
       <Header>
-        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="64" SelectionLength="0">using System;
@@ -511,7 +511,7 @@ this.ShowClass = this.ShowComment
 	= false;
 </Source>
           </HAFunc>
-          <HAFunc Type="Public" Text="Apply" IsExpanded="false" IsSelected="true" AllowDrag="true">
+          <HAFunc Type="Public" Text="Apply" IsExpanded="false" IsSelected="false" AllowDrag="true">
             <Arguments>
               <HAObject Type="Private" Text="form1:Form1" IsExpanded="false" IsSelected="true" AllowDrag="true" />
             </Arguments>
@@ -575,6 +575,117 @@ this.CommentHeight   = form1.view1.txtComment.Height;
 this.RightPanelWidth = form1.view1.panel3    .Width ;
 this.MemberHeight    = form1.view1.tabMember .Height;
 this.ObjectHeight    = form1.view1.tabObject .Height;
+</Source>
+          </HAFunc>
+        </HAFunc>
+      </Body>
+      <Footer>
+        <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="0" />
+        </HAFunc>
+      </Footer>
+    </HAClass>
+    <HAClass Type="Public" Text="HAAccountManager" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <HAObject Type="Private" Text="accounts:HAAccount[]" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+      <Header>
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="152" SelectionLength="0">using System;
+using Girl.Windows.Forms;
+
+namespace Girl.HierArch
+{
+	public class HAAccount
+	{
+		public string Server = "", Id = "", Password = "";
+	}
+}
+</Source>
+        </HAFunc>
+      </Header>
+      <Body>
+        <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="38" SelectionLength="0">&lt;summary&gt;
+サーバのアカウントを管理します。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="0" SelectionLength="0" />
+          <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="34" SelectionLength="0">this.accounts = new HAAccount[0];
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Get:HAAccount" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="76" SelectionLength="0">int num = this.Find(server);
+return (num &gt;= 0) ? this.accounts[num] : null;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Set" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="id:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="password:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="104" SelectionLength="0">int num = this.Find(server);
+if (num &lt; 0)
+{
+	int len = this.accounts.Length;
+	HAAccount[] acs = new HAAccount[len + 1];
+	for (int i = 0; i &lt; len; i++)
+	{
+		acs[i] = this.accounts[i];
+	}
+	acs[len] = new HAAccount();
+	this.accounts = acs;
+	num = len;
+}
+this.accounts[num].Server   = server;
+this.accounts[num].Id       = id;
+this.accounts[num].Password = password;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Find:int" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="25" SelectionLength="0">int i = 0;
+foreach (HAAccount ac in this.accounts)
+{
+	if (ac.Server == server) return i;
+	i++;
+}
+return -1;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Load" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="adm:ApplicationDataManager" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="5" SelectionLength="0">HAAccount[] acs = adm.Load("Accounts.xml", typeof(HAAccount[])) as HAAccount[];
+this.accounts = (acs != null) ? acs : new HAAccount[0];
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Save" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="adm:ApplicationDataManager" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="41" SelectionLength="0">adm.Save("Accounts.xml", this.accounts);
 </Source>
           </HAFunc>
         </HAFunc>
@@ -1227,11 +1338,12 @@ foreach (TreeNode n in this.Nodes)
           </HAFunc>
         </Footer>
       </HAClass>
-      <HAClass Type="Public" Text="HAClassNode:HATreeNode" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <HAClass Type="Public" Text="HAClassNode:HATreeNode" IsExpanded="false" IsSelected="false" AllowDrag="true">
         <HAObject Type="Public" Text="Members:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Public" Text="Header:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Public" Text="Body:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Public" Text="Footer:HAFuncNode" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <HAObject Type="Public" Text="Footer:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="Server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
         <Header>
           <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
             <Arguments />
@@ -1260,12 +1372,13 @@ using Girl.Windows.Forms;
             <HAFunc Type="Public" Text="Init:override" IsExpanded="false" IsSelected="true" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="145" SelectionLength="0">base.Init();
+              <Source SelectionStart="164" SelectionLength="0">base.Init();
 
 this.Members = new ArrayList();
 this.Header  = new HAFuncNode();
 this.Body    = new HAFuncNode();
 this.Footer  = new HAFuncNode();
+this.Server  = "";
 </Source>
             </HAFunc>
             <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">

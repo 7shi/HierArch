@@ -1,5 +1,3 @@
-// このファイルは LinkRichTextBox.hacls から生成されています。
-
 using System;
 using System.Collections;
 using System.Drawing;

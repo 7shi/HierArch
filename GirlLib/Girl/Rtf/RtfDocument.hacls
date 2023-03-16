@@ -1,0 +1,692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="RtfDocument:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+  <HAObject Type="Private" Text="fontTable:RtfFontTable" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+  <HAObject Type="Private" Text="colorTable:RtfColorTable" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+  <HAObject Type="Private" Text="document:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="295" SelectionLength="0">using System;
+using System.Collections;
+using System.Drawing;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using Girl.Text;
+
+namespace Girl.Rtf
+{
+	public struct RtfContext
+	{
+		public int Font, FontSize, Color;
+		public bool Bold, Italic, Underline;
+	
+		public void Read(RtfObject ro)
+		{
+			switch (ro.Name)
+			{
+				case "\\b":
+					this.Bold = true;
+					return;
+				case "\\b0":
+					this.Bold = false;
+					return;
+				case "\\i":
+					this.Italic = true;
+					return;
+				case "\\i0":
+					this.Italic = false;
+					return;
+				case "\\ul":
+					this.Underline = true;
+					return;
+				case "\\ulnone":
+					this.Underline = false;
+					return;
+			}
+			
+			if (ro.Name.StartsWith("\\fs"))
+			{
+				this.FontSize = ro.Value;
+			}
+			else if (ro.Name.StartsWith("\\f"))
+			{
+				this.Font = ro.Value;
+			}
+			else if (ro.Name.StartsWith("\\cf"))
+			{
+				this.Color = ro.Value;
+			}
+		}
+	}
+}
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="39" SelectionLength="0">&lt;summary&gt;
+RTF の要素を保持します。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="35" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="118" SelectionLength="0">this.fontTable   = new RtfFontTable();
+this.colorTable  = new RtfColorTable();
+this.document    = new ArrayList();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="Properties" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="get_FontTable:RtfFontTable" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="24" SelectionLength="0">return this.fontTable;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_ColorTable:RtfColorTable" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="25" SelectionLength="0">return this.colorTable;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_Document:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="23" SelectionLength="0">return this.document;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_LastContext:RtfContext" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <HAObject Type="Private" Text="ret:RtfContext" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="113" SelectionLength="0">ret = new RtfContext();
+foreach (object obj in this.document)
+{
+	ret.Read(obj as RtfObject);
+}
+return ret;
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Parse:static RtfDocument" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="rtf:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <HAObject Type="Private" Text="ret:RtfDocument" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <HAObject Type="Private" Text="sr:StringReader" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="ch1:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="ch:char" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="177" SelectionLength="0">ret = new RtfDocument();
+sr = new StringReader(rtf);
+while ((ch1 = sr.Read()) &gt;= 0)
+{
+	ch = (char)ch1;
+	if (ch == '{')
+	{
+		ret.Parse(sr);
+		break;
+	}
+}
+return ret;
+</Source>
+        <HAFunc Type="Protected" Text="AddRtfObject:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="314" SelectionLength="0">if (ro.Name == "\\fonttbl")
+{
+	this.fontTable.SetObject(ro);
+}
+else if (ro.Name == "\\colortbl")
+{
+	this.colorTable.SetObject(ro);
+}
+else if (this.document.Count &gt; 0
+	|| ro.Name.StartsWith("\\viewkind")
+	|| ro.Name.StartsWith("\\uc"))
+{
+	this.document.Add(ro);
+}
+else
+{
+	base.AddRtfObject(ro);
+}
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Parse:static RtfDocument" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="node:TreeNode" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <HAObject Type="Private" Text="ret:RtfDocument" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="61" SelectionLength="0">ret = new RtfDocument();
+ret.ParseNode(node);
+return ret;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="ToRtf:string" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <Arguments />
+        <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="70" SelectionLength="0">sb = new StringBuilder();
+this.GenerateRtf(sb);
+return sb.ToString();
+</Source>
+        <HAFunc Type="Protected" Text="GenerateRtfChild:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <HAObject Type="Private" Text="prev:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="279" SelectionLength="0">base.GenerateRtfChild(sb);
+
+this.fontTable .GenerateRtf(sb);
+this.colorTable.GenerateRtf(sb);
+
+if (this.document.Count &lt; 1)
+{
+	sb.Append(' ');
+}
+prev = null;
+foreach (object obj in this.document)
+{
+	ro = obj as RtfObject;
+	if (sb.Length &gt; 0 &amp;&amp; sb[sb.Length - 1] != '\n'
+		&amp;&amp; !ro.Name.StartsWith("\\")
+		&amp;&amp; (prev == null || !prev.IsText))
+	{
+		sb.Append(' ');
+	}
+	ro.GenerateRtf(sb);
+	prev = ro;
+}
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="ToString:override string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <HAObject Type="Private" Text="ret:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="rc:RtfContext" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="rf:RtfFont" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="360" SelectionLength="0">ret = new StringBuilder();
+rc = new RtfContext();
+foreach (object obj in this.document)
+{
+	ro = obj as RtfObject;
+	rc.Read(ro);
+	if (ro.IsText)
+	{
+		rf = this.fontTable.Fonts[rc.Font];
+		ret.Append(ro.GetText(
+			CharSetEncoding.GetEncoding(rf.CharSet)));
+	}
+	else if (ro.Name == "\\par")
+	{
+		ret.Append("\r\n");
+	}
+}
+return ret.ToString();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Protected" Text="DisplayTreeViewChild:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="treeView:TreeView" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="node:TreeNode" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="97" SelectionLength="0">base.DisplayTreeViewChild(treeView, node);
+
+this. fontTable.DisplayTreeView(treeView, node);
+this.colorTable.DisplayTreeView(treeView, node);
+
+foreach (object obj in this.document)
+{
+	(obj as RtfObject).DisplayTreeView(treeView, node);
+}
+</Source>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="Font" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="set_Font:Font" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="58" SelectionLength="0">this.FontName = value.Name;
+this.FontSize = value.Size;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_FontName:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <HAObject Type="Private" Text="fn:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="v:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="217" SelectionLength="0">fn = "";
+foreach (object obj in this.document)
+{
+	ro = obj as RtfObject;
+	if (ro.IsFontNumber)
+	{
+		v = this.fontTable.Fonts[ro.Value].Name;
+		if (fn != "" &amp;&amp; fn != v) return "";
+		fn = v;
+	}
+}
+return fn;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="set_FontName:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <HAObject Type="Private" Text="ros:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="rf:RtfFont" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="272" SelectionLength="0">ros = new ArrayList();
+foreach (object obj in this.document)
+{
+	ro = obj as RtfObject;
+	if (ro.IsFontNumber)
+	{
+		rf = new RtfFont(value);
+		ro = new RtfObject(string.Format(
+			"\\f{0}", this.fontTable.GetIndex(rf)));
+	}
+	ros.Add(ro);
+}
+this.document = ros;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_FontSize:float" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <HAObject Type="Private" Text="ret:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="v:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="215" SelectionLength="0">ret = 0;
+foreach (object obj in this.document)
+{
+	ro = obj as RtfObject;
+	if (ro.Name.StartsWith("\\fs"))
+	{
+		v = ro.Value;
+		if (ret &gt; 0 &amp;&amp; ret != v) return 0;
+		ret = v;
+	}
+}
+return ((float)ret) / 2;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="set_FontSize:float" IsExpanded="true" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <HAObject Type="Private" Text="len:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="257" SelectionLength="0">this.RemoveFontSize();
+
+len = this.document.Count;
+for (int i = 0; i &lt; len; i++)
+{
+	ro = this.document[i] as RtfObject;
+	if (ro.IsText)
+	{
+		this.document.Insert(i, new RtfObject(
+			string.Format("\\fs{0}", (int)(value * 2))));
+		return;
+	}
+}
+</Source>
+          <HAFunc Type="Public" Text="RemoveFontSize" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <HAObject Type="Private" Text="ros:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="0" SelectionLength="178">ros = new ArrayList();
+foreach (object obj in this.document)
+{
+	ro = obj as RtfObject;
+	if (ro.Name.StartsWith("\\fs")) continue;
+	
+	ros.Add(ro);
+}
+this.document = ros;
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="set_CurrentFont:Font" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="48" SelectionLength="0">this.CurrentFontName = value.Name;
+this.CurrentFontSize = value.Size;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_CurrentFontName:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="58" SelectionLength="0">return this.fontTable.Fonts[this.LastContext.Font].Name;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="set_CurrentFontName:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="92" SelectionLength="0">this.AddDocument(string.Format(
+	"\\f{0}", this.fontTable.GetIndex(new RtfFont(value))));
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_CurrentFontSize:float" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="48" SelectionLength="0">return ((float)this.LastContext.FontSize) / 2;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="set_CurrentFontSize:float" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="63">this.AddDocument(string.Format("\\fs{0}", (int)(value * 2)));
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="Style" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="ExistsInDocument:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="target:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="116" SelectionLength="0">foreach (object obj in this.document)
+{
+	if ((obj as RtfObject).Exists(target)) return true;
+}
+
+return false;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="RemoveFromDocument" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="target:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <HAObject Type="Private" Text="ros:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="190" SelectionLength="0">ros = new ArrayList();
+foreach (object obj in this.document)
+{
+	ro = obj as RtfObject;
+	if (ro.Name == target) continue;
+	
+	ros.Add(ro);
+	ro.Remove(target);
+}
+this.document = ros;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_IsBold:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="38" SelectionLength="0">return this.ExistsInDocument("\\b");
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_IsItalic:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="38" SelectionLength="0">return this.ExistsInDocument("\\i");
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_IsUnderline:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="39" SelectionLength="0">return this.ExistsInDocument("\\ul");
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="set_IsBold:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="101" SelectionLength="0">this.RemoveFromDocument("\\b");
+this.RemoveFromDocument("\\b0");
+if (value) this.AddStyle("\\b");
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="set_IsItalic:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="96" SelectionLength="0">this.RemoveFromDocument("\\i");
+this.RemoveFromDocument("\\i0");
+if (value) this.AddStyle("\\i");
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="set_IsUnderline:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="107" SelectionLength="0">this.RemoveFromDocument("\\ul");
+this.RemoveFromDocument("\\ulnone");
+if (value) this.AddStyle("\\ul");
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="AddStyle" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="style:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <HAObject Type="Private" Text="len:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="218" SelectionLength="0">len = this.document.Count;
+for (int i = 0; i &lt; len; i++)
+{
+	ro = this.document[i] as RtfObject;
+	if (ro.Name.StartsWith("\\f") || ro.IsText)
+	{
+		this.document.Insert(i, new RtfObject(style));
+		return;
+	}
+}
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="Text Manipulation" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="SetDocument" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="343" SelectionLength="0">if (this.name == "") this.name = "\\rtf1";
+if (this.rtfObjects.Count &lt; 1)
+{
+	this.AddRtfObject(new RtfObject("\\ansi"));
+	this.AddRtfObject(new RtfObject("\\deff0"));
+}
+if (this.document.Count &lt; 1)
+{
+	// 無限ループになるので this.AddDocument() は使わない
+	this.document.Add(new RtfObject("\\uc1"));
+	this.document.Add(new RtfObject("\\pard"));
+}
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="AddDocument" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="62" SelectionLength="0">this.SetDocument();
+this.document.Add(new RtfObject(name));
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="AppendText" IsExpanded="true" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="prev:char" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="461" SelectionLength="0">if (text.Length &lt; 1) return;
+
+sb = new StringBuilder();
+prev = '\0';
+foreach (char ch in text)
+{
+	if (ch == '\r' || (prev != '\r' &amp;&amp; ch == '\n'))
+	{
+		if (sb.Length &gt; 0)
+		{
+			this.AddDocument(
+				RtfObject.ConvertText(sb.ToString()));
+			sb.Remove(0, sb.Length);
+		}
+		this.AppendLine();
+	}
+	else if (ch != '\n')
+	{
+		sb.Append(ch);		
+	}
+	prev = ch;
+}
+if (sb.Length &gt; 0)
+{
+	this.AddDocument(RtfObject.ConvertText(sb.ToString()));
+}
+</Source>
+          <HAFunc Type="Public" Text="AppendText" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <HAObject Type="Private" Text="c:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="32" SelectionLength="0">if (text.Length &lt; 1) return;
+
+c = this.colorTable.GetIndex(color);
+if (c != 0) this.AddDocument(string.Format("\\cf{0}", c));
+this.AppendText(text);
+if (c != 0) this.AddDocument("\\cf0");
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="AppendText" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="32" SelectionLength="0">if (text.Length &lt; 1) return;
+
+if ((fontStyle &amp; FontStyle.Bold) == FontStyle.Bold)
+{
+	this.AddDocument("\\b");
+}
+if ((fontStyle &amp; FontStyle.Italic) == FontStyle.Italic)
+{
+	this.AddDocument("\\i");
+}
+if ((fontStyle &amp; FontStyle.Underline) == FontStyle.Underline)
+{
+	this.AddDocument("\\ul");
+}
+
+this.AppendText(text);
+
+if ((fontStyle &amp; FontStyle.Underline) == FontStyle.Underline)
+{
+	this.AddDocument("\\ulnone");
+}
+if ((fontStyle &amp; FontStyle.Italic) == FontStyle.Italic)
+{
+	this.AddDocument("\\i0");
+}
+if ((fontStyle &amp; FontStyle.Bold) == FontStyle.Bold)
+{
+	this.AddDocument("\\b0");
+}
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="AppendText" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            </Arguments>
+            <HAObject Type="Private" Text="c:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="32" SelectionLength="0">if (text.Length &lt; 1) return;
+
+c = this.colorTable.GetIndex(color);
+if (c != 0) this.AddDocument(string.Format("\\cf{0}", c));
+this.AppendText(text, fontStyle);
+if (c != 0) this.AddDocument("\\cf0");
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="AppendLine" IsExpanded="true" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="28" SelectionLength="0">this.AddDocument("\\par");
+</Source>
+          <HAFunc Type="Public" Text="AppendLine" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="44" SelectionLength="0">this.AppendText(text);
+this.AppendLine();
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="AppendLine" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="51" SelectionLength="0">this.AppendText(text, color);
+this.AppendLine();
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="AppendLine" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="55" SelectionLength="0">this.AppendText(text, fontStyle);
+this.AppendLine();
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="AppendLine" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="62" SelectionLength="0">this.AppendText(text, color, fontStyle);
+this.AppendLine();
+</Source>
+          </HAFunc>
+        </HAFunc>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

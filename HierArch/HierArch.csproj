@@ -126,6 +126,11 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "HAAccountManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "HADoc.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

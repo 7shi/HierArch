@@ -3,8 +3,7 @@
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
       <Arguments />
-      <Comment SelectionStart="39" SelectionLength="0">このファイルは FontComboBox.hacls から生成されています。
-</Comment>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="0" SelectionLength="0">using System;
 using System.Collections;
 using System.Drawing;

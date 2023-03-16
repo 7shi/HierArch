@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="ASTMethod:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+  <HAObject Type="Public" Text="Access:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="39" SelectionLength="0">&lt;summary&gt;
+抽象構文木でのメソッドを表します。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0" />
+      </HAFunc>
+      <HAFunc Type="Public" Text="ParseDeclaration" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="118" SelectionLength="0">this.Access = parser.Access;
+
+while (parser.Read())
+{
+	if (parser.Text == "{")
+	{
+		this.Parse(parser);
+		break;
+	}
+}
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Parse" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="47" SelectionLength="0">int level = 0;
+string text;
+bool first = true;
+
+while (parser.Read())
+{
+	if (first)
+	{
+		this.Pos = parser.Pos;
+		first = false;
+	}
+	text = parser.Text;
+	
+	if (text == "{")
+	{
+		level++;
+	}
+	else if (text == "}")
+	{
+		level--;
+		if (level &lt; 0) break;
+	}
+}
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

@@ -1,5 +1,3 @@
-// このファイルは ContextManager.hacls から生成されています。
-
 using System;
 using System.Collections;
 using System.Windows.Forms;

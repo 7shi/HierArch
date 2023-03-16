@@ -3,8 +3,7 @@
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
       <Arguments />
-      <Comment SelectionStart="38" SelectionLength="0">このファイルは TextBoxPlus.hacls から生成されています。
-</Comment>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="42" SelectionLength="0">using System;
 using System.Windows.Forms;
 </Source>

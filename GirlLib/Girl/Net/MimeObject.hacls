@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="MimeObject" IsExpanded="false" IsSelected="true" AllowDrag="true">
+  <HAObject Type="Private" Text="contentType:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+  <HAObject Type="Private" Text="location:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+  <HAObject Type="Private" Text="data:byte[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="162" SelectionLength="0">using System;
+using System.Collections;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
+using Girl.Xml;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="44" SelectionLength="0">&lt;summary&gt;
+MIME に格納されるファイルを処理します。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Private" Text="Init" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="13" SelectionLength="0">this.contentType = null;
+this.location = null;
+this.data = null;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="true" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="13" SelectionLength="0">this.Init();
+</Source>
+        <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="url:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="16" SelectionLength="0">this.Read(url);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="url:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="25" SelectionLength="0">this.Read(url, textBox);
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="Properties" IsExpanded="true" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="get_ContentType:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="13" SelectionLength="0">return this.contentType;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_Location:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="22" SelectionLength="0">return this.location;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_Data:byte[]" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="18" SelectionLength="0">return this.data;
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Read:bool" IsExpanded="true" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="url:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <HAObject Type="Private" Text="b:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="443" SelectionLength="0">this.Init();
+if (textBox != null)
+{
+	this.AppendText(textBox, url + "\r\n");
+	this.AppendText(textBox, "サーバに接続しています...\r\n");
+}
+
+this.location = url;
+HttpWebRequest req = null;
+for (int i = 0; req == null &amp;&amp; i &lt; 3; i++)
+{
+	try
+	{
+		req = WebRequest.Create(url) as HttpWebRequest;
+	}
+	catch
+	{
+		req = null;
+		this.AppendText(textBox, "再試行しています。\r\n");
+		Thread.Sleep(1000);
+	}
+}
+if (req == null)
+{
+	this.AppendText(textBox, "接続に失敗しました。\r\n");
+	return false;
+}
+
+HttpWebResponse res = req.GetResponse() as HttpWebResponse;
+if (res == null) return false;
+
+if (textBox != null)
+{
+	this.AppendText(textBox, "データを読み取っています...\r\n");
+}
+this.contentType = res.ContentType;
+Stream str = res.GetResponseStream();
+MemoryStream ms = new MemoryStream();
+while ((b = str.ReadByte()) != -1)
+{
+	ms.WriteByte((byte)b);
+}
+ms.Close();
+str.Close();
+res.Close();
+
+this.data = ms.ToArray();
+if (textBox != null)
+{
+	this.AppendText(textBox, "完了しました。\r\n");
+}
+return true;
+</Source>
+        <HAFunc Type="Public" Text="Read:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="url:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="29" SelectionLength="0">return this.Read(url, null);
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Write" IsExpanded="true" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="46" SelectionLength="0">if (this.contentType == null || !this.contentType.StartsWith("text/"))
+{
+	this.WriteBinary(textWriter);
+}
+else
+{
+	this.WriteText(textWriter);
+}
+</Source>
+        <HAFunc Type="Private" Text="WriteBinary" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="387" SelectionLength="0">textWriter.WriteLine("Content-Type: " + this.contentType);
+textWriter.WriteLine("Content-Transfer-Encoding: base64");
+textWriter.WriteLine("Content-Location: " + this.location);
+textWriter.WriteLine();
+
+int len = this.data.Length;
+for (int p = 0; p &lt; len; p += 57)
+{
+	int len2 = len - p;
+	if (len2 &gt; 57) len2 = 57;
+	textWriter.WriteLine(Convert.ToBase64String(
+		this.data, p, len2));
+}
+</Source>
+        </HAFunc>
+        <HAFunc Type="Private" Text="WriteText" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="53" SelectionLength="0">textWriter.WriteLine("Content-Type: " + this.contentType);
+textWriter.WriteLine("Content-Transfer-Encoding: quoted-printable");
+textWriter.WriteLine("Content-Location: " + this.location);
+textWriter.WriteLine();
+
+char ch = '\0', prev;
+foreach (byte b in this.data)
+{
+	prev = ch;
+	ch = (char)b;
+	if (ch == '\r')
+	{
+		textWriter.WriteLine();
+	}
+	else if (ch == '\n')
+	{
+		if (prev != '\r') textWriter.WriteLine();
+	}
+	else if (ch == '=')
+	{
+		textWriter.Write("=3D");
+	}
+	else if (ch &gt; 127)
+	{
+		textWriter.Write("={0:X2}", b);
+	}
+	else
+	{
+		textWriter.Write(ch);
+	}
+}
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="ParseHtml:ArrayList" IsExpanded="true" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <HAObject Type="Private" Text="ret:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="481" SelectionLength="0">ret = new ArrayList();
+
+MemoryStream ms = new MemoryStream(this.data, false);
+XmlParser xp = new XmlParser(ms);
+xp.dec = Encoding.GetEncoding("windows-1250").GetDecoder();
+while (xp.Read())
+{
+	target = null;
+	if (xp.Name == "img" &amp;&amp; xp.Attributes.Contains("src"))
+	{
+		target = xp.Attributes["src"];
+	}
+	else if (xp.Name == "link" &amp;&amp; xp.Attributes.Contains("href"))
+	{
+		target = xp.Attributes["href"];
+	}
+	if (target != null)
+	{
+		this.AddObject(ret, target.ToString(), textBox);
+	}
+}
+xp.Close();
+ms.Close();
+
+return ret;
+</Source>
+        <HAFunc Type="Public" Text="ParseHtml:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="29" SelectionLength="0">return this.ParseHtml(null);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Private" Text="AddObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments>
+            <HAObject Type="Private" Text="arrayList:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="url:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          </Arguments>
+          <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="url2:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="target:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="189" SelectionLength="0">sb = new StringBuilder();
+foreach (char ch in url)
+{
+	if (ch != '\r' &amp;&amp; ch != '\n') sb.Append(ch);
+}
+url2 = sb.ToString();
+foreach (object obj in arrayList)
+{
+	if ((obj as __CLASS).location == url2) return;
+}
+
+if (!url2.StartsWith("http://"))
+{
+	target = new Uri(new Uri(this.location), url2).AbsoluteUri;
+}
+else
+{
+	target = url2;
+}
+
+__CLASS mo = new __CLASS(target, textBox);
+if (mo.data == null) return;
+
+arrayList.Add(mo);
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="AppendText" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="121" SelectionLength="0">textBox.AppendText(text);
+if (textBox is RichTextBox)
+{
+	textBox.Focus();
+	textBox.ScrollToCaret();
+}
+textBox.Refresh();
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

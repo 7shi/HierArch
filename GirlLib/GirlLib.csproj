@@ -187,6 +187,16 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Girl\Net\MimeDocument.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Net\MimeObject.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Girl\Rtf\RtfColorTable.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -283,6 +293,11 @@
                 />
                 <File
                     RelPath = "Girl\Windows\Forms\TextBoxPlus.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Xml\XmlParser.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

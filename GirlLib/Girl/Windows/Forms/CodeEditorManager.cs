@@ -1,5 +1,3 @@
-// このファイルは CodeEditorManager.hacls から生成されています。
-
 using System;
 using System.Collections;
 using System.IO;

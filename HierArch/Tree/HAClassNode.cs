@@ -23,6 +23,7 @@ namespace Girl.HierArch
 		public HAFuncNode Header;
 		public HAFuncNode Body;
 		public HAFuncNode Footer;
+		public string Server;
 
 		public override void Init()
 		{
@@ -32,6 +33,7 @@ namespace Girl.HierArch
 			this.Header  = new HAFuncNode();
 			this.Body    = new HAFuncNode();
 			this.Footer  = new HAFuncNode();
+			this.Server  = "";
 		}
 
 		/// <summary>

@@ -15,9 +15,8 @@ namespace Girl.HierArch
 
 		public static ViewData Load(ApplicationDataManager adm)
 		{
-			ViewData ret = (ViewData)adm.Load("View.xml", typeof(ViewData));
-			if(ret == null) ret = new ViewData();
-			return ret;
+			ViewData ret = adm.Load("View.xml", typeof(ViewData)) as ViewData;
+			return (ret != null) ? ret : new ViewData();
 		}
 
 		public void Save(ApplicationDataManager adm)

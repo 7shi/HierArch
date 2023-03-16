@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="ASTObject" IsExpanded="true" IsSelected="false" AllowDrag="true">
+  <HAObject Type="Public" Text="Name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+  <HAObject Type="Public" Text="Pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+  <HAObject Type="Public" Text="DeclarationPos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+  <HAObject Type="Protected" Text="objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="40" SelectionLength="0">using System;
+using System.Collections;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="10" SelectionLength="0">&lt;summary&gt;
+抽象構文木の要素を表します。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="28" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="84" SelectionLength="0">this.Name = "";
+this.Pos = this.DeclarationPos = 0;
+this.objects = new ArrayList();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="21" SelectionLength="0">return this.objects;
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+  <HAClass Link="ASTNamespace.hacls" />
+  <HAClass Link="ASTClass.hacls" />
+  <HAClass Link="ASTMethod.hacls" />
+  <HAClass Link="ASTRegion.hacls" />
+</HAClass>

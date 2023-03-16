@@ -1,5 +1,3 @@
-// このファイルは Text.hacls から生成されています。
-
 using System;
 using System.Text;
 

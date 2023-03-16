@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="ASTRegion:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+抽象構文木でのリージョンを表します。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="region:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="188" SelectionLength="0">int p = 8, len = region.Length;
+for (; p &lt; len; p++)
+{
+	char ch = region[p];
+	if (ch != ' ' &amp;&amp; ch != '\t') break;
+}
+this.Name = region.Substring(p);
+
+this.Pos = this.DeclarationPos = pos;
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

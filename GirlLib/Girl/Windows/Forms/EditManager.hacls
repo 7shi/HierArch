@@ -6,9 +6,7 @@
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
       <Arguments />
-      <Comment SelectionStart="93" SelectionLength="0">このファイルは EditManager.hacls から生成されています。
-
-このクラスは[STAThread]でのみ正常動作します。
+      <Comment SelectionStart="0" SelectionLength="0">このクラスは[STAThread]でのみ正常動作します。
 [MTAThread]では使用しないでください。
 </Comment>
       <Source SelectionStart="194" SelectionLength="0">using System;

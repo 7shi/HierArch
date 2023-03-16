@@ -1,5 +1,3 @@
-// このファイルは TextBoxPlus.hacls から生成されています。
-
 using System;
 using System.Windows.Forms;
 

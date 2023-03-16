@@ -1,5 +1,3 @@
-// このファイルは Rtf.hacls から生成されています。
-
 using System;
 using System.Drawing;
 using System.Text;
