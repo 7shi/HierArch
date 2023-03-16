@@ -359,7 +359,7 @@
                 />
                 <File
                     RelPath = "Tree\HATree.cs"
-                    SubType = "Component"
+                    SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File

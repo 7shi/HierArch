@@ -1,3 +1,6 @@
+// このファイルは ..\..\..\Girl.haprj から自動生成されています。
+// 編集は必ずそちらを通すようにして、直接書き換えないでください。
+
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -10,17 +13,22 @@ namespace Girl.Windows.Forms
 	/// </summary>
 	public class ApplicationDataManager
 	{
+		private string dataPath;
+
+		/// <summary>
+		/// コンストラクタです。
+		/// </summary>
 		public ApplicationDataManager()
 		{
+			this.dataPath = null;
 		}
 
-		private string m_sDataPath = null;
 		public string DataPath
 		{
 			get
 			{
-				if(m_sDataPath != null) return m_sDataPath;
-
+				if(this.dataPath != null) return this.dataPath;
+				
 				string path = Application.LocalUserAppDataPath;
 				string ret = Directory.GetParent(path).FullName;
 				try
@@ -30,13 +38,13 @@ namespace Girl.Windows.Forms
 				catch
 				{
 				}
-				m_sDataPath = ret;
+				this.dataPath = ret;
 				return ret;
 			}
 
 			set
 			{
-				m_sDataPath = value;
+				this.dataPath = value;
 			}
 		}
 
@@ -44,12 +52,14 @@ namespace Girl.Windows.Forms
 		{
 			object ret = null;
 			XmlSerializer xs = new XmlSerializer(dataType);
+			string path = this.DataPath;
+			if (!path.EndsWith("\\")) path += "\\";
 			FileStream fs;
 			try
 			{
-				fs = new FileStream(DataPath + "\\" + fileName, FileMode.Open);
+				fs = new FileStream(path + fileName, FileMode.Open);
 			}
-			catch(FileNotFoundException)
+			catch
 			{
 				return ret;
 			}

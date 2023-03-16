@@ -87,27 +87,12 @@
         <Files>
             <Include>
                 <File
-                    RelPath = "ApplicationDataManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "CodeEditorManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "CodeWriter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "ContextManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -120,16 +105,6 @@
                     RelPath = "DnDTreeView.resx"
                     DependentUpon = "DnDTreeView.cs"
                     BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Document.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "EditManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "ExTreeView.cs"
@@ -152,19 +127,14 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "OpaqueSplitter.cs"
-                    SubType = "Component"
+                    RelPath = "RichTextToolBar.cs"
+                    SubType = "UserControl"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "OpaqueSplitter.resx"
-                    DependentUpon = "OpaqueSplitter.cs"
+                    RelPath = "RichTextToolBar.resx"
+                    DependentUpon = "RichTextToolBar.cs"
                     BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "TextBoxPlus.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Win32API.cs"
@@ -173,6 +143,116 @@
                 />
                 <File
                     RelPath = "WindowSize.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Coding\CParserBase.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Coding\CSharpParser.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Coding\ParserBase.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Rtf\RtfColorTable.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Rtf\RtfDocument.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Rtf\RtfFont.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Rtf\RtfFontTable.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Rtf\RtfObject.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Text\CharSetEncoding.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\ApplicationDataManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\CodeEditor.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\CodeEditor.resx"
+                    DependentUpon = "CodeEditor.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Windows\Forms\CodeEditorManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\ContextManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\Document.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\EditManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\ExComboBox.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\ExRichTextBox.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\FontComboBox.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\LinkRichTextBox.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\OpaqueSplitter.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Forms\TextBoxPlus.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

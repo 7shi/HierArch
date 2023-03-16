@@ -1,4 +1,4 @@
-// このファイルは ..\Girl.haprj から自動生成されています。
+// このファイルは ..\..\..\Girl.haprj から自動生成されています。
 // 編集は必ずそちらを通すようにして、直接書き換えないでください。
 
 using System;
@@ -72,17 +72,6 @@ namespace Girl.Windows.Forms
 		{
 			if (line < textBox.Lines.Length) return textBox.Lines[line];
 			return "";
-		}
-
-		public static void InsertText(TextBoxBase textBox, string text)
-		{
-			RichTextBox rtb = textBox as RichTextBox;
-			if (rtb != null)
-			{
-				rtb.SelectionColor = rtb.ForeColor;
-				rtb.SelectionFont  = rtb.Font;
-			}
-			textBox.SelectedText = text;
 		}
 	}
 }

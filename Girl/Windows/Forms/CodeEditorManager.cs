@@ -1,4 +1,4 @@
-// このファイルは ..\Girl.haprj から自動生成されています。
+// このファイルは ..\..\..\Girl.haprj から自動生成されています。
 // 編集は必ずそちらを通すようにして、直接書き換えないでください。
 
 using System;
@@ -187,37 +187,37 @@ namespace Girl.Windows.Forms
 				pos = textBox.SelectionStart;
 				if (crtext.EndsWith("}"))
 				{
-					TextBoxPlus.InsertText(textBox, this.IndentString);
+					this.InsertText(textBox, this.IndentString);
 					pos++;
 				}
-				TextBoxPlus.InsertText(textBox, "\r\n" + crind);
+				this.InsertText(textBox, "\r\n" + crind);
 			}
 			else if (cl < crind.Length)
 			{
 				pos = (textBox.SelectionStart += crind.Length - cl);
 				if (crtext.EndsWith("}"))
 				{
-					TextBoxPlus.InsertText(textBox, this.IndentString);
+					this.InsertText(textBox, this.IndentString);
 					pos++;
 				}
-				TextBoxPlus.InsertText(textBox, "\r\n" + crind);
+				this.InsertText(textBox, "\r\n" + crind);
 			}
 			else if (cl > 0 && crtext.Substring(cl - 1, 1) == "{")
 			{
 				string nxtext = TextBoxPlus.GetLineText(textBox, ln + 1);
 				string nxind  = CodeEditorManager.GetIndent(nxtext);
-				TextBoxPlus.InsertText(textBox, "\r\n" + crind + this.IndentString);
+				this.InsertText(textBox, "\r\n" + crind + this.IndentString);
 				bool needsClose = !(nxtext.EndsWith("}") && crind == nxind) && crind.Length >= nxind.Length;
 				if (cl < crtext.Length)
 				{
 					pos = textBox.SelectionStart;
 					if (crtext.Substring(cl, 1) == "}")
 					{
-						TextBoxPlus.InsertText(textBox, "\r\n" + crind);
+						this.InsertText(textBox, "\r\n" + crind);
 						textBox.SelectionStart++;
 						if (textBox.SelectionStart == textBox.TextLength)
 						{
-							TextBoxPlus.InsertText(textBox, "\r\n");
+							this.InsertText(textBox, "\r\n");
 						}
 						needsClose = false;
 					}
@@ -229,20 +229,20 @@ namespace Girl.Windows.Forms
 				if (needsClose)
 				{
 					if (pos < 0) pos = textBox.SelectionStart;
-					TextBoxPlus.InsertText(textBox, "\r\n" + crind + "}");
+					this.InsertText(textBox, "\r\n" + crind + "}");
 					if (textBox.SelectionStart == textBox.TextLength)
 					{
-						TextBoxPlus.InsertText(textBox, "\r\n");
+						this.InsertText(textBox, "\r\n");
 					}
 				}
 			}
 			else if (crtext.EndsWith(":"))
 			{
-				TextBoxPlus.InsertText(textBox, "\r\n" + crind + this.IndentString);
+				this.InsertText(textBox, "\r\n" + crind + this.IndentString);
 			}
 			else
 			{
-				TextBoxPlus.InsertText(textBox, "\r\n" + crind);
+				this.InsertText(textBox, "\r\n" + crind);
 			}
 			if (pos >= 0) textBox.SelectionStart = pos;
 		}
@@ -273,25 +273,25 @@ namespace Girl.Windows.Forms
 			switch (ch)
 			{
 				case '(':
-					TextBoxPlus.InsertText(textBox, ")");
+					this.InsertText(textBox, ")");
 					textBox.SelectionStart--;
 					break;
 				case '[':
-					TextBoxPlus.InsertText(textBox, "]");
+					this.InsertText(textBox, "]");
 					textBox.SelectionStart--;
 					break;
 				case '{':
-					TextBoxPlus.InsertText(textBox, "}");
+					this.InsertText(textBox, "}");
 					textBox.SelectionStart--;
 					break;
 				case '<':
-					TextBoxPlus.InsertText(textBox, ">");
+					this.InsertText(textBox, ">");
 					textBox.SelectionStart--;
 					break;
 				case '*':
 					if (prv1 == '/')
 					{
-						TextBoxPlus.InsertText(textBox, "*/");
+						this.InsertText(textBox, "*/");
 						textBox.SelectionStart -= 2;
 					}
 					break;
@@ -304,7 +304,7 @@ namespace Girl.Windows.Forms
 							textBox.SelectionStart++;
 							return true;
 						}
-						TextBoxPlus.InsertText(textBox, ch.ToString());
+						this.InsertText(textBox, ch.ToString());
 						textBox.SelectionStart--;
 					}
 					break;
@@ -365,6 +365,17 @@ namespace Girl.Windows.Forms
 			textBox.SelectionLength = nlen;
 		}
 
+		private void InsertText(TextBoxBase textBox, string text)
+		{
+			//RichTextBox rtb = textBox as RichTextBox;
+			//if (rtb != null)
+			//{
+			//	rtb.SelectionColor = rtb.ForeColor;
+			//	rtb.SelectionFont  = rtb.Font;
+			//}
+			textBox.SelectedText = text;
+		}
+
 		#endregion
 
 		#region Event Handler
@@ -417,17 +428,15 @@ namespace Girl.Windows.Forms
 			{
 				e.Handled = true;
 			}
-			else if (this.SmartParenthesis)
+			else if (this.SmartParenthesis
+				&& this.ProcessParenthesis(textBox, e.KeyChar))
 			{
-				if (this.ProcessParenthesis(textBox, e.KeyChar))
-				{
-					e.Handled = true;
-				}
-				else if (textBox is RichTextBox && e.KeyChar >= ' ')
-				{
-					TextBoxPlus.InsertText(textBox, e.KeyChar.ToString());
-					e.Handled = true;
-				}
+				e.Handled = true;
+			}
+			else if (e.KeyChar >= ' ' && textBox is RichTextBox)
+			{
+				this.InsertText(textBox, e.KeyChar.ToString());
+				e.Handled = true;
 			}
 		}
 

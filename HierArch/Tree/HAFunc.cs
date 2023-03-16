@@ -22,13 +22,15 @@ namespace Girl.HierArch
 		private MenuItem mnuType;
 		public HAObject ArgTreeView;
 		public HAObject ObjectTreeView;
-		public TextBox CommentTextBox;
-		public TextBox SourceTextBox;
+		public ExRichTextBox CommentTextBox;
+		public CodeEditor SourceTextBox;
+		public HAClassNode OwnerClass;
 		public HAFuncNode Header;
 		public HAFuncNode Body;
 		public HAFuncNode Footer;
-		public HAClassNode OwnerClass;
 		public HAFuncNode TargetNode;
+		private Font textFont;
+		private ParserBase parser;
 
 		/// <summary>
 		/// コンストラクタです。
@@ -47,6 +49,9 @@ namespace Girl.HierArch
 			this.HideSelection = false;
 			this.LabelEdit = true;
 			this.ImageList = this.imageList1;
+			
+			this.textFont = new Font("ＭＳ ゴシック", 9);
+			this.parser   = new CSharpParser();
 			
 			this.mnuAccess    .Text = "関数(&U)";
 			this.mnuFolderGray.Text = "仮想フォルダ(&V)";
@@ -165,13 +170,28 @@ namespace Girl.HierArch
 				if (this.CommentTextBox != null)
 				{
 					this.CommentTextBox.Enabled = true;
+					this.CommentTextBox.Clear();
 					this.CommentTextBox.Text = this.TargetNode.Comment;
 					this.CommentTextBox.SelectionStart  = this.TargetNode.CommentSelectionStart;
 					this.CommentTextBox.SelectionLength = this.TargetNode.CommentSelectionLength;
 				}
 				if (this.SourceTextBox != null)
 				{
+					if (this.TargetNode.IsObject
+						|| this.TargetNode.Type == HAType.Class
+						|| this.TargetNode == this.Header
+						|| this.TargetNode == this.Footer)
+					{
+						this.SourceTextBox.Parser = this.parser;
+						this.SourceTextBox.DetectUrls = false;
+					}
+					else
+					{
+						this.SourceTextBox.Parser = null;
+						this.SourceTextBox.DetectUrls = true;
+					}
 					this.SourceTextBox.Enabled = true;
+					this.SourceTextBox.Clear();
 					this.SourceTextBox.Text = this.TargetNode.Source;
 					this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
 					this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
@@ -184,14 +204,14 @@ namespace Girl.HierArch
 				if (this.CommentTextBox != null)
 				{
 					this.CommentTextBox.Enabled = false;
-					this.CommentTextBox.Text = "";
+					this.CommentTextBox.Clear();
 					this.CommentTextBox.SelectionStart  = 0;
 					this.CommentTextBox.SelectionLength = 0;
 				}
 				if (this.SourceTextBox != null)
 				{
 					this.SourceTextBox.Enabled = false;
-					this.SourceTextBox.Text = "";
+					this.SourceTextBox.Clear();
 					this.SourceTextBox.SelectionStart  = 0;
 					this.SourceTextBox.SelectionLength = 0;
 				}

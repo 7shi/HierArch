@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<HAProject version="0.1.1080.5651">
-  <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="true" AllowDrag="true">
+<HAProject version="0.1.1080.7586">
+  <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="false" AllowDrag="true">
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
         <Arguments />
@@ -18,10 +18,10 @@
 &lt;/summary&gt;
 </Comment>
         <Source SelectionStart="0" SelectionLength="0" />
-        <HAFunc Type="Text" Text="To Do" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <HAFunc Type="Text" Text="プログラミング" IsExpanded="false" IsSelected="true" AllowDrag="true">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="137" SelectionLength="0">コンストラクタでのbaseサポート
+          <Source SelectionStart="197" SelectionLength="0">コンストラクタでのbaseサポート
 メンバの初期化
 enumのサポート
 スプレッドシートでの一括編集
@@ -33,6 +33,19 @@ enumのサポート
 遠隔同期
 検索
 ツリー式GUIビルダ
+構造体のサポート
+依存関係自動検出
+XmlDocViewerとの統合とリフレクション
+マクロ
+変数名自動更新
+</Source>
+        </HAFunc>
+        <HAFunc Type="Text" Text="ツリー" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="31" SelectionLength="0">リンクのサポート
+部分ファイルの分割
+中央管理システム
 </Source>
         </HAFunc>
       </HAFunc>
@@ -1203,24 +1216,27 @@ fs.Close();
           </HAFunc>
         </Footer>
       </HAClass>
-      <HAClass Type="Public" Text="HAFunc:HATree" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAClass Type="Public" Text="HAFunc:HATree" IsExpanded="false" IsSelected="true" AllowDrag="true">
         <HAObject Type="Private" Text="contextMenu1:ContextMenu" IsExpanded="true" IsSelected="false" AllowDrag="true">
-          <HAObject Type="Private" Text="mnuType:MenuItem" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="mnuType:MenuItem" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         </HAObject>
         <HAObject Type="Public" Text="ArgTreeView:HAObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Public" Text="ObjectTreeView:HAObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Public" Text="CommentTextBox:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Public" Text="SourceTextBox:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Public" Text="Header:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Public" Text="Body:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Public" Text="Footer:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Public" Text="OwnerClass:HAClassNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="CommentTextBox:ExRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="SourceTextBox:CodeEditor" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="OwnerClass:HAClassNode" IsExpanded="true" IsSelected="false" AllowDrag="true">
+          <HAObject Type="Public" Text="Header:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Public" Text="Body:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Public" Text="Footer:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        </HAObject>
         <HAObject Type="Public" Text="TargetNode:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="textFont:Font" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
         <Header>
           <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="198" SelectionLength="0">using System;
+            <Source SelectionStart="171" SelectionLength="0">using System;
 using System.Collections;
 using System.Drawing;
 using System.IO;
@@ -1246,7 +1262,7 @@ using Girl.Windows.Forms;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="288" SelectionLength="0">this.ArgTreeView    = null;
+              <Source SelectionStart="396" SelectionLength="0">this.ArgTreeView    = null;
 this.ObjectTreeView = null;
 this.CommentTextBox = null;
 this.SourceTextBox  = null;
@@ -1258,6 +1274,9 @@ this.ContextMenu = this.contextMenu1 = new ContextMenu();
 this.HideSelection = false;
 this.LabelEdit = true;
 this.ImageList = this.imageList1;
+
+this.textFont = new Font("ＭＳ ゴシック", 9);
+this.parser   = new CSharpParser();
 
 this.mnuAccess    .Text = "関数(&amp;U)";
 this.mnuFolderGray.Text = "仮想フォルダ(&amp;V)";
@@ -1331,7 +1350,7 @@ mnuType.Enabled = mnuAppend.Enabled = mnuInsert.Enabled
 	= mnuDelete.Enabled = mnuRename.Enabled = (n != null &amp;&amp; n.AllowDrag);
 </Source>
             </HAFunc>
-            <HAFunc Type="Protected" Text="get_NewNode:override HATreeNode" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <HAFunc Type="Protected" Text="get_NewNode:override HATreeNode" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
               <Source SelectionStart="33" SelectionLength="0">return new HAFuncNode("新しい関数");
@@ -1372,23 +1391,38 @@ if (this.SourceTextBox  != null)
 }
 </Source>
             </HAFunc>
-            <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="true" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="1356" SelectionLength="0">if (this.TargetNode != null)
+              <Source SelectionStart="582" SelectionLength="0">if (this.TargetNode != null)
 {
 	if (this.ArgTreeView    != null) this.ArgTreeView   .SetView(this.TargetNode.Args);
 	if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(this.TargetNode.Objects);
 	if (this.CommentTextBox != null)
 	{
 		this.CommentTextBox.Enabled = true;
+		this.CommentTextBox.Clear();
 		this.CommentTextBox.Text = this.TargetNode.Comment;
 		this.CommentTextBox.SelectionStart  = this.TargetNode.CommentSelectionStart;
 		this.CommentTextBox.SelectionLength = this.TargetNode.CommentSelectionLength;
 	}
 	if (this.SourceTextBox != null)
 	{
+		if (this.TargetNode.IsObject
+			|| this.TargetNode.Type == HAType.Class
+			|| this.TargetNode == this.Header
+			|| this.TargetNode == this.Footer)
+		{
+			this.SourceTextBox.Parser = this.parser;
+			this.SourceTextBox.DetectUrls = false;
+		}
+		else
+		{
+			this.SourceTextBox.Parser = null;
+			this.SourceTextBox.DetectUrls = true;
+		}
 		this.SourceTextBox.Enabled = true;
+		this.SourceTextBox.Clear();
 		this.SourceTextBox.Text = this.TargetNode.Source;
 		this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
 		this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
@@ -1401,14 +1435,14 @@ else
 	if (this.CommentTextBox != null)
 	{
 		this.CommentTextBox.Enabled = false;
-		this.CommentTextBox.Text = "";
+		this.CommentTextBox.Clear();
 		this.CommentTextBox.SelectionStart  = 0;
 		this.CommentTextBox.SelectionLength = 0;
 	}
 	if (this.SourceTextBox != null)
 	{
 		this.SourceTextBox.Enabled = false;
-		this.SourceTextBox.Text = "";
+		this.SourceTextBox.Clear();
 		this.SourceTextBox.SelectionStart  = 0;
 		this.SourceTextBox.SelectionLength = 0;
 	}

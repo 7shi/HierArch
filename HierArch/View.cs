@@ -14,8 +14,6 @@ namespace Girl.HierArch
 	public class View : System.Windows.Forms.UserControl
 	{
 		public event EventHandler Changed;
-		public System.Windows.Forms.TextBox txtSource;
-		public System.Windows.Forms.TextBox txtComment;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Panel panel3;
@@ -40,6 +38,9 @@ namespace Girl.HierArch
 		private HAMember tvMember;
 		private HAObject tvArg;
 		private HAObject tvObject;
+		private Girl.Windows.Forms.RichTextToolBar richTextToolBar1;
+		public Girl.Windows.Forms.ExRichTextBox txtComment;
+		public Girl.Windows.Forms.CodeEditor txtSource;
 
 		/// <summary>
 		/// 必要なデザイナ変数です。
@@ -76,6 +77,9 @@ namespace Girl.HierArch
 
 			this.txtComment.TextChanged += new EventHandler(this.tvFunc.OnChanged);
 			this.txtSource .TextChanged += new EventHandler(this.tvFunc.OnChanged);
+
+			this.richTextToolBar1.AddTarget(this.txtComment);
+			this.richTextToolBar1.AddTarget(this.txtSource );
 		}
 
 		/// <summary>
@@ -100,45 +104,41 @@ namespace Girl.HierArch
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.tvClass = new Girl.HierArch.HAClass();
+			this.tvFunc = new Girl.HierArch.HAFunc();
+			this.tvMember = new Girl.HierArch.HAMember();
+			this.tvArg = new Girl.HierArch.HAObject();
+			this.tvObject = new Girl.HierArch.HAObject();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.txtSource = new Girl.Windows.Forms.CodeEditor();
 			this.opaqueSplitter4 = new Girl.Windows.Forms.OpaqueSplitter();
-			this.txtComment = new System.Windows.Forms.TextBox();
-			this.txtSource = new System.Windows.Forms.TextBox();
+			this.txtComment = new Girl.Windows.Forms.ExRichTextBox();
+			this.richTextToolBar1 = new Girl.Windows.Forms.RichTextToolBar();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tabFunc = new System.Windows.Forms.TabControl();
 			this.tpFunc = new System.Windows.Forms.TabPage();
-			this.tvFunc = new Girl.HierArch.HAFunc();
 			this.opaqueSplitter3 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.tabClass = new System.Windows.Forms.TabControl();
 			this.tpClass = new System.Windows.Forms.TabPage();
-			this.tvClass = new Girl.HierArch.HAClass();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.tabObject = new System.Windows.Forms.TabControl();
 			this.tpObject = new System.Windows.Forms.TabPage();
-			this.tvObject = new Girl.HierArch.HAObject();
 			this.opaqueSplitter6 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.tabArg = new System.Windows.Forms.TabControl();
 			this.tpArg = new System.Windows.Forms.TabPage();
-			this.tvArg = new Girl.HierArch.HAObject();
 			this.opaqueSplitter5 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.tabMember = new System.Windows.Forms.TabControl();
 			this.tpMember = new System.Windows.Forms.TabPage();
-			this.tvMember = new Girl.HierArch.HAMember();
 			this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.opaqueSplitter2 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.tabFunc.SuspendLayout();
-			this.tpFunc.SuspendLayout();
 			this.tabClass.SuspendLayout();
-			this.tpClass.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.tabObject.SuspendLayout();
-			this.tpObject.SuspendLayout();
 			this.tabArg.SuspendLayout();
-			this.tpArg.SuspendLayout();
 			this.tabMember.SuspendLayout();
-			this.tpMember.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel2
@@ -146,53 +146,60 @@ namespace Girl.HierArch
 			this.panel2.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				 this.txtSource,
 																				 this.opaqueSplitter4,
-																				 this.txtComment});
+																				 this.txtComment,
+																				 this.richTextToolBar1});
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel2.Location = new System.Drawing.Point(179, 0);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(218, 424);
+			this.panel2.Size = new System.Drawing.Size(402, 488);
 			this.panel2.TabIndex = 0;
+			// 
+			// txtSource
+			// 
+			this.txtSource.AcceptsTab = true;
+			this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.txtSource.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F);
+			this.txtSource.HideSelection = false;
+			this.txtSource.Location = new System.Drawing.Point(0, 139);
+			this.txtSource.Name = "txtSource";
+			this.txtSource.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
+			this.txtSource.Size = new System.Drawing.Size(402, 349);
+			this.txtSource.TabIndex = 6;
+			this.txtSource.Text = "";
+			this.txtSource.WordWrap = false;
 			// 
 			// opaqueSplitter4
 			// 
 			this.opaqueSplitter4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.opaqueSplitter4.Location = new System.Drawing.Point(0, 120);
+			this.opaqueSplitter4.Location = new System.Drawing.Point(0, 136);
 			this.opaqueSplitter4.Name = "opaqueSplitter4";
 			this.opaqueSplitter4.Opaque = true;
-			this.opaqueSplitter4.Size = new System.Drawing.Size(218, 3);
+			this.opaqueSplitter4.Size = new System.Drawing.Size(402, 3);
 			this.opaqueSplitter4.TabIndex = 3;
 			this.opaqueSplitter4.TabStop = false;
 			// 
 			// txtComment
 			// 
-			this.txtComment.AcceptsReturn = true;
-			this.txtComment.AcceptsTab = true;
 			this.txtComment.Dock = System.Windows.Forms.DockStyle.Top;
 			this.txtComment.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.txtComment.HideSelection = false;
-			this.txtComment.Multiline = true;
+			this.txtComment.Location = new System.Drawing.Point(0, 25);
 			this.txtComment.Name = "txtComment";
-			this.txtComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtComment.Size = new System.Drawing.Size(218, 120);
-			this.txtComment.TabIndex = 2;
+			this.txtComment.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
+			this.txtComment.Size = new System.Drawing.Size(402, 111);
+			this.txtComment.TabIndex = 5;
 			this.txtComment.Text = "";
 			this.txtComment.WordWrap = false;
 			// 
-			// txtSource
+			// richTextToolBar1
 			// 
-			this.txtSource.AcceptsReturn = true;
-			this.txtSource.AcceptsTab = true;
-			this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtSource.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.txtSource.HideSelection = false;
-			this.txtSource.Location = new System.Drawing.Point(0, 123);
-			this.txtSource.Multiline = true;
-			this.txtSource.Name = "txtSource";
-			this.txtSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtSource.Size = new System.Drawing.Size(218, 301);
-			this.txtSource.TabIndex = 1;
-			this.txtSource.Text = "";
-			this.txtSource.WordWrap = false;
+			this.richTextToolBar1.Divider = true;
+			this.richTextToolBar1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.richTextToolBar1.Name = "richTextToolBar1";
+			this.richTextToolBar1.Size = new System.Drawing.Size(402, 25);
+			this.richTextToolBar1.TabIndex = 4;
+			this.richTextToolBar1.TabStop = false;
+			this.richTextToolBar1.Target = null;
 			// 
 			// panel1
 			// 
@@ -202,7 +209,7 @@ namespace Girl.HierArch
 																				 this.tabClass});
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(176, 424);
+			this.panel1.Size = new System.Drawing.Size(176, 488);
 			this.panel1.TabIndex = 1;
 			// 
 			// tabFunc
@@ -213,7 +220,7 @@ namespace Girl.HierArch
 			this.tabFunc.Location = new System.Drawing.Point(0, 187);
 			this.tabFunc.Name = "tabFunc";
 			this.tabFunc.SelectedIndex = 0;
-			this.tabFunc.Size = new System.Drawing.Size(176, 237);
+			this.tabFunc.Size = new System.Drawing.Size(176, 301);
 			this.tabFunc.TabIndex = 2;
 			// 
 			// tpFunc
@@ -222,7 +229,7 @@ namespace Girl.HierArch
 																				 this.tvFunc});
 			this.tpFunc.Location = new System.Drawing.Point(4, 21);
 			this.tpFunc.Name = "tpFunc";
-			this.tpFunc.Size = new System.Drawing.Size(168, 212);
+			this.tpFunc.Size = new System.Drawing.Size(168, 276);
 			this.tpFunc.TabIndex = 0;
 			this.tpFunc.Text = "関数";
 			// 
@@ -287,9 +294,9 @@ namespace Girl.HierArch
 																				 this.opaqueSplitter5,
 																				 this.tabMember});
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panel3.Location = new System.Drawing.Point(400, 0);
+			this.panel3.Location = new System.Drawing.Point(584, 0);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(176, 424);
+			this.panel3.Size = new System.Drawing.Size(176, 488);
 			this.panel3.TabIndex = 2;
 			// 
 			// tabObject
@@ -300,7 +307,7 @@ namespace Girl.HierArch
 			this.tabObject.Location = new System.Drawing.Point(0, 275);
 			this.tabObject.Name = "tabObject";
 			this.tabObject.SelectedIndex = 0;
-			this.tabObject.Size = new System.Drawing.Size(176, 149);
+			this.tabObject.Size = new System.Drawing.Size(176, 213);
 			this.tabObject.TabIndex = 4;
 			// 
 			// tpObject
@@ -309,7 +316,7 @@ namespace Girl.HierArch
 																				   this.tvObject});
 			this.tpObject.Location = new System.Drawing.Point(4, 21);
 			this.tpObject.Name = "tpObject";
-			this.tpObject.Size = new System.Drawing.Size(168, 124);
+			this.tpObject.Size = new System.Drawing.Size(168, 188);
 			this.tpObject.TabIndex = 0;
 			this.tpObject.Text = "変数";
 			// 
@@ -412,17 +419,17 @@ namespace Girl.HierArch
 			this.opaqueSplitter1.Location = new System.Drawing.Point(176, 0);
 			this.opaqueSplitter1.Name = "opaqueSplitter1";
 			this.opaqueSplitter1.Opaque = true;
-			this.opaqueSplitter1.Size = new System.Drawing.Size(3, 424);
+			this.opaqueSplitter1.Size = new System.Drawing.Size(3, 488);
 			this.opaqueSplitter1.TabIndex = 3;
 			this.opaqueSplitter1.TabStop = false;
 			// 
 			// opaqueSplitter2
 			// 
 			this.opaqueSplitter2.Dock = System.Windows.Forms.DockStyle.Right;
-			this.opaqueSplitter2.Location = new System.Drawing.Point(397, 0);
+			this.opaqueSplitter2.Location = new System.Drawing.Point(581, 0);
 			this.opaqueSplitter2.Name = "opaqueSplitter2";
 			this.opaqueSplitter2.Opaque = true;
-			this.opaqueSplitter2.Size = new System.Drawing.Size(3, 424);
+			this.opaqueSplitter2.Size = new System.Drawing.Size(3, 488);
 			this.opaqueSplitter2.TabIndex = 4;
 			this.opaqueSplitter2.TabStop = false;
 			// 
@@ -435,20 +442,15 @@ namespace Girl.HierArch
 																		  this.panel1,
 																		  this.panel3});
 			this.Name = "View";
-			this.Size = new System.Drawing.Size(576, 424);
+			this.Size = new System.Drawing.Size(760, 488);
 			this.panel2.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.tabFunc.ResumeLayout(false);
-			this.tpFunc.ResumeLayout(false);
 			this.tabClass.ResumeLayout(false);
-			this.tpClass.ResumeLayout(false);
 			this.panel3.ResumeLayout(false);
 			this.tabObject.ResumeLayout(false);
-			this.tpObject.ResumeLayout(false);
 			this.tabArg.ResumeLayout(false);
-			this.tpArg.ResumeLayout(false);
 			this.tabMember.ResumeLayout(false);
-			this.tpMember.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}

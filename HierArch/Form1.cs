@@ -648,8 +648,8 @@ namespace Girl.HierArch
 			this.ClientSize = new System.Drawing.Size(712, 489);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.view1,
-																		  this.statusBar1,
-																		  this.toolBar1});
+																		  this.toolBar1,
+																		  this.statusBar1});
 			this.Menu = this.mainMenu1;
 			this.Name = "Form1";
 			this.Text = "HierArch";
