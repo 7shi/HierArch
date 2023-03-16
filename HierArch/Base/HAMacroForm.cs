@@ -76,7 +76,7 @@ namespace Girl.HierArch
 			return macros[name] as HAFuncNode;
 		}
 
-		public void WriteCode(CodeWriter cw, string source, Hashtable replace, ArrayList history)
+		public void WriteCode(CodeWriter cw, string source, string block, Hashtable replace, ArrayList history)
 		{
 			StringBuilder sb = new StringBuilder();
 			CSharpParser csp = new CSharpParser();
@@ -86,10 +86,18 @@ namespace Girl.HierArch
 			int prth = 0;
 			bool no_space = false, is_key_word = false;
 			string text;
+			Hashtable objlst = this.MakeObjectList(history);
 			while (csp.Read())
 			{
 				text = csp.Text;
-				if (replace != null && replace.Contains(text)) text = replace[text] as string;
+				if (replace != null && replace.Contains(text))
+				{
+					text = replace[text] as string;
+				}
+				else if (objlst != null && objlst.Contains(text))
+				{
+					text = objlst[text] as string;
+				}
 				if (prth < 1 &&(text == ";" || text == ":"))
 				{
 					sb.Append(text);
@@ -167,6 +175,15 @@ namespace Girl.HierArch
 						case ";":
 						sb.Append(text);
 						break;
+						case "__YIELD":
+						cw.WriteStartBlock("for (;;)  // __YIELD");
+						if (block != null)
+						{
+							this.WriteCode(cw, block, null, replace, history);
+						}
+						cw.WriteCode("break;");
+						cw.WriteEndBlock();
+						break;
 						default: if (sb.Length > 0 && !no_space) sb.Append(' ');
 						sb.Append(text);
 						no_space = false;
@@ -193,13 +210,22 @@ namespace Girl.HierArch
 			StringCollection args = new StringCollection();
 			StringBuilder name = new StringBuilder();
 			StringBuilder decl = new StringBuilder();
+			StringBuilder blck = null;
 			while (csp.Read())
 			{
 				if (csp.Text == "]")
 				{
 					cw.WriteCode(string.Format("// Macro: {0}", decl.ToString()));
-					this.WriteMacro(cw, name.ToString(), args, history);
+					string block =(blck == null) ? null:
+					blck.ToString();
+					this.WriteMacro(cw, name.ToString(), args, block, history);
 					return true;
+				}
+				if (csp.Text == "{")
+				{
+					if (blck == null) blck = new StringBuilder();
+					this.ReadBlock(blck, csp);
+					continue;
 				}
 				decl.Append(csp.Text);
 				if (csp.Text == "(")
@@ -207,6 +233,7 @@ namespace Girl.HierArch
 					for (;;)
 					{
 						string arg = this.ReadArg(csp);
+						if (arg == null) break;
 						args.Add(arg);
 						decl.Append(arg);
 						decl.Append(csp.Text);
@@ -223,27 +250,34 @@ namespace Girl.HierArch
 
 		private string ReadArg(CSharpParser csp)
 		{
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = null;
 			int prth = 0;
 			while (csp.Read())
 			{
 				if (prth < 1 && csp.Text == ",") break;
-				if (csp.Text == "(")
+				switch (csp.Text)
 				{
+					case "(":
+					case "[":
+					case "{":
 					prth++;
-				}
-				else if (csp.Text == ")")
-				{
-					if (prth < 1) break;
+					break;
+					case ")":
+					case "]":
+					case "}":
 					prth--;
+					break;
 				}
+				if (prth < 0) break;
+				if (sb == null) sb = new StringBuilder();
 				sb.Append(csp.Spacing);
 				sb.Append(csp.Text);
 			}
-			return sb.ToString();
+			return (sb != null) ? sb.ToString():
+			null;
 		}
 
-		private void WriteMacro(CodeWriter cw, string name, StringCollection args, ArrayList history)
+		private void WriteMacro(CodeWriter cw, string name, StringCollection args, string block, ArrayList history)
 		{
 			if (!this.macros.Contains(name)) return;
 			HAFuncNode n = this.macros[name] as HAFuncNode;
@@ -279,12 +313,69 @@ namespace Girl.HierArch
 					replace.Add(op.Name, args[i]);
 				}
 			}
+			int level = history.Count - 1;
+			int num = 0;
 			foreach (object obj in n.Objects)
 			{
-				cw.WriteCode(string.Format("{0};", new ObjectParser((obj as HAObjectNode).Text).ObjectDeclaration));
+				string type = new ObjectParser((obj as HAObjectNode).Text).Type;
+				if (type != null && type.Length > 0)
+				{
+					cw.WriteCode(string.Format("{0} __{1}_{2};", type, level, num));
+				}
+				num++;
 			}
-			this.WriteCode(cw, n.Source, replace, history);
+			this.WriteCode(cw, n.Source, block, replace, history);
 			cw.WriteEndBlock();
+		}
+
+		private void ReadBlock(StringBuilder sb, CSharpParser csp)
+		{
+			int level = 0;
+			while (csp.Read())
+			{
+				if (csp.Text == "}")
+				{
+					if (level < 1) return;
+					level--;
+				}
+				else if (csp.Text == "{")
+				{
+					level++;
+				}
+				sb.Append(csp.Spacing);
+				sb.Append(csp.Text);
+			}
+		}
+
+		private Hashtable MakeObjectList(ArrayList history)
+		{
+			if (history == null) return null;
+			Hashtable ret = new Hashtable();
+			int len = history.Count;
+			for (int i = len - 1; i >= 0; i--)
+			{
+				int num = 0;
+				HAFuncNode n = history[i] as HAFuncNode;
+				foreach (object obj in n.Objects)
+				{
+					this.MakeObjectList(ret, obj as HAObjectNode, i, ref num);
+				}
+			}
+			return ret;
+		}
+
+		private void MakeObjectList(Hashtable list, HAObjectNode node, int level, ref int num)
+		{
+			string name = new ObjectParser(node.Text).Name;
+			if (!list.Contains(name))
+			{
+				list[name] = string.Format("__{0}_{1}", level, num);
+				num++;
+			}
+			foreach (TreeNode n in node.Nodes)
+			{
+				this.MakeObjectList(list, n as HAObjectNode, level, ref num);
+			}
 		}
 	}
 }

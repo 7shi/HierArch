@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 22:11:39">
+<HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/21 20:51:47">
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:45">
       <Arguments />
@@ -17,11 +17,10 @@
 &lt;/summary&gt;
 </Comment>
       <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Text" Text="プログラミング" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 13:26:26">
+      <HAFunc Type="Text" Text="プログラミング" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/21 20:51:47">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0" />
-        <Source SelectionStart="194" SelectionLength="0">検索
-パーサが変
+        <Source SelectionStart="212" SelectionLength="0">検索
 コンストラクタでのbaseサポート
 メンバの初期化
 enumのサポート
@@ -34,16 +33,19 @@ enumのサポート
 構造体のサポート
 依存関係自動検出
 XmlDocViewerとの統合とリフレクション
-マクロ
 変数名自動更新
 補正のできるパーサ
 コメントのインデント
+
+//  [Done]
+// パーサが変
+// マクロ
 </Source>
       </HAFunc>
       <HAFunc Type="Text" Text="ツリー" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 22:11:39">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0" />
-        <Source SelectionStart="72" SelectionLength="0">一般ファイルへのリンクのサポート
+        <Source SelectionStart="29" SelectionLength="0">一般ファイルへのリンクのサポート
 
 //  [Done]
 // XMLリンク

@@ -424,7 +424,7 @@ namespace Girl.HierArch
 			if (this.Source != "")
 			{
 				cw.WriteBlankLine();
-				Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null);
+				Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null, null);
 			}
 		}
 

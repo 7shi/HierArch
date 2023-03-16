@@ -1900,7 +1900,7 @@ while (xr.Read())
       </HAFunc>
     </Footer>
   </HAClass>
-  <HAClass Type="Public" Text="HAFuncNode:HATreeNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:25:55">
+  <HAClass Type="Public" Text="HAFuncNode:HATreeNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/21 22:51:54">
     <HAObject Type="Public" Text="Args:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38" />
     <HAObject Type="Public" Text="Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38" />
     <HAObject Type="Public" Text="Comment:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38" />
@@ -2402,12 +2402,12 @@ this.GenerateFuncCode(cw);
 cw.WriteEndBlock();
 </Source>
             </HAFunc>
-            <HAFunc Type="Private" Text="GenerateFuncCode" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 5:25:55">
+            <HAFunc Type="Private" Text="GenerateFuncCode" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/21 22:51:54">
               <Arguments>
                 <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 13:05:11" />
               </Arguments>
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="219" SelectionLength="0">cw.SetStart();
+              <Source SelectionStart="225" SelectionLength="0">cw.SetStart();
 foreach (Object obj in this.Objects)
 {
 	(obj as HAObjectNode).Generate(cw);
@@ -2415,7 +2415,7 @@ foreach (Object obj in this.Objects)
 if (this.Source != "")
 {
 	cw.WriteBlankLine();
-	Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null);
+	Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null, null);
 }
 </Source>
             </HAFunc>
