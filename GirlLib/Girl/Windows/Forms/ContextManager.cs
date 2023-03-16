@@ -1,4 +1,4 @@
-﻿// このファイルは ContextManager.hacls から生成されています。
+// このファイルは ContextManager.hacls から生成されています。
 
 using System;
 using System.Collections;

@@ -9,7 +9,7 @@ using Girl.Rtf;
 namespace Girl.Windows.Forms
 {
 	/// <summary>
-	/// RichTextBox ‚ğŠÈ’P‚É‘€ì‚·‚é‚½‚ß‚Ìƒc[ƒ‹ƒo[‚Å‚·B
+	/// RichTextBox ã‚’ç°¡å˜ã«æ“ä½œã™ã‚‹ãŸã‚ã®ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã§ã™ã€‚
 	/// </summary>
 	public class RichTextToolBar : System.Windows.Forms.UserControl
 	{
@@ -32,10 +32,10 @@ namespace Girl.Windows.Forms
 
 		public RichTextToolBar()
 		{
-			// ‚±‚ÌŒÄ‚Ño‚µ‚ÍAWindows.Forms ƒtƒH[ƒ€ ƒfƒUƒCƒi‚Å•K—v‚Å‚·B
+			// ã“ã®å‘¼ã³å‡ºã—ã¯ã€Windows.Forms ãƒ•ã‚©ãƒ¼ãƒ  ãƒ‡ã‚¶ã‚¤ãƒŠã§å¿…è¦ã§ã™ã€‚
 			InitializeComponent();
 
-			// TODO: InitForm ‚ğŒÄ‚Ño‚µ‚ÌŒã‚É‰Šú‰»ˆ—‚ğ’Ç‰Á‚µ‚Ü‚·B
+			// TODO: InitForm ã‚’å‘¼ã³å‡ºã—ã®å¾Œã«åˆæœŸåŒ–å‡¦ç†ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 			this.Dock = DockStyle.Top;
 			this.TabStop = false;
 
@@ -43,7 +43,7 @@ namespace Girl.Windows.Forms
 		}
 
 		/// <summary>
-		/// g—p‚³‚ê‚Ä‚¢‚éƒŠƒ\[ƒX‚ÉŒãˆ—‚ğÀs‚µ‚Ü‚·B
+		/// ä½¿ç”¨ã•ã‚Œã¦ã„ã‚‹ãƒªã‚½ãƒ¼ã‚¹ã«å¾Œå‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 		/// </summary>
 		protected override void Dispose( bool disposing )
 		{
@@ -59,8 +59,8 @@ namespace Girl.Windows.Forms
 
 		#region Component Designer generated code
 		/// <summary>
-		/// ƒfƒUƒCƒi ƒTƒ|[ƒg‚É•K—v‚Èƒƒ\ƒbƒh‚Å‚·B‚±‚Ìƒƒ\ƒbƒh‚Ì“à—e‚ğ
-		/// ƒR[ƒh ƒGƒfƒBƒ^‚Å•ÏX‚µ‚È‚¢‚Å‚­‚¾‚³‚¢B
+		/// ãƒ‡ã‚¶ã‚¤ãƒŠ ã‚µãƒãƒ¼ãƒˆã«å¿…è¦ãªãƒ¡ã‚½ãƒƒãƒ‰ã§ã™ã€‚ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã®å†…å®¹ã‚’
+		/// ã‚³ãƒ¼ãƒ‰ ã‚¨ãƒ‡ã‚£ã‚¿ã§å¤‰æ›´ã—ãªã„ã§ãã ã•ã„ã€‚
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -118,24 +118,24 @@ namespace Girl.Windows.Forms
 			// 
 			this.tbBold.ImageIndex = 0;
 			this.tbBold.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.tbBold.ToolTipText = "‘¾š";
+			this.tbBold.ToolTipText = "å¤ªå­—";
 			// 
 			// tbItalic
 			// 
 			this.tbItalic.ImageIndex = 1;
 			this.tbItalic.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.tbItalic.ToolTipText = "Î‘Ì";
+			this.tbItalic.ToolTipText = "æ–œä½“";
 			// 
 			// tbUnderline
 			// 
 			this.tbUnderline.ImageIndex = 2;
 			this.tbUnderline.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.tbUnderline.ToolTipText = "‰ºü";
+			this.tbUnderline.ToolTipText = "ä¸‹ç·š";
 			// 
 			// tbColor
 			// 
 			this.tbColor.ImageIndex = 3;
-			this.tbColor.ToolTipText = "F";
+			this.tbColor.ToolTipText = "è‰²";
 			// 
 			// tbSeparator1
 			// 
@@ -146,19 +146,19 @@ namespace Girl.Windows.Forms
 			this.tbLeft.ImageIndex = 4;
 			this.tbLeft.Pushed = true;
 			this.tbLeft.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.tbLeft.ToolTipText = "¶";
+			this.tbLeft.ToolTipText = "å·¦";
 			// 
 			// tbCenter
 			// 
 			this.tbCenter.ImageIndex = 5;
 			this.tbCenter.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.tbCenter.ToolTipText = "’†‰›";
+			this.tbCenter.ToolTipText = "ä¸­å¤®";
 			// 
 			// tbRight
 			// 
 			this.tbRight.ImageIndex = 6;
 			this.tbRight.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.tbRight.ToolTipText = "‰E";
+			this.tbRight.ToolTipText = "å³";
 			// 
 			// tbSeparator2
 			// 
@@ -168,7 +168,7 @@ namespace Girl.Windows.Forms
 			// 
 			this.tbBullet.ImageIndex = 7;
 			this.tbBullet.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.tbBullet.ToolTipText = "‰Óğ‘‚«";
+			this.tbBullet.ToolTipText = "ç®‡æ¡æ›¸ã";
 			// 
 			// cmbFontSize
 			// 
@@ -252,7 +252,7 @@ namespace Girl.Windows.Forms
 		}
 
 		/// <summary>
-		/// ƒtƒH[ƒJƒX‚ğ”ğ‚¯‚éB
+		/// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’é¿ã‘ã‚‹ã€‚
 		/// </summary>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
@@ -467,14 +467,14 @@ namespace Girl.Windows.Forms
 			}
 			catch
 			{
-				MessageBox.Show(this.ParentForm, "–³Œø‚È”š‚Å‚·B",
+				MessageBox.Show(this.ParentForm, "ç„¡åŠ¹ãªæ•°å­—ã§ã™ã€‚",
 					Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return 0;
 			}
 
 			if (ret < 1 || 1638 < ret)
 			{
-				MessageBox.Show(this.ParentForm, "1 ‚©‚ç 1638 ‚ÌŠÔ‚Ì’l‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B",
+				MessageBox.Show(this.ParentForm, "1 ã‹ã‚‰ 1638 ã®é–“ã®å€¤ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚",
 					Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return 0;
 			}

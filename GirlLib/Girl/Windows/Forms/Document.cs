@@ -1,4 +1,4 @@
-﻿// このファイルは Document.hacls から生成されています。
+// このファイルは Document.hacls から生成されています。
 
 using System;
 using System.IO;

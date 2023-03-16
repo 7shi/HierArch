@@ -1,4 +1,4 @@
-﻿// このファイルは Rtf.hacls から生成されています。
+// このファイルは Rtf.hacls から生成されています。
 
 using System;
 using System.Collections;

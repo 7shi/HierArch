@@ -1,4 +1,4 @@
-﻿// このファイルは FontComboBox.hacls から生成されています。
+// このファイルは FontComboBox.hacls から生成されています。
 
 using System;
 using System.Collections;

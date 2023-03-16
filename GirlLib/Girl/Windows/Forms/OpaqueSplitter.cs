@@ -1,4 +1,4 @@
-﻿// このファイルは OpaqueSplitter.hacls から生成されています。
+// このファイルは OpaqueSplitter.hacls から生成されています。
 
 using System;
 using System.Drawing;

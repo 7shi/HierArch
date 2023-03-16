@@ -1,4 +1,4 @@
-﻿// このファイルは CodeEditor.hacls から生成されています。
+// このファイルは CodeEditor.hacls から生成されています。
 
 using System;
 using System.Drawing;

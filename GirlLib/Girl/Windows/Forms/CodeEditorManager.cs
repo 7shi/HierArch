@@ -1,4 +1,4 @@
-﻿// このファイルは CodeEditorManager.hacls から生成されています。
+// このファイルは CodeEditorManager.hacls から生成されています。
 
 using System;
 using System.Collections;

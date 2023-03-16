@@ -1,4 +1,4 @@
-﻿// このファイルは ExRichTextBox.hacls から生成されています。
+// このファイルは ExRichTextBox.hacls から生成されています。
 
 using System;
 using System.Drawing;

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace Girl.Windows.Forms
 {
 	/// <summary>
-	/// �A�v���P�[�V�����̐ݒ��ێ����܂��B
+	/// アプリケーションの設定を保持します。
 	/// </summary>
 	public class WindowSizeData
 	{
@@ -26,7 +26,7 @@ namespace Girl.Windows.Forms
 	}
 
 	/// <summary>
-	/// �t�H�[���̃T�C�Y���Ǘ����܂��B
+	/// フォームのサイズを管理します。
 	/// </summary>
 	public class WindowSizeManager
 	{
@@ -75,7 +75,7 @@ namespace Girl.Windows.Forms
 	}
 
 	/// <summary>
-	/// �t�H�[���̃T�C�Y���Ď����܂��B
+	/// フォームのサイズを監視します。
 	/// </summary>
 	public class WindowSizeMonitor
 	{

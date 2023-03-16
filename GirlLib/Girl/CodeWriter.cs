@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace Girl.Coding
 {
 	/// <summary>
-	/// ソースコードを出力します。
+	/// 繧ｽ繝ｼ繧ｹ繧ｳ繝ｼ繝峨ｒ蜃ｺ蜉帙＠縺ｾ縺吶�
 	/// </summary>
 	public class CodeWriter : StreamWriter
 	{

@@ -1,4 +1,4 @@
-﻿// このファイルは EditManager.hacls から生成されています。
+// このファイルは EditManager.hacls から生成されています。
 // 
 // このクラスは[STAThread]でのみ正常動作します。
 // [MTAThread]では使用しないでください。
