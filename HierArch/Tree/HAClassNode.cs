@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -306,6 +307,7 @@ namespace Girl.HierArch
 		{
 			FileStream fs;
 			StreamWriter sw;
+			MethodInfo mi;
 
 			try
 			{
@@ -316,8 +318,32 @@ namespace Girl.HierArch
 				return;
 			}
 			
-			sw = new StreamWriter(fs, Encoding.Default);
-			sw.WriteLine(string.Format("  **** {0} ****", this.Text));
+			try
+			{
+				//sw = new Plugin(fs);
+				sw = new StreamWriter(fs, Encoding.Default);
+			}
+			catch
+			{
+				sw = new StreamWriter(fs, Encoding.Default);
+			}
+			try
+			{
+				mi = sw.GetType().GetMethod("WriteTitle");
+			}
+			catch
+			{
+				mi = null;
+			}
+			if (mi != null)
+			{
+				mi.Invoke(sw, new object[]{this.Text});
+			}
+			else
+			{
+				sw.WriteLine("  **** {0} ****", this.Text);
+			}
+			
 			int i = 1;
 			foreach (Object obj in this.Body.Nodes)
 			{

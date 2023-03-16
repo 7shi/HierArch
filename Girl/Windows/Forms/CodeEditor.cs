@@ -4,6 +4,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using Girl.Coding;
 using Girl.Rtf;
@@ -54,7 +55,27 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				return base.Text;
+				StringBuilder sb;
+				char prev;
+
+				sb = new StringBuilder();
+				prev = '\0';
+				foreach (char ch in base.Text)
+				{
+					if (ch == '\r')
+					{
+						sb.Append("\r\n");
+					}
+					else if (ch == '\n')
+					{
+						if (prev != '\r') sb.Append("\r\n");
+					}
+					else
+					{
+						sb.Append(ch);
+					}
+				}
+				return sb.ToString();
 			}
 
 			set

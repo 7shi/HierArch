@@ -85,6 +85,16 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuBuildBuild;
 		private System.Windows.Forms.MenuItem mnuBuildRun;
 		private EditManager editManager = new EditManager();
+		private System.Windows.Forms.ContextMenu cmEdit;
+		private System.Windows.Forms.MenuItem cmEditUndo;
+		private System.Windows.Forms.MenuItem cmEditRedo;
+		private System.Windows.Forms.MenuItem cmEditSeparator1;
+		private System.Windows.Forms.MenuItem cmEditCut;
+		private System.Windows.Forms.MenuItem cmEditCopy;
+		private System.Windows.Forms.MenuItem cmEditPaste;
+		private System.Windows.Forms.MenuItem cmEditDelete;
+		private System.Windows.Forms.MenuItem cmEditSeparator2;
+		private System.Windows.Forms.MenuItem cmEditSelectAll;
 		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
 		public Form1()
@@ -117,13 +127,13 @@ namespace Girl.HierArch
 			// テキストボックスの状態をメニューと連動させます。
 			this.editManager.AddControl(this.view1.txtComment);
 			this.editManager.AddControl(this.view1.txtSource );
-			this.editManager.SetCommand(EditAction.Undo     , this.mnuEditUndo     , this.tbEditUndo );
-			this.editManager.SetCommand(EditAction.Redo     , this.mnuEditRedo     , this.tbEditRedo );
-			this.editManager.SetCommand(EditAction.Cut      , this.mnuEditCut      , this.tbEditCut  );
-			this.editManager.SetCommand(EditAction.Copy     , this.mnuEditCopy     , this.tbEditCopy );
-			this.editManager.SetCommand(EditAction.Paste    , this.mnuEditPaste    , this.tbEditPaste);
-			this.editManager.SetCommand(EditAction.Delete   , this.mnuEditDelete   );
-			this.editManager.SetCommand(EditAction.SelectAll, this.mnuEditSelectAll);
+			this.editManager.SetCommand(EditAction.Undo     , this.mnuEditUndo     , this.cmEditUndo , this.tbEditUndo );
+			this.editManager.SetCommand(EditAction.Redo     , this.mnuEditRedo     , this.cmEditRedo , this.tbEditRedo );
+			this.editManager.SetCommand(EditAction.Cut      , this.mnuEditCut      , this.cmEditCut  , this.tbEditCut  );
+			this.editManager.SetCommand(EditAction.Copy     , this.mnuEditCopy     , this.cmEditCopy , this.tbEditCopy );
+			this.editManager.SetCommand(EditAction.Paste    , this.mnuEditPaste    , this.cmEditPaste, this.tbEditPaste);
+			this.editManager.SetCommand(EditAction.Delete   , this.mnuEditDelete   , this.cmEditDelete   );
+			this.editManager.SetCommand(EditAction.SelectAll, this.mnuEditSelectAll, this.cmEditSelectAll);
 
 			// エディタオプションを設定します。
 			Form1.codeEditorManager.SetTarget(this.view1.txtComment);
@@ -134,6 +144,8 @@ namespace Girl.HierArch
 			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartParenthesis, this.mnuOptionSmartParenthesis);
 
 			this.m_Doc.ClassTreeView = view1.tvClass;
+			this.view1.txtComment.ContextMenu = this.cmEdit;
+			this.view1.txtSource .ContextMenu = this.cmEdit;
 		}
 
 		/// <summary>
@@ -225,6 +237,16 @@ namespace Girl.HierArch
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
 			this.mnuHelpHomePage = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
+			this.cmEdit = new System.Windows.Forms.ContextMenu();
+			this.cmEditUndo = new System.Windows.Forms.MenuItem();
+			this.cmEditRedo = new System.Windows.Forms.MenuItem();
+			this.cmEditSeparator1 = new System.Windows.Forms.MenuItem();
+			this.cmEditCut = new System.Windows.Forms.MenuItem();
+			this.cmEditCopy = new System.Windows.Forms.MenuItem();
+			this.cmEditPaste = new System.Windows.Forms.MenuItem();
+			this.cmEditDelete = new System.Windows.Forms.MenuItem();
+			this.cmEditSeparator2 = new System.Windows.Forms.MenuItem();
+			this.cmEditSelectAll = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// toolBar1
@@ -641,6 +663,64 @@ namespace Girl.HierArch
 			this.mnuHelpAbout.Index = 1;
 			this.mnuHelpAbout.Text = "バージョン情報(&A)";
 			this.mnuHelpAbout.Click += new System.EventHandler(this.mnuHelpAbout_Click);
+			// 
+			// cmEdit
+			// 
+			this.cmEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																				   this.cmEditUndo,
+																				   this.cmEditRedo,
+																				   this.cmEditSeparator1,
+																				   this.cmEditCut,
+																				   this.cmEditCopy,
+																				   this.cmEditPaste,
+																				   this.cmEditDelete,
+																				   this.cmEditSeparator2,
+																				   this.cmEditSelectAll});
+			// 
+			// cmEditUndo
+			// 
+			this.cmEditUndo.Index = 0;
+			this.cmEditUndo.Text = "元に戻す(&U)";
+			// 
+			// cmEditRedo
+			// 
+			this.cmEditRedo.Index = 1;
+			this.cmEditRedo.Text = "やり直し(&R)";
+			// 
+			// cmEditSeparator1
+			// 
+			this.cmEditSeparator1.Index = 2;
+			this.cmEditSeparator1.Text = "-";
+			// 
+			// cmEditCut
+			// 
+			this.cmEditCut.Index = 3;
+			this.cmEditCut.Text = "切り取り(&T)";
+			// 
+			// cmEditCopy
+			// 
+			this.cmEditCopy.Index = 4;
+			this.cmEditCopy.Text = "コピー(&C)";
+			// 
+			// cmEditPaste
+			// 
+			this.cmEditPaste.Index = 5;
+			this.cmEditPaste.Text = "貼り付け(&P)";
+			// 
+			// cmEditDelete
+			// 
+			this.cmEditDelete.Index = 6;
+			this.cmEditDelete.Text = "削除(&D)";
+			// 
+			// cmEditSeparator2
+			// 
+			this.cmEditSeparator2.Index = 7;
+			this.cmEditSeparator2.Text = "-";
+			// 
+			// cmEditSelectAll
+			// 
+			this.cmEditSelectAll.Index = 8;
+			this.cmEditSelectAll.Text = "すべて選択(&A)";
 			// 
 			// Form1
 			// 

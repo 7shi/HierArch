@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -485,30 +486,26 @@ namespace Girl.HierArch
 
 		public void GenerateText(StreamWriter sw, string chapter, bool concat)
 		{
-			sw.WriteLine();
-			sw.WriteLine();
-			sw.WriteLine(string.Format("  {0} {1}", chapter, this.Text));
-			sw.WriteLine();
-			if (concat)
+			MethodInfo mi;
+
+			try
 			{
-				StringReader sr = new StringReader(this.Source);
-				string line;
-				while ((line = sr.ReadLine()) != null)
-				{
-					if (line == "")
-					{
-						sw.WriteLine();
-					}
-					else
-					{
-						sw.Write(line);
-					}
-				}
-				sr.Close();
-				sw.WriteLine();
+				mi = sw.GetType().GetMethod("WriteNode");
+			}
+			catch
+			{
+				mi = null;
+			}
+			if (mi != null)
+			{
+				mi.Invoke(sw, new object[]{chapter, this.Text, this.Comment, this.Source});
 			}
 			else
 			{
+				sw.WriteLine();
+				sw.WriteLine();
+				sw.WriteLine(string.Format("  {0} {1}", chapter, this.Text));
+				sw.WriteLine();
 				sw.WriteLine(this.Source);
 			}
 			

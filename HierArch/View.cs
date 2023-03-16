@@ -134,12 +134,72 @@ namespace Girl.HierArch
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.tabFunc.SuspendLayout();
+			this.tpFunc.SuspendLayout();
 			this.tabClass.SuspendLayout();
+			this.tpClass.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.tabObject.SuspendLayout();
+			this.tpObject.SuspendLayout();
 			this.tabArg.SuspendLayout();
+			this.tpArg.SuspendLayout();
 			this.tabMember.SuspendLayout();
+			this.tpMember.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// tvClass
+			// 
+			this.tvClass.AllowDrop = true;
+			this.tvClass.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tvClass.HideSelection = false;
+			this.tvClass.ItemHeight = 16;
+			this.tvClass.LabelEdit = true;
+			this.tvClass.Name = "tvClass";
+			this.tvClass.Size = new System.Drawing.Size(168, 159);
+			this.tvClass.TabIndex = 0;
+			// 
+			// tvFunc
+			// 
+			this.tvFunc.AllowDrop = true;
+			this.tvFunc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tvFunc.HideSelection = false;
+			this.tvFunc.ItemHeight = 16;
+			this.tvFunc.LabelEdit = true;
+			this.tvFunc.Name = "tvFunc";
+			this.tvFunc.Size = new System.Drawing.Size(168, 276);
+			this.tvFunc.TabIndex = 0;
+			// 
+			// tvMember
+			// 
+			this.tvMember.AllowDrop = true;
+			this.tvMember.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tvMember.HideSelection = false;
+			this.tvMember.ItemHeight = 16;
+			this.tvMember.LabelEdit = true;
+			this.tvMember.Name = "tvMember";
+			this.tvMember.Size = new System.Drawing.Size(168, 135);
+			this.tvMember.TabIndex = 0;
+			// 
+			// tvArg
+			// 
+			this.tvArg.AllowDrop = true;
+			this.tvArg.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tvArg.HideSelection = false;
+			this.tvArg.ItemHeight = 16;
+			this.tvArg.LabelEdit = true;
+			this.tvArg.Name = "tvArg";
+			this.tvArg.Size = new System.Drawing.Size(168, 84);
+			this.tvArg.TabIndex = 0;
+			// 
+			// tvObject
+			// 
+			this.tvObject.AllowDrop = true;
+			this.tvObject.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tvObject.HideSelection = false;
+			this.tvObject.ItemHeight = 16;
+			this.tvObject.LabelEdit = true;
+			this.tvObject.Name = "tvObject";
+			this.tvObject.Size = new System.Drawing.Size(168, 188);
+			this.tvObject.TabIndex = 0;
 			// 
 			// panel2
 			// 
@@ -180,6 +240,7 @@ namespace Girl.HierArch
 			// 
 			// txtComment
 			// 
+			this.txtComment.AcceptsTab = true;
 			this.txtComment.Dock = System.Windows.Forms.DockStyle.Top;
 			this.txtComment.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.txtComment.HideSelection = false;
@@ -233,17 +294,6 @@ namespace Girl.HierArch
 			this.tpFunc.TabIndex = 0;
 			this.tpFunc.Text = "関数";
 			// 
-			// tvFunc
-			// 
-			this.tvFunc.AllowDrop = true;
-			this.tvFunc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvFunc.HideSelection = false;
-			this.tvFunc.ItemHeight = 16;
-			this.tvFunc.LabelEdit = true;
-			this.tvFunc.Name = "tvFunc";
-			this.tvFunc.Size = new System.Drawing.Size(168, 212);
-			this.tvFunc.TabIndex = 0;
-			// 
 			// opaqueSplitter3
 			// 
 			this.opaqueSplitter3.Dock = System.Windows.Forms.DockStyle.Top;
@@ -273,17 +323,6 @@ namespace Girl.HierArch
 			this.tpClass.Size = new System.Drawing.Size(168, 159);
 			this.tpClass.TabIndex = 0;
 			this.tpClass.Text = "クラス";
-			// 
-			// tvClass
-			// 
-			this.tvClass.AllowDrop = true;
-			this.tvClass.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvClass.HideSelection = false;
-			this.tvClass.ItemHeight = 16;
-			this.tvClass.LabelEdit = true;
-			this.tvClass.Name = "tvClass";
-			this.tvClass.Size = new System.Drawing.Size(168, 159);
-			this.tvClass.TabIndex = 0;
 			// 
 			// panel3
 			// 
@@ -320,17 +359,6 @@ namespace Girl.HierArch
 			this.tpObject.TabIndex = 0;
 			this.tpObject.Text = "変数";
 			// 
-			// tvObject
-			// 
-			this.tvObject.AllowDrop = true;
-			this.tvObject.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvObject.HideSelection = false;
-			this.tvObject.ItemHeight = 16;
-			this.tvObject.LabelEdit = true;
-			this.tvObject.Name = "tvObject";
-			this.tvObject.Size = new System.Drawing.Size(168, 124);
-			this.tvObject.TabIndex = 0;
-			// 
 			// opaqueSplitter6
 			// 
 			this.opaqueSplitter6.Dock = System.Windows.Forms.DockStyle.Top;
@@ -362,17 +390,6 @@ namespace Girl.HierArch
 			this.tpArg.TabIndex = 0;
 			this.tpArg.Text = "引数";
 			// 
-			// tvArg
-			// 
-			this.tvArg.AllowDrop = true;
-			this.tvArg.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvArg.HideSelection = false;
-			this.tvArg.ItemHeight = 16;
-			this.tvArg.LabelEdit = true;
-			this.tvArg.Name = "tvArg";
-			this.tvArg.Size = new System.Drawing.Size(168, 84);
-			this.tvArg.TabIndex = 0;
-			// 
 			// opaqueSplitter5
 			// 
 			this.opaqueSplitter5.Dock = System.Windows.Forms.DockStyle.Top;
@@ -402,17 +419,6 @@ namespace Girl.HierArch
 			this.tpMember.Size = new System.Drawing.Size(168, 135);
 			this.tpMember.TabIndex = 0;
 			this.tpMember.Text = "メンバ";
-			// 
-			// tvMember
-			// 
-			this.tvMember.AllowDrop = true;
-			this.tvMember.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvMember.HideSelection = false;
-			this.tvMember.ItemHeight = 16;
-			this.tvMember.LabelEdit = true;
-			this.tvMember.Name = "tvMember";
-			this.tvMember.Size = new System.Drawing.Size(168, 135);
-			this.tvMember.TabIndex = 0;
 			// 
 			// opaqueSplitter1
 			// 
@@ -446,11 +452,16 @@ namespace Girl.HierArch
 			this.panel2.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.tabFunc.ResumeLayout(false);
+			this.tpFunc.ResumeLayout(false);
 			this.tabClass.ResumeLayout(false);
+			this.tpClass.ResumeLayout(false);
 			this.panel3.ResumeLayout(false);
 			this.tabObject.ResumeLayout(false);
+			this.tpObject.ResumeLayout(false);
 			this.tabArg.ResumeLayout(false);
+			this.tpArg.ResumeLayout(false);
 			this.tabMember.ResumeLayout(false);
+			this.tpMember.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
