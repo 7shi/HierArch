@@ -8,8 +8,9 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GirlLib</RootNamespace>
     <AssemblyName>GirlLib</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -73,27 +74,27 @@
     <Compile Include="Girl\Windows\Forms\ContextManager.cs" />
     <Compile Include="Girl\Windows\Forms\ControlEx.cs" />
     <Compile Include="Girl\Windows\Forms\Document.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\Canvas.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasButton.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasControl.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasCorner.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasEllipse.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasGrip.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasGroup.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasImage.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasLine.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasLineEx.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasLines.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasObject.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasObjectSelection.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasPaintManager.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasPolygon.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasRectangle.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasSeparator.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasSerializer.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\CanvasString.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\DrawingBox.cs" />
-    <Compile Include="Girl\Windows\Forms\Drawing\DrawingBoxContextMenu.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\Canvas.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasButton.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasControl.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasCorner.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasEllipse.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasGrip.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasGroup.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasImage.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasLine.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasLineEx.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasLines.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasObject.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasObjectSelection.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasPaintManager.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasPolygon.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasRectangle.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasSeparator.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasSerializer.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\CanvasString.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\DrawingBox.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing2D\DrawingBoxContextMenu.cs" />
     <Compile Include="Girl\Windows\Forms\EditManager.cs" />
     <Compile Include="Girl\Windows\Forms\ExComboBox.cs" />
     <Compile Include="Girl\Windows\Forms\ExRichTextBox.cs" />
@@ -124,14 +125,11 @@
     <Folder Include="Girl\Text" />
     <Folder Include="Girl\Windows" />
     <Folder Include="Girl\Windows\Forms" />
-    <Folder Include="Girl\Windows\Forms\Drawing" />
+    <Folder Include="Girl\Windows\Forms\Drawing2D" />
     <Folder Include="Girl\Xml" />
     <Folder Include="Src" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Girl\Windows\Forms\Drawing\DrawingBox.resx">
-      <DependentUpon>DrawingBox.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Src\DnDTreeView.resx">
       <DependentUpon>DnDTreeView.cs</DependentUpon>
     </EmbeddedResource>
