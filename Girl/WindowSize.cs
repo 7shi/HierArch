@@ -15,7 +15,7 @@ namespace Girl.Windows.Forms
 		public static WindowSizeData Load(ApplicationDataManager adm)
 		{
 			WindowSizeData ret = (WindowSizeData)adm.Load("WindowSize.xml", typeof(WindowSizeData));
-			if(ret == null) ret = new WindowSizeData();
+			if (ret == null) ret = new WindowSizeData();
 			return ret;
 		}
 
@@ -35,7 +35,7 @@ namespace Girl.Windows.Forms
 		private FormWindowState m_WindowState;
 		private Size m_Size;
 
-		public WindowSizeManager(Form form, WindowSizeData data)
+		public WindowSizeManager(Form form, WindowSizeData data, bool hasMenu)
 		{
 			m_Form = form;
 			m_Form.Resize += new EventHandler(Form_Resize);
@@ -46,8 +46,13 @@ namespace Girl.Windows.Forms
 			m_Size        = m_Data.WindowSize;
 
 			m_Form.WindowState = m_WindowState;
-			if(!m_Size.IsEmpty)
+			if (!m_Size.IsEmpty)
 			{
+				if (hasMenu)
+				{
+					Object obj = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop\WindowMetrics").GetValue("MenuHeight", "-270");
+					m_Size.Height -= (Convert.ToInt32((String)obj) / -15 + 1);
+				}
 				m_Form.Size = m_Size;
 			}
 			else
@@ -58,7 +63,7 @@ namespace Girl.Windows.Forms
 
 		private void Form_Resize(object sender, EventArgs e)
 		{
-			if(m_Form.WindowState == FormWindowState.Normal) m_Size = m_Form.Size;
+			if (m_Form.WindowState == FormWindowState.Normal) m_Size = m_Form.Size;
 			m_WindowState = m_Form.WindowState;
 		}
 

@@ -79,12 +79,8 @@ namespace Girl.Windows.Forms
 			if (m_ndDrag != null && !m_ndDrag.AllowDrag) m_ndDrag = null;
 		}
 
-		protected override void OnMouseMove(MouseEventArgs e)
+		private void StartDrag()
 		{
-			base.OnMouseMove(e);
-			if (m_ndDrag == null || m_fDrag || e.Button != MouseButtons.Left ||
-				Math.Abs(m_ptDown.X - e.X) < 3 || Math.Abs(m_ptDown.Y - e.Y) < 3) return;
-
 			m_fDrag = true;
 			m_ndDragTarget = null;
 			SelectedNode = m_ndDrag;
@@ -113,11 +109,28 @@ namespace Girl.Windows.Forms
 			m_bDragged = false;
 		}
 
+		protected override void OnMouseMove(MouseEventArgs e)
+		{
+			base.OnMouseMove(e);
+			if (m_ndDrag == null || m_fDrag || e.Button != MouseButtons.Left ||
+				Math.Abs(m_ptDown.X - e.X) < 3 || Math.Abs(m_ptDown.Y - e.Y) < 3) return;
+
+			StartDrag();
+		}
+
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			base.OnMouseLeave(e);
+			if (m_ndDrag == null || m_fDrag) return;
+
+			StartDrag();
+		}
+
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			if (!m_bDisturbSelection)
 			{
-				base.OnMouseDown(e);
+				base.OnMouseUp(e);
 			}
 			else
 			{
@@ -268,7 +281,7 @@ namespace Girl.Windows.Forms
 			BeginUpdate();
 			TreeNode n = null;
 			int index = -1;
-			switch(m_DragStatus)
+			switch (m_DragStatus)
 			{
 				case DragStatus.Previous:
 					n = m_ndDragTarget.Parent;

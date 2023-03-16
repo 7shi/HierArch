@@ -21,16 +21,6 @@ namespace Girl.HierarchyArchitect
 		private Document m_Doc = new Document();
 		private Hashtable m_tblView = new Hashtable();
 		private string m_sCaption;
-
-		/// <summary>
-		/// 必要なデザイナ変数です。
-		/// </summary>
-		private System.Windows.Forms.MainMenu mainMenu1;
-		private System.Windows.Forms.MenuItem mnuFile;
-		private System.Windows.Forms.MenuItem mnuEdit;
-		private System.Windows.Forms.MenuItem mnuView;
-		private System.Windows.Forms.MenuItem mnuHelp;
-		private System.Windows.Forms.MenuItem mnuHelpAbout;
 		public System.Windows.Forms.ToolBar toolBar1;
 		public System.Windows.Forms.StatusBar statusBar1;
 		private System.Windows.Forms.ImageList imageList1;
@@ -41,21 +31,27 @@ namespace Girl.HierarchyArchitect
 		private System.Windows.Forms.ToolBarButton tbEditCut;
 		private System.Windows.Forms.ToolBarButton tbEditCopy;
 		private System.Windows.Forms.ToolBarButton tbEditPaste;
+		private System.Windows.Forms.OpenFileDialog openFileDialog1;
+		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+		public Girl.HierarchyArchitect.View view1;
+		private System.Windows.Forms.MainMenu mainMenu1;
+		private System.Windows.Forms.MenuItem mnuFile;
 		private System.Windows.Forms.MenuItem mnuFileNew;
 		private System.Windows.Forms.MenuItem mnuFileOpen;
 		private System.Windows.Forms.MenuItem mnuFileSave;
 		private System.Windows.Forms.MenuItem mnuFileSaveAs;
 		private System.Windows.Forms.MenuItem mnuFileSeparator1;
+		private System.Windows.Forms.MenuItem mnuFileClose;
 		private System.Windows.Forms.MenuItem mnuFileExit;
+		private System.Windows.Forms.MenuItem mnuEdit;
 		private System.Windows.Forms.MenuItem mnuEditCut;
 		private System.Windows.Forms.MenuItem mnuEditCopy;
 		private System.Windows.Forms.MenuItem mnuEditPaste;
-		private System.Windows.Forms.OpenFileDialog openFileDialog1;
-		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+		private System.Windows.Forms.MenuItem mnuView;
 		public System.Windows.Forms.MenuItem mnuViewToolBar;
 		public System.Windows.Forms.MenuItem mnuViewStatusBar;
-		private System.Windows.Forms.MenuItem mnuFileClose;
-		public Girl.HierarchyArchitect.View view1;
+		private System.Windows.Forms.MenuItem mnuHelp;
+		private System.Windows.Forms.MenuItem mnuHelpAbout;
 		private System.ComponentModel.IContainer components;
 
 		public Form1()
@@ -93,17 +89,17 @@ namespace Girl.HierarchyArchitect
 		/// </summary>
 		protected override void Dispose( bool disposing )
 		{
-			if( disposing )
+			if (disposing)
 			{
 				if (components != null) 
 				{
 					components.Dispose();
 				}
 			}
-			base.Dispose( disposing );
+			base.Dispose(disposing);
 
 			m_Forms.Remove(this);
-			if(m_Forms.Count == 0) Application.Exit();
+			if (m_Forms.Count == 0) Application.Exit();
 		}
 
 		#region Windows Form Designer generated code
@@ -115,6 +111,19 @@ namespace Girl.HierarchyArchitect
 		{
 			this.components = new System.ComponentModel.Container();
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Form1));
+			this.toolBar1 = new System.Windows.Forms.ToolBar();
+			this.tbFileNew = new System.Windows.Forms.ToolBarButton();
+			this.tbFileOpen = new System.Windows.Forms.ToolBarButton();
+			this.tbFileSave = new System.Windows.Forms.ToolBarButton();
+			this.tbSeparator1 = new System.Windows.Forms.ToolBarButton();
+			this.tbEditCut = new System.Windows.Forms.ToolBarButton();
+			this.tbEditCopy = new System.Windows.Forms.ToolBarButton();
+			this.tbEditPaste = new System.Windows.Forms.ToolBarButton();
+			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+			this.statusBar1 = new System.Windows.Forms.StatusBar();
+			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+			this.view1 = new Girl.HierarchyArchitect.View();
 			this.mainMenu1 = new System.Windows.Forms.MainMenu();
 			this.mnuFile = new System.Windows.Forms.MenuItem();
 			this.mnuFileNew = new System.Windows.Forms.MenuItem();
@@ -133,20 +142,86 @@ namespace Girl.HierarchyArchitect
 			this.mnuViewStatusBar = new System.Windows.Forms.MenuItem();
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
-			this.toolBar1 = new System.Windows.Forms.ToolBar();
-			this.tbFileNew = new System.Windows.Forms.ToolBarButton();
-			this.tbFileOpen = new System.Windows.Forms.ToolBarButton();
-			this.tbFileSave = new System.Windows.Forms.ToolBarButton();
-			this.tbSeparator1 = new System.Windows.Forms.ToolBarButton();
-			this.tbEditCut = new System.Windows.Forms.ToolBarButton();
-			this.tbEditCopy = new System.Windows.Forms.ToolBarButton();
-			this.tbEditPaste = new System.Windows.Forms.ToolBarButton();
-			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-			this.statusBar1 = new System.Windows.Forms.StatusBar();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-			this.view1 = new Girl.HierarchyArchitect.View();
 			this.SuspendLayout();
+			// 
+			// toolBar1
+			// 
+			this.toolBar1.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
+			this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+																						this.tbFileNew,
+																						this.tbFileOpen,
+																						this.tbFileSave,
+																						this.tbSeparator1,
+																						this.tbEditCut,
+																						this.tbEditCopy,
+																						this.tbEditPaste});
+			this.toolBar1.DropDownArrows = true;
+			this.toolBar1.ImageList = this.imageList1;
+			this.toolBar1.Name = "toolBar1";
+			this.toolBar1.ShowToolTips = true;
+			this.toolBar1.Size = new System.Drawing.Size(392, 25);
+			this.toolBar1.TabIndex = 0;
+			this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
+			// 
+			// tbFileNew
+			// 
+			this.tbFileNew.ImageIndex = 0;
+			this.tbFileNew.ToolTipText = "新規作成 (Ctrl+N)";
+			// 
+			// tbFileOpen
+			// 
+			this.tbFileOpen.ImageIndex = 1;
+			this.tbFileOpen.ToolTipText = "開く (Ctrl+O)";
+			// 
+			// tbFileSave
+			// 
+			this.tbFileSave.ImageIndex = 2;
+			this.tbFileSave.ToolTipText = "上書き保存 (Ctrl+S)";
+			// 
+			// tbSeparator1
+			// 
+			this.tbSeparator1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			// 
+			// tbEditCut
+			// 
+			this.tbEditCut.ImageIndex = 3;
+			this.tbEditCut.ToolTipText = "切り取り (Ctrl+X)";
+			// 
+			// tbEditCopy
+			// 
+			this.tbEditCopy.ImageIndex = 4;
+			this.tbEditCopy.ToolTipText = "コピー (Ctrl+C)";
+			// 
+			// tbEditPaste
+			// 
+			this.tbEditPaste.ImageIndex = 5;
+			this.tbEditPaste.ToolTipText = "貼り付け (Ctrl+V)";
+			// 
+			// imageList1
+			// 
+			this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+			this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+			this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+			// 
+			// statusBar1
+			// 
+			this.statusBar1.Location = new System.Drawing.Point(0, 291);
+			this.statusBar1.Name = "statusBar1";
+			this.statusBar1.Size = new System.Drawing.Size(392, 22);
+			this.statusBar1.TabIndex = 1;
+			// 
+			// saveFileDialog1
+			// 
+			this.saveFileDialog1.FileName = "doc1";
+			// 
+			// view1
+			// 
+			this.view1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.view1.Location = new System.Drawing.Point(0, 25);
+			this.view1.Name = "view1";
+			this.view1.Size = new System.Drawing.Size(392, 266);
+			this.view1.TabIndex = 2;
 			// 
 			// mainMenu1
 			// 
@@ -274,85 +349,6 @@ namespace Girl.HierarchyArchitect
 			this.mnuHelpAbout.Text = "バージョン情報(&A)";
 			this.mnuHelpAbout.Click += new System.EventHandler(this.mnuHelpAbout_Click);
 			// 
-			// toolBar1
-			// 
-			this.toolBar1.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
-			this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-																						this.tbFileNew,
-																						this.tbFileOpen,
-																						this.tbFileSave,
-																						this.tbSeparator1,
-																						this.tbEditCut,
-																						this.tbEditCopy,
-																						this.tbEditPaste});
-			this.toolBar1.DropDownArrows = true;
-			this.toolBar1.ImageList = this.imageList1;
-			this.toolBar1.Name = "toolBar1";
-			this.toolBar1.ShowToolTips = true;
-			this.toolBar1.Size = new System.Drawing.Size(392, 25);
-			this.toolBar1.TabIndex = 0;
-			this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
-			// 
-			// tbFileNew
-			// 
-			this.tbFileNew.ImageIndex = 0;
-			this.tbFileNew.ToolTipText = "新規作成 (Ctrl+N)";
-			// 
-			// tbFileOpen
-			// 
-			this.tbFileOpen.ImageIndex = 1;
-			this.tbFileOpen.ToolTipText = "開く (Ctrl+O)";
-			// 
-			// tbFileSave
-			// 
-			this.tbFileSave.ImageIndex = 2;
-			this.tbFileSave.ToolTipText = "上書き保存 (Ctrl+S)";
-			// 
-			// tbSeparator1
-			// 
-			this.tbSeparator1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-			// 
-			// tbEditCut
-			// 
-			this.tbEditCut.ImageIndex = 3;
-			this.tbEditCut.ToolTipText = "切り取り (Ctrl+X)";
-			// 
-			// tbEditCopy
-			// 
-			this.tbEditCopy.ImageIndex = 4;
-			this.tbEditCopy.ToolTipText = "コピー (Ctrl+C)";
-			// 
-			// tbEditPaste
-			// 
-			this.tbEditPaste.ImageIndex = 5;
-			this.tbEditPaste.ToolTipText = "貼り付け (Ctrl+V)";
-			// 
-			// imageList1
-			// 
-			this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-			this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-			this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-			// 
-			// statusBar1
-			// 
-			this.statusBar1.Location = new System.Drawing.Point(0, 291);
-			this.statusBar1.Name = "statusBar1";
-			this.statusBar1.Size = new System.Drawing.Size(392, 22);
-			this.statusBar1.TabIndex = 1;
-			// 
-			// saveFileDialog1
-			// 
-			this.saveFileDialog1.FileName = "doc1";
-			// 
-			// view1
-			// 
-			this.view1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.view1.Location = new System.Drawing.Point(0, 25);
-			this.view1.Name = "view1";
-			this.view1.Size = new System.Drawing.Size(392, 266);
-			this.view1.TabIndex = 2;
-			// 
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -363,7 +359,7 @@ namespace Girl.HierarchyArchitect
 																		  this.toolBar1});
 			this.Menu = this.mainMenu1;
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "Hierarchy Architect";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.ResumeLayout(false);
 
@@ -376,11 +372,14 @@ namespace Girl.HierarchyArchitect
 		[STAThread]
 		static void Main() 
 		{
+			Application.AddMessageFilter(new MouseWheelMessageFilter());
+
 			ApplicationDataManager adm = new ApplicationDataManager();
 			m_Data1 = WindowSizeData.Load(adm);
 			m_Data2 = ViewData.Load(adm);
 
-			CreateForm().Show();
+			Form1 f = CreateForm();
+			f.Show();
 			Application.Run();
 
 			m_Data1.Save(adm);
@@ -391,7 +390,7 @@ namespace Girl.HierarchyArchitect
 		{
 			Form1 ret = new Form1();
 			m_Forms.Add(ret);
-			new WindowSizeManager(ret, m_Data1);
+			new WindowSizeManager(ret, m_Data1, true);
 			new ViewManager(ret, m_Data2);
 			return ret;
 		}
@@ -402,7 +401,7 @@ namespace Girl.HierarchyArchitect
 			foreach(Form1 f in list)
 			{
 				f.Close();
-				if(f.Visible) break;
+				if (f.Visible) break;
 			}
 		}
 
@@ -450,7 +449,7 @@ namespace Girl.HierarchyArchitect
 
 		private void mnuHelpAbout_Click(object sender, System.EventArgs e)
 		{
-			MessageBox.Show(this, ProductName + " ver." + ProductVersion, "About...");
+			MessageBox.Show(this, m_sCaption/*ProductName*/ + " ver." + ProductVersion, "About...");
 		}
 
 		private void toolBar1_ButtonClick(object sender, System.Windows.Forms.ToolBarButtonClickEventArgs e)
