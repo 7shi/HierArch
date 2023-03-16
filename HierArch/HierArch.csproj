@@ -131,6 +131,10 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "HierArch.exe.manifest"
+                    BuildAction = "None"
+                />
+                <File
                     RelPath = "View.cs"
                     SubType = "UserControl"
                     BuildAction = "Compile"
