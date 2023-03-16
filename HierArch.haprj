@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAProject version="0.1.1142.38933">
+<HAProject version="0.1.1155.42883">
   <HAViewInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <X>256</X>
-    <Y>218</Y>
+    <X>293</X>
+    <Y>225</Y>
     <Width>981</Width>
     <Height>736</Height>
     <State>Normal</State>

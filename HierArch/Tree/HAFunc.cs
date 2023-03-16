@@ -174,11 +174,19 @@ namespace Girl.HierArch
 				this.TargetNode.CommentSelectionStart  = this.CommentTextBox.SelectionStart;
 				this.TargetNode.CommentSelectionLength = this.CommentTextBox.SelectionLength;
 			}
-			if (this.SourceTextBox  != null)
+			if (this.SourceTextBox != null)
 			{
 				this.TargetNode.Source                = this.SourceTextBox.Code;
 				this.TargetNode.SourceSelectionStart  = this.SourceTextBox.SelectionStart;
 				this.TargetNode.SourceSelectionLength = this.SourceTextBox.SelectionLength;
+				if (this.TargetNode.EnableRtf)
+				{
+					this.TargetNode.Rtf = this.SourceTextBox.Rtf;
+				}
+				else
+				{
+					this.TargetNode.Rtf = "";
+				}
 			}
 		}
 
@@ -201,6 +209,8 @@ namespace Girl.HierArch
 				}
 				if (this.SourceTextBox != null)
 				{
+					this.SourceTextBox.Enabled = true;
+					this.SourceTextBox.Clear();
 					if (this.TargetNode.IsObject
 						|| this.TargetNode.Type == HAType.Class
 						|| this.TargetNode == this.Header
@@ -208,15 +218,21 @@ namespace Girl.HierArch
 					{
 						this.SourceTextBox.Parser = this.parser;
 						this.SourceTextBox.DetectUrls = false;
+						this.SourceTextBox.Code = this.TargetNode.Source;
 					}
 					else
 					{
 						this.SourceTextBox.Parser = null;
 						this.SourceTextBox.DetectUrls = true;
+						if (this.TargetNode.EnableRtf && this.TargetNode.Rtf != "")
+						{
+							this.SourceTextBox.Rtf = this.TargetNode.Rtf;
+						}
+						else
+						{
+							this.SourceTextBox.Code = this.TargetNode.Source;
+						}
 					}
-					this.SourceTextBox.Enabled = true;
-					this.SourceTextBox.Clear();
-					this.SourceTextBox.Code = this.TargetNode.Source;
 					this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
 					this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
 				}

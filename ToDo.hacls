@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 22:11:39">
+<HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 22:11:39">
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:45">
       <Arguments />

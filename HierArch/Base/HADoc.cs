@@ -51,6 +51,7 @@ namespace Girl.HierArch
 
 			try
 			{
+				if (!File.Exists(this.FullName)) throw new Exception();
 				xr = new XmlTextReader(this.FullName);
 			}
 			catch
@@ -105,7 +106,7 @@ namespace Girl.HierArch
 			this.ClassTreeView.StoreData();
 			bool ret = false;
 			string lfn = this.FullName.ToLower();
-			if (lfn.EndsWith(".haprj"))
+			if (lfn.EndsWith(".haprj") || lfn.EndsWith(".hamcr"))
 			{
 				ret = SaveHAPrj();
 			}
@@ -203,7 +204,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return "2003/02/16 22:17:45";
+				return "2003/03/02 23:00:06";
 			}
 		}
 
@@ -301,5 +302,13 @@ namespace Girl.HierArch
 		}
 
 		#endregion
+
+		public static string MacroProject
+		{
+			get
+			{
+				return HADoc.UserDir + @"\Macro.hamcr";
+			}
+		}
 	}
 }

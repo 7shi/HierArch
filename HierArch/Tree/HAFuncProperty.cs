@@ -41,5 +41,18 @@ namespace Girl.HierArch
 				this.node.Link = value;
 			}
 		}
+
+		public bool EnableRtf
+		{
+			get
+			{
+				return (this.node as HAFuncNode).EnableRtf;
+			}
+
+			set
+			{
+				(this.node as HAFuncNode).EnableRtf = value;
+			}
+		}
 	}
 }

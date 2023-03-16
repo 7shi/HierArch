@@ -247,6 +247,7 @@ namespace Girl.HierArch
 			this.txtSource.TabIndex = 6;
 			this.txtSource.Text = "";
 			this.txtSource.WordWrap = false;
+			this.txtSource.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtSource_LinkClicked);
 			// 
 			// opaqueSplitter4
 			// 
@@ -271,6 +272,7 @@ namespace Girl.HierArch
 			this.txtComment.TabIndex = 5;
 			this.txtComment.Text = "";
 			this.txtComment.WordWrap = false;
+			this.txtComment.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtComment_LinkClicked);
 			// 
 			// richTextToolBar1
 			// 
@@ -630,6 +632,16 @@ namespace Girl.HierArch
 			{
 				(s as PropertyGrid).Refresh();
 			}
+		}
+
+		private void txtComment_LinkClicked(object sender, System.Windows.Forms.LinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start(e.LinkText);
+		}
+
+		private void txtSource_LinkClicked(object sender, System.Windows.Forms.LinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start(e.LinkText);
 		}
 	}
 }

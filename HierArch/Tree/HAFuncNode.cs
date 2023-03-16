@@ -26,6 +26,8 @@ namespace Girl.HierArch
 		public ArrayList Objects;
 		public string Comment;
 		public string Source;
+		public string Rtf;
+		public bool EnableRtf;
 		public int CommentSelectionStart;
 		public int CommentSelectionLength;
 		public int SourceSelectionStart;
@@ -41,12 +43,14 @@ namespace Girl.HierArch
 			this.Objects = new ArrayList();
 			this.Comment = "";
 			this.Source  = "";
+			this.Rtf     = "";
+			this.EnableRtf = false;
 			this.CommentSelectionStart  = 0;
 			this.CommentSelectionLength = 0;
 			this.SourceSelectionStart   = 0;
 			this.SourceSelectionLength  = 0;
 			this.PropertyPair = null;
-			this.Property     = new HAFuncProperty(this);
+			this.Property = new HAFuncProperty(this);
 		}
 
 		/// <summary>
@@ -115,6 +119,8 @@ namespace Girl.HierArch
 			ret.Objects = this.Objects.Clone() as ArrayList;
 			ret.Comment = this.Comment;
 			ret.Source  = this.Source;
+			ret.Rtf     = this.Rtf;
+			ret.EnableRtf = this.EnableRtf;
 			ret.CommentSelectionStart  = this.CommentSelectionStart;
 			ret.CommentSelectionLength = this.CommentSelectionLength;
 			ret.SourceSelectionStart   = this.SourceSelectionStart;
@@ -232,6 +238,13 @@ namespace Girl.HierArch
 			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.SourceSelectionLength));
 			xw.WriteString(this.Source);
 			xw.WriteEndElement();
+			
+			if (this.EnableRtf)
+			{
+				xw.WriteStartElement("RichTextFormat");
+				xw.WriteString(this.Rtf);
+				xw.WriteEndElement();
+			}
 		}
 
 		public override void ReadXmlNode(XmlTextReader xr)
@@ -252,23 +265,31 @@ namespace Girl.HierArch
 					}
 				}
 			}
-			else if (xr.Name == "HAObject" && xr.NodeType == XmlNodeType.Element)
+			else if (xr.NodeType == XmlNodeType.Element)
 			{
-				HAObjectNode n = new HAObjectNode();
-				this.Objects.Add(n);
-				n.FromXml(xr);
-			}
-			else if (xr.Name == "Comment" && xr.NodeType == XmlNodeType.Element)
-			{
-				this.CommentSelectionStart  = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
-				this.CommentSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
-				if (!xr.IsEmptyElement && xr.Read()) this.Comment = xr.ReadString();
-			}
-			else if (xr.Name == "Source" && xr.NodeType == XmlNodeType.Element)
-			{
-				this.SourceSelectionStart  = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
-				this.SourceSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
-				if (!xr.IsEmptyElement && xr.Read()) this.Source = xr.ReadString();
+				if (xr.Name == "HAObject")
+				{
+					HAObjectNode n = new HAObjectNode();
+					this.Objects.Add(n);
+					n.FromXml(xr);
+				}
+				else if (xr.Name == "Comment")
+				{
+					this.CommentSelectionStart  = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
+					this.CommentSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
+					if (!xr.IsEmptyElement && xr.Read()) this.Comment = xr.ReadString();
+				}
+				else if (xr.Name == "Source")
+				{
+					this.SourceSelectionStart  = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
+					this.SourceSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
+					if (!xr.IsEmptyElement && xr.Read()) this.Source = xr.ReadString();
+				}
+				else if (xr.Name == "RichTextFormat")
+				{
+					this.EnableRtf = true;
+					if (!xr.IsEmptyElement && xr.Read()) this.Rtf = xr.ReadString();
+				}
 			}
 		}
 

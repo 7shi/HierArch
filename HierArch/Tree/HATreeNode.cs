@@ -450,6 +450,7 @@ namespace Girl.HierArch
 
 		public bool Synchronize(HAUploaderManager manager, LinkRichTextBox output)
 		{
+			this.ForeColor = this.TreeView.ForeColor;
 			if (!this.SynchronizeThis(manager, output)) return false;
 			
 			foreach (TreeNode n in this.Nodes)
@@ -593,15 +594,16 @@ namespace Girl.HierArch
 			output.AppendLine(fileInfo.Name + ": アップロードしています...");
 			output.ShowLast();
 			string res = fileInfo.Upload(this.link);
-			if (res == null)
+			if (res != null)
 			{
-				fileInfo.LastWriteTime = DateTime.Now;
-				return true;
+				output.AppendLine(string.Format("エラー: {0}", res), Color.Red);
+				output.ShowLast();
+				return false;
 			}
 			
-			output.AppendLine(string.Format("エラー: {0}", res), Color.Red);
-			output.ShowLast();
-			return false;
+			fileInfo.LastWriteTime = DateTime.Now;
+			this.ForeColor = Color.Blue;
+			return true;
 		}
 
 		private bool Download(HAUploaderFileInfo fi, FileInfo fi2, LinkRichTextBox output, byte[] data)
@@ -648,6 +650,8 @@ namespace Girl.HierArch
 				output.ShowLast();
 				return false;
 			}
+			
+			this.ForeColor = Color.Red;
 			return true;
 		}
 

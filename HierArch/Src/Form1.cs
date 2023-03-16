@@ -19,6 +19,7 @@ namespace Girl.HierArch
 		private static ViewData viewData;
 		private static ArrayList forms = new ArrayList();
 		public static HAAccountManager AccountManager = new HAAccountManager();
+		protected static HAMacroForm MacroForm = null;
 
 		private HADoc document = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
@@ -82,8 +83,8 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuOptionSmartHome;
 		private System.Windows.Forms.MenuItem mnuOptionSmartParenthesis;
 		private System.ComponentModel.IContainer components;
-		private System.Windows.Forms.ToolBarButton tbBuildGenerate;
-		private System.Windows.Forms.MenuItem mnuBuildGenerate;
+		protected System.Windows.Forms.ToolBarButton tbBuildGenerate;
+		protected System.Windows.Forms.MenuItem mnuBuildGenerate;
 		private System.Windows.Forms.MenuItem mnuBuildBuild;
 		private System.Windows.Forms.MenuItem mnuBuildRun;
 		private EditManager editManager = new EditManager();
@@ -106,6 +107,7 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuViewOutput;
 		private System.Windows.Forms.MenuItem mnuProject;
 		private System.Windows.Forms.MenuItem mnuProjectSynchronize;
+		private System.Windows.Forms.MenuItem mnuViewMacro;
 		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
 		public Form1()
@@ -118,6 +120,9 @@ namespace Girl.HierArch
 			//
 			// TODO: InitializeComponent 呼び出しの後に、コンストラクタ コードを追加してください。
 			//
+			Form1.forms.Add(this);
+			new ViewManager(this, Form1.viewData);
+
 			this.m_sCaption = Text;
 			this.SetCaption();
 			this.SetDocument();
@@ -179,7 +184,7 @@ namespace Girl.HierArch
 			base.Dispose(disposing);
 
 			Form1.forms.Remove(this);
-			if (Form1.forms.Count == 0) Application.Exit();
+			if (Form1.forms.Count < 1) Application.Exit();
 		}
 
 		#region Windows Form Designer generated code
@@ -272,6 +277,7 @@ namespace Girl.HierArch
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.lrtOutput = new Girl.Windows.Forms.LinkRichTextBox();
 			this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
+			this.mnuViewMacro = new System.Windows.Forms.MenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
@@ -541,6 +547,7 @@ namespace Girl.HierArch
 			this.mnuView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					this.mnuViewToolBar,
 																					this.mnuViewStatusBar,
+																					this.mnuViewMacro,
 																					this.mnuViewSeparator1,
 																					this.mnuViewClass,
 																					this.mnuViewFunc,
@@ -566,60 +573,60 @@ namespace Girl.HierArch
 			// 
 			// mnuViewSeparator1
 			// 
-			this.mnuViewSeparator1.Index = 2;
+			this.mnuViewSeparator1.Index = 3;
 			this.mnuViewSeparator1.Text = "-";
 			// 
 			// mnuViewClass
 			// 
 			this.mnuViewClass.Checked = true;
-			this.mnuViewClass.Index = 3;
+			this.mnuViewClass.Index = 4;
 			this.mnuViewClass.Text = "クラス(&C)";
 			this.mnuViewClass.Click += new System.EventHandler(this.mnuViewClass_Click);
 			// 
 			// mnuViewFunc
 			// 
 			this.mnuViewFunc.Checked = true;
-			this.mnuViewFunc.Index = 4;
+			this.mnuViewFunc.Index = 5;
 			this.mnuViewFunc.Text = "関数(&F)";
 			this.mnuViewFunc.Click += new System.EventHandler(this.mnuViewFunc_Click);
 			// 
 			// mnuViewMember
 			// 
 			this.mnuViewMember.Checked = true;
-			this.mnuViewMember.Index = 5;
+			this.mnuViewMember.Index = 6;
 			this.mnuViewMember.Text = "メンバ(&M)";
 			this.mnuViewMember.Click += new System.EventHandler(this.mnuViewMember_Click);
 			// 
 			// mnuViewArg
 			// 
 			this.mnuViewArg.Checked = true;
-			this.mnuViewArg.Index = 6;
+			this.mnuViewArg.Index = 7;
 			this.mnuViewArg.Text = "引数(&A)";
 			this.mnuViewArg.Click += new System.EventHandler(this.mnuViewArg_Click);
 			// 
 			// mnuViewObject
 			// 
 			this.mnuViewObject.Checked = true;
-			this.mnuViewObject.Index = 7;
+			this.mnuViewObject.Index = 8;
 			this.mnuViewObject.Text = "変数(&O)";
 			this.mnuViewObject.Click += new System.EventHandler(this.mnuViewObject_Click);
 			// 
 			// mnuViewSeparator2
 			// 
-			this.mnuViewSeparator2.Index = 8;
+			this.mnuViewSeparator2.Index = 9;
 			this.mnuViewSeparator2.Text = "-";
 			// 
 			// mnuViewComment
 			// 
 			this.mnuViewComment.Checked = true;
-			this.mnuViewComment.Index = 9;
+			this.mnuViewComment.Index = 10;
 			this.mnuViewComment.Text = "注釈(&E)";
 			this.mnuViewComment.Click += new System.EventHandler(this.mnuViewComment_Click);
 			// 
 			// mnuViewOutput
 			// 
 			this.mnuViewOutput.Checked = true;
-			this.mnuViewOutput.Index = 10;
+			this.mnuViewOutput.Index = 11;
 			this.mnuViewOutput.Text = "出力(&U)";
 			this.mnuViewOutput.Click += new System.EventHandler(this.mnuViewOutput_Click);
 			// 
@@ -830,6 +837,12 @@ namespace Girl.HierArch
 			this.opaqueSplitter1.TabIndex = 4;
 			this.opaqueSplitter1.TabStop = false;
 			// 
+			// mnuViewMacro
+			// 
+			this.mnuViewMacro.Index = 2;
+			this.mnuViewMacro.Text = "マクロ(&R)";
+			this.mnuViewMacro.Click += new System.EventHandler(this.mnuViewMacro_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -868,14 +881,14 @@ namespace Girl.HierArch
 			Form1 f;
 			if (args.GetLength(0) < 1)
 			{
-				f = CreateForm();
+				f = new Form1();
 				f.Show();
 			}
 			else
 			{
 				foreach (string fn in args)
 				{
-					f = CreateForm();
+					f = new Form1();
 					f.Show();
 					f.Open(fn);
 				}
@@ -886,12 +899,11 @@ namespace Girl.HierArch
 			Form1.AccountManager.Save(adm);
 		}
 
-		private static Form1 CreateForm()
+		private static void CreateMacroWindow()
 		{
-			Form1 ret = new Form1();
-			Form1.forms.Add(ret);
-			new ViewManager(ret, Form1.viewData);
-			return ret;
+			if (Form1.MacroForm != null) return;
+
+			Form1.MacroForm = new HAMacroForm();
 		}
 
 		private static void Exit()
@@ -904,11 +916,23 @@ namespace Girl.HierArch
 			}
 		}
 
+		public FormWindowState LastState = FormWindowState.Normal;
+
+		protected override void OnResize(EventArgs e)
+		{
+			if (this.WindowState != FormWindowState.Minimized)
+			{
+				this.LastState = this.WindowState;
+			}
+
+			base.OnResize(e);
+		}
+
 		#region Menu
 
 		private void mnuFileNew_Click(object sender, System.EventArgs e)
 		{
-			Form1.CreateForm().Show();
+			new Form1().Show();
 		}
 
 		private void mnuFileOpen_Click(object sender, System.EventArgs e)
@@ -959,6 +983,24 @@ namespace Girl.HierArch
 
 			this.mnuViewClass.Checked = visible;
 			this.view1.SetPanel1(visible, this.view1.tabFunc.Visible);
+		}
+
+		private void mnuViewMacro_Click(object sender, System.EventArgs e)
+		{
+			Form1.CreateMacroWindow();
+
+			if (!Form1.MacroForm.Visible)
+			{
+				Form1.MacroForm.Show();
+			}
+			else
+			{
+				if (Form1.MacroForm.WindowState == FormWindowState.Minimized)
+				{
+					Form1.MacroForm.WindowState = Form1.MacroForm.LastState;
+				}
+				Form1.MacroForm.Focus();
+			}
 		}
 
 		private void mnuViewFunc_Click(object sender, System.EventArgs e)
@@ -1114,7 +1156,7 @@ namespace Girl.HierArch
 			Form1 target = this;
 			if(this.document.Changed || this.document.FullName != "")
 			{
-				target = CreateForm();
+				target = new Form1();
 				target.Show();
 			}
 			return target.Open(openFileDialog1.FileName);
@@ -1123,10 +1165,15 @@ namespace Girl.HierArch
 		public bool Open(string fn)
 		{
 			this.document.FullName = fn;
+
+			Cursor cur = Cursor.Current;
+			Cursor.Current = Cursors.WaitCursor;
 			bool ret = this.document.Open();
 			SetCaption();
 			SetDocument();
 			view1.Focus();
+			Cursor.Current = cur;
+
 			return ret;
 		}
 
@@ -1134,9 +1181,13 @@ namespace Girl.HierArch
 		{
 			if(this.document.FullName == "") return SaveAs();
 
+			Cursor cur = Cursor.Current;
+			Cursor.Current = Cursors.WaitCursor;
 			this.document.ViewInfo.Store(this);
 			bool ret = this.document.Save();
 			SetCaption();
+			Cursor.Current = cur;
+
 			return ret;
 		}
 

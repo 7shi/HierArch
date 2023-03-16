@@ -35,7 +35,55 @@
       <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
-  <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 21:45:14">
+  <HAClass Type="Public" Text="HAMacroForm:Form1" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 16:15:13">
+    <Header>
+      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/03/02 16:07:36">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+      </HAFunc>
+    </Header>
+    <Body>
+      <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/03/02 16:07:50">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 16:12:15">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="109" SelectionLength="0">this.mnuBuildGenerate.Enabled = false;
+this. tbBuildGenerate.Enabled = false;
+this.Open(HADoc.MacroProject);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="Dispose:override" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/02 16:15:13">
+          <Arguments>
+            <HAObject Type="Private" Text="disposing:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/02 16:14:41" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="49" SelectionLength="0">Form1.MacroForm = null;
+base.Dispose(disposing);
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </Body>
+    <Footer>
+      <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/03/02 16:07:36">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+      </HAFunc>
+    </Footer>
+  </HAClass>
+  <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 15:37:51">
     <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <HAObject Type="Public" Text="ViewInfo:HAViewInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <Header>
@@ -56,9 +104,9 @@ using Girl.Windows.Forms;
       </HAFunc>
     </Header>
     <Body>
-      <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:45">
+      <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/03/02 15:19:44">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+        <Comment SelectionStart="37" SelectionLength="0">&lt;summary&gt;
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
@@ -84,13 +132,14 @@ if (p &lt; 0) return ret;
 return ret.Substring(0, p);
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="Open:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+        <HAFunc Type="Public" Text="Open:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 15:19:01">
           <Arguments />
           <HAObject Type="Private" Text="xr:XmlTextReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           <HAObject Type="Private" Text="n:HAClassNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="92" SelectionLength="0">try
+          <Source SelectionStart="12" SelectionLength="0">try
 {
+	if (!File.Exists(this.FullName)) throw new Exception();
 	xr = new XmlTextReader(this.FullName);
 }
 catch
@@ -140,13 +189,13 @@ Changed = false;
 return true;
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="Save:override bool" IsExpanded="true" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+        <HAFunc Type="Public" Text="Save:override bool" IsExpanded="true" IsSelected="true" AllowDrag="true" LastModified="2003/03/02 15:37:51">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="331" SelectionLength="0">this.ClassTreeView.StoreData();
+          <Source SelectionStart="357" SelectionLength="0">this.ClassTreeView.StoreData();
 bool ret = false;
 string lfn = this.FullName.ToLower();
-if (lfn.EndsWith(".haprj"))
+if (lfn.EndsWith(".haprj") || lfn.EndsWith(".hamcr"))
 {
 	ret = SaveHAPrj();
 }
@@ -341,6 +390,12 @@ parameters.CompilerOptions = "/target:library";
 return icc.CompileAssemblyFromFile(parameters, source);
 </Source>
           </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="get_MacroProject:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 15:36:22">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="42" SelectionLength="0">return __CLASS.UserDir + @"\Macro.hamcr";
+</Source>
         </HAFunc>
       </HAFunc>
     </Body>
