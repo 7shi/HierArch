@@ -27,29 +27,12 @@ namespace Girl.HierArch
 		public HAObject()
 		{
 			this.dataFormat = "HierArch Object Data";
-			
 			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1 = new ContextMenu();
 			this.HideSelection = false;
 			this.LabelEdit = true;
 			this.ImageList = this.imageList1;
-			
-			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
-				{
-					mnuType = new MenuItem("種類変更(&T)", new MenuItem[]
-						{
-							this.mnuTypeObject = new MenuItem("変数(&O)", MenuNodeTypeHandler),
-							this.mnuFolder,
-							this.mnuEtc
-						}),
-					new MenuItem("-"),
-					this.mnuChild,
-					this.mnuAppend,
-					this.mnuInsert,
-					new MenuItem("-"),
-					this.mnuDelete,
-					this.mnuRename
-				});
+			this.contextMenu1.MenuItems.AddRange(new MenuItem[] { mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { this.mnuTypeObject = new MenuItem("変数(&O)", MenuNodeTypeHandler), this.mnuFolder, this.mnuEtc }), new MenuItem("-"), this.mnuChild, this.mnuAppend, this.mnuInsert, new MenuItem("-"), this.mnuDelete, this.mnuRename });
 			menuType.Add(this.mnuTypeObject, HAType.Private);
 		}
 
@@ -63,7 +46,7 @@ namespace Girl.HierArch
 		protected override void SetState()
 		{
 			HAObjectNode n = this.SelectedNode as HAObjectNode;
-			mnuType.Enabled = mnuDelete.Enabled = mnuRename.Enabled = (n != null);
+			mnuType.Enabled = mnuDelete.Enabled = mnuRename.Enabled =(n != null);
 		}
 
 		protected override HATreeNode NewNode

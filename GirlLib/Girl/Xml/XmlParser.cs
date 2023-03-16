@@ -66,22 +66,21 @@ namespace Girl.Xml
 			int ch;
 			int state;
 
-			data    = new MemoryStream();
+			data = new MemoryStream();
 			element = new MemoryStream();
-			state   = 0;
-			
+			state = 0;
 			while ((ch = stream.ReadByte()) != -1)
 			{
-				if ((state == 1 || state == 4) && ch == (int)'>')
+				if ((state == 1 || state == 4) && ch ==(int) '>')
 				{
 					break;
 				}
-				else if (ch == (int)'<')
+				else if (ch ==(int) '<')
 				{
 					if (state == 1)
 					{
-						data.WriteByte((byte)ch);
-						data.Write(element.ToArray(), 0, (int)element.Length);
+						data.WriteByte((byte) ch);
+						data.Write(element.ToArray(), 0,(int) element.Length);
 						element.SetLength(0);
 					}
 					else
@@ -91,18 +90,16 @@ namespace Girl.Xml
 				}
 				else if (state >= 1)
 				{
-					element.WriteByte((byte)ch);
+					element.WriteByte((byte) ch);
 					if (element.Length == 3)
 					{
-						byte[] e = element.ToArray();
-						if (e[0] == (byte)'!'
-							&& e[1] == (byte)'-'
-							&& e[2] == (byte)'-')
+						byte [] e = element.ToArray();
+						if (e[0] ==(byte) '!' && e[1] ==(byte) '-' && e[2] ==(byte) '-')
 						{
 							state = 2;
 						}
 					}
-					if ((state == 2 || state == 3) && ch == (int)'-')
+					if ((state == 2 || state == 3) && ch ==(int) '-')
 					{
 						state++;
 					}
@@ -113,7 +110,7 @@ namespace Girl.Xml
 				}
 				else
 				{
-					data.WriteByte((byte)ch);
+					data.WriteByte((byte) ch);
 				}
 			}
 			this.element = this.ConvertString(element.ToArray());
@@ -123,7 +120,6 @@ namespace Girl.Xml
 			data.Close();
 			element.Close();
 			if (this.element.Length < 1) return false;
-			
 			this.Parse();
 			return true;
 		}
@@ -133,7 +129,7 @@ namespace Girl.Xml
 			char[] chars;
 
 			if (bytes.Length < 1) return "";
-			chars = new char[this.dec.GetCharCount(bytes, 0, bytes.Length)];
+			chars = new char [this.dec.GetCharCount(bytes, 0, bytes.Length)];
 			this.dec.GetChars(bytes, 0, bytes.Length, chars, 0);
 			return new String(chars);
 		}
@@ -156,17 +152,16 @@ namespace Girl.Xml
 				if (ad.Length > 0) this.attr["value"] = ad;
 				return;
 			}
-			
 			aname = new StringBuilder();
 			adata = new StringBuilder();
 			xmlState = state = 0;
 			len = this.element.Length;
 			quot = '\0';
-			for (int i = 0; i <= len; i++) {
-				ch = (i < len) ? this.element[i] : '\0';
-				if (i == len
-					|| (quot == '\0' && (ch == ' ' || ch == '\r' || ch == '\n' || ch == '\t'))
-					|| (state == 4 && ch == quot))
+			for (int i = 0; i <= len; i++)
+			{
+				ch =(i < len) ? this.element[i]:
+				'\0';
+				if (i == len ||(quot == '\0' &&(ch == ' ' || ch == '\r' || ch == '\n' || ch == '\t')) ||(state == 4 && ch == quot))
 				{
 					if (state == 1)
 					{
@@ -182,8 +177,8 @@ namespace Girl.Xml
 						quot = '\0';
 						if (aname.Length > 0 && adata.Length > 0)
 						{
-							string an = this.letter ? aname.ToString()
-								: aname.ToString().ToLower();
+							string an = this.letter ? aname.ToString():
+							aname.ToString().ToLower();
 							this.attr[an] = adata.ToString();
 						}
 						if (aname.Length > 0) aname.Remove(0, aname.Length);
@@ -220,7 +215,7 @@ namespace Girl.Xml
 						continue;
 					}
 				}
-				if (ch == '?' && (state == 1 || state == 3))
+				if (ch == '?' &&(state == 1 || state == 3))
 				{
 					xmlState = 3;
 					continue;
@@ -242,7 +237,7 @@ namespace Girl.Xml
 				}
 				else if (state == 4)
 				{
-					if (quot == '\0' && (ch == '"' || ch == '\''))
+					if (quot == '\0' &&(ch == '"' || ch == '\''))
 					{
 						quot = ch;
 					}
@@ -253,18 +248,14 @@ namespace Girl.Xml
 				}
 			}
 			if (!letter) this.name = this.name.ToLower();
-			
 			switch (xmlState)
 			{
-				case 1:
-					this.name = "/" + this.name;
-					break;
-				case 2:
-					this.name += "/";
-					break;
-				case 3:
-					this.name = "?" + this.name;
-					break;
+				case 1: this.name = "/" + this.name;
+				break;
+				case 2: this.name += "/";
+				break;
+				case 3: this.name = "?" + this.name;
+				break;
 			}
 		}
 	}

@@ -19,7 +19,7 @@ namespace Girl.HierArch
 		private static ViewData viewData;
 		private static ArrayList forms = new ArrayList();
 		public static HAAccountManager AccountManager = new HAAccountManager();
-		protected static HAMacroForm MacroForm = null;
+		public static HAMacroForm MacroForm = null;
 
 		private HADoc document = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
@@ -184,7 +184,16 @@ namespace Girl.HierArch
 			base.Dispose(disposing);
 
 			Form1.forms.Remove(this);
-			if (Form1.forms.Count < 1) Application.Exit();
+			bool ok = true;
+			foreach (object obj in Form1.forms)
+			{
+				if ((obj as Form).Visible)
+				{
+					ok = false;
+					break;
+				}
+			}
+			if (ok) Application.Exit();
 		}
 
 		#region Windows Form Designer generated code
@@ -1101,6 +1110,9 @@ namespace Girl.HierArch
 
 			Cursor cur = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
+			Form1.CreateMacroWindow();
+			if (Form1.MacroForm.Visible) Form1.MacroForm.view1.tvClass.StoreData();
+			Form1.MacroForm.SetMacros();
 			this.document.Make();
 			this.view1.GenerateAll(path);
 			Cursor.Current = cur;

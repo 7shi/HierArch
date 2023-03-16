@@ -26,14 +26,12 @@ namespace Girl.Windows.Forms
 			this.WordWrap = false;
 			this.Font = new Font("ＭＳ ゴシック", 9);
 			//this.ShowSelectionMargin = true;
-			
 			this.Parser = null;
 		}
 
 		public void JumpToError(Point p)
 		{
 			if (p.X < 0 || p.Y < 0) return;
-			
 			this.SelectionStart = this.GetLinePosition(p.Y) + p.X;
 			this.SelectionLength = 0;
 			if (this.Parser != null)
@@ -84,13 +82,11 @@ namespace Girl.Windows.Forms
 					this.Text = value;
 					return;
 				}
-				
 				StringReader sr = new StringReader(value);
 				this.Parser.Reader = sr;
 				this.Parser.Color_Default = this.ForeColor;
 				this.Parser.Parse();
 				sr.Close();
-				
 				this.Rtf = this.Parser.Rtf;
 			}
 		}
@@ -99,14 +95,12 @@ namespace Girl.Windows.Forms
 		{
 			int pos = this.SelectionStart;
 			int len = this.SelectionLength;
-			
 			InternalHScrollBar hbar = new InternalHScrollBar(this);
 			InternalVScrollBar vbar = new InternalVScrollBar(this);
 			int hpos = hbar.Pos;
 			int vpos = vbar.Pos;
-			
 			this.Code = this.Code;
-			this.SelectionStart  = pos;
+			this.SelectionStart = pos;
 			this.SelectionLength = len;
 			hbar.Pos = hpos;
 			vbar.Pos = vpos;

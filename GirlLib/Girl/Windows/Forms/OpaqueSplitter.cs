@@ -40,25 +40,21 @@ namespace Girl.Windows.Forms
 				int pos = this.SplitPosition;
 				switch (Dock)
 				{
-					case DockStyle.Left:
-						a = this.Left - pos;
-						pos = e.SplitX - a;
-						break;
-					case DockStyle.Right:
-						a = this.Left + pos;
-						pos = a - e.SplitX;
-						break;
-					case DockStyle.Top:
-						a = this.Top - pos;
-						pos = e.SplitY - a;
-						break;
-					case DockStyle.Bottom:
-						a = this.Top + pos;
-						pos = a - e.SplitY;
-						break;
+					case DockStyle.Left: a = this.Left - pos;
+					pos = e.SplitX - a;
+					break;
+					case DockStyle.Right: a = this.Left + pos;
+					pos = a - e.SplitX;
+					break;
+					case DockStyle.Top: a = this.Top - pos;
+					pos = e.SplitY - a;
+					break;
+					case DockStyle.Bottom: a = this.Top + pos;
+					pos = a - e.SplitY;
+					break;
 				}
 				if (this.SplitPosition != pos) this.SplitPosition = pos;
-			} 
+			}
 			base.OnSplitterMoving(e);
 		}
 	}

@@ -16,7 +16,7 @@ namespace Girl.Rtf
 		private void Init()
 		{
 			this.Name = this.Family = "";
-			this.CharSet = (int)Girl.Text.CharSet.Default;
+			this.CharSet =(int) Girl.Text.CharSet.Default;
 		}
 
 		/// <summary>
@@ -35,39 +35,36 @@ namespace Girl.Rtf
 		public RtfFont(string name)
 		{
 			this.Init();
-			
-			this.Name   = RtfObject.ConvertLocalText(name);
+			this.Name = RtfObject.ConvertLocalText(name);
 			this.Family = "nil";
 		}
 
 		public RtfFont(string name, string family)
 		{
 			this.Init();
-			
-			this.Name   = RtfObject.ConvertLocalText(name);
+			this.Name = RtfObject.ConvertLocalText(name);
 			this.Family = family;
 		}
 
 		public RtfFont(string name, string family, int charSet)
 		{
-			this.Name    = RtfObject.ConvertLocalText(name);
-			this.Family  = family;
+			this.Name = RtfObject.ConvertLocalText(name);
+			this.Family = family;
 			this.CharSet = charSet;
 		}
 
 		public RtfFont(Font f)
 		{
 			this.Init();
-			
-			this.Name    = RtfObject.ConvertLocalText(f.Name);
-			this.Family  = "nil";
-			this.CharSet = (int)f.GdiCharSet;
+			this.Name = RtfObject.ConvertLocalText(f.Name);
+			this.Family = "nil";
+			this.CharSet =(int) f.GdiCharSet;
 		}
 
 		public RtfFont(RtfFont font)
 		{
-			this.Name    = font.Name;
-			this.Family  = font.Family;
+			this.Name = font.Name;
+			this.Family = font.Family;
 			this.CharSet = font.CharSet;
 		}
 
@@ -77,7 +74,6 @@ namespace Girl.Rtf
 
 			this.Init();
 			if (font.RtfObjects.Count < 1) return;
-			
 			foreach (object obj in font.RtfObjects)
 			{
 				ro = obj as RtfObject;
@@ -110,8 +106,7 @@ namespace Girl.Rtf
 
 		public override string ToString()
 		{
-			return string.Format("{0}, {1}, {2}",
-				this.Name, this.Family, this.CharSet);
+			return string.Format("{0}, {1}, {2}", this.Name, this.Family, this.CharSet);
 		}
 
 		public override int GetHashCode()
@@ -125,10 +120,7 @@ namespace Girl.Rtf
 
 			rf = obj as RtfFont;
 			if (rf == null) return false;
-			
-			return this.Name == rf.Name
-				&& this.Family == rf.Family
-				&& this.CharSet == rf.CharSet;
+			return this.Name == rf.Name && this.Family == rf.Family && this.CharSet == rf.CharSet;
 		}
 	}
 }

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CodeWriter:StreamWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 0:51:25">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/03/16 0:46:53">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="88" SelectionLength="0">using System;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/03/16 0:47:09">
+      <Arguments />
+      <Comment SelectionStart="23" SelectionLength="0">&lt;summary&gt;
+ソースコードを出力します。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="310" SelectionLength="0">private int indent = 0;
+public string IndentString = "\t";
+private string indentString = "";
+private int curLine = 1;
+private int startLine = 1;
+public string ClassName = "";
+
+public CodeWriter(Stream stream) : base(stream)
+{
+}
+
+public CodeWriter(Stream stream, Encoding encoding) : base(stream, encoding)
+{
+}
+</Source>
+      <HAFunc Type="Public" Text="SetStart" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:51:09">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="31" SelectionLength="0">this.startLine = this.curLine;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Indent:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:47:30">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="20" SelectionLength="0">return this.indent;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_CurLine:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:47:55">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="21" SelectionLength="0">return this.curLine;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="ReplaceKeywords:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 0:50:20">
+        <Arguments>
+          <HAObject Type="Private" Text="str:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 0:50:13" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="148" SelectionLength="0">string ret = new Regex(@"\b__CLASS\b").Replace(str, this.ClassName);
+return new Regex(@"\b__DATETIME_NOW\b").Replace(ret, DateTime.Now.ToString());
+</Source>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="Write" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:50:28">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="WriteCode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:50:39">
+          <Arguments>
+            <HAObject Type="Private" Text="code:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 0:48:56" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="58" SelectionLength="0">this.WriteLine(this.indentString + code);
+this.curLine++;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteCodes" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:50:42">
+          <Arguments>
+            <HAObject Type="Private" Text="prefix:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:49:30" />
+            <HAObject Type="Private" Text="codes:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 0:49:32" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="353" SelectionLength="0">codes = codes.Replace("\r\n", "\n");
+int ps = 0, pe = codes.Length;
+while (ps &lt; codes.Length &amp;&amp; codes[ps] == '\n') ps++;
+while (pe &gt; 0 &amp;&amp; codes[pe - 1] == '\n') pe--;
+if (ps == pe) return;
+
+string[] lines = codes.Substring(ps, pe - ps).Split('\n');
+foreach (string line in lines)
+{
+	this.WriteLine(this.indentString + prefix + line);
+	this.curLine++;
+}
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteCodes" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:50:41">
+          <Arguments>
+            <HAObject Type="Private" Text="codes:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 0:49:11" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="28" SelectionLength="0">this.WriteCodes("", codes);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteBlankLine" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:51:00">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="79" SelectionLength="0">if (this.curLine == this.startLine) return;
+
+this.WriteLine();
+this.curLine++;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteStartBlock" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:50:32">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="72" SelectionLength="0">this.WriteCode("{");
+this.indent++;
+this.MakeIndent();
+this.SetStart();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteStartBlock" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:50:34">
+          <Arguments>
+            <HAObject Type="Private" Text="code:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 0:48:25" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="46" SelectionLength="0">this.WriteCode(code);
+this.WriteStartBlock();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteEndBlock" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:50:37">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="85" SelectionLength="0">if (this.indent &lt; 1) return;
+
+this.indent--;
+this.MakeIndent();
+this.WriteCode("}");
+</Source>
+        </HAFunc>
+        <HAFunc Type="Private" Text="MakeIndent" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:51:25">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="143" SelectionLength="0">StringBuilder sb = new StringBuilder();
+for (int i = 0; i &lt; this.indent; i++) sb.Append(this.IndentString);
+this.indentString = sb.ToString();
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/03/16 0:46:07">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

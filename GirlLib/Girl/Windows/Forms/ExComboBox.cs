@@ -23,17 +23,14 @@ namespace Girl.Windows.Forms
 			const int WM_KEYDOWN = 256;
 			if (m.Msg == WM_KEYDOWN && !this.DroppedDown)
 			{
-				switch ((int)m.WParam)
+				switch ((int) m.WParam)
 				{
-					case 13:
-						if (this.EscapeKeyPress != null) this.EnterKeyPress(this, EventArgs.Empty);
-						return true;
-					case 27:
-						if (this.EscapeKeyPress != null) this.EscapeKeyPress(this, EventArgs.Empty);
-						return true;
+					case 13: if (this.EscapeKeyPress != null) this.EnterKeyPress(this, EventArgs.Empty);
+					return true;
+					case 27: if (this.EscapeKeyPress != null) this.EscapeKeyPress(this, EventArgs.Empty);
+					return true;
 				}
 			}
-			
 			return base.PreProcessMessage(ref m);
 		}
 	}

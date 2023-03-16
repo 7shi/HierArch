@@ -84,9 +84,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return (this.m_Type == HAType.Public
-					|| this.m_Type == HAType.Protected
-					|| this.m_Type == HAType.Private);
+				return (this.m_Type == HAType.Public || this.m_Type == HAType.Protected || this.m_Type == HAType.Private);
 			}
 		}
 
@@ -96,13 +94,7 @@ namespace Girl.HierArch
 			{
 				switch (this.m_Type)
 				{
-					case HAType.Text:
-					case HAType.TextBlue:
-					case HAType.TextBrown:
-					case HAType.TextGray:
-					case HAType.TextGreen:
-					case HAType.TextRed:
-						return true;
+					case HAType.Text: case HAType.TextBlue: case HAType.TextBrown: case HAType.TextGray: case HAType.TextGreen: case HAType.TextRed: return true;
 				}
 				return false;
 			}
@@ -112,8 +104,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return (this.IsRealFolder
-					|| this.m_Type == HAType.FolderGray || this.m_Type == HAType.FolderGray_Open);
+				return (this.IsRealFolder || this.m_Type == HAType.FolderGray || this.m_Type == HAType.FolderGray_Open);
 			}
 		}
 
@@ -123,17 +114,7 @@ namespace Girl.HierArch
 			{
 				switch (this.m_Type)
 				{
-					case HAType.Folder:
-					case HAType.Folder_Open:
-					case HAType.FolderBlue:
-					case HAType.FolderBule_Open:
-					case HAType.FolderBrown:
-					case HAType.FolderBrown_Open:
-					case HAType.FolderGreen:
-					case HAType.FolderGreen_Open:
-					case HAType.FolderRed:
-					case HAType.FolderRed_Open:
-						return true;
+					case HAType.Folder: case HAType.Folder_Open: case HAType.FolderBlue: case HAType.FolderBule_Open: case HAType.FolderBrown: case HAType.FolderBrown_Open: case HAType.FolderGreen: case HAType.FolderGreen_Open: case HAType.FolderRed: case HAType.FolderRed_Open: return true;
 				}
 				return false;
 			}
@@ -143,7 +124,7 @@ namespace Girl.HierArch
 
 		public override void SetIcon()
 		{
-			int t = (int)this.m_Type;
+			int t =(int) this.m_Type;
 			if (this.IsFolder)
 			{
 				if (m_Type.ToString().EndsWith("_Open")) t--;
@@ -154,12 +135,12 @@ namespace Girl.HierArch
 
 		public override object Clone()
 		{
-			HATreeNode ret = (HATreeNode)base.Clone();
-			ret.Type         = this.Type;
+			HATreeNode ret =(HATreeNode) base.Clone();
+			ret.Type = this.Type;
 			ret.m_IsExpanded = this.m_IsExpanded;
 			ret.m_IsSelected = this.m_IsSelected;
-			ret.link         = this.link;
-			ret.Server       = this.Server;
+			ret.link = this.link;
+			ret.Server = this.Server;
 			ret.LastModified = this.LastModified;
 			return ret;
 		}
@@ -168,10 +149,9 @@ namespace Girl.HierArch
 		{
 			this.m_IsExpanded = this.IsExpanded;
 			this.m_IsSelected = this.IsSelected;
-			
 			foreach (TreeNode n in this.Nodes)
 			{
-				if (n is HATreeNode) ((HATreeNode)n).StoreState();
+				if (n is HATreeNode)((HATreeNode) n).StoreState();
 			}
 		}
 
@@ -185,12 +165,11 @@ namespace Girl.HierArch
 			}
 			else if (this.TreeView != null)
 			{
-				this.NodeFont = (this.TreeView as HAClass).LinkFont;
+				this.NodeFont =(this.TreeView as HAClass).LinkFont;
 			}
-			
 			foreach (TreeNode n in this.Nodes)
 			{
-				if (n is HATreeNode) ((HATreeNode)n).ApplyState();
+				if (n is HATreeNode)((HATreeNode) n).ApplyState();
 			}
 		}
 
@@ -209,13 +188,11 @@ namespace Girl.HierArch
 				{
 					Uri uri1 = new Uri((xw.BaseStream as FileStream).Name);
 					Uri uri2 = new Uri(this.link);
-			
 					xw2 = new XmlTextWriter(this.link, Encoding.UTF8);
 					xw2.Formatting = Formatting.Indented;
 					xw2.WriteStartDocument();
-			
 					xw.WriteStartElement(this.XmlName);
-					xw.WriteAttributeString("Link"  , uri1.MakeRelative(uri2));
+					xw.WriteAttributeString("Link", uri1.MakeRelative(uri2));
 					xw.WriteAttributeString("Server", this.Server);
 					xw.WriteEndElement();
 				}
@@ -229,7 +206,7 @@ namespace Girl.HierArch
 				// ドラッグ＆ドロップによるリンクの再現
 				xw2 = null;
 				xw.WriteStartElement(this.XmlName);
-				xw.WriteAttributeString("Link"  , this.link);
+				xw.WriteAttributeString("Link", this.link);
 				xw.WriteAttributeString("Server", this.Server);
 				xw.WriteEndElement();
 			}
@@ -237,22 +214,17 @@ namespace Girl.HierArch
 			{
 				xw2 = xw;
 			}
-			
 			if (xw2 != null)
 			{
 				xw2.WriteStartElement(this.XmlName);
-			
 				this.WriteXml(xw2);
-			
 				DnDTreeNode dn;
-				foreach(TreeNode n in Nodes)
+				foreach (TreeNode n in Nodes)
 				{
-					dn = (DnDTreeNode)n;
+					dn =(DnDTreeNode) n;
 					if (dn != null) dn.ToXml(xw2);
 				}
-			
 				xw2.WriteEndElement();
-			
 				if (xw2 != xw)
 				{
 					xw2.WriteEndDocument();
@@ -267,14 +239,13 @@ namespace Girl.HierArch
 			xw.WriteAttributeString("Text", this.Text);
 			xw.WriteAttributeString("IsExpanded", XmlConvert.ToString(this.m_IsExpanded));
 			xw.WriteAttributeString("IsSelected", XmlConvert.ToString(this.m_IsSelected));
-			xw.WriteAttributeString("AllowDrag" , XmlConvert.ToString(this.AllowDrag));
+			xw.WriteAttributeString("AllowDrag", XmlConvert.ToString(this.AllowDrag));
 			xw.WriteAttributeString("LastModified", this.LastModified.ToString());
 		}
 
 		public override void FromXml(XmlTextReader xr)
 		{
 			if (xr.Name != this.XmlName || xr.NodeType != XmlNodeType.Element) return;
-			
 			XmlTextReader xr2;
 			string link = xr.GetAttribute("Link");
 			if (link == null || link.Length < 1)
@@ -286,7 +257,6 @@ namespace Girl.HierArch
 				try
 				{
 					if (!this.IsValidLink(link)) throw new Exception();
-			
 					string uri = xr.BaseURI;
 					if (uri != null && uri.Length > 0)
 					{
@@ -297,7 +267,6 @@ namespace Girl.HierArch
 					this.Server = xr.GetAttribute("Server");
 					if (this.Server == null || this.Server.Length < 1) this.Server = "";
 					this.ApplyState();
-			
 					xr2 = new XmlTextReader(link);
 					while (xr2.Read() && xr2.Name != this.XmlName);
 				}
@@ -308,10 +277,8 @@ namespace Girl.HierArch
 					return;
 				}
 			}
-			
 			this.ReadXml(xr2);
 			if (xr2.IsEmptyElement) return;
-			
 			HATreeNode n;
 			while (xr2.Read())
 			{
@@ -330,23 +297,20 @@ namespace Girl.HierArch
 					ReadXmlNode(xr2);
 				}
 			}
-			
 			if (m_IsExpanded) Expand();
-			
 			if (xr2 != xr) xr2.Close();
 		}
 
 		public virtual void ReadXml(XmlTextReader xr)
 		{
-			this.Type = (HAType)HAType.Parse(typeof(HAType), xr.GetAttribute("Type"));
+			this.Type =(HAType) HAType.Parse(typeof (HAType), xr.GetAttribute("Type"));
 			this.Text = xr.GetAttribute("Text");
 			this.m_IsExpanded = XmlConvert.ToBoolean(xr.GetAttribute("IsExpanded"));
 			this.m_IsSelected = XmlConvert.ToBoolean(xr.GetAttribute("IsSelected"));
-			this.AllowDrag    = XmlConvert.ToBoolean(xr.GetAttribute("AllowDrag"));
-			
+			this.AllowDrag = XmlConvert.ToBoolean(xr.GetAttribute("AllowDrag"));
 			string lastModified = xr.GetAttribute("LastModified");
-			this.LastModified = (lastModified != null && lastModified.Length > 0)
-				? DateTime.Parse(lastModified) : DateTime.Now;
+			this.LastModified =(lastModified != null && lastModified.Length > 0) ? DateTime.Parse(lastModified):
+			DateTime.Now;
 		}
 
 		public virtual void ReadXmlNode(XmlTextReader xr)
@@ -372,8 +336,7 @@ namespace Girl.HierArch
 				}
 				else if (!this.IsValidLink(value))
 				{
-					MessageBox.Show("リンク先が重複しています。:\r\n\r\n" + value,
-						"エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show("リンク先が重複しています。:\r\n\r\n" + value, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 				else if (value != this.link)
 				{
@@ -399,10 +362,8 @@ namespace Girl.HierArch
 			get
 			{
 				if (this.link != string.Empty) return this.link;
-				
 				HATreeNode p = this.Parent as HATreeNode;
 				if (p != null) return p.TargetFileName;
-				
 				return string.Empty;
 			}
 		}
@@ -411,36 +372,30 @@ namespace Girl.HierArch
 		{
 			HATreeNode p = this.Parent as HATreeNode;
 			if (p != null && !p.CheckParentLink(link)) return false;
-			
 			// foreach (TreeNode n in this.Nodes)
 			// {
 			// 	HATreeNode nn = n as HATreeNode;
 			// 	if (!nn.CheckChildrenLink(link)) return false;
 			// }
-			
 			return true;
 		}
 
 		private bool CheckParentLink(string link)
 		{
 			if (this.link == link) return false;
-			
 			HATreeNode p = this.Parent as HATreeNode;
 			if (p != null) return p.CheckParentLink(link);
-			
 			return true;
 		}
 
 		private bool CheckChildrenLink(string link)
 		{
 			if (this.link == link) return false;
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				HATreeNode nn = n as HATreeNode;
 				if (!nn.CheckChildrenLink(link)) return false;
 			}
-			
 			return true;
 		}
 
@@ -452,19 +407,16 @@ namespace Girl.HierArch
 		{
 			this.ForeColor = this.TreeView.ForeColor;
 			if (!this.SynchronizeThis(manager, output)) return false;
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				if (!(n as HAClassNode).Synchronize(manager, output)) return false;
 			}
-			
 			return true;
 		}
 
 		private bool SynchronizeThis(HAUploaderManager manager, LinkRichTextBox output)
 		{
 			if (this.Server == "") return true;
-			
 			output.AppendLine(string.Format("{0}: {1}", this.Text, this.Server));
 			if (this.link.Length < 1)
 			{
@@ -472,7 +424,6 @@ namespace Girl.HierArch
 				output.ShowLast();
 				return false;
 			}
-			
 			HAUploaderInfo inf = manager.GetInfo(this.Server);
 			if (inf.Files == null)
 			{
@@ -486,7 +437,6 @@ namespace Girl.HierArch
 					return false;
 				}
 			}
-			
 			string target = Path.GetFileName(this.link);
 			HAUploaderFileInfo fi;
 			FileInfo fi2 = new FileInfo(this.link);
@@ -508,14 +458,12 @@ namespace Girl.HierArch
 				fi = new HAUploaderFileInfo(inf, this.link);
 				return this.Upload(fi, output);
 			}
-			
 			fi = inf.Files[target] as HAUploaderFileInfo;
-			byte[] data = null;
+			byte [] data = null;
 			if (!existsL && existsS)
 			{
 				return this.Download(fi, fi2, output, data);
 			}
-			
 			if (fi.Length == fi2.Length)
 			{
 				// ファイルサイズが同じため内容を比較
@@ -535,7 +483,7 @@ namespace Girl.HierArch
 					foreach (byte b in data)
 					{
 						int b2 = fs.ReadByte();
-						if (b2 != (int)b)
+						if (b2 !=(int) b)
 						{
 							same = false;
 							break;
@@ -556,7 +504,6 @@ namespace Girl.HierArch
 					return true;
 				}
 			}
-			
 			// 同期
 			string msg = string.Format("ローカル: {0}\r\nサーバ: {1}", fi2.LastWriteTime, fi.LastWriteTime);
 			DialogResult dr;
@@ -574,7 +521,6 @@ namespace Girl.HierArch
 				}
 				return true;
 			}
-			
 			dr = this.Ask("ダウンロードしますか？\r\n\r\n" + msg, target);
 			if (dr == DialogResult.Cancel)
 			{
@@ -584,7 +530,6 @@ namespace Girl.HierArch
 			{
 				return true;
 			}
-			
 			// ダウンロード
 			return this.Download(fi, fi2, output, data);
 		}
@@ -600,7 +545,6 @@ namespace Girl.HierArch
 				output.ShowLast();
 				return false;
 			}
-			
 			fileInfo.LastWriteTime = DateTime.Now;
 			this.ForeColor = Color.Blue;
 			return true;
@@ -620,7 +564,6 @@ namespace Girl.HierArch
 					return false;
 				}
 			}
-			
 			output.AppendLine(fi.Name + ": 書き込んでいます...");
 			output.ShowLast();
 			try
@@ -630,7 +573,6 @@ namespace Girl.HierArch
 				FileStream fs = fi2.OpenWrite();
 				fs.Write(data, 0, data.Length);
 				fs.Close();
-			
 				string link = this.link;
 				string server = this.Server;
 				this.Init();
@@ -650,7 +592,6 @@ namespace Girl.HierArch
 				output.ShowLast();
 				return false;
 			}
-			
 			this.ForeColor = Color.Red;
 			return true;
 		}
@@ -661,8 +602,7 @@ namespace Girl.HierArch
 		{
 			Cursor cur = Cursor.Current;
 			Cursor.Current = Cursors.Default;
-			DialogResult ret = MessageBox.Show(question, caption,
-				MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+			DialogResult ret = MessageBox.Show(question, caption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 			Cursor.Current = cur;
 			return ret;
 		}

@@ -32,10 +32,10 @@ namespace Girl.Windows.Forms
 			this.IndentString = "\t";
 			this.menuOptions = new Hashtable();
 			this.handlers = new EventHandler[]
-				{
-					new EventHandler(this.menuItem_Click)
-				};
-			
+			{
+				new EventHandler(this.menuItem_Click)
+			}
+			;
 			this.SetStatus(true);
 		}
 
@@ -43,7 +43,7 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				return (int)Enum.GetNames(typeof(CodeEditorOption)).Length;
+				return (int) Enum.GetNames(typeof (CodeEditorOption)).Length;
 			}
 		}
 
@@ -51,7 +51,6 @@ namespace Girl.Windows.Forms
 		{
 			int len = text.Length;
 			if (len < 1) return "";
-			
 			int pos;
 			char ch = text[0];
 			if (ch == '>' || ch == '|')
@@ -75,7 +74,7 @@ namespace Girl.Windows.Forms
 
 		public void SetTarget(TextBoxBase textBox)
 		{
-			textBox.KeyDown  += new KeyEventHandler     (this.textBox_KeyDown );
+			textBox.KeyDown += new KeyEventHandler(this.textBox_KeyDown);
 			textBox.KeyPress += new KeyPressEventHandler(this.textBox_KeyPress);
 		}
 
@@ -83,14 +82,14 @@ namespace Girl.Windows.Forms
 
 		public void SetCommand(CodeEditorOption option, object target)
 		{
-			this.SetCommand((int)option, target);
+			this.SetCommand((int) option, target);
 		}
 
 		public void SetCommand(CodeEditorOption option, params object[] targets)
 		{
 			foreach (object obj in targets)
 			{
-				this.SetCommand((int)option, obj);
+				this.SetCommand((int) option, obj);
 			}
 		}
 
@@ -111,12 +110,12 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				return this.flags[(int)CodeEditorOption.SmartEnter];
+				return this.flags[(int) CodeEditorOption.SmartEnter];
 			}
 
 			set
 			{
-				this.SetStatus((int)CodeEditorOption.SmartEnter, value);
+				this.SetStatus((int) CodeEditorOption.SmartEnter, value);
 			}
 		}
 
@@ -124,12 +123,12 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				return this.flags[(int)CodeEditorOption.SmartTab];
+				return this.flags[(int) CodeEditorOption.SmartTab];
 			}
 
 			set
 			{
-				this.SetStatus((int)CodeEditorOption.SmartTab, value);
+				this.SetStatus((int) CodeEditorOption.SmartTab, value);
 			}
 		}
 
@@ -137,12 +136,12 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				return this.flags[(int)CodeEditorOption.SmartHome];
+				return this.flags[(int) CodeEditorOption.SmartHome];
 			}
 
 			set
 			{
-				this.SetStatus((int)CodeEditorOption.SmartHome, value);
+				this.SetStatus((int) CodeEditorOption.SmartHome, value);
 			}
 		}
 
@@ -150,12 +149,12 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				return this.flags[(int)CodeEditorOption.SmartParenthesis];
+				return this.flags[(int) CodeEditorOption.SmartParenthesis];
 			}
 
 			set
 			{
-				this.SetStatus((int)CodeEditorOption.SmartParenthesis, value);
+				this.SetStatus((int) CodeEditorOption.SmartParenthesis, value);
 			}
 		}
 
@@ -177,7 +176,7 @@ namespace Girl.Windows.Forms
 			int ln = TextBoxPlus.GetCurrentLine(textBox);
 			int cl = TextBoxPlus.GetCurrentColumn(textBox);
 			string crtext = TextBoxPlus.GetLineText(textBox, ln);
-			string crind  = CodeEditorManager.GetIndent(crtext);
+			string crind = CodeEditorManager.GetIndent(crtext);
 			int pos = -1;
 			if (cl == crind.Length && cl < crtext.Length)
 			{
@@ -191,7 +190,7 @@ namespace Girl.Windows.Forms
 			}
 			else if (cl < crind.Length)
 			{
-				pos = (textBox.SelectionStart += crind.Length - cl);
+				pos =(textBox.SelectionStart += crind.Length - cl);
 				if (crtext.EndsWith("}"))
 				{
 					this.InsertText(textBox, this.IndentString);
@@ -202,7 +201,7 @@ namespace Girl.Windows.Forms
 			else if (cl > 0 && crtext.Substring(cl - 1, 1) == "{")
 			{
 				string nxtext = TextBoxPlus.GetLineText(textBox, ln + 1);
-				string nxind  = CodeEditorManager.GetIndent(nxtext);
+				string nxind = CodeEditorManager.GetIndent(nxtext);
 				this.InsertText(textBox, "\r\n" + crind + this.IndentString);
 				bool needsClose = !(nxtext.EndsWith("}") && crind == nxind) && crind.Length >= nxind.Length;
 				if (cl < crtext.Length)
@@ -264,54 +263,57 @@ namespace Girl.Windows.Forms
 		private bool ProcessParenthesis(TextBoxBase textBox, char ch)
 		{
 			int pos = textBox.SelectionStart;
-			char prv1 = pos > 0 ? textBox.Text[pos - 1] : '\0';
-			char prv2 = pos > 1 ? textBox.Text[pos - 2] : '\0';
-			char curr = pos < textBox.TextLength ? textBox.Text[pos] : '\0';
+			char prv1 = pos > 0 ? textBox.Text[pos - 1]:
+			'\0';
+			char prv2 = pos > 1 ? textBox.Text[pos - 2]:
+			'\0';
+			char curr = pos < textBox.TextLength ? textBox.Text[pos]:
+			'\0';
 			switch (ch)
 			{
 				case '(':
-					this.InsertText(textBox, ")");
-					textBox.SelectionStart--;
-					break;
+				this.InsertText(textBox, ")");
+				textBox.SelectionStart--;
+				break;
 				case '[':
-					this.InsertText(textBox, "]");
-					textBox.SelectionStart--;
-					break;
+				this.InsertText(textBox, "]");
+				textBox.SelectionStart--;
+				break;
 				case '{':
-					this.InsertText(textBox, "}");
-					textBox.SelectionStart--;
-					break;
+				this.InsertText(textBox, "}");
+				textBox.SelectionStart--;
+				break;
 				case '<':
-					this.InsertText(textBox, ">");
-					textBox.SelectionStart--;
-					break;
+				this.InsertText(textBox, ">");
+				textBox.SelectionStart--;
+				break;
 				case '*':
-					if (prv1 == '/')
-					{
-						this.InsertText(textBox, "*/");
-						textBox.SelectionStart -= 2;
-					}
-					break;
+				if (prv1 == '/')
+				{
+					this.InsertText(textBox, "*/");
+					textBox.SelectionStart -= 2;
+				}
+				break;
 				case '"':
 				case '\'':
-					if (prv1 != '\\' || (prv1 == '\\' && prv2 == '\\'))
+				if (prv1 != '\\' ||(prv1 == '\\' && prv2 == '\\'))
+				{
+					if (ch == curr)
 					{
-						if (ch == curr)
-						{
-							textBox.SelectionStart++;
-							return true;
-						}
-						this.InsertText(textBox, ch.ToString());
-						textBox.SelectionStart--;
+						textBox.SelectionStart++;
+						return true;
 					}
-					break;
+					this.InsertText(textBox, ch.ToString());
+					textBox.SelectionStart--;
+				}
+				break;
 				case ')':
 				case ']':
 				case '}':
 				case '>':
-					if (ch != curr) break;
-					textBox.SelectionStart++;
-					return true;
+				if (ch != curr) break;
+				textBox.SelectionStart++;
+				return true;
 			}
 			return false;
 		}
@@ -325,9 +327,8 @@ namespace Girl.Windows.Forms
 			if (textBox.SelectedText.EndsWith("\n")) el--;
 			int sp = TextBoxPlus.GetLinePosition(textBox, sl);
 			int ep = TextBoxPlus.GetLinePosition(textBox, el + 1);
-			textBox.SelectionStart  = sp;
+			textBox.SelectionStart = sp;
 			textBox.SelectionLength = ep - sp;
-			
 			StringReader sr = new StringReader(textBox.SelectedText);
 			StringWriter sw = new StringWriter();
 			string ind = this.IndentString, line;
@@ -339,7 +340,8 @@ namespace Girl.Windows.Forms
 				}
 				else
 				{
-					char ch = (line.Length > 0) ? line[0] : '\0';
+					char ch =(line.Length > 0) ? line[0]:
+					'\0';
 					if (line.StartsWith(ind))
 					{
 						sw.WriteLine(line.Substring(ind.Length));
@@ -368,7 +370,7 @@ namespace Girl.Windows.Forms
 			if (rtb != null)
 			{
 				rtb.SelectionColor = rtb.ForeColor;
-				rtb.SelectionFont  = rtb.Font;
+				rtb.SelectionFont = rtb.Font;
 			}
 			textBox.SelectedText = text;
 		}
@@ -381,7 +383,6 @@ namespace Girl.Windows.Forms
 		{
 			TextBoxBase textBox = sender as TextBoxBase;
 			if (textBox == null) return;
-			
 			if (e.KeyCode == Keys.Enter && this.SmartEnter)
 			{
 				if (e.Modifiers == Keys.None)
@@ -393,10 +394,9 @@ namespace Girl.Windows.Forms
 					int line = TextBoxPlus.GetCurrentLine(textBox);
 					if (line < textBox.Lines.Length)
 					{
-						int clm  = TextBoxPlus.GetCurrentColumn(textBox);
+						int clm = TextBoxPlus.GetCurrentColumn(textBox);
 						int ind = CodeEditorManager.GetIndent(TextBoxPlus.GetLineText(textBox, line + 1)).Length;
-						textBox.SelectionStart += (TextBoxPlus.GetLineText(textBox, line).Length - clm)
-							+ TextBoxPlus.GetEndLineWidth(textBox) + ind;
+						textBox.SelectionStart +=(TextBoxPlus.GetLineText(textBox, line).Length - clm) + TextBoxPlus.GetEndLineWidth(textBox) + ind;
 					}
 				}
 				e.Handled = true;
@@ -405,7 +405,7 @@ namespace Girl.Windows.Forms
 			{
 				if (this.ProcessHome(textBox)) e.Handled = true;
 			}
-			else if (e.KeyCode == Keys.Tab && this.SmartTab && (e.Shift || textBox.SelectionLength > 0))
+			else if (e.KeyCode == Keys.Tab && this.SmartTab &&(e.Shift || textBox.SelectionLength > 0))
 			{
 				this.ProcessTab(textBox, e.Shift);
 				e.Handled = true;
@@ -416,8 +416,7 @@ namespace Girl.Windows.Forms
 		{
 			TextBoxBase textBox = sender as TextBoxBase;
 			if (textBox == null) return;
-			
-			if (e.KeyChar == (char)13 && this.SmartEnter && textBox is TextBox)
+			if (e.KeyChar ==(char) 13 && this.SmartEnter && textBox is TextBox)
 			{
 				e.Handled = true;
 			}
@@ -425,8 +424,7 @@ namespace Girl.Windows.Forms
 			{
 				e.Handled = true;
 			}
-			else if (this.SmartParenthesis
-				&& this.ProcessParenthesis(textBox, e.KeyChar))
+			else if (this.SmartParenthesis && this.ProcessParenthesis(textBox, e.KeyChar))
 			{
 				e.Handled = true;
 			}
@@ -443,8 +441,7 @@ namespace Girl.Windows.Forms
 
 			mi = sender as MenuItem;
 			if (mi == null || !this.menuOptions.Contains(mi)) return;
-			
-			this.SetStatus((int)this.menuOptions[sender], !mi.Checked);
+			this.SetStatus((int) this.menuOptions[sender], !mi.Checked);
 		}
 
 		#endregion

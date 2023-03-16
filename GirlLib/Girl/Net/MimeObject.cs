@@ -81,7 +81,6 @@ namespace Girl.Net
 				this.AppendText(textBox, url + "\r\n");
 				this.AppendText(textBox, "サーバに接続しています...\r\n");
 			}
-			
 			this.location = url;
 			HttpWebRequest req = null;
 			for (int i = 0; req == null && i < 3; i++)
@@ -102,10 +101,8 @@ namespace Girl.Net
 				this.AppendText(textBox, "接続に失敗しました。\r\n");
 				return false;
 			}
-			
 			HttpWebResponse res = req.GetResponse() as HttpWebResponse;
 			if (res == null) return false;
-			
 			if (textBox != null)
 			{
 				this.AppendText(textBox, "データを読み取っています...\r\n");
@@ -115,12 +112,11 @@ namespace Girl.Net
 			MemoryStream ms = new MemoryStream();
 			while ((b = str.ReadByte()) != -1)
 			{
-				ms.WriteByte((byte)b);
+				ms.WriteByte((byte) b);
 			}
 			ms.Close();
 			str.Close();
 			res.Close();
-			
 			this.data = ms.ToArray();
 			if (textBox != null)
 			{
@@ -152,14 +148,12 @@ namespace Girl.Net
 			textWriter.WriteLine("Content-Transfer-Encoding: base64");
 			textWriter.WriteLine("Content-Location: " + this.location);
 			textWriter.WriteLine();
-			
 			int len = this.data.Length;
 			for (int p = 0; p < len; p += 57)
 			{
 				int len2 = len - p;
 				if (len2 > 57) len2 = 57;
-				textWriter.WriteLine(Convert.ToBase64String(
-					this.data, p, len2));
+				textWriter.WriteLine(Convert.ToBase64String(this.data, p, len2));
 			}
 		}
 
@@ -169,12 +163,11 @@ namespace Girl.Net
 			textWriter.WriteLine("Content-Transfer-Encoding: quoted-printable");
 			textWriter.WriteLine("Content-Location: " + this.location);
 			textWriter.WriteLine();
-			
 			char ch = '\0', prev;
 			foreach (byte b in this.data)
 			{
 				prev = ch;
-				ch = (char)b;
+				ch =(char) b;
 				if (ch == '\r')
 				{
 					textWriter.WriteLine();
@@ -204,7 +197,6 @@ namespace Girl.Net
 			object target;
 
 			ret = new ArrayList();
-			
 			MemoryStream ms = new MemoryStream(this.data, false);
 			XmlParser xp = new XmlParser(ms);
 			xp.dec = Encoding.GetEncoding("windows-1250").GetDecoder();
@@ -226,7 +218,6 @@ namespace Girl.Net
 			}
 			xp.Close();
 			ms.Close();
-			
 			return ret;
 		}
 
@@ -251,7 +242,6 @@ namespace Girl.Net
 			{
 				if ((obj as MimeObject).location == url2) return;
 			}
-			
 			if (!url2.StartsWith("http://"))
 			{
 				target = new Uri(new Uri(this.location), url2).AbsoluteUri;
@@ -260,10 +250,8 @@ namespace Girl.Net
 			{
 				target = url2;
 			}
-			
 			MimeObject mo = new MimeObject(target, textBox);
 			if (mo.data == null) return;
-			
 			arrayList.Add(mo);
 		}
 

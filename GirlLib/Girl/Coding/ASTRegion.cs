@@ -13,13 +13,12 @@ namespace Girl.Coding
 		public ASTRegion(string region, int pos)
 		{
 			int p = 8, len = region.Length;
-			for (; p < len; p++)
+			for (;p < len; p++)
 			{
 				char ch = region[p];
 				if (ch != ' ' && ch != '\t') break;
 			}
 			this.Name = region.Substring(p);
-			
 			this.Pos = this.DeclarationPos = pos;
 		}
 	}

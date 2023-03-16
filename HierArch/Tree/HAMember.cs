@@ -25,31 +25,13 @@ namespace Girl.HierArch
 		public HAMember()
 		{
 			this.dataFormat = "HierArch Object Data";
-			
 			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1 = new ContextMenu();
 			this.HideSelection = false;
 			this.LabelEdit = true;
 			this.ImageList = this.imageList1;
-			
 			this.mnuAccess.Text = "変数(&O)";
-			
-			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
-				{
-					mnuType = new MenuItem("種類変更(&T)", new MenuItem[]
-						{
-							this.mnuAccess,
-							this.mnuFolder,
-							this.mnuEtc
-						}),
-					new MenuItem("-"),
-					this.mnuChild,
-					this.mnuAppend,
-					this.mnuInsert,
-					new MenuItem("-"),
-					this.mnuDelete,
-					this.mnuRename
-				});
+			this.contextMenu1.MenuItems.AddRange(new MenuItem[] { mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { this.mnuAccess, this.mnuFolder, this.mnuEtc }), new MenuItem("-"), this.mnuChild, this.mnuAppend, this.mnuInsert, new MenuItem("-"), this.mnuDelete, this.mnuRename });
 		}
 
 		protected override void StartDrag()
@@ -62,7 +44,7 @@ namespace Girl.HierArch
 		protected override void SetState()
 		{
 			HAMemberNode n = this.SelectedNode as HAMemberNode;
-			mnuType.Enabled = mnuDelete.Enabled = mnuRename.Enabled = (n != null);
+			mnuType.Enabled = mnuDelete.Enabled = mnuRename.Enabled =(n != null);
 		}
 
 		protected override HATreeNode NewNode
@@ -87,7 +69,7 @@ namespace Girl.HierArch
 					this.BeginUpdate();
 					foreach (Object obj in list)
 					{
-						if (obj is HAMemberNode) Nodes.Add((HAMemberNode)((HAMemberNode)obj).Clone());
+						if (obj is HAMemberNode) Nodes.Add((HAMemberNode)((HAMemberNode) obj).Clone());
 					}
 					this.ApplyState();
 					if (this.SelectedNode != null)

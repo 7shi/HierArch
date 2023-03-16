@@ -35,13 +35,20 @@
       <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
-  <HAClass Type="Public" Text="HAMacroForm:Form1" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 16:15:13">
+  <HAClass Type="Public" Text="HAMacroForm:Form1" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:33:35">
+    <HAObject Type="Private" Text="macros:Hashtable" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/15 17:35:08" />
     <Header>
-      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/03/02 16:07:36">
+      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/03/16 2:28:06">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0">using System;
+        <Source SelectionStart="161" SelectionLength="0">using System;
+using System.Collections;
+using System.Collections.Specialized;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using Girl.Coding;
 </Source>
       </HAFunc>
     </Header>
@@ -53,18 +60,19 @@
 &lt;/summary&gt;
 </Comment>
         <Source SelectionStart="0" SelectionLength="0" />
-        <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 16:12:15">
+        <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 17:35:44">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-          <Source SelectionStart="109" SelectionLength="0">this.mnuBuildGenerate.Enabled = false;
+          <Source SelectionStart="129" SelectionLength="0">this.mnuBuildGenerate.Enabled = false;
 this. tbBuildGenerate.Enabled = false;
 this.Open(HADoc.MacroProject);
+this.macros = null;
 </Source>
         </HAFunc>
-        <HAFunc Type="Protected" Text="Dispose:override" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/02 16:15:13">
+        <HAFunc Type="Protected" Text="Dispose:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 16:15:13">
           <Arguments>
             <HAObject Type="Private" Text="disposing:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/02 16:14:41" />
           </Arguments>
@@ -72,6 +80,303 @@ this.Open(HADoc.MacroProject);
           <Source SelectionStart="49" SelectionLength="0">Form1.MacroForm = null;
 base.Dispose(disposing);
 </Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="SetMacros" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 20:33:21">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="119" SelectionLength="0">this.macros = new Hashtable();
+foreach (TreeNode n in this.view1.tvClass.Nodes)
+{
+	this.ReadClass(n as HAClassNode);
+}
+</Source>
+          <HAFunc Type="Private" Text="ReadClass" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 20:38:12">
+            <Arguments>
+              <HAObject Type="Private" Text="node:HAClassNode" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/15 20:33:25" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="152" SelectionLength="0">foreach (TreeNode n in node.Body.Nodes)
+{
+	this.ReadFunc(n as HAFuncNode);
+}
+
+foreach (TreeNode n in node.Nodes)
+{
+	this.ReadClass(n as HAClassNode);
+}
+</Source>
+          </HAFunc>
+          <HAFunc Type="Private" Text="ReadFunc" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 20:39:59">
+            <Arguments>
+              <HAObject Type="Private" Text="node:HAFuncNode" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/15 20:35:41" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="141" SelectionLength="0">if (node.Type == HAType.Public)
+{
+	this.macros[node.Text] = node;
+}
+
+foreach (TreeNode n in node.Nodes)
+{
+	this.ReadFunc(n as HAFuncNode);
+}
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="GetMacro:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 18:19:09">
+          <Arguments>
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/15 17:36:47" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="95" SelectionLength="0">if (macros == null || !macros.Contains(name)) return null;
+
+return macros[name] as HAFuncNode;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteCode" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:22:05">
+          <Arguments>
+            <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 22:59:36" />
+            <HAObject Type="Private" Text="source:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 21:07:34" />
+            <HAObject Type="Private" Text="replace:Hashtable" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 4:05:39" />
+            <HAObject Type="Private" Text="history:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 5:17:33" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="972" SelectionLength="0">StringBuilder sb = new StringBuilder();
+CSharpParser csp = new CSharpParser();
+StringReader sr = new StringReader(source);
+csp.Reader = sr;
+int indent = cw.Indent;
+int prth = 0;
+bool no_space = false, is_key_word = false;
+string text;
+while (csp.Read())
+{
+	text = csp.Text;
+	if (replace != null &amp;&amp; replace.Contains(text)) text = replace[text] as string;
+	if (prth &lt; 1 &amp;&amp; (text == ";" || text == ":"))
+	{
+		sb.Append(text);
+		this.WriteCode(cw, sb);
+	}
+	else if (prth &lt; 1 &amp;&amp; text == "{")
+	{
+		if (sb.Length &gt; 0)
+		{
+			cw.WriteStartBlock(sb.ToString());
+			sb.Length = 0;
+		}
+		else
+		{
+			cw.WriteStartBlock();
+		}
+	}
+	else if (prth &lt; 1 &amp;&amp; text == "}")
+	{
+		this.WriteCode(cw, sb);
+		cw.WriteEndBlock();
+	}
+	else if (text.StartsWith("//"))
+	{
+		if (sb.Length &lt; 1)
+		{
+			cw.WriteCode(text);
+		}
+		else
+		{
+			sb.Append("  ");
+			sb.Append(text);
+			this.WriteCode(cw, sb);
+		}
+	}
+	else
+	{
+		switch (text)
+		{
+			case "@":
+				if (!this.WriteMacro(cw, csp, history))
+				{
+					cw.WriteCode("// Macro: Error");
+				}
+				break;
+			case ".":
+				sb.Append(text);
+				no_space = true;
+				break;
+			case "(":
+			case "[":
+				if (is_key_word) sb.Append(' ');
+				is_key_word = false;
+				sb.Append(text);
+				no_space = true;
+				prth++;
+				break;
+			case ")":
+			case "]":
+				sb.Append(text);
+				no_space = false;
+				prth--;
+				break;
+			case "{":
+				sb.Append(" {");
+				no_space = false;
+				prth++;
+				break;
+			case "}":
+				sb.Append(" }");
+				no_space = false;
+				prth--;
+				break;
+			case ",":
+			case ";":
+				sb.Append(text);
+				break;
+			default:
+				if (sb.Length &gt; 0 &amp;&amp; !no_space) sb.Append(' ');
+				sb.Append(text);
+				no_space = false;
+				is_key_word = csp.IsKeyWord;
+				break;
+		}
+	}
+}
+sr.Close();
+this.WriteCode(cw, sb);
+while (cw.Indent &gt; indent) cw.WriteEndBlock();
+</Source>
+          <HAFunc Type="Private" Text="WriteCode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 23:13:07">
+            <Arguments>
+              <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/15 23:12:47" />
+              <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 23:12:42" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="72" SelectionLength="0">if (sb.Length &lt; 1) return;
+
+cw.WriteCode(sb.ToString());
+sb.Length = 0;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Private" Text="WriteMacro:bool" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:22:30">
+            <Arguments>
+              <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 21:33:14" />
+              <HAObject Type="Private" Text="csp:CSharpParser" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 21:33:17" />
+              <HAObject Type="Private" Text="history:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 5:22:14" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="231" SelectionLength="0">if (!csp.Read() || csp.Text != "[") return false;
+
+StringCollection args = new StringCollection();
+StringBuilder name = new StringBuilder();
+StringBuilder decl = new StringBuilder();
+while (csp.Read())
+{
+	if (csp.Text == "]")
+	{
+		cw.WriteCode(string.Format("// Macro: {0}", decl.ToString()));
+		this.WriteMacro(cw, name.ToString(), args, history);
+		return true;
+	}
+	decl.Append(csp.Text);
+	if (csp.Text == "(")
+	{
+		for (;;)
+		{
+			string arg = this.ReadArg(csp);
+			args.Add(arg);
+			decl.Append(arg);
+			decl.Append(csp.Text);
+			if (csp.Text == ")") break;
+		}
+	}
+	else
+	{
+		name.Append(csp.Text);
+	}
+}
+
+return false;
+</Source>
+            <HAFunc Type="Private" Text="ReadArg:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 2:50:55">
+              <Arguments>
+                <HAObject Type="Private" Text="csp:CSharpParser" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 2:09:28" />
+              </Arguments>
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="295" SelectionLength="0">StringBuilder sb = new StringBuilder();
+int prth = 0;
+while (csp.Read())
+{
+	if (prth &lt; 1 &amp;&amp; csp.Text == ",") break;
+	
+	if (csp.Text == "(")
+	{
+		prth++;
+	}
+	else if (csp.Text == ")")
+	{
+		if (prth &lt; 1) break;
+		prth--;
+	}
+	
+	sb.Append(csp.Spacing);
+	sb.Append(csp.Text);
+}
+return sb.ToString();
+</Source>
+            </HAFunc>
+            <HAFunc Type="Private" Text="WriteMacro" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 5:33:35">
+              <Arguments>
+                <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 2:43:03" />
+                <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 2:43:08" />
+                <HAObject Type="Private" Text="args:StringCollection" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 2:43:11" />
+                <HAObject Type="Private" Text="history:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 5:22:35" />
+              </Arguments>
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="241" SelectionLength="0">if (!this.macros.Contains(name)) return;
+
+HAFuncNode n = this.macros[name] as HAFuncNode;
+if (history == null)
+{
+	history = new ArrayList();
+}
+else if (history.Contains(n))
+{
+	cw.WriteCode("// Macro: 循環を検出しました。");
+	return;
+}
+history.Add(n);
+
+Hashtable replace = new Hashtable();
+int c1 = args.Count;
+int c2 = n.Args.Count;
+
+cw.WriteStartBlock();
+for (int i = 0; i &lt; c1 &amp;&amp; i &lt; c2; i++)
+{
+	ObjectParser op = new ObjectParser((n.Args[i] as HAObjectNode).Text);
+	if (i == c2 - 1 &amp;&amp; c1 &gt; c2)
+	{
+		StringBuilder sb = new StringBuilder();
+		for (int j = i; j &lt; c1; j++)
+		{
+			if (sb.Length &gt; 0) sb.Append(", ");
+			sb.Append(args[j]);
+		}
+		replace.Add(op.Name, sb.ToString());
+	}
+	else
+	{
+		replace.Add(op.Name, args[i]);
+	}
+}
+foreach (object obj in n.Objects)
+{
+	cw.WriteCode(string.Format("{0};",
+		new ObjectParser((obj as HAObjectNode).Text).ObjectDeclaration));
+}
+this.WriteCode(cw, n.Source, replace, history);
+cw.WriteEndBlock();
+</Source>
+            </HAFunc>
+          </HAFunc>
         </HAFunc>
       </HAFunc>
     </Body>
@@ -83,7 +388,7 @@ base.Dispose(disposing);
       </HAFunc>
     </Footer>
   </HAClass>
-  <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 15:37:51">
+  <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 5:53:41">
     <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <HAObject Type="Public" Text="ViewInfo:HAViewInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <Header>
@@ -111,17 +416,33 @@ using Girl.Windows.Forms;
 &lt;/summary&gt;
 </Comment>
         <Source SelectionStart="0" SelectionLength="0" />
-        <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+        <HAFunc Type="Public" Text="__CLASS" IsExpanded="true" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 5:48:34">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-          <Source SelectionStart="85" SelectionLength="0">this.ClassTreeView = null;
+          <Source SelectionStart="103" SelectionLength="0">this.ClassTreeView = null;
 this.ViewInfo = new HAViewInfo();
 
+this.InitMacro();
 this.InitUserPlugin();
 </Source>
+          <HAFunc Type="Private" Text="InitMacro" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:53:41">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="0" SelectionLength="0">string macro = __CLASS.UserDir + @"\Macro.hamcr";
+if (File.Exists(macro)) return;
+
+string dir = ApplicationDataManager.SearchFolder("Data");
+if (dir == null) return;
+
+string macro_orig = dir + @"\Macro.hamcr";
+if (!File.Exists(macro_orig)) return;
+
+File.Copy(macro_orig, macro);
+</Source>
+          </HAFunc>
         </HAFunc>
         <HAFunc Type="Public" Text="get_ShortName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
@@ -189,7 +510,7 @@ Changed = false;
 return true;
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="Save:override bool" IsExpanded="true" IsSelected="true" AllowDrag="true" LastModified="2003/03/02 15:37:51">
+        <HAFunc Type="Public" Text="Save:override bool" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 15:37:51">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="357" SelectionLength="0">this.ClassTreeView.StoreData();
@@ -299,33 +620,10 @@ return true;
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="0" SelectionLength="0" />
-          <HAFunc Type="Public" Text="get_UserDir:static string" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+          <HAFunc Type="Private" Text="InitUserPlugin" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:48:21">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="165" SelectionLength="0">string ret = Environment.GetFolderPath(
-	Environment.SpecialFolder.Personal) + @"\HierArch";
-if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
-return ret;
-</Source>
-            <HAFunc Type="Public" Text="get_UserPluginDir:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
-              <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="115" SelectionLength="0">string ret = __CLASS.UserDir + @"\Plugin";
-if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
-return ret;
-</Source>
-            </HAFunc>
-          </HAFunc>
-          <HAFunc Type="Public" Text="get_SysPluginDir:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
-            <Arguments />
-            <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="54" SelectionLength="0">return ApplicationDataManager.SearchFolder("Plugin");
-</Source>
-          </HAFunc>
-          <HAFunc Type="Private" Text="InitUserPlugin" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
-            <Arguments />
-            <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="100" SelectionLength="0">string dir1 = __CLASS.SysPluginDir;
+            <Source SelectionStart="653" SelectionLength="0">string dir1 = __CLASS.SysPluginDir;
 if (dir1 == null) return;
 
 string dir2 = __CLASS.UserPluginDir;
@@ -347,6 +645,29 @@ if (File.Exists(dll)) return;
 
 DirectoryInfo di2 = new FileInfo(Application.ExecutablePath).Directory;
 File.Copy(di2.FullName + @"\HierArchLib.dll", dll);
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="get_UserDir:static string" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="165" SelectionLength="0">string ret = Environment.GetFolderPath(
+	Environment.SpecialFolder.Personal) + @"\HierArch";
+if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
+return ret;
+</Source>
+            <HAFunc Type="Public" Text="get_UserPluginDir:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="115" SelectionLength="0">string ret = __CLASS.UserDir + @"\Plugin";
+if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
+return ret;
+</Source>
+            </HAFunc>
+          </HAFunc>
+          <HAFunc Type="Public" Text="get_SysPluginDir:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="7" SelectionLength="47">return ApplicationDataManager.SearchFolder("Plugin");
 </Source>
           </HAFunc>
           <HAFunc Type="Public" Text="Make" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">

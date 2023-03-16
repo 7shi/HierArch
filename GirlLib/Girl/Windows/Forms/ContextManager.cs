@@ -24,21 +24,17 @@ namespace Girl.Windows.Forms
 			int i;
 
 			len = this.MaxActions;
-			
-			this.flags = new bool[len];
+			this.flags = new bool [len];
 			for (i = 0; i < len; i++)
 			{
 				this.flags[i] = false;
 			}
-			
 			this.cmdList = new ArrayList[len];
 			for (i = 0; i < len; i++)
 			{
 				this.cmdList[i] = new ArrayList();
 			}
-			
 			this.handlers = null;
-			
 			this.toolBars = new ArrayList();
 			this.toolBarButtonHandlers = new Hashtable();
 		}
@@ -57,10 +53,8 @@ namespace Girl.Windows.Forms
 
 			targets = cmdList[action];
 			if (targets.Contains(target)) return;
-			
 			targets.Add(target);
 			this.SetProperty(target, flags[action]);
-			
 			this.SetHandler(action, target);
 		}
 
@@ -92,7 +86,6 @@ namespace Girl.Windows.Forms
 			EventHandler eh;
 
 			if (!this.toolBarButtonHandlers.Contains(e.Button)) return;
-			
 			eh = this.toolBarButtonHandlers[e.Button] as EventHandler;
 			eh.Invoke(sender, EventArgs.Empty);
 		}
@@ -110,9 +103,7 @@ namespace Girl.Windows.Forms
 			ArrayList targets;
 
 			if (flags[action] == status) return;
-			
 			flags[action] = status;
-			
 			targets = cmdList[action];
 			foreach (object obj in targets)
 			{

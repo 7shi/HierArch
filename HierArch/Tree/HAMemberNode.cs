@@ -55,10 +55,8 @@ namespace Girl.HierArch
 			}
 			else if (this.IsObject)
 			{
-				cw.WriteCode(t.ToString().ToLower() + " "
-					+ cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration) + ";");
+				cw.WriteCode(t.ToString().ToLower() + " " + cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration) + ";");
 			}
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				(n as HAMemberNode).Generate(cw);

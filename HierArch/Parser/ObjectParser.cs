@@ -35,25 +35,22 @@ namespace Girl.HierArch
 		public ObjectParser(string text)
 		{
 			this.Init();
-			
 			this.Parse(text);
 		}
 
 		public ObjectParser(string text, HAType objectType)
 		{
 			this.Init();
-			
 			this.Parse(text);
 			this.ObjectType = objectType;
 		}
 
 		public void Parse(string text)
 		{
-			string[] list = text.Split(':');
+			string [] list = text.Split(':');
 			this.name = ObjectParser.Strip(list[0]);
 			this.type = "";
 			if (list.GetLength(0) < 2) return;
-			
 			this.type = ObjectParser.Strip(list[1]);
 		}
 
@@ -161,7 +158,6 @@ namespace Girl.HierArch
 			get
 			{
 				string access = this.ObjectType.ToString().ToLower();
-				
 				if (this.IsConstructor)
 				{
 					return access + " " + this.Name;
@@ -174,8 +170,7 @@ namespace Girl.HierArch
 				{
 					return access + " void " + this.Name;
 				}
-				else if (this.Type == "static" || this.Type == "virtual"
-					|| this.Type == "override" || this.Type == "new")
+				else if (this.Type == "static" || this.Type == "virtual" || this.Type == "override" || this.Type == "new")
 				{
 					return access + " " + this.Type + " void " + this.Name;
 				}

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAProject version="0.1.1142.21818">
+<HAProject version="0.1.1170.10018">
   <HAViewInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <X>66</X>
     <Y>66</Y>
@@ -40,7 +40,7 @@
         <HAFunc Type="Text" Text="Make.bat" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:01">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="66" SelectionLength="0">%WINDIR%\Microsoft.NET\Framework\v1.0.3705\csc /t:winexe Calc.cs
+          <Source SelectionStart="65" SelectionLength="0">%WINDIR%\Microsoft.NET\Framework\v1.0.3705\csc /t:winexe Calc.cs
 </Source>
         </HAFunc>
       </HAFunc>
@@ -52,7 +52,7 @@
         <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
     </Footer>
-    <HAClass Type="Public" Text="Calc:Form" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:01">
+    <HAClass Type="Public" Text="Calc:Form" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 4:58:56">
       <HAObject Type="Private" Text="num1:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
       <HAObject Type="Private" Text="plus:Label" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
       <HAObject Type="Private" Text="num2:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
@@ -64,7 +64,7 @@
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
 </Comment>
-          <Source SelectionStart="67" SelectionLength="0">using System;
+          <Source SelectionStart="64" SelectionLength="0">using System;
 using System.Drawing;
 using System.Windows.Forms;
 </Source>
@@ -81,44 +81,26 @@ using System.Windows.Forms;
           <HAFunc Type="Public" Text="Main:static void" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="33" SelectionLength="0">Application.Run(new __CLASS());
+            <Source SelectionStart="32" SelectionLength="0">Application.Run(new __CLASS());
 </Source>
           </HAFunc>
-          <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:02">
+          <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 4:47:47">
             <Arguments />
             <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-            <Source SelectionStart="59" SelectionLength="0">this.Text = "Calc";
-this.ClientSize = new Size(170, 70);
-
-num1   = new TextBox();
-num2   = new TextBox();
-num3   = new TextBox();
-plus   = new Label();
-equal  = new Label();
-button = new Button();
-
-num1  .SetBounds( 10, 10, 30, 20);
-num2  .SetBounds( 70, 10, 30, 20);
-num3  .SetBounds(130, 10, 30, 20);
-plus  .SetBounds( 50, 10, 10, 20);
-equal .SetBounds(110, 10, 10, 20);
-button.SetBounds( 50, 40, 70, 20);
-
-num3  .Text = "?";
-plus  .Text = "+";
-equal .Text = "=";
-button.Text = "計算";
-
-this.Controls.AddRange(new Control[] {
-	num1, num2, num3, plus, equal, button });
-
-button.Click += new EventHandler(this.button_Click);
+            <Source SelectionStart="428" SelectionLength="0">@[フォーム(this)の大きさ(170, 70)と文字列("Calc")を指定]
+@[テキストボックス(num1)を位置( 10, 10)と大きさ(30, 20)で作成]
+@[テキストボックス(num2)を位置( 70, 10)と大きさ(30, 20)で作成]
+@[テキストボックス(num3)を位置(130, 10)と大きさ(30, 20)と文字列("?")で作成]
+@[ラベル(plus )を位置( 50, 10)と大きさ(10, 20)と文字列("+")で作成]
+@[ラベル(equal)を位置(110, 10)と大きさ(10, 20)と文字列("=")で作成]
+@[ボタン(button)を位置(50, 40)と大きさ(70, 20)と文字列("計算")とハンドラ(this.button_Click)で作成]
+@[コントロール(this)上にコントロール群(num1, num2, num3, plus, equal, button)を配置]
 </Source>
           </HAFunc>
-          <HAFunc Type="Public" Text="button_Click" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02">
+          <HAFunc Type="Public" Text="button_Click" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 4:58:56">
             <Arguments>
               <HAObject Type="Private" Text="sender" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
               <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
@@ -127,10 +109,10 @@ button.Click += new EventHandler(this.button_Click);
             <HAObject Type="Private" Text="b:double" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
             <HAObject Type="Private" Text="c:double" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="107" SelectionLength="0">a = Convert.ToDouble(num1.Text);
-b = Convert.ToDouble(num2.Text);
+            <Source SelectionStart="100" SelectionLength="0">@[double(a)に文字列(num1.Text)を代入]
+@[double(b)に文字列(num2.Text)を代入]
 c = a + b;
-num3.Text = c.ToString();
+@[文字列(num3.Text)に数値(c)を代入]
 </Source>
           </HAFunc>
         </HAFunc>

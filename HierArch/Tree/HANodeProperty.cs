@@ -42,7 +42,8 @@ namespace Girl.HierArch
 			get
 			{
 				HAAccount haa = Form1.AccountManager.Get(this.Server);
-				return (haa != null) ? haa.Id : "";
+				return (haa != null) ? haa.Id:
+				"";
 			}
 
 			set
@@ -56,7 +57,8 @@ namespace Girl.HierArch
 			get
 			{
 				HAAccount haa = Form1.AccountManager.Get(this.Server);
-				return (haa != null) ? haa.Password : "";
+				return (haa != null) ? haa.Password:
+				"";
 			}
 
 			set

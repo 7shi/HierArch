@@ -26,6 +26,7 @@
       <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
+  <HAClass Link="Coding/CodeWriter.hacls" />
   <HAClass Link="Coding/ParserBase.hacls" />
   <HAClass Link="Coding/CParserBase.hacls" />
   <HAClass Link="Coding/CSharpParser.hacls" />

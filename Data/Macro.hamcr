@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAProject version="0.1.1170.1656">
+<HAProject version="0.1.1170.10018">
   <HAViewInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <X>203</X>
-    <Y>87</Y>
-    <Width>1089</Width>
-    <Height>818</Height>
+    <X>198</X>
+    <Y>198</Y>
+    <Width>960</Width>
+    <Height>729</Height>
     <State>Normal</State>
     <ShowClass>true</ShowClass>
     <ShowFunc>true</ShowFunc>
@@ -12,12 +12,12 @@
     <ShowMember>true</ShowMember>
     <ShowArg>true</ShowArg>
     <ShowObject>true</ShowObject>
-    <LeftPanelWidth>260</LeftPanelWidth>
-    <ClassHeight>226</ClassHeight>
+    <LeftPanelWidth>176</LeftPanelWidth>
+    <ClassHeight>184</ClassHeight>
     <CommentHeight>111</CommentHeight>
     <RightPanelWidth>176</RightPanelWidth>
     <MemberHeight>160</MemberHeight>
-    <ObjectHeight>450</ObjectHeight>
+    <ObjectHeight>361</ObjectHeight>
   </HAViewInfo>
-  <HAClass Link="Girl.hacls" />
+  <HAClass Link="Macro.hacls" />
 </HAProject>

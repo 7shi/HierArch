@@ -29,8 +29,19 @@ namespace Girl.HierArch
 		{
 			this.ClassTreeView = null;
 			this.ViewInfo = new HAViewInfo();
-			
+			this.InitMacro();
 			this.InitUserPlugin();
+		}
+
+		private void InitMacro()
+		{
+			string macro = HADoc.UserDir + @"\Macro.hamcr";
+			if (File.Exists(macro)) return;
+			string dir = ApplicationDataManager.SearchFolder("Data");
+			if (dir == null) return;
+			string macro_orig = dir + @"\Macro.hamcr";
+			if (!File.Exists(macro_orig)) return;
+			File.Copy(macro_orig, macro);
 		}
 
 		public string ShortName
@@ -62,8 +73,7 @@ namespace Girl.HierArch
 			{
 				if (xr.Name == "HAViewInfo" && xr.NodeType == XmlNodeType.Element)
 				{
-					this.ViewInfo = new XmlSerializer(
-						typeof(HAViewInfo)).Deserialize(xr) as HAViewInfo;
+					this.ViewInfo = new XmlSerializer(typeof (HAViewInfo)).Deserialize(xr) as HAViewInfo;
 				}
 				else if (xr.Name == "HAClass" && xr.NodeType == XmlNodeType.Element)
 				{
@@ -91,7 +101,6 @@ namespace Girl.HierArch
 				}
 			}
 			xr.Close();
-			
 			this.ClassTreeView.ApplyState();
 			if (this.ClassTreeView.SelectedNode == null && this.ClassTreeView.Nodes.Count > 0)
 			{
@@ -137,21 +146,17 @@ namespace Girl.HierArch
 			xw.Formatting = Formatting.Indented;
 			xw.WriteStartDocument();
 			xw.WriteStartElement("HAProject");
-			xw.WriteAttributeString("version" , Application.ProductVersion);
-			
-			XmlSerializer xs = new XmlSerializer(typeof(HAViewInfo));
+			xw.WriteAttributeString("version", Application.ProductVersion);
+			XmlSerializer xs = new XmlSerializer(typeof (HAViewInfo));
 			xs.Serialize(xw, this.ViewInfo);
-			
 			foreach (TreeNode n in this.ClassTreeView.Nodes)
 			{
 				(n as HAClassNode).ToXml(xw);
 			}
-			
 			xw.WriteEndElement();
 			xw.WriteEndDocument();
 			xw.Flush();
 			xw.Close();
-			
 			return true;
 		}
 
@@ -165,16 +170,11 @@ namespace Girl.HierArch
 				MessageBox.Show("クラスが選択されていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return false;
 			}
-			
-			string msg = "HDS 形式では現在開かれているクラスだけが保存されます。\r\n"
-				+ "注釈, メンバ, 引数, 変数は保存されません。";
-			
-			if (MessageBox.Show(msg, "確認", MessageBoxButtons.OKCancel,
-				MessageBoxIcon.Information) == DialogResult.Cancel)
+			string msg = "HDS 形式では現在開かれているクラスだけが保存されます。\r\n" + "注釈, メンバ, 引数, 変数は保存されません。";
+			if (MessageBox.Show(msg, "確認", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
 			{
 				return false;
 			}
-			
 			try
 			{
 				sw = new StreamWriter(this.FullName, false, Encoding.UTF8);
@@ -188,7 +188,7 @@ namespace Girl.HierArch
 			xw.Formatting = Formatting.Indented;
 			xw.WriteStartDocument();
 			xw.WriteStartElement("hds");
-			xw.WriteAttributeString("version" , "0.3.5");
+			xw.WriteAttributeString("version", "0.3.5");
 			foreach (TreeNode nn in n.Body.Nodes)
 			{
 				(nn as HAFuncNode).ToHds(xw);
@@ -204,18 +204,39 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return "2003/03/02 23:00:06";
+				return "2003/03/16 5:53:45";
 			}
 		}
 
 		#region Plugin
 
+		private void InitUserPlugin()
+		{
+			string dir1 = HADoc.SysPluginDir;
+			if (dir1 == null) return;
+			string dir2 = HADoc.UserPluginDir;
+			DirectoryInfo di = new DirectoryInfo(dir1);
+			foreach (FileInfo fi in di.GetFiles("*.cs"))
+			{
+				string source = dir2 + @"\" + fi.Name;
+				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
+			}
+			foreach (FileInfo fi in di.GetFiles("*.miopt"))
+			{
+				string source = dir2 + @"\" + fi.Name;
+				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
+			}
+			string dll = dir2 + @"\HierArchLib.dll";
+			if (File.Exists(dll)) return;
+			DirectoryInfo di2 = new FileInfo(Application.ExecutablePath).Directory;
+			File.Copy(di2.FullName + @"\HierArchLib.dll", dll);
+		}
+
 		public static string UserDir
 		{
 			get
 			{
-				string ret = Environment.GetFolderPath(
-					Environment.SpecialFolder.Personal) + @"\HierArch";
+				string ret = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\HierArch";
 				if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
 				return ret;
 			}
@@ -239,36 +260,9 @@ namespace Girl.HierArch
 			}
 		}
 
-		private void InitUserPlugin()
-		{
-			string dir1 = HADoc.SysPluginDir;
-			if (dir1 == null) return;
-			
-			string dir2 = HADoc.UserPluginDir;
-			
-			DirectoryInfo di = new DirectoryInfo(dir1);
-			foreach (FileInfo fi in di.GetFiles("*.cs"))
-			{
-				string source = dir2 + @"\" + fi.Name;
-				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
-			}
-			foreach (FileInfo fi in di.GetFiles("*.miopt"))
-			{
-				string source = dir2 + @"\" + fi.Name;
-				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
-			}
-			
-			string dll = dir2 + @"\HierArchLib.dll";
-			if (File.Exists(dll)) return;
-			
-			DirectoryInfo di2 = new FileInfo(Application.ExecutablePath).Directory;
-			File.Copy(di2.FullName + @"\HierArchLib.dll", dll);
-		}
-
 		public void Make()
 		{
 			this.InitUserPlugin();
-			
 			DirectoryInfo di = new DirectoryInfo(HADoc.UserPluginDir);
 			foreach (FileInfo fi in di.GetFiles("*.cs"))
 			{
@@ -286,18 +280,13 @@ namespace Girl.HierArch
 
 		public CompilerResults Compile(string source, string dll)
 		{
-			Microsoft.CSharp.CSharpCodeProvider codeProvider =
-				new Microsoft.CSharp.CSharpCodeProvider();
+			Microsoft.CSharp.CSharpCodeProvider codeProvider = new Microsoft.CSharp.CSharpCodeProvider();
 			ICodeCompiler icc = codeProvider.CreateCompiler();
 			CompilerParameters parameters = new CompilerParameters();
 			parameters.GenerateExecutable = true;
-			parameters.ReferencedAssemblies.AddRange(new string[]
-				{
-					"System.dll", HADoc.UserPluginDir + @"\HierArchLib.dll"
-				});
+			parameters.ReferencedAssemblies.AddRange(new string [] { "System.dll", HADoc.UserPluginDir + @"\HierArchLib.dll" });
 			parameters.OutputAssembly = dll;
 			parameters.CompilerOptions = "/target:library";
-			
 			return icc.CompileAssemblyFromFile(parameters, source);
 		}
 

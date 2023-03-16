@@ -69,9 +69,9 @@ namespace Girl.Rtf
 		/// </summary>
 		public RtfDocument()
 		{
-			this.fontTable   = new RtfFontTable();
-			this.colorTable  = new RtfColorTable();
-			this.document    = new ArrayList();
+			this.fontTable = new RtfFontTable();
+			this.colorTable = new RtfColorTable();
+			this.document = new ArrayList();
 		}
 
 		#region Properties
@@ -128,7 +128,7 @@ namespace Girl.Rtf
 			sr = new StringReader(rtf);
 			while ((ch1 = sr.Read()) >= 0)
 			{
-				ch = (char)ch1;
+				ch =(char) ch1;
 				if (ch == '{')
 				{
 					ret.Parse(sr);
@@ -148,9 +148,7 @@ namespace Girl.Rtf
 			{
 				this.colorTable.SetObject(ro);
 			}
-			else if (this.document.Count > 0
-				|| ro.Name.StartsWith("\\viewkind")
-				|| ro.Name.StartsWith("\\uc"))
+			else if (this.document.Count > 0 || ro.Name.StartsWith("\\viewkind") || ro.Name.StartsWith("\\uc"))
 			{
 				this.document.Add(ro);
 			}
@@ -184,10 +182,8 @@ namespace Girl.Rtf
 			RtfObject ro;
 
 			base.GenerateRtfChild(sb);
-			
-			this.fontTable .GenerateRtf(sb);
+			this.fontTable.GenerateRtf(sb);
 			this.colorTable.GenerateRtf(sb);
-			
 			if (this.document.Count < 1)
 			{
 				sb.Append(' ');
@@ -196,9 +192,7 @@ namespace Girl.Rtf
 			foreach (object obj in this.document)
 			{
 				ro = obj as RtfObject;
-				if (sb.Length > 0 && sb[sb.Length - 1] != '\n'
-					&& !ro.Name.StartsWith("\\")
-					&& (prev == null || !prev.IsText))
+				if (sb.Length > 0 && sb[sb.Length - 1] != '\n' && !ro.Name.StartsWith("\\") &&(prev == null || !prev.IsText))
 				{
 					sb.Append(' ');
 				}
@@ -223,8 +217,7 @@ namespace Girl.Rtf
 				if (ro.IsText)
 				{
 					rf = this.fontTable.Fonts[rc.Font];
-					ret.Append(ro.GetText(
-						CharSetEncoding.GetEncoding(rf.CharSet)));
+					ret.Append(ro.GetText(CharSetEncoding.GetEncoding(rf.CharSet)));
 				}
 				else if (ro.Name == "\\par")
 				{
@@ -237,10 +230,8 @@ namespace Girl.Rtf
 		protected override void DisplayTreeViewChild(TreeView treeView, TreeNode node)
 		{
 			base.DisplayTreeViewChild(treeView, node);
-			
-			this. fontTable.DisplayTreeView(treeView, node);
+			this.fontTable.DisplayTreeView(treeView, node);
 			this.colorTable.DisplayTreeView(treeView, node);
-			
 			foreach (object obj in this.document)
 			{
 				(obj as RtfObject).DisplayTreeView(treeView, node);
@@ -293,8 +284,7 @@ namespace Girl.Rtf
 					if (ro.IsFontNumber)
 					{
 						rf = new RtfFont(value);
-						ro = new RtfObject(string.Format(
-							"\\f{0}", this.fontTable.GetIndex(rf)));
+						ro = new RtfObject(string.Format("\\f{0}", this.fontTable.GetIndex(rf)));
 					}
 					ros.Add(ro);
 				}
@@ -321,7 +311,7 @@ namespace Girl.Rtf
 						ret = v;
 					}
 				}
-				return ((float)ret) / 2;
+				return ((float) ret) / 2;
 			}
 
 			set
@@ -330,15 +320,13 @@ namespace Girl.Rtf
 				RtfObject ro;
 
 				this.RemoveFontSize();
-				
 				len = this.document.Count;
 				for (int i = 0; i < len; i++)
 				{
 					ro = this.document[i] as RtfObject;
 					if (ro.IsText)
 					{
-						this.document.Insert(i, new RtfObject(
-							string.Format("\\fs{0}", (int)(value * 2))));
+						this.document.Insert(i, new RtfObject(string.Format("\\fs{0}",(int) (value * 2))));
 						return;
 					}
 				}
@@ -355,7 +343,6 @@ namespace Girl.Rtf
 			{
 				ro = obj as RtfObject;
 				if (ro.Name.StartsWith("\\fs")) continue;
-				
 				ros.Add(ro);
 			}
 			this.document = ros;
@@ -379,8 +366,7 @@ namespace Girl.Rtf
 
 			set
 			{
-				this.AddDocument(string.Format(
-					"\\f{0}", this.fontTable.GetIndex(new RtfFont(value))));
+				this.AddDocument(string.Format("\\f{0}", this.fontTable.GetIndex(new RtfFont(value))));
 			}
 		}
 
@@ -388,12 +374,12 @@ namespace Girl.Rtf
 		{
 			get
 			{
-				return ((float)this.LastContext.FontSize) / 2;
+				return ((float) this.LastContext.FontSize) / 2;
 			}
 
 			set
 			{
-				this.AddDocument(string.Format("\\fs{0}", (int)(value * 2)));
+				this.AddDocument(string.Format("\\fs{0}",(int) (value * 2)));
 			}
 		}
 
@@ -407,7 +393,6 @@ namespace Girl.Rtf
 			{
 				if ((obj as RtfObject).Exists(target)) return true;
 			}
-			
 			return false;
 		}
 
@@ -421,7 +406,6 @@ namespace Girl.Rtf
 			{
 				ro = obj as RtfObject;
 				if (ro.Name == target) continue;
-				
 				ros.Add(ro);
 				ro.Remove(target);
 			}
@@ -522,24 +506,22 @@ namespace Girl.Rtf
 			char prev;
 
 			if (text.Length < 1) return;
-			
 			sb = new StringBuilder();
 			prev = '\0';
 			foreach (char ch in text)
 			{
-				if (ch == '\r' || (prev != '\r' && ch == '\n'))
+				if (ch == '\r' ||(prev != '\r' && ch == '\n'))
 				{
 					if (sb.Length > 0)
 					{
-						this.AddDocument(
-							RtfObject.ConvertText(sb.ToString()));
+						this.AddDocument(RtfObject.ConvertText(sb.ToString()));
 						sb.Remove(0, sb.Length);
 					}
 					this.AppendLine();
 				}
 				else if (ch != '\n')
 				{
-					sb.Append(ch);		
+					sb.Append(ch);
 				}
 				prev = ch;
 			}
@@ -554,7 +536,6 @@ namespace Girl.Rtf
 			int c;
 
 			if (text.Length < 1) return;
-			
 			c = this.colorTable.GetIndex(color);
 			if (c != 0) this.AddDocument(string.Format("\\cf{0}", c));
 			this.AppendText(text);
@@ -564,7 +545,6 @@ namespace Girl.Rtf
 		public void AppendText(string text, FontStyle fontStyle)
 		{
 			if (text.Length < 1) return;
-			
 			if ((fontStyle & FontStyle.Bold) == FontStyle.Bold)
 			{
 				this.AddDocument("\\b");
@@ -577,9 +557,7 @@ namespace Girl.Rtf
 			{
 				this.AddDocument("\\ul");
 			}
-			
 			this.AppendText(text);
-			
 			if ((fontStyle & FontStyle.Underline) == FontStyle.Underline)
 			{
 				this.AddDocument("\\ulnone");
@@ -599,7 +577,6 @@ namespace Girl.Rtf
 			int c;
 
 			if (text.Length < 1) return;
-			
 			c = this.colorTable.GetIndex(color);
 			if (c != 0) this.AddDocument(string.Format("\\cf{0}", c));
 			this.AppendText(text, fontStyle);

@@ -33,7 +33,8 @@ namespace Girl.HierArch
 		{
 			server = HAAccountManager.RemoveQuery(server);
 			int num = this.Find(server);
-			return (num >= 0) ? this.accounts[num] : null;
+			return (num >= 0) ? this.accounts[num]:
+			null;
 		}
 
 		public void Set(string server, string id, string password)
@@ -52,8 +53,8 @@ namespace Girl.HierArch
 				this.accounts = acs;
 				num = len;
 			}
-			this.accounts[num].Server   = server;
-			this.accounts[num].Id       = id;
+			this.accounts[num].Server = server;
+			this.accounts[num].Id = id;
 			this.accounts[num].Password = password;
 		}
 
@@ -71,8 +72,9 @@ namespace Girl.HierArch
 
 		public void Load(ApplicationDataManager adm)
 		{
-			HAAccount[] acs = adm.Load("Accounts.xml", typeof(HAAccount[])) as HAAccount[];
-			this.accounts = (acs != null) ? acs : new HAAccount[0];
+			HAAccount[] acs = adm.Load("Accounts.xml", typeof (HAAccount[])) as HAAccount[];
+			this.accounts =(acs != null) ? acs:
+			new HAAccount[0];
 		}
 
 		public void Save(ApplicationDataManager adm)
@@ -83,7 +85,8 @@ namespace Girl.HierArch
 		public static string RemoveQuery(string server)
 		{
 			int p = server.IndexOf('?');
-			return (p >= 0) ? server.Substring(0, p) : server;
+			return (p >= 0) ? server.Substring(0, p):
+			server;
 		}
 	}
 }

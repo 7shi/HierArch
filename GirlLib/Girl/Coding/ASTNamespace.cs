@@ -20,11 +20,9 @@ namespace Girl.Coding
 			this.DeclarationPos = parser.Pos;
 			string text;
 			StringBuilder sb = new StringBuilder();
-			
 			while (parser.Read())
 			{
 				text = parser.Text;
-				
 				if (text == "{")
 				{
 					this.Name = sb.ToString();
@@ -43,7 +41,6 @@ namespace Girl.Coding
 			string text;
 			int level = 0;
 			bool first = true;
-			
 			while (parser.Read())
 			{
 				if (first)
@@ -52,7 +49,6 @@ namespace Girl.Coding
 					first = false;
 				}
 				text = parser.Text;
-				
 				if (text == "{")
 				{
 					level++;

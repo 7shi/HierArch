@@ -32,9 +32,7 @@ namespace Girl.Rtf
 				int i;
 
 				if (this.fonts != null) return this.fonts;
-				
 				this.fonts = new RtfFont[this.rtfObjects.Count];
-				
 				i = 0;
 				foreach (RtfObject ro in this.rtfObjects)
 				{
@@ -77,16 +75,15 @@ namespace Girl.Rtf
 				if (rf2.Equals(rf)) return ret;
 				ret++;
 			}
-			
 			this.fonts = null;
 			if (this.name == "") this.name = "\\fonttbl";
 			ro = new RtfObject(string.Format("\\f{0}", ret));
-			ro.AddRtfObject(string.Format("\\f{0}"       , rf.Family ));
+			ro.AddRtfObject(string.Format("\\f{0}", rf.Family));
 			if (rf.CharSet >= 0)
 			{
 				ro.AddRtfObject(string.Format("\\fcharset{0}", rf.CharSet));
 			}
-			ro.AddRtfObject(string.Format("{0};"         , rf.Name   ));
+			ro.AddRtfObject(string.Format("{0};", rf.Name));
 			this.AddRtfObject(ro);
 			return ret;
 		}

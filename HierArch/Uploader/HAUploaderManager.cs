@@ -27,7 +27,6 @@ namespace Girl.HierArch
 			{
 				return this.Servers[server] as HAUploaderInfo;
 			}
-			
 			HAUploaderInfo ret = new HAUploaderInfo(server);
 			this.Servers[server] = ret;
 			return ret;

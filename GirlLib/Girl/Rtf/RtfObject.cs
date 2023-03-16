@@ -59,9 +59,7 @@ namespace Girl.Rtf
 
 				len = this.name.Length;
 				if (len < 1 || this.name[0] != '\\' || len < 2) return true;
-				if (len > 2 && (this.name[1] == 'c' || this.name[1] == 'u')
-					&& char.IsDigit(this.name[2])) return true;
-				
+				if (len > 2 &&(this.name[1] == 'c' || this.name[1] == 'u') && char.IsDigit(this.name[2])) return true;
 				return RtfObject._IsChar(this.name[1]);
 			}
 		}
@@ -78,9 +76,7 @@ namespace Girl.Rtf
 		{
 			get
 			{
-				return this.name.Length > 2
-					&& this.name.StartsWith("\\f")
-					&& char.IsDigit(this.name[2]);
+				return this.name.Length > 2 && this.name.StartsWith("\\f") && char.IsDigit(this.name[2]);
 			}
 		}
 
@@ -104,7 +100,6 @@ namespace Girl.Rtf
 					if (char.IsDigit(ch)) sb.Append(ch);
 				}
 				if (sb.Length < 1) return 0;
-				
 				return Convert.ToInt32(sb.ToString());
 			}
 		}
@@ -126,14 +121,14 @@ namespace Girl.Rtf
 			d = encoding.GetDecoder();
 			while ((ch = sr.Read()) != -1)
 			{
-				ch2 = (char)ch;
+				ch2 =(char) ch;
 				if (ch2 == '\\')
 				{
 					this.ReadEscape(text, ms, sr, d);
 				}
 				else if (' ' <= ch2 && ch2 < 128)
 				{
-					ms.WriteByte((byte)ch2);
+					ms.WriteByte((byte) ch2);
 				}
 				else
 				{
@@ -154,8 +149,7 @@ namespace Girl.Rtf
 
 			ch = sr.Read();
 			if (ch == -1) return;
-			
-			ch2 = (char)ch;
+			ch2 =(char) ch;
 			if (ch2 == '\'')
 			{
 				this.ReadByte(ms, sr);
@@ -179,14 +173,10 @@ namespace Girl.Rtf
 
 			ch = sr.Read();
 			if (ch == -1) return;
-			
-			hex = ((char)ch).ToString();
-			
+			hex =((char) ch).ToString();
 			ch = sr.Read();
 			if (ch == -1) return;
-			
-			hex += (char)ch;
-			
+			hex +=(char) ch;
 			try
 			{
 				ms.WriteByte(byte.Parse(hex, NumberStyles.HexNumber));
@@ -205,15 +195,14 @@ namespace Girl.Rtf
 			sb = new StringBuilder();
 			while ((ch = sr.Read()) != -1)
 			{
-				ch2 = (char)ch;
+				ch2 =(char) ch;
 				if (!char.IsDigit(ch2)) break;
 				sb.Append(ch2);
 			}
 			if (sb.Length < 1) return;
-			
 			try
 			{
-				text.Append((char)Convert.ToInt32(sb.ToString()));
+				text.Append((char) Convert.ToInt32(sb.ToString()));
 			}
 			catch
 			{
@@ -225,12 +214,10 @@ namespace Girl.Rtf
 			Byte[] bytes;
 			char[] chars;
 
-			if (ms.Length < 1 ) return;
-			
+			if (ms.Length < 1) return;
 			bytes = ms.ToArray();
 			ms.SetLength(0);
-			
-			chars = new char[d.GetCharCount(bytes, 0, bytes.Length)];
+			chars = new char [d.GetCharCount(bytes, 0, bytes.Length)];
 			d.GetChars(bytes, 0, bytes.Length, chars, 0);
 			text.Append(chars);
 		}
@@ -248,7 +235,7 @@ namespace Girl.Rtf
 			escape = u = false;
 			while ((ch1 = sr.Read()) >= 0)
 			{
-				ch = (char)ch1;
+				ch =(char) ch1;
 				if (u)
 				{
 					if (!char.IsDigit(ch))
@@ -315,9 +302,7 @@ namespace Girl.Rtf
 
 			len = sb.Length;
 			if (len < 1 || sb[0] != '\\' || len < 2) return true;
-			if (len > 2 && (sb[1] == 'c' || sb[1] == 'u')
-				&& char.IsDigit(sb[2])) return true;
-			
+			if (len > 2 &&(sb[1] == 'c' || sb[1] == 'u') && char.IsDigit(sb[2])) return true;
 			return RtfObject._IsChar(sb[1]);
 		}
 
@@ -338,7 +323,6 @@ namespace Girl.Rtf
 
 			len = sb.Length;
 			if (len < 1) return null;
-			
 			if (this.name == "")
 			{
 				this.name = sb.ToString();
@@ -363,7 +347,6 @@ namespace Girl.Rtf
 			RtfObject ro;
 
 			this.name = node.Text;
-			
 			foreach (TreeNode n in node.Nodes)
 			{
 				ro = new RtfObject();
@@ -375,19 +358,15 @@ namespace Girl.Rtf
 		public void GenerateRtf(StringBuilder sb)
 		{
 			if (this.IsEmpty) return;
-			
 			if (this.rtfObjects.Count < 1)
 			{
 				sb.Append(this.name);
 				if (this.name == "\\par") sb.Append("\r\n");
 				return;
 			}
-			
 			sb.Append('{');
 			sb.Append(this.name);
-			
 			this.GenerateRtfChild(sb);
-			
 			sb.Append('}');
 			if (this.name == "\\colortbl" || this.name == "\\fonttbl" || this.name == "\\rtf1")
 			{
@@ -404,9 +383,7 @@ namespace Girl.Rtf
 			foreach (object obj in this.rtfObjects)
 			{
 				ro = obj as RtfObject;
-				if (sb.Length > 0 && sb[sb.Length - 1] != '\n'
-					&& !ro.Name.StartsWith("\\")
-					&& (prev == null || !prev.IsText))
+				if (sb.Length > 0 && sb[sb.Length - 1] != '\n' && !ro.Name.StartsWith("\\") &&(prev == null || !prev.IsText))
 				{
 					sb.Append(' ');
 				}
@@ -420,7 +397,6 @@ namespace Girl.Rtf
 			TreeNode n;
 
 			if (this.IsEmpty) return;
-			
 			n = new TreeNode(this.name);
 			if (parent == null)
 			{
@@ -430,7 +406,6 @@ namespace Girl.Rtf
 			{
 				parent.Nodes.Add(n);
 			}
-			
 			this.DisplayTreeViewChild(treeView, n);
 		}
 
@@ -445,12 +420,10 @@ namespace Girl.Rtf
 		public bool Exists(string target)
 		{
 			if (this.name == target) return true;
-			
 			foreach (object obj in this.rtfObjects)
 			{
 				if ((obj as RtfObject).Exists(target)) return true;
 			}
-			
 			return false;
 		}
 
@@ -464,7 +437,6 @@ namespace Girl.Rtf
 			{
 				ro = obj as RtfObject;
 				if (ro.name == target) continue;
-				
 				ros.Add(ro);
 				ro.Remove(target);
 			}
@@ -488,7 +460,7 @@ namespace Girl.Rtf
 				}
 				else
 				{
-					sb.Append(string.Format("\\u{0}?", (int)ch));
+					sb.Append(string.Format("\\u{0}?",(int) ch));
 				}
 			}
 			return sb.ToString();
@@ -505,11 +477,11 @@ namespace Girl.Rtf
 			sb = new StringBuilder();
 			e = Encoding.Default.GetEncoder();
 			chars = text.ToCharArray();
-			bytes = new byte[e.GetByteCount(chars, 0, text.Length, false)];
+			bytes = new byte [e.GetByteCount(chars, 0, text.Length, false)];
 			e.GetBytes(chars, 0, text.Length, bytes, 0, false);
 			foreach (byte b in bytes)
 			{
-				ch = (char)b;
+				ch =(char) b;
 				if (ch == '\\' || ch == '{' || ch == '}')
 				{
 					sb.Append('\\');

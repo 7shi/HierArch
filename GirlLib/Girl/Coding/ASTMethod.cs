@@ -19,7 +19,6 @@ namespace Girl.Coding
 		public void ParseDeclaration(ParserBase parser)
 		{
 			this.Access = parser.Access;
-			
 			while (parser.Read())
 			{
 				if (parser.Text == "{")
@@ -35,7 +34,6 @@ namespace Girl.Coding
 			int level = 0;
 			string text;
 			bool first = true;
-			
 			while (parser.Read())
 			{
 				if (first)
@@ -44,7 +42,6 @@ namespace Girl.Coding
 					first = false;
 				}
 				text = parser.Text;
-				
 				if (text == "{")
 				{
 					level++;

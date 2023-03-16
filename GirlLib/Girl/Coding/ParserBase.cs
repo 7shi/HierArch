@@ -31,29 +31,27 @@ namespace Girl.Coding
 		/// </summary>
 		public ParserBase()
 		{
-			this.reader   = null;
+			this.reader = null;
 			this.keyWords = null;
-			
-			this.Color_Default   = Color.Black;
-			this.Color_KeyWord   = Color.Blue;
-			this.Color_Comment   = Color.DarkGreen;
-			this.Color_String    = Color.Magenta;
+			this.Color_Default = Color.Black;
+			this.Color_KeyWord = Color.Blue;
+			this.Color_Comment = Color.DarkGreen;
+			this.Color_String = Color.Magenta;
 			this.Color_Directive = Color.DarkMagenta;
 		}
 
 		protected virtual void Init()
 		{
-			this.source     = new StringBuilder();
+			this.source = new StringBuilder();
 			this.lineNumber = 1;
-			this.text       = "";
-			this.spacing    = "";
-			this.rtf        = new RtfDocument();
+			this.text = "";
+			this.spacing = "";
+			this.rtf = new RtfDocument();
 		}
 
 		public virtual bool Read()
 		{
 			if (this.text.Length < 1) return false;
-			
 			this.rtf.AppendText(this.spacing);
 			this.rtf.AppendText(this.text, this.TextColor);
 			return true;
@@ -66,7 +64,6 @@ namespace Girl.Coding
 				this.rtf.AppendText(this.spacing);
 				if (this.spacing.EndsWith("\n")) this.rtf.AppendLine();
 			}
-			
 			this.reader = null;
 		}
 
@@ -123,7 +120,6 @@ namespace Girl.Coding
 			get
 			{
 				if (this.keyWords == null) return false;
-				
 				foreach (string kw in this.KeyWords)
 				{
 					if (this.text == kw) return true;

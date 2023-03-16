@@ -52,7 +52,7 @@ this.Color_String    = Color.Magenta;
 this.Color_Directive = Color.DarkMagenta;
 </Source>
       </HAFunc>
-      <HAFunc Type="Protected" Text="Init:virtual" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+      <HAFunc Type="Protected" Text="Init:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="141" SelectionLength="0">this.source     = new StringBuilder();
@@ -142,10 +142,10 @@ return false;
             <Source SelectionStart="15" SelectionLength="0">return false;
 </Source>
           </HAFunc>
-          <HAFunc Type="Public" Text="get_IsString:virtual bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+          <HAFunc Type="Public" Text="get_IsString:virtual bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="15" SelectionLength="0">return false;
+            <Source SelectionStart="14" SelectionLength="0">return false;
 </Source>
           </HAFunc>
           <HAFunc Type="Public" Text="get_IsDirective:virtual bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">

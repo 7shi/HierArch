@@ -35,19 +35,17 @@ namespace Girl.Windows.Forms
 		protected override void OnMeasureItem(MeasureItemEventArgs e)
 		{
 			base.OnMeasureItem(e);
-			
 			Font f = new Font(this.Items[e.Index].ToString(), this.Font.Size);
-			e.ItemHeight = (int)e.Graphics.MeasureString(f.Name, f).Height;
+			e.ItemHeight =(int) e.Graphics.MeasureString(f.Name, f).Height;
 			f.Dispose();
 		}
 
 		protected override void OnDrawItem(DrawItemEventArgs e)
 		{
 			base.OnDrawItem(e);
-			
 			Font f = new Font(this.Items[e.Index].ToString(), this.Font.Size);
-			Brush b = (e.State == DrawItemState.Selected)
-				? SystemBrushes.HighlightText : SystemBrushes.WindowText;
+			Brush b =(e.State == DrawItemState.Selected) ? SystemBrushes.HighlightText:
+			SystemBrushes.WindowText;
 			e.DrawBackground();
 			e.Graphics.DrawString(f.Name, f, b, e.Bounds);
 			f.Dispose();

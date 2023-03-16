@@ -25,8 +25,7 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				if(this.dataPath != null) return this.dataPath;
-				
+				if (this.dataPath != null) return this.dataPath;
 				string path = Application.LocalUserAppDataPath;
 				string ret = Directory.GetParent(path).FullName;
 				try
@@ -96,7 +95,6 @@ namespace Girl.Windows.Forms
 		{
 			string path = this.DataPath;
 			if (!path.EndsWith(@"\")) path += @"\";
-			
 			XmlSerializer xs = new XmlSerializer(data.GetType());
 			StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
 			xs.Serialize(sw, data);
@@ -107,7 +105,6 @@ namespace Girl.Windows.Forms
 		{
 			string path = this.DataPath;
 			if (!path.EndsWith(@"\")) path += @"\";
-			
 			StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
 			sw.Write(text);
 			sw.Close();
@@ -116,15 +113,13 @@ namespace Girl.Windows.Forms
 		public static string SearchFolder(string folder)
 		{
 			DirectoryInfo di = new FileInfo(Application.ExecutablePath).Directory;
-			
-			for (; di != null && di.Exists; di = di.Parent)
+			for (;di != null && di.Exists; di = di.Parent)
 			{
 				string path = di.FullName;
 				if (!path.EndsWith(@"\")) path += @"\";
 				path += folder;
 				if (Directory.Exists(path)) return path;
 			}
-			
 			return null;
 		}
 	}

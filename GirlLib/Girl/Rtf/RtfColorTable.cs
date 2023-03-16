@@ -37,7 +37,6 @@ namespace Girl.Rtf
 				int i;
 
 				if (this.colors != null) return this.colors;
-				
 				this.colors = new Color[this.ColorCount];
 				r = g = b = i = 0;
 				foreach (RtfObject ro in this.rtfObjects)
@@ -73,7 +72,6 @@ namespace Girl.Rtf
 				int ret;
 
 				if (this.colors != null) return this.colors.GetLength(0);
-				
 				ret = 0;
 				foreach (RtfObject ro in this.rtfObjects)
 				{
@@ -106,15 +104,12 @@ namespace Girl.Rtf
 			ret = 0;
 			foreach (Color cc in this.Colors)
 			{
-				if (cc.R == color.R
-					&& cc.G == color.G
-					&& cc.B == color.B)
+				if (cc.R == color.R && cc.G == color.G && cc.B == color.B)
 				{
 					return ret;
 				}
 				ret++;
 			}
-			
 			this.colors = null;
 			if (this.name == "") this.name = "\\colortbl";
 			if (this.rtfObjects.Count < 1)
@@ -122,7 +117,7 @@ namespace Girl.Rtf
 				this.AddRtfObject(";");
 				ret = 1;
 			}
-			this.AddRtfObject(string.Format("\\red{0}"  , color.R));
+			this.AddRtfObject(string.Format("\\red{0}", color.R));
 			this.AddRtfObject(string.Format("\\green{0}", color.G));
 			this.AddRtfObject(string.Format("\\blue{0};", color.B));
 			return ret;

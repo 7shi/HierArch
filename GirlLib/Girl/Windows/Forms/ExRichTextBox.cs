@@ -21,7 +21,6 @@ namespace Girl.Windows.Forms
 		public void AppendText(string text, Color color)
 		{
 			if (text.Length < 1) return;
-			
 			Color c = this.SelectionColor;
 			this.SelectionColor = color;
 			this.AppendText(text);
@@ -31,7 +30,6 @@ namespace Girl.Windows.Forms
 		public void AppendText(string text, FontStyle fontStyle)
 		{
 			if (text.Length < 1) return;
-			
 			Font f1 = this.SelectionFont;
 			Font f2 = new Font(f1.FontFamily, f1.Size, fontStyle);
 			this.SelectionFont = f2;
@@ -43,7 +41,6 @@ namespace Girl.Windows.Forms
 		public void AppendText(string text, Color color, FontStyle fontStyle)
 		{
 			if (text.Length < 1) return;
-			
 			Color c = this.SelectionColor;
 			this.SelectionColor = color;
 			this.AppendText(text, fontStyle);
@@ -82,7 +79,6 @@ namespace Girl.Windows.Forms
 		public void InsertText(string text, Color color)
 		{
 			if (text.Length < 1) return;
-			
 			Color c = this.SelectionColor;
 			this.SelectionColor = color;
 			this.SelectedText = text;
@@ -92,7 +88,6 @@ namespace Girl.Windows.Forms
 		public void InsertText(string text, FontStyle fontStyle)
 		{
 			if (text.Length < 1) return;
-			
 			Font f1 = this.SelectionFont;
 			Font f2 = new Font(f1.FontFamily, f1.Size, fontStyle);
 			this.SelectionFont = f2;
@@ -104,7 +99,6 @@ namespace Girl.Windows.Forms
 		public void InsertText(string text, Color color, FontStyle fontStyle)
 		{
 			if (text.Length < 1) return;
-			
 			Color c = this.SelectionColor;
 			this.SelectionColor = color;
 			this.InsertText(text, fontStyle);

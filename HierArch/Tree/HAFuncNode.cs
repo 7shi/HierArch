@@ -38,17 +38,16 @@ namespace Girl.HierArch
 		public override void Init()
 		{
 			base.Init();
-			
-			this.Args    = new ArrayList();
+			this.Args = new ArrayList();
 			this.Objects = new ArrayList();
 			this.Comment = "";
-			this.Source  = "";
-			this.Rtf     = "";
+			this.Source = "";
+			this.Rtf = "";
 			this.EnableRtf = false;
-			this.CommentSelectionStart  = 0;
+			this.CommentSelectionStart = 0;
 			this.CommentSelectionLength = 0;
-			this.SourceSelectionStart   = 0;
-			this.SourceSelectionLength  = 0;
+			this.SourceSelectionStart = 0;
+			this.SourceSelectionLength = 0;
 			this.PropertyPair = null;
 			this.Property = new HAFuncProperty(this);
 		}
@@ -87,26 +86,11 @@ namespace Girl.HierArch
 			{
 				switch (this.Type)
 				{
-					case HAType.FolderBlue:
-					case HAType.FolderBule_Open:
-					case HAType.TextBlue:
-						return "blue";
-					case HAType.FolderBrown:
-					case HAType.FolderBrown_Open:
-					case HAType.TextBrown:
-						return "brown";
-					case HAType.FolderGray:
-					case HAType.FolderGray_Open:
-					case HAType.TextGray:
-						return "gray";
-					case HAType.FolderGreen:
-					case HAType.FolderGreen_Open:
-					case HAType.TextGreen:
-						return "green";
-					case HAType.FolderRed:
-					case HAType.FolderRed_Open:
-					case HAType.TextRed:
-						return "red";
+					case HAType.FolderBlue: case HAType.FolderBule_Open: case HAType.TextBlue: return "blue";
+					case HAType.FolderBrown: case HAType.FolderBrown_Open: case HAType.TextBrown: return "brown";
+					case HAType.FolderGray: case HAType.FolderGray_Open: case HAType.TextGray: return "gray";
+					case HAType.FolderGreen: case HAType.FolderGreen_Open: case HAType.TextGreen: return "green";
+					case HAType.FolderRed: case HAType.FolderRed_Open: case HAType.TextRed: return "red";
 				}
 				return "";
 			}
@@ -115,16 +99,16 @@ namespace Girl.HierArch
 		public override object Clone()
 		{
 			HAFuncNode ret = base.Clone() as HAFuncNode;
-			ret.Args    = this.Args.Clone() as ArrayList;
+			ret.Args = this.Args.Clone() as ArrayList;
 			ret.Objects = this.Objects.Clone() as ArrayList;
 			ret.Comment = this.Comment;
-			ret.Source  = this.Source;
-			ret.Rtf     = this.Rtf;
+			ret.Source = this.Source;
+			ret.Rtf = this.Rtf;
 			ret.EnableRtf = this.EnableRtf;
-			ret.CommentSelectionStart  = this.CommentSelectionStart;
+			ret.CommentSelectionStart = this.CommentSelectionStart;
 			ret.CommentSelectionLength = this.CommentSelectionLength;
-			ret.SourceSelectionStart   = this.SourceSelectionStart;
-			ret.SourceSelectionLength  = this.SourceSelectionLength;
+			ret.SourceSelectionStart = this.SourceSelectionStart;
+			ret.SourceSelectionLength = this.SourceSelectionLength;
 			return ret;
 		}
 
@@ -133,11 +117,10 @@ namespace Girl.HierArch
 		public HAFuncNode Search(string text)
 		{
 			if (this.Text == text) return this;
-			
 			HAFuncNode ret = null;
 			foreach (TreeNode n in this.Nodes)
 			{
-				ret = (n as HAFuncNode).Search(text);
+				ret =(n as HAFuncNode).Search(text);
 				if (ret != null) break;
 			}
 			return ret;
@@ -146,11 +129,10 @@ namespace Girl.HierArch
 		public HAFuncNode Search(string text, HAType type)
 		{
 			if (this.Text == text && this.Type == type) return this;
-			
 			HAFuncNode ret = null;
 			foreach (TreeNode n in this.Nodes)
 			{
-				ret = (n as HAFuncNode).Search(text, type);
+				ret =(n as HAFuncNode).Search(text, type);
 				if (ret != null) break;
 			}
 			return ret;
@@ -164,11 +146,10 @@ namespace Girl.HierArch
 				ObjectParser op = new ObjectParser(this.Text);
 				if (op.Name == text) return this;
 			}
-			
 			HAFuncNode ret = null;
 			foreach (TreeNode n in this.Nodes)
 			{
-				ret = (n as HAFuncNode).SearchProperty(text);
+				ret =(n as HAFuncNode).SearchProperty(text);
 				if (ret != null) break;
 			}
 			return ret;
@@ -190,7 +171,6 @@ namespace Girl.HierArch
 		public void SearchPropertyPair(HAFuncNode body)
 		{
 			if (this.Type == HAType.Comment) return;
-			
 			if (this.IsObject)
 			{
 				ObjectParser op = new ObjectParser(this.Text);
@@ -200,7 +180,6 @@ namespace Girl.HierArch
 					if (n != null) this.PropertyPair = n.PropertyPair = n;
 				}
 			}
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				(n as HAFuncNode).SearchPropertyPair(body);
@@ -214,31 +193,26 @@ namespace Girl.HierArch
 		public override void WriteXml(XmlTextWriter xw)
 		{
 			base.WriteXml(xw);
-			
 			xw.WriteStartElement("Arguments");
 			foreach (Object obj in this.Args)
 			{
-				if (obj is HAObjectNode) (obj as HAObjectNode).ToXml(xw);
+				if (obj is HAObjectNode)(obj as HAObjectNode).ToXml(xw);
 			}
 			xw.WriteEndElement();
-			
 			foreach (Object obj in this.Objects)
 			{
-				if (obj is HAObjectNode) (obj as HAObjectNode).ToXml(xw);
+				if (obj is HAObjectNode)(obj as HAObjectNode).ToXml(xw);
 			}
-			
 			xw.WriteStartElement("Comment");
-			xw.WriteAttributeString("SelectionStart" , XmlConvert.ToString(this.CommentSelectionStart));
+			xw.WriteAttributeString("SelectionStart", XmlConvert.ToString(this.CommentSelectionStart));
 			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.CommentSelectionLength));
 			xw.WriteString(this.Comment);
 			xw.WriteEndElement();
-			
 			xw.WriteStartElement("Source");
-			xw.WriteAttributeString("SelectionStart" , XmlConvert.ToString(this.SourceSelectionStart));
+			xw.WriteAttributeString("SelectionStart", XmlConvert.ToString(this.SourceSelectionStart));
 			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.SourceSelectionLength));
 			xw.WriteString(this.Source);
 			xw.WriteEndElement();
-			
 			if (this.EnableRtf)
 			{
 				xw.WriteStartElement("RichTextFormat");
@@ -275,13 +249,13 @@ namespace Girl.HierArch
 				}
 				else if (xr.Name == "Comment")
 				{
-					this.CommentSelectionStart  = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
+					this.CommentSelectionStart = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
 					this.CommentSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
 					if (!xr.IsEmptyElement && xr.Read()) this.Comment = xr.ReadString();
 				}
 				else if (xr.Name == "Source")
 				{
-					this.SourceSelectionStart  = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
+					this.SourceSelectionStart = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
 					this.SourceSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
 					if (!xr.IsEmptyElement && xr.Read()) this.Source = xr.ReadString();
 				}
@@ -303,12 +277,10 @@ namespace Girl.HierArch
 			xw.WriteStartElement("para");
 			xw.WriteString("\n" + this.Source.Replace("\r\n", "\n"));
 			xw.WriteEndElement();
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				(n as HAFuncNode).ToHds(xw);
 			}
-			
 			xw.WriteEndElement();
 		}
 
@@ -316,12 +288,10 @@ namespace Girl.HierArch
 		{
 			this.Type = HAType.Text;
 			if (xr.Name != "node" || xr.NodeType != XmlNodeType.Element) return;
-			
 			this.Text = xr.GetAttribute("title");
-			this.m_IsExpanded = (xr.GetAttribute("open") == "true");
+			this.m_IsExpanded =(xr.GetAttribute("open") == "true");
 			string icon = xr.GetAttribute("icon");
 			if (xr.IsEmptyElement) return;
-			
 			HAFuncNode n;
 			while (xr.Read())
 			{
@@ -335,8 +305,7 @@ namespace Girl.HierArch
 				{
 					break;
 				}
-				else if (xr.Name == "para" && xr.NodeType == XmlNodeType.Element
-					&& !xr.IsEmptyElement && xr.Read())
+				else if (xr.Name == "para" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement && xr.Read())
 				{
 					string text = xr.ReadString();
 					if (text.IndexOf("\r\n") < 0)
@@ -360,15 +329,14 @@ namespace Girl.HierArch
 					}
 				}
 			}
-			
 			if (this.Nodes.Count > 0)
 			{
 				if (this.m_IsExpanded) Expand();
-				this.m_Type = (HAType)Enum.Parse(typeof(HAType), "folder" + icon, true);
+				this.m_Type =(HAType) Enum.Parse(typeof (HAType), "folder" + icon, true);
 			}
 			else
 			{
-				this.m_Type = (HAType)Enum.Parse(typeof(HAType), "text" + icon, true);
+				this.m_Type =(HAType) Enum.Parse(typeof (HAType), "text" + icon, true);
 			}
 			this.SetIcon();
 		}
@@ -393,12 +361,10 @@ namespace Girl.HierArch
 				cw.WriteBlankLine();
 				cw.WriteCode("#region " + this.Text);
 			}
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				(n as HAFuncNode).GenerateClass(cw);
 			}
-			
 			if (t.ToString().StartsWith("Folder"))
 			{
 				cw.WriteBlankLine();
@@ -410,10 +376,8 @@ namespace Girl.HierArch
 		{
 			ObjectParser op = new ObjectParser(this.Text, this.Type);
 			if (op.IsProperty && this.PropertyPair == this) return;
-			
 			cw.WriteBlankLine();
 			if (this.Comment != "") cw.WriteCodes("/// ", this.Comment);
-			
 			if (op.IsProperty)
 			{
 				cw.WriteStartBlock(op.PropertyDeclaration);
@@ -432,7 +396,6 @@ namespace Girl.HierArch
 			this.GenerateFuncCode(cw);
 			cw.WriteEndBlock();
 			if (this.PropertyPair == null || this.PropertyPair == this) return;
-			
 			cw.WriteBlankLine();
 			this.PropertyPair.GenerateProperty(cw);
 		}
@@ -447,9 +410,7 @@ namespace Girl.HierArch
 			}
 			code += sb.ToString() + ")";
 			cw.WriteStartBlock(cw.ReplaceKeywords(code));
-			
 			this.GenerateFuncCode(cw);
-			
 			cw.WriteEndBlock();
 		}
 
@@ -463,7 +424,7 @@ namespace Girl.HierArch
 			if (this.Source != "")
 			{
 				cw.WriteBlankLine();
-				cw.WriteCodes(cw.ReplaceKeywords(this.Source));
+				Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null);
 			}
 		}
 
@@ -480,7 +441,6 @@ namespace Girl.HierArch
 				target += new ObjectParser(this.Text).Name;
 				this.GenerateFile(target);
 			}
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				(n as HAFuncNode).GenerateFolder(path);
@@ -500,7 +460,6 @@ namespace Girl.HierArch
 			{
 				return;
 			}
-			
 			sw = new StreamWriter(fs, Encoding.Default);
 			sw.Write(this.Source);
 			sw.Close();
@@ -510,7 +469,6 @@ namespace Girl.HierArch
 		public void GenerateText(HierArchWriter haw, string chapter, bool concat)
 		{
 			haw.WriteNode(this.Type, chapter, this.Text, this.Comment, this.Source);
-			
 			int i = 1;
 			foreach (TreeNode n in this.Nodes)
 			{

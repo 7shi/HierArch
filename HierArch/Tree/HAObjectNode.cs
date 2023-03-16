@@ -49,8 +49,8 @@ namespace Girl.HierArch
 		{
 			if (this.IsObject)
 			{
-				this.SelectedImageIndex = (int)HAType.PointRed;
-				this.ImageIndex         = (int)HAType.Point;
+				this.SelectedImageIndex =(int) HAType.PointRed;
+				this.ImageIndex =(int) HAType.Point;
 				return;
 			}
 			base.SetIcon();
@@ -70,7 +70,6 @@ namespace Girl.HierArch
 				if (sb.Length > 0) sb.Append(", ");
 				sb.Append(cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration));
 			}
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				(n as HAObjectNode).Generate(cw, sb);
@@ -88,7 +87,6 @@ namespace Girl.HierArch
 			{
 				cw.WriteCode(cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration) + ";");
 			}
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				(n as HAObjectNode).Generate(cw);

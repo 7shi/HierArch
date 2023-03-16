@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="CParserBase:ParserBase" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+<HAClass Type="Public" Text="CParserBase:ParserBase" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:55:04">
   <HAObject Type="Protected" Text="separator:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
   <HAObject Type="Private" Text="preText:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
   <HAObject Type="Private" Text="preChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
@@ -61,12 +61,12 @@ this.curPos     =  0;
 this.pos        =  0;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="Read:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+      <HAFunc Type="Public" Text="Read:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 0:35:29">
         <Arguments />
         <HAObject Type="Private" Text="ch:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         <HAObject Type="Private" Text="st:State" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         <Comment SelectionStart="0" SelectionLength="0" />
-        <Source SelectionStart="416" SelectionLength="0">this.preText = this.text;
+        <Source SelectionStart="2438" SelectionLength="0">this.preText = this.text;
 this.text = this.spacing = "";
 ch = -1;
 st = State.Normal;
@@ -187,10 +187,16 @@ for (;;)
 	} 
 	else if (st == State.String)
 	{
-		if (this.text.Length &gt; 1 &amp;&amp; this.preChar != '\\'
-			&amp;&amp; ch == '"')
+		if (this.text.Length &gt; 1)
 		{
-			break;
+			if (this.preChar == '\\' &amp;&amp; ch == '\\')
+			{
+				this.curChar = ' ';
+			}
+			else if (this.preChar != '\\' &amp;&amp; ch == '"')
+			{
+				break;
+			}
 		}
 	}
 	else if (st == State.StringAt)
@@ -199,10 +205,16 @@ for (;;)
 	}
 	else if (st == State.Char)
 	{
-		if (this.text.Length &gt; 1 &amp;&amp; this.preChar != '\\'
-			&amp;&amp; ch == '\'')
+		if (this.text.Length &gt; 1)
 		{
-			break;
+			if (this.preChar == '\\' &amp;&amp; ch == '\\')
+			{
+				this.curChar = ' ';
+			}
+			else if (this.preChar != '\\' &amp;&amp; ch == '\'')
+			{
+				break;
+			}
 		}
 	}
 }
@@ -246,10 +258,10 @@ return this.curChar;
           <Source SelectionStart="66" SelectionLength="0">return this.text.StartsWith("/*") || this.text.StartsWith("//");
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="get_IsString:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+        <HAFunc Type="Public" Text="get_IsString:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 0:55:04">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="65" SelectionLength="0">return this.text.StartsWith("\"") || this.text.StartsWith("'");
+          <Source SelectionStart="95" SelectionLength="0">return this.text.StartsWith("\"") || this.text.StartsWith("'") || this.text.StartsWith("@\"");
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="get_IsDirective:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">

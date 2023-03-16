@@ -20,10 +20,8 @@ namespace Girl.Net
 		public MimeDocument()
 		{
 			this.objects = new ArrayList();
-			
 			// 本当は重複をチェックしないといけない
 			this.Boundary = "----=_NextPart_000_0000";
-			
 			this.From = "<MimeDocument>";
 			this.Subject = "MimeDocument Generated Page";
 		}
@@ -54,7 +52,6 @@ namespace Girl.Net
 		public void Write(TextWriter textWriter)
 		{
 			this.WriteHeader(textWriter);
-			
 			foreach (object obj in this.objects)
 			{
 				MimeObject mo = obj as MimeObject;

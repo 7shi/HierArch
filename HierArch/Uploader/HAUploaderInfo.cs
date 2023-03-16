@@ -23,13 +23,13 @@ namespace Girl.HierArch
 		public HAUploaderInfo(string server)
 		{
 			this.Server = server;
-			this.Files  = null;
+			this.Files = null;
 		}
 
 		public string Dir()
 		{
 			WebClient wc = new WebClient();
-			byte[] res;
+			byte [] res;
 			try
 			{
 				res = wc.DownloadData(this.MakeUrl("session=dir"));
@@ -38,17 +38,14 @@ namespace Girl.HierArch
 			{
 				return ex.ToString();
 			}
-			
 			this.Files = new Hashtable();
 			StringReader sr = new StringReader(Encoding.ASCII.GetString(res));
 			string line;
 			while ((line = sr.ReadLine()) != null)
 			{
 				if (line.Length < 1) continue;
-			
-				string[] data = line.Split(',');
+				string [] data = line.Split(',');
 				if (data.Length != 3) continue;
-				
 				new HAUploaderFileInfo(this, data);
 			}
 			return null;
@@ -56,7 +53,7 @@ namespace Girl.HierArch
 
 		public string MakeUrl(string query)
 		{
-			return this.Server + ((this.Server.IndexOf('?') < 0) ? "?" : "&") + query;
+			return this.Server +((this.Server.IndexOf('?') < 0) ? "?" : "&") + query;
 		}
 	}
 }

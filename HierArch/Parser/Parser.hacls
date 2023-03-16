@@ -151,7 +151,7 @@ return sb.ToString();
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="0" SelectionLength="0" />
-          <HAFunc Type="Public" Text="get_IsConstructor:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+          <HAFunc Type="Public" Text="get_IsConstructor:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="36" SelectionLength="0">return this.name == "__" + "CLASS";
@@ -225,10 +225,10 @@ return access + " " + this.Type + " " + this.Name;
           <Source SelectionStart="90" SelectionLength="0">return this.ObjectType.ToString().ToLower() + " " + this.Type + " " + this.PropertyName;
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="get_ObjectDeclaration:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
+        <HAFunc Type="Public" Text="get_ObjectDeclaration:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="80" SelectionLength="0">string t = this.Type;
+          <Source SelectionStart="77" SelectionLength="0">string t = this.Type;
 if (t == "") t = "object";
 return t + " " + this.Name;
 </Source>

@@ -38,17 +38,15 @@ namespace Girl.Coding
 		protected override void Init()
 		{
 			base.Init();
-			
 			this.separator = ";,.(){}[]*";
-			
-			this.preText    = "";
-			this.preChar    = -1;
-			this.curChar    = -1;
-			this.nextChar   = -1;
-			this.curLineNum =  1;
-			this.prePos     =  0;
-			this.curPos     =  0;
-			this.pos        =  0;
+			this.preText = "";
+			this.preChar = -1;
+			this.curChar = -1;
+			this.nextChar = -1;
+			this.curLineNum = 1;
+			this.prePos = 0;
+			this.curPos = 0;
+			this.pos = 0;
 		}
 
 		public override bool Read()
@@ -60,7 +58,6 @@ namespace Girl.Coding
 			this.text = this.spacing = "";
 			ch = -1;
 			st = State.Normal;
-			
 			for (;;)
 			{
 				if (this.text.Length < 1)
@@ -71,9 +68,7 @@ namespace Girl.Coding
 				}
 				ch = ReadChar();
 				if (ch == -1) break;
-			
-				if (st == State.String || st == State.StringAt
-					|| st == State.Char || st == State.Comment1)
+				if (st == State.String || st == State.StringAt || st == State.Char || st == State.Comment1)
 				{
 				}
 				else if (st == State.Comment2 || st == State.Directive)
@@ -84,14 +79,14 @@ namespace Girl.Coding
 						break;
 					}
 				}
-				else if (" \t\r\n".IndexOf((char)ch) >= 0) 
+				else if (" \t\r\n".IndexOf((char) ch) >= 0)
 				{
 					if (this.text.Length > 0)
 					{
 						this.nextChar = ch;
 						break;
 					}
-					this.spacing += (char)ch;
+					this.spacing +=(char) ch;
 					continue;
 				}
 				else if (ch == '"')
@@ -133,18 +128,16 @@ namespace Girl.Coding
 				else if (this.text == "/" && ch == '*')
 				{
 				}
-				else if (this.text.Length > 0
-					&& this.separator.IndexOf((char)ch) >= 0)
+				else if (this.text.Length > 0 && this.separator.IndexOf((char) ch) >= 0)
 				{
 					this.nextChar = ch;
 					break;
 				}
-			
-				this.text += (char)ch;
-				if (this.text.Length == 1) 
+				this.text +=(char) ch;
+				if (this.text.Length == 1)
 				{
 					this.lineNumber = this.curLineNum;
-					if (this.text == "#") 
+					if (this.text == "#")
 					{
 						st = State.Directive;
 					}
@@ -154,7 +147,7 @@ namespace Girl.Coding
 						break;
 					}
 				}
-				else if (this.text == "/*") 
+				else if (this.text == "/*")
 				{
 					st = State.Comment1;
 				}
@@ -162,7 +155,7 @@ namespace Girl.Coding
 				{
 					st = State.Comment2;
 				}
-				else if (this.text == "#") 
+				else if (this.text == "#")
 				{
 					st = State.Directive;
 				}
@@ -170,17 +163,22 @@ namespace Girl.Coding
 				{
 					st = State.Number;
 				}
-			
 				if (st == State.Comment1)
 				{
 					if (this.preChar == '*' && ch == '/') break;
-				} 
+				}
 				else if (st == State.String)
 				{
-					if (this.text.Length > 1 && this.preChar != '\\'
-						&& ch == '"')
+					if (this.text.Length > 1)
 					{
-						break;
+						if (this.preChar == '\\' && ch == '\\')
+						{
+							this.curChar = ' ';
+						}
+						else if (this.preChar != '\\' && ch == '"')
+						{
+							break;
+						}
 					}
 				}
 				else if (st == State.StringAt)
@@ -189,35 +187,39 @@ namespace Girl.Coding
 				}
 				else if (st == State.Char)
 				{
-					if (this.text.Length > 1 && this.preChar != '\\'
-						&& ch == '\'')
+					if (this.text.Length > 1)
 					{
-						break;
+						if (this.preChar == '\\' && ch == '\\')
+						{
+							this.curChar = ' ';
+						}
+						else if (this.preChar != '\\' && ch == '\'')
+						{
+							break;
+						}
 					}
 				}
 			}
-			
 			return base.Read();
 		}
 
 		private int ReadChar()
 		{
-			if (this.nextChar != -1) 
+			if (this.nextChar != -1)
 			{
 				this.curChar = this.nextChar;
 				this.nextChar = -1;
-			} 
-			else 
+			}
+			else
 			{
 				this.preChar = this.curChar;
 				this.curChar = this.reader.Read();
 				if (this.curChar != -1)
 				{
 					this.curPos++;
-					this.source.Append((char)this.curChar);
+					this.source.Append((char) this.curChar);
 				}
-				if (this.curChar == '\r'
-					|| (this.preChar != '\r' && this.curChar == '\n'))
+				if (this.curChar == '\r' ||(this.preChar != '\r' && this.curChar == '\n'))
 				{
 					this.curLineNum++;
 				}
@@ -239,7 +241,7 @@ namespace Girl.Coding
 		{
 			get
 			{
-				return this.text.StartsWith("\"") || this.text.StartsWith("'");
+				return this.text.StartsWith("\"") || this.text.StartsWith("'") || this.text.StartsWith("@\"");
 			}
 		}
 

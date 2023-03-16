@@ -46,10 +46,10 @@ namespace Girl.Windows.Forms
 		/// </summary>
 		public LinkRichTextBox()
 		{
-			this.ReadOnly   = true;
-			this.oldCursor  = this.Cursor;
-			this.linkColor  = Color.Blue;
-			this.links      = new ArrayList();
+			this.ReadOnly = true;
+			this.oldCursor = this.Cursor;
+			this.linkColor = Color.Blue;
+			this.links = new ArrayList();
 			this.linkTarget = null;
 		}
 
@@ -84,13 +84,12 @@ namespace Girl.Windows.Forms
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			base.OnMouseMove(e);
-			
 			int pos = this.GetCharIndexFromPosition(new Point(e.X, e.Y));
 			object target = null;
 			LinkTargetInfo li;
 			foreach (object obj in this.links)
 			{
-				li = (LinkTargetInfo)obj;
+				li =(LinkTargetInfo) obj;
 				if (li.Start <= pos && pos < li.Start + li.Length)
 				{
 					target = li.Target;
@@ -110,18 +109,16 @@ namespace Girl.Windows.Forms
 		{
 			base.OnMouseDown(e);
 			if (this.linkTarget == null || this.LinkTargetClicked == null) return;
-			
 			this.LinkTargetClicked(this, new LinkTargetEventArgs(this.linkTarget));
 		}
 
 		private void SetTarget(object target)
 		{
 			if (target == this.linkTarget) return;
-			
 			this.linkTarget = target;
-			this.Cursor = (target == null) ? this.oldCursor : Cursors.Hand;
+			this.Cursor =(target == null) ? this.oldCursor:
+			Cursors.Hand;
 			if (this.LinkTargetNotify == null) return;
-			
 			this.LinkTargetNotify(this, new LinkTargetEventArgs(target));
 		}
 

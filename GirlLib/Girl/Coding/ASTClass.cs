@@ -21,7 +21,6 @@ namespace Girl.Coding
 		{
 			this.DeclarationPos = parser.Pos;
 			string text;
-			
 			while (parser.Read())
 			{
 				text = parser.Text;
@@ -43,7 +42,6 @@ namespace Girl.Coding
 			int pos = parser.Pos, prePos;
 			bool first = true;
 			Stack region = new Stack();
-			
 			while (parser.Read())
 			{
 				if (first)
@@ -52,10 +50,9 @@ namespace Girl.Coding
 					first = false;
 				}
 				preText = text;
-				prePos  = pos;
+				prePos = pos;
 				text = parser.Text;
-				pos  = parser.Pos;
-				
+				pos = parser.Pos;
 				if (text == "{")
 				{
 					if (level == 0 && !ignore)
@@ -111,12 +108,10 @@ namespace Girl.Coding
 		private void ParseProperty(ParserBase parser, Stack region, string name, int pos)
 		{
 			string text = parser.Text, preText, access = parser.Access;
-			
 			while (parser.Read())
 			{
 				preText = text;
 				text = parser.Text;
-				
 				if (text == "{")
 				{
 					ASTMethod am = new ASTMethod();
@@ -141,7 +136,7 @@ namespace Girl.Coding
 			}
 			else
 			{
-				(region.Peek() as ASTObject).Objects.Add(ao);
+				 (region.Peek() as ASTObject).Objects.Add(ao);
 			}
 		}
 	}

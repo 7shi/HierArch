@@ -29,12 +29,11 @@ namespace Girl.HierArch
 		public override void Init()
 		{
 			base.Init();
-			
-			this.Members   = new ArrayList();
-			this.Header    = new HAFuncNode();
-			this.Body      = new HAFuncNode();
-			this.Footer    = new HAFuncNode();
-			this.Property  = new HAClassProperty(this);
+			this.Members = new ArrayList();
+			this.Header = new HAFuncNode();
+			this.Body = new HAFuncNode();
+			this.Footer = new HAFuncNode();
+			this.Property = new HAClassProperty(this);
 		}
 
 		/// <summary>
@@ -70,11 +69,12 @@ namespace Girl.HierArch
 			get
 			{
 				ObjectParser op = new ObjectParser(this.Text);
-				string ns = (this.IsFolder) ? op.Type : "";
+				string ns =(this.IsFolder) ? op.Type:
+				"";
 				if (ns.IndexOf('.') >= 0 || this.Parent == null) return ns;
-				
-				string pns = (this.Parent as HAClassNode).Namespace;
-				if (pns != "") return (ns != "") ? pns + "." + ns : pns;
+				string pns =(this.Parent as HAClassNode).Namespace;
+				if (pns != "") return (ns != "") ? pns + "." + ns:
+				pns;
 				return ns;
 			}
 		}
@@ -84,20 +84,16 @@ namespace Girl.HierArch
 		public override void WriteXml(XmlTextWriter xw)
 		{
 			base.WriteXml(xw);
-			
 			foreach (Object obj in this.Members)
 			{
-				if (obj is HAMemberNode) ((HAMemberNode)obj).ToXml(xw);
+				if (obj is HAMemberNode)((HAMemberNode) obj).ToXml(xw);
 			}
-			
 			xw.WriteStartElement("Header");
 			this.Header.ToXml(xw);
 			xw.WriteEndElement();
-			
 			xw.WriteStartElement("Body");
 			this.Body.ToXml(xw);
 			xw.WriteEndElement();
-			
 			xw.WriteStartElement("Footer");
 			this.Footer.ToXml(xw);
 			xw.WriteEndElement();
@@ -132,7 +128,6 @@ namespace Girl.HierArch
 		{
 			this.Type = HAType.Text;
 			if (xr.Name != "hds" || xr.NodeType != XmlNodeType.Element || xr.IsEmptyElement) return;
-			
 			HAFuncNode n;
 			while (xr.Read())
 			{
@@ -159,7 +154,6 @@ namespace Girl.HierArch
 			string target = path;
 			if (!target.EndsWith(@"\")) target += @"\";
 			target += new ObjectParser(this.Text).Name;
-			
 			if (t == HAType.Comment)
 			{
 				return;
@@ -191,7 +185,6 @@ namespace Girl.HierArch
 			{
 				this.GenerateText(target + ".txt");
 			}
-			
 			foreach (TreeNode n in this.Nodes)
 			{
 				(n as HAClassNode).Generate(path);
@@ -211,11 +204,9 @@ namespace Girl.HierArch
 			{
 				return;
 			}
-			
 			cw = new CodeWriter(fs, Encoding.UTF8);
 			ObjectParser op = new ObjectParser(this.Text);
 			cw.ClassName = op.Name;
-			
 			// Header
 			this.WriteHeader(cw);
 			this.WriteLocalHeader(cw);
@@ -229,7 +220,6 @@ namespace Girl.HierArch
 				cw.WriteBlankLine();
 				cw.WriteCodes(this.Header.Source);
 			}
-			
 			// Namespace
 			string ns = this.Namespace;
 			if (ns != "")
@@ -237,7 +227,6 @@ namespace Girl.HierArch
 				cw.WriteBlankLine();
 				cw.WriteStartBlock("namespace " + ns);
 			}
-			
 			// Body
 			cw.WriteBlankLine();
 			if (this.Body.Comment != "") cw.WriteCodes("/// ", this.Body.Comment);
@@ -259,9 +248,7 @@ namespace Girl.HierArch
 				(obj as HAFuncNode).GenerateClass(cw);
 			}
 			cw.WriteEndBlock();
-			
 			if (ns != "") cw.WriteEndBlock();
-			
 			// Footer
 			if (this.Footer.Comment != "")
 			{
@@ -273,7 +260,6 @@ namespace Girl.HierArch
 				cw.WriteBlankLine();
 				cw.WriteCodes(this.Footer.Source);
 			}
-			
 			cw.Close();
 			fs.Close();
 		}
@@ -282,10 +268,8 @@ namespace Girl.HierArch
 		{
 			if (this.Parent != null) (this.Parent as HAClassNode).WriteHeader(cw);
 			if (!this.IsFolder) return;
-			
 			HAFuncNode n = this.Body.Search("Header", HAType.Comment);
 			if (n == null || n.Source == "") return;
-			
 			cw.WriteBlankLine();
 			cw.WriteCodes("// ", n.Source);
 		}
@@ -296,14 +280,12 @@ namespace Girl.HierArch
 			{
 				if (this.Parent != null)
 				{
-					(this.Parent as HAClassNode).WriteLocalHeader(cw);
+					 (this.Parent as HAClassNode).WriteLocalHeader(cw);
 				}
 				return;
 			}
-			
 			HAFuncNode n = this.Body.Search("LocalHeader", HAType.Comment);
 			if (n == null || n.Source == "") return;
-			
 			cw.WriteBlankLine();
 			cw.WriteCodes("// ", n.Source);
 		}
@@ -322,23 +304,17 @@ namespace Girl.HierArch
 			{
 				return;
 			}
-			
 			haw = null;
 			domain = null;
 			try
 			{
-				string dll = string.Format(@"{0}\{1}.dll",
-					HADoc.UserPluginDir, this.Type.ToString());
+				string dll = string.Format(@"{0}\{1}.dll", HADoc.UserPluginDir, this.Type.ToString());
 				if (File.Exists(dll))
 				{
 					AppDomainSetup setup = new AppDomainSetup();
 					setup.ApplicationBase = HADoc.UserPluginDir;
 					domain = AppDomain.CreateDomain(this.Type.ToString(), null, setup);
-					haw = domain.CreateInstanceFromAndUnwrap(
-						dll, "Plugin", false,
-						BindingFlags.Default, null,
-						new object[] {fs},
-						null, null, null) as HierArchWriter;
+					haw = domain.CreateInstanceFromAndUnwrap(dll, "Plugin", false, BindingFlags.Default, null, new object [] { fs }, null, null, null) as HierArchWriter;
 				}
 			}
 			catch (Exception ex)
@@ -346,9 +322,7 @@ namespace Girl.HierArch
 				MessageBox.Show(ex.ToString());
 			}
 			if (haw == null) haw = new HierArchWriter(fs, Encoding.Default);
-			
 			haw.WriteTitle(this.Type, this.Text);
-			
 			int i = 1;
 			foreach (Object obj in this.Body.Nodes)
 			{
@@ -356,7 +330,7 @@ namespace Girl.HierArch
 				i++;
 			}
 			haw.Close();
-			fs .Close();
+			fs.Close();
 			if (domain != null) AppDomain.Unload(domain);
 		}
 

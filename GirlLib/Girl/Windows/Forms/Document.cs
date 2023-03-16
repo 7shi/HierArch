@@ -17,14 +17,14 @@ namespace Girl.Windows.Forms
 		public Document()
 		{
 			this.FullName = "";
-			this.Changed  = false;
+			this.Changed = false;
 		}
 
 		public string Name
 		{
 			get
 			{
-				if(this.FullName == "") return "無題";
+				if (this.FullName == "") return "無題";
 				return new FileInfo(this.FullName).Name;
 			}
 		}

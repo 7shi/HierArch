@@ -10,13 +10,13 @@ namespace Girl.Windows.Forms
 	{
 		public static int GetEndLineWidth(TextBoxBase textBox)
 		{
-			return (textBox is TextBox) ? 2 : 1;
+			return (textBox is TextBox) ? 2:
+			1;
 		}
 
 		public static int GetLinePosition(TextBoxBase textBox, int line)
 		{
 			if (line > textBox.Lines.Length) return textBox.TextLength;
-			
 			int endLine = TextBoxPlus.GetEndLineWidth(textBox);
 			int ret = 0;
 			for (int i = 0; i < line; i++)
