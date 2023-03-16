@@ -1,3 +1,8 @@
+// このファイルは ..\..\HierArch.haprj から自動生成されています。
+// 編集は必ずそちらを通すようにして、直接書き換えないでください。
+
+// ここにソースコードの注釈を書きます。
+
 using System;
 using System.Text;
 
@@ -8,33 +13,55 @@ namespace Girl.HierArch
 	/// </summary>
 	public class ObjectParser
 	{
-		private string m_Name = "";
-		private string m_Type = "";
+		private string name;
+		private string type;
+		public HAType ObjectType;
 
+		private void Init()
+		{
+			this.name = "";
+			this.type = "";
+			this.ObjectType = HAType.Public;
+		}
+
+		/// <summary>
+		/// コンストラクタです。
+		/// </summary>
 		public ObjectParser()
 		{
+			this.Init();
 		}
 
 		public ObjectParser(string text)
 		{
+			this.Init();
+			
 			this.Parse(text);
+		}
+
+		public ObjectParser(string text, HAType objectType)
+		{
+			this.Init();
+			
+			this.Parse(text);
+			this.ObjectType = objectType;
 		}
 
 		public void Parse(string text)
 		{
 			string[] list = text.Split(':');
-			this.m_Name = ObjectParser.Strip(list[0]);
-			this.m_Type = "";
+			this.name = ObjectParser.Strip(list[0]);
+			this.type = "";
 			if (list.GetLength(0) < 2) return;
-
-			this.m_Type = ObjectParser.Strip(list[1]);
+			
+			this.type = ObjectParser.Strip(list[1]);
 		}
 
 		public string Name
 		{
 			get
 			{
-				return this.m_Name;
+				return this.name;
 			}
 		}
 
@@ -42,7 +69,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return this.m_Type;
+				return this.type;
 			}
 		}
 
@@ -69,11 +96,63 @@ namespace Girl.HierArch
 			return sb.ToString();
 		}
 
-		public bool IsSpecial
+		#region Category
+
+		public bool IsConstructor
 		{
 			get
 			{
-				return (this.m_Name == "__CLASS" || this.m_Name == "~__CLASS");
+				return this.name == "__" + "CLASS";
+			}
+		}
+
+		public bool IsDestructor
+		{
+			get
+			{
+				return this.name == "~__" + "CLASS";
+			}
+		}
+
+		public bool IsProperty
+		{
+			get
+			{
+				return this.IsGet || this.IsSet;
+			}
+		}
+
+		public bool IsGet
+		{
+			get
+			{
+				return this.name.StartsWith("get_");
+			}
+		}
+
+		public bool IsSet
+		{
+			get
+			{
+				return this.name.StartsWith("set_");
+			}
+		}
+
+		#endregion
+
+		public string PropertyName
+		{
+			get
+			{
+				return this.name.Substring(4);
+			}
+		}
+
+		public string PropertyPair
+		{
+			get
+			{
+				return ((this.IsGet) ? "set_" : "get_") + this.PropertyName;
 			}
 		}
 
@@ -81,9 +160,34 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				if (this.IsSpecial) return this.Name;
-				if (this.Type == "") return "void " + this.Name;
-				return this.Type + " " + this.Name;
+				string access = this.ObjectType.ToString().ToLower();
+				
+				if (this.IsConstructor)
+				{
+					return access + " " + this.Name;
+				}
+				else if (this.IsDestructor)
+				{
+					return this.Name;
+				}
+				else if (this.Type == "")
+				{
+					return access + " void " + this.Name;
+				}
+				else if (this.Type == "static" || this.Type == "virtual"
+					|| this.Type == "override" || this.Type == "new")
+				{
+					return access + " " + this.Type + " void " + this.Name;
+				}
+				return access + " " + this.Type + " " + this.Name;
+			}
+		}
+
+		public string PropertyDeclaration
+		{
+			get
+			{
+				return this.ObjectType.ToString().ToLower() + " " + this.Type + " " + this.PropertyName;
 			}
 		}
 

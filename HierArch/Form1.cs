@@ -61,9 +61,31 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuViewSeparator2;
 		private System.Windows.Forms.MenuItem mnuViewComment;
 		private System.Windows.Forms.MenuItem mnuCode;
-		private System.Windows.Forms.MenuItem mnuCodeGenerateAll;
 		private System.Windows.Forms.MenuItem mnuHelpHomePage;
+		private System.Windows.Forms.ToolBarButton tbSeparator2;
+		private System.Windows.Forms.ToolBarButton tbBuildBuild;
+		private System.Windows.Forms.ToolBarButton tbEditUndo;
+		private System.Windows.Forms.ToolBarButton tbEditRedo;
+		private System.Windows.Forms.ToolBarButton tbSeparator3;
+		private System.Windows.Forms.ToolBarButton tbBuildRun;
+		private System.Windows.Forms.MenuItem mnuEditUndo;
+		private System.Windows.Forms.MenuItem mnuEditRedo;
+		private System.Windows.Forms.MenuItem mnuEditSeparator1;
+		private System.Windows.Forms.MenuItem mnuEditDelete;
+		private System.Windows.Forms.MenuItem mnuEditSeparator2;
+		private System.Windows.Forms.MenuItem mnuEditSelectAll;
+		private System.Windows.Forms.MenuItem menuItem1;
+		private System.Windows.Forms.MenuItem mnuOptionSmartEnter;
+		private System.Windows.Forms.MenuItem mnuOptionSmartTab;
+		private System.Windows.Forms.MenuItem mnuOptionSmartHome;
+		private System.Windows.Forms.MenuItem mnuOptionSmartParenthesis;
 		private System.ComponentModel.IContainer components;
+		private System.Windows.Forms.ToolBarButton tbBuildGenerate;
+		private System.Windows.Forms.MenuItem mnuBuildGenerate;
+		private System.Windows.Forms.MenuItem mnuBuildBuild;
+		private System.Windows.Forms.MenuItem mnuBuildRun;
+		private EditManager editManager = new EditManager();
+		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
 		public Form1()
 		{
@@ -82,17 +104,34 @@ namespace Girl.HierArch
 
 			// ツールバーのボタンをメニューの項目に対応させます。
 			// ここで定義した情報は toolBar1_ButtonClick() で使用されます。
-			this.tbFileNew  .Tag = mnuFileNew;
-			this.tbFileOpen .Tag = mnuFileOpen;
-			this.tbFileSave .Tag = mnuFileSave;
-			this.tbEditCut  .Tag = mnuEditCut;
-			this.tbEditCopy .Tag = mnuEditCopy;
-			this.tbEditPaste.Tag = mnuEditPaste;
+			this.tbFileNew      .Tag = this.mnuFileNew;
+			this.tbFileOpen     .Tag = this.mnuFileOpen;
+			this.tbFileSave     .Tag = this.mnuFileSave;
+			this.tbBuildGenerate.Tag = this.mnuBuildGenerate;
 
 			// View メニューの項目とコントロールを対応させます。
 			// ここで定義した情報は mnuViewItem_Click() で使用されます。
 			this.m_tblView.Add(mnuViewToolBar  , toolBar1  );
 			this.m_tblView.Add(mnuViewStatusBar, statusBar1);
+
+			// テキストボックスの状態をメニューと連動させます。
+			this.editManager.AddControl(this.view1.txtComment);
+			this.editManager.AddControl(this.view1.txtSource );
+			this.editManager.SetCommand(EditAction.Undo     , this.mnuEditUndo     , this.tbEditUndo );
+			this.editManager.SetCommand(EditAction.Redo     , this.mnuEditRedo     , this.tbEditRedo );
+			this.editManager.SetCommand(EditAction.Cut      , this.mnuEditCut      , this.tbEditCut  );
+			this.editManager.SetCommand(EditAction.Copy     , this.mnuEditCopy     , this.tbEditCopy );
+			this.editManager.SetCommand(EditAction.Paste    , this.mnuEditPaste    , this.tbEditPaste);
+			this.editManager.SetCommand(EditAction.Delete   , this.mnuEditDelete   );
+			this.editManager.SetCommand(EditAction.SelectAll, this.mnuEditSelectAll);
+
+			// エディタオプションを設定します。
+			Form1.codeEditorManager.SetTarget(this.view1.txtComment);
+			Form1.codeEditorManager.SetTarget(this.view1.txtSource );
+			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartEnter      , this.mnuOptionSmartEnter      );
+			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartTab        , this.mnuOptionSmartTab        );
+			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartHome       , this.mnuOptionSmartHome       );
+			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartParenthesis, this.mnuOptionSmartParenthesis);
 
 			this.m_Doc.ClassTreeView = view1.tvClass;
 		}
@@ -132,6 +171,13 @@ namespace Girl.HierArch
 			this.tbEditCut = new System.Windows.Forms.ToolBarButton();
 			this.tbEditCopy = new System.Windows.Forms.ToolBarButton();
 			this.tbEditPaste = new System.Windows.Forms.ToolBarButton();
+			this.tbSeparator2 = new System.Windows.Forms.ToolBarButton();
+			this.tbEditUndo = new System.Windows.Forms.ToolBarButton();
+			this.tbEditRedo = new System.Windows.Forms.ToolBarButton();
+			this.tbSeparator3 = new System.Windows.Forms.ToolBarButton();
+			this.tbBuildGenerate = new System.Windows.Forms.ToolBarButton();
+			this.tbBuildBuild = new System.Windows.Forms.ToolBarButton();
+			this.tbBuildRun = new System.Windows.Forms.ToolBarButton();
 			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
 			this.statusBar1 = new System.Windows.Forms.StatusBar();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -147,9 +193,15 @@ namespace Girl.HierArch
 			this.mnuFileClose = new System.Windows.Forms.MenuItem();
 			this.mnuFileExit = new System.Windows.Forms.MenuItem();
 			this.mnuEdit = new System.Windows.Forms.MenuItem();
+			this.mnuEditUndo = new System.Windows.Forms.MenuItem();
+			this.mnuEditRedo = new System.Windows.Forms.MenuItem();
+			this.mnuEditSeparator1 = new System.Windows.Forms.MenuItem();
 			this.mnuEditCut = new System.Windows.Forms.MenuItem();
 			this.mnuEditCopy = new System.Windows.Forms.MenuItem();
 			this.mnuEditPaste = new System.Windows.Forms.MenuItem();
+			this.mnuEditDelete = new System.Windows.Forms.MenuItem();
+			this.mnuEditSeparator2 = new System.Windows.Forms.MenuItem();
+			this.mnuEditSelectAll = new System.Windows.Forms.MenuItem();
 			this.mnuView = new System.Windows.Forms.MenuItem();
 			this.mnuViewToolBar = new System.Windows.Forms.MenuItem();
 			this.mnuViewStatusBar = new System.Windows.Forms.MenuItem();
@@ -162,7 +214,14 @@ namespace Girl.HierArch
 			this.mnuViewSeparator2 = new System.Windows.Forms.MenuItem();
 			this.mnuViewComment = new System.Windows.Forms.MenuItem();
 			this.mnuCode = new System.Windows.Forms.MenuItem();
-			this.mnuCodeGenerateAll = new System.Windows.Forms.MenuItem();
+			this.mnuBuildGenerate = new System.Windows.Forms.MenuItem();
+			this.mnuBuildBuild = new System.Windows.Forms.MenuItem();
+			this.mnuBuildRun = new System.Windows.Forms.MenuItem();
+			this.menuItem1 = new System.Windows.Forms.MenuItem();
+			this.mnuOptionSmartEnter = new System.Windows.Forms.MenuItem();
+			this.mnuOptionSmartTab = new System.Windows.Forms.MenuItem();
+			this.mnuOptionSmartHome = new System.Windows.Forms.MenuItem();
+			this.mnuOptionSmartParenthesis = new System.Windows.Forms.MenuItem();
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
 			this.mnuHelpHomePage = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
@@ -178,7 +237,14 @@ namespace Girl.HierArch
 																						this.tbSeparator1,
 																						this.tbEditCut,
 																						this.tbEditCopy,
-																						this.tbEditPaste});
+																						this.tbEditPaste,
+																						this.tbSeparator2,
+																						this.tbEditUndo,
+																						this.tbEditRedo,
+																						this.tbSeparator3,
+																						this.tbBuildGenerate,
+																						this.tbBuildBuild,
+																						this.tbBuildRun});
 			this.toolBar1.DropDownArrows = true;
 			this.toolBar1.ImageList = this.imageList1;
 			this.toolBar1.Name = "toolBar1";
@@ -208,21 +274,53 @@ namespace Girl.HierArch
 			// 
 			// tbEditCut
 			// 
-			this.tbEditCut.Enabled = false;
 			this.tbEditCut.ImageIndex = 3;
 			this.tbEditCut.ToolTipText = "切り取り (Ctrl+X)";
 			// 
 			// tbEditCopy
 			// 
-			this.tbEditCopy.Enabled = false;
 			this.tbEditCopy.ImageIndex = 4;
 			this.tbEditCopy.ToolTipText = "コピー (Ctrl+C)";
 			// 
 			// tbEditPaste
 			// 
-			this.tbEditPaste.Enabled = false;
 			this.tbEditPaste.ImageIndex = 5;
 			this.tbEditPaste.ToolTipText = "貼り付け (Ctrl+V)";
+			// 
+			// tbSeparator2
+			// 
+			this.tbSeparator2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			// 
+			// tbEditUndo
+			// 
+			this.tbEditUndo.ImageIndex = 6;
+			this.tbEditUndo.ToolTipText = "元に戻す (Ctrl+Z)";
+			// 
+			// tbEditRedo
+			// 
+			this.tbEditRedo.ImageIndex = 7;
+			this.tbEditRedo.ToolTipText = "やり直し (Ctrl+Y)";
+			// 
+			// tbSeparator3
+			// 
+			this.tbSeparator3.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			// 
+			// tbBuildGenerate
+			// 
+			this.tbBuildGenerate.ImageIndex = 8;
+			this.tbBuildGenerate.ToolTipText = "コード生成";
+			// 
+			// tbBuildBuild
+			// 
+			this.tbBuildBuild.Enabled = false;
+			this.tbBuildBuild.ImageIndex = 9;
+			this.tbBuildBuild.ToolTipText = "ビルド";
+			// 
+			// tbBuildRun
+			// 
+			this.tbBuildRun.Enabled = false;
+			this.tbBuildRun.ImageIndex = 10;
+			this.tbBuildRun.ToolTipText = "実行 (F5)";
 			// 
 			// imageList1
 			// 
@@ -264,6 +362,7 @@ namespace Girl.HierArch
 																					  this.mnuEdit,
 																					  this.mnuView,
 																					  this.mnuCode,
+																					  this.menuItem1,
 																					  this.mnuHelp});
 			// 
 			// mnuFile
@@ -328,31 +427,62 @@ namespace Girl.HierArch
 			// 
 			this.mnuEdit.Index = 1;
 			this.mnuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					this.mnuEditUndo,
+																					this.mnuEditRedo,
+																					this.mnuEditSeparator1,
 																					this.mnuEditCut,
 																					this.mnuEditCopy,
-																					this.mnuEditPaste});
+																					this.mnuEditPaste,
+																					this.mnuEditDelete,
+																					this.mnuEditSeparator2,
+																					this.mnuEditSelectAll});
 			this.mnuEdit.Text = "編集(&E)";
+			// 
+			// mnuEditUndo
+			// 
+			this.mnuEditUndo.Index = 0;
+			this.mnuEditUndo.Text = "元に戻す(&U)";
+			// 
+			// mnuEditRedo
+			// 
+			this.mnuEditRedo.Index = 1;
+			this.mnuEditRedo.Text = "やり直し(&R)";
+			// 
+			// mnuEditSeparator1
+			// 
+			this.mnuEditSeparator1.Index = 2;
+			this.mnuEditSeparator1.Text = "-";
 			// 
 			// mnuEditCut
 			// 
-			this.mnuEditCut.Enabled = false;
-			this.mnuEditCut.Index = 0;
-			this.mnuEditCut.Shortcut = System.Windows.Forms.Shortcut.CtrlX;
+			this.mnuEditCut.Index = 3;
 			this.mnuEditCut.Text = "切り取り(&T)";
 			// 
 			// mnuEditCopy
 			// 
-			this.mnuEditCopy.Enabled = false;
-			this.mnuEditCopy.Index = 1;
-			this.mnuEditCopy.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
+			this.mnuEditCopy.Index = 4;
 			this.mnuEditCopy.Text = "コピー(&C)";
 			// 
 			// mnuEditPaste
 			// 
-			this.mnuEditPaste.Enabled = false;
-			this.mnuEditPaste.Index = 2;
-			this.mnuEditPaste.Shortcut = System.Windows.Forms.Shortcut.CtrlV;
+			this.mnuEditPaste.Index = 5;
 			this.mnuEditPaste.Text = "貼り付け(&P)";
+			// 
+			// mnuEditDelete
+			// 
+			this.mnuEditDelete.Index = 6;
+			this.mnuEditDelete.Text = "削除(&D)";
+			// 
+			// mnuEditSeparator2
+			// 
+			this.mnuEditSeparator2.Index = 7;
+			this.mnuEditSeparator2.Text = "-";
+			// 
+			// mnuEditSelectAll
+			// 
+			this.mnuEditSelectAll.Index = 8;
+			this.mnuEditSelectAll.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
+			this.mnuEditSelectAll.Text = "すべて選択(&A)";
 			// 
 			// mnuView
 			// 
@@ -438,18 +568,63 @@ namespace Girl.HierArch
 			// 
 			this.mnuCode.Index = 3;
 			this.mnuCode.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnuCodeGenerateAll});
-			this.mnuCode.Text = "コード(&C)";
+																					this.mnuBuildGenerate,
+																					this.mnuBuildBuild,
+																					this.mnuBuildRun});
+			this.mnuCode.Text = "ビルド(&C)";
 			// 
-			// mnuCodeGenerateAll
+			// mnuBuildGenerate
 			// 
-			this.mnuCodeGenerateAll.Index = 0;
-			this.mnuCodeGenerateAll.Text = "全生成(&A)";
-			this.mnuCodeGenerateAll.Click += new System.EventHandler(this.mnuCodeGenerateAll_Click);
+			this.mnuBuildGenerate.Index = 0;
+			this.mnuBuildGenerate.Text = "コード生成(&G)";
+			this.mnuBuildGenerate.Click += new System.EventHandler(this.mnuBuildGenerate_Click);
+			// 
+			// mnuBuildBuild
+			// 
+			this.mnuBuildBuild.Enabled = false;
+			this.mnuBuildBuild.Index = 1;
+			this.mnuBuildBuild.Text = "ビルド(&B)";
+			// 
+			// mnuBuildRun
+			// 
+			this.mnuBuildRun.Enabled = false;
+			this.mnuBuildRun.Index = 2;
+			this.mnuBuildRun.Shortcut = System.Windows.Forms.Shortcut.F5;
+			this.mnuBuildRun.Text = "実行(&R)";
+			// 
+			// menuItem1
+			// 
+			this.menuItem1.Index = 4;
+			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					  this.mnuOptionSmartEnter,
+																					  this.mnuOptionSmartTab,
+																					  this.mnuOptionSmartHome,
+																					  this.mnuOptionSmartParenthesis});
+			this.menuItem1.Text = "オプション(&O)";
+			// 
+			// mnuOptionSmartEnter
+			// 
+			this.mnuOptionSmartEnter.Index = 0;
+			this.mnuOptionSmartEnter.Text = "スマート &Enter";
+			// 
+			// mnuOptionSmartTab
+			// 
+			this.mnuOptionSmartTab.Index = 1;
+			this.mnuOptionSmartTab.Text = "スマート &Tab";
+			// 
+			// mnuOptionSmartHome
+			// 
+			this.mnuOptionSmartHome.Index = 2;
+			this.mnuOptionSmartHome.Text = "スマート &Home";
+			// 
+			// mnuOptionSmartParenthesis
+			// 
+			this.mnuOptionSmartParenthesis.Index = 3;
+			this.mnuOptionSmartParenthesis.Text = "自動括弧挿入(&P)";
 			// 
 			// mnuHelp
 			// 
-			this.mnuHelp.Index = 4;
+			this.mnuHelp.Index = 5;
 			this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					this.mnuHelpHomePage,
 																					this.mnuHelpAbout});
@@ -620,7 +795,7 @@ namespace Girl.HierArch
 
 		#endregion
 
-		private void mnuCodeGenerateAll_Click(object sender, System.EventArgs e)
+		private void mnuBuildGenerate_Click(object sender, System.EventArgs e)
 		{
 			string path;
 			try
@@ -656,10 +831,9 @@ namespace Girl.HierArch
 		private void toolBar1_ButtonClick(object sender, System.Windows.Forms.ToolBarButtonClickEventArgs e)
 		{
 			object target = e.Button.Tag;
-			if(target.GetType() == typeof(MenuItem))
-			{
-				((MenuItem)target).PerformClick();
-			}
+			if (target == null || !(target is MenuItem)) return;
+
+			(target as MenuItem).PerformClick();
 		}
 
 		#endregion

@@ -213,6 +213,10 @@
                     BuildAction = "Content"
                 />
                 <File
+                    RelPath = "Icons\ToolBar\Build.png"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "Icons\ToolBar\EditCopy.png"
                     BuildAction = "Content"
                 />
@@ -225,6 +229,14 @@
                     BuildAction = "Content"
                 />
                 <File
+                    RelPath = "Icons\ToolBar\EditRedo.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\EditUndo.png"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "Icons\ToolBar\FileNew.png"
                     BuildAction = "Content"
                 />
@@ -234,6 +246,14 @@
                 />
                 <File
                     RelPath = "Icons\ToolBar\FileSave.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\Generate.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\Run.png"
                     BuildAction = "Content"
                 />
                 <File
@@ -288,6 +308,11 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "Tree\HAClassNode.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Tree\HAFunc.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
@@ -296,6 +321,11 @@
                     RelPath = "Tree\HAFunc.resx"
                     DependentUpon = "HAFunc.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Tree\HAFuncNode.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Tree\HAMember.cs"
@@ -308,6 +338,11 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "Tree\HAMemberNode.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Tree\HAObject.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
@@ -316,6 +351,11 @@
                     RelPath = "Tree\HAObject.resx"
                     DependentUpon = "HAObject.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Tree\HAObjectNode.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Tree\HATree.cs"

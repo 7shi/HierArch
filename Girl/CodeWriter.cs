@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Girl.Code
+namespace Girl.Coding
 {
 	/// <summary>
 	/// ソースコードを出力します。
@@ -18,6 +18,10 @@ namespace Girl.Code
 		public string ClassName = "";
 
 		public CodeWriter(Stream stream) : base(stream)
+		{
+		}
+
+		public CodeWriter(Stream stream, Encoding encoding) : base(stream, encoding)
 		{
 		}
 

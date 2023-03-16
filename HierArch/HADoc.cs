@@ -1,3 +1,6 @@
+// このファイルは ..\HierArch.haprj から自動生成されています。
+// 編集は必ずそちらを通すようにして、直接書き換えないでください。
+
 using System;
 using System.IO;
 using System.Text;
@@ -8,17 +11,18 @@ using Girl.Windows.Forms;
 namespace Girl.HierArch
 {
 	/// <summary>
-	/// HADoc の概要の説明です。
+	/// ここにクラスの説明を書きます。
 	/// </summary>
 	public class HADoc : Document
 	{
-		public HAClass ClassTreeView = null;
+		public HAClass ClassTreeView;
 
+		/// <summary>
+		/// コンストラクタです。
+		/// </summary>
 		public HADoc()
 		{
-			// 
-			// TODO: コンストラクタ ロジックをここに追加してください。
-			//
+			this.ClassTreeView = null;
 		}
 
 		public string ShortName
@@ -35,6 +39,9 @@ namespace Girl.HierArch
 		public override bool Open()
 		{
 			FileStream fs;
+			XmlTextReader xr;
+			HAClassNode n;
+
 			try
 			{
 				fs = new FileStream(FullName, FileMode.Open);
@@ -43,8 +50,7 @@ namespace Girl.HierArch
 			{
 				return false;
 			}
-			XmlTextReader xr = new XmlTextReader(fs);
-			HAClassNode n;
+			xr = new XmlTextReader(fs);
 			while (xr.Read())
 			{
 				if (xr.Name == "HAClass" && xr.NodeType == XmlNodeType.Element)
@@ -106,6 +112,7 @@ namespace Girl.HierArch
 		private bool SaveHAPrj()
 		{
 			FileStream fs;
+
 			try
 			{
 				fs = new FileStream(this.FullName, FileMode.Create);
@@ -139,13 +146,13 @@ namespace Girl.HierArch
 				MessageBox.Show("クラスが選択されていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return false;
 			}
-
+			
 			if (MessageBox.Show("HDS 形式では現在開かれているクラスだけが保存されます。", "確認",
 				MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
 			{
 				return false;
 			}
-
+			
 			FileStream fs;
 			try
 			{

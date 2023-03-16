@@ -97,7 +97,17 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "CodeEditorManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "CodeWriter.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ContextManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -113,6 +123,11 @@
                 />
                 <File
                     RelPath = "Document.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "EditManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -145,6 +160,11 @@
                     RelPath = "OpaqueSplitter.resx"
                     DependentUpon = "OpaqueSplitter.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "TextBoxPlus.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Win32API.cs"

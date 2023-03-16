@@ -1,44 +1,37 @@
+// このファイルは ..\..\HierArch.haprj から自動生成されています。
+// 編集は必ずそちらを通すようにして、直接書き換えないでください。
+
 using System;
 using System.Collections;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using Girl.Code;
+using Girl.Coding;
 using Girl.Windows.Forms;
 
 namespace Girl.HierArch
 {
 	/// <summary>
-	/// HAObject の概要の説明です。
+	/// ここにクラスの説明を書きます。
 	/// </summary>
 	public class HAObject : HATree
 	{
-		private System.Windows.Forms.ContextMenu contextMenu1;
+		private ContextMenu contextMenu1;
+		private MenuItem mnuType;
+		private MenuItem mnuTypeObject;
 
-		private void InitializeComponent()
-		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(HAObject));
-			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
-			// 
-			// imageList1
-			// 
-			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-			// 
-			// HAObject
-			// 
-			this.AllowDrop = true;
-			this.ContextMenu = this.contextMenu1;
-			this.HideSelection = false;
-			this.LabelEdit = true;
-		}
-
-		private MenuItem mnuType, mnuTypeObject;
-
+		/// <summary>
+		/// コンストラクタです。
+		/// </summary>
 		public HAObject()
 		{
-			InitializeComponent();
-
+			this.AllowDrop = true;
+			this.ContextMenu = this.contextMenu1 = new ContextMenu();
+			this.HideSelection = false;
+			this.LabelEdit = true;
+			this.ImageList = this.imageList1;
+			
 			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
 				{
 					mnuType = new MenuItem("種類変更(&T)", new MenuItem[]
@@ -52,11 +45,10 @@ namespace Girl.HierArch
 					this.mnuAppend,
 					this.mnuInsert,
 					new MenuItem("-"),
-					this.mnuDelete
+					this.mnuDelete,
+					this.mnuRename
 				});
 			menuType.Add(this.mnuTypeObject, HAType.Private);
-
-			this.ImageList = this.imageList1;
 		}
 
 		protected override void StartDrag()
@@ -69,7 +61,7 @@ namespace Girl.HierArch
 		protected override void SetState()
 		{
 			HAObjectNode n = this.SelectedNode as HAObjectNode;
-			mnuType  .Enabled = mnuDelete.Enabled = (n != null);
+			mnuType.Enabled = mnuDelete.Enabled = mnuRename.Enabled = (n != null);
 		}
 
 		protected override HATreeNode NewNode
@@ -120,6 +112,7 @@ namespace Girl.HierArch
 		public override void FromXml(XmlTextReader xr, TreeNodeCollection nc, int index)
 		{
 			DnDTreeNode dn;
+
 			bool first = true;
 			while (xr.Read())
 			{
@@ -137,89 +130,6 @@ namespace Girl.HierArch
 						this.OnChanged(this, new EventArgs());
 					}
 				}
-			}
-		}
-
-		#endregion
-
-	}
-
-	/// <summary>
-	/// HAObjectNode の概要の説明です。
-	/// </summary>
-	public class HAObjectNode : HATreeNode
-	{
-		public HAObjectNode()
-		{
-		}
-
-		public HAObjectNode(string text) : base(text)
-		{
-		}
-
-		public override string XmlName
-		{
-			get
-			{
-				return "HAObject";
-			}
-		}
-
-		public override HATreeNode NewNode
-		{
-			get
-			{
-				return new HAObjectNode();
-			}
-		}
-
-		public override void SetIcon()
-		{
-			if (this.IsObject)
-			{
-				this.SelectedImageIndex = (int)HAType.PointRed;
-				this.ImageIndex         = (int)HAType.Point;
-				return;
-			}
-			base.SetIcon();
-		}
-
-		#region Generation
-
-		public void Generate(CodeWriter cw, StringBuilder sb)
-		{
-			HAType t = this.Type;
-			if (t == HAType.Comment)
-			{
-				return;
-			}
-			else if (this.IsObject)
-			{
-				if (sb.Length > 0) sb.Append(", ");
-				sb.Append(cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration));
-			}
-
-			foreach (TreeNode n in this.Nodes)
-			{
-				(n as HAObjectNode).Generate(cw, sb);
-			}
-		}
-
-		public void Generate(CodeWriter cw)
-		{
-			HAType t = this.Type;
-			if (t == HAType.Comment)
-			{
-				return;
-			}
-			else if (this.IsObject)
-			{
-				cw.WriteCode(cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration) + ";");
-			}
-
-			foreach (TreeNode n in this.Nodes)
-			{
-				(n as HAObjectNode).Generate(cw);
 			}
 		}
 

@@ -53,7 +53,7 @@ namespace Girl.HierArch
 		#region Menu
 
 		public MenuItem
-			mnuChild, mnuAppend, mnuInsert, mnuDelete,
+			mnuChild, mnuAppend, mnuInsert, mnuDelete, mnuRename,
 			mnuAccess, mnuAccessPublic, mnuAccessProtected, mnuAccessPrivate,
 			mnuFolder, mnuFolderNormal, mnuFolderBlue, mnuFolderBrown,
 			mnuFolderGray, mnuFolderGreen, mnuFolderRed,
@@ -66,10 +66,11 @@ namespace Girl.HierArch
 
 		private void MakeMenu()
 		{
-			mnuChild  = new MenuItem("下に追加(&C)", new EventHandler(this.MenuNodeChild_Click));
-			mnuAppend = new MenuItem("後に追加(&A)", new EventHandler(this.MenuNodeAppend_Click));
-			mnuInsert = new MenuItem("前に追加(&I)", new EventHandler(this.MenuNodeInsert_Click));
-			mnuDelete = new MenuItem("削除(&D)"    , new EventHandler(this.MenuNodeDelete_Click));
+			mnuChild  = new MenuItem("下に追加(&C)"  , new EventHandler(this.MenuNodeChild_Click));
+			mnuAppend = new MenuItem("後に追加(&A)"  , new EventHandler(this.MenuNodeAppend_Click));
+			mnuInsert = new MenuItem("前に追加(&I)"  , new EventHandler(this.MenuNodeInsert_Click));
+			mnuDelete = new MenuItem("削除(&D)"      , new EventHandler(this.MenuNodeDelete_Click));
+			mnuRename = new MenuItem("名前を変更(&M)", new EventHandler(this.MenuNodeRename_Click));
 
 			MenuNodeTypeHandler = new EventHandler(this.MenuNodeType_Click);
 
@@ -208,8 +209,16 @@ namespace Girl.HierArch
 			TreeNodeCollection tc = (p != null) ? p.Nodes : this.Nodes;
 			tc.Remove(n);
 			if (p != null && tc.Count < 1) p.SetIcon();
-			if (this.Nodes.Count < 1) this.SetState();
+			this.SetState();
 			this.OnChanged(this, EventArgs.Empty);
+		}
+
+		protected virtual void MenuNodeRename_Click(object sender, System.EventArgs e)
+		{
+			HATreeNode n = (HATreeNode)this.SelectedNode;
+			if (n == null) return;
+
+			n.BeginEdit();
 		}
 
 		#endregion
