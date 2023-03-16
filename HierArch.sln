@@ -1,8 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 7.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierArch", "HierArch\HierArch.csproj", "{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierArchLib", "HierArchLib\HierArchLib.csproj", "{E94400D0-807D-4A6C-9763-18E652FBD44D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GirlLib", "..\GirlLib\GirlLib.csproj", "{9084494D-A49E-4CA4-A433-8411E47A7176}"
