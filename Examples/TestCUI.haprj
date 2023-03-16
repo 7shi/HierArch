@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<HAProject version="0.1.1038.40564">
+  <HAClass Type="FolderBlue" Text="TestCUI" IsExpanded="true" IsSelected="false" AllowDrag="true">
+    <Header>
+      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+      </HAFunc>
+    </Header>
+    <Body>
+      <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Text" Text="Make.bat" IsExpanded="false" IsSelected="true" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="59" SelectionLength="0">%WINDIR%\Microsoft.NET\Framework\v1.0.3705\csc TestCUI.cs
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </Body>
+    <Footer>
+      <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+      </HAFunc>
+    </Footer>
+    <HAClass Type="Public" Text="TestCUI" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <Header>
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+          <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+        </HAFunc>
+      </Header>
+      <Body>
+        <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="0" SelectionLength="0" />
+          <HAFunc Type="Public" Text="Main:static void" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="37" SelectionLength="0">Console.WriteLine("Hello, World!");
+</Source>
+          </HAFunc>
+        </HAFunc>
+      </Body>
+      <Footer>
+        <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="0" />
+        </HAFunc>
+      </Footer>
+    </HAClass>
+  </HAClass>
+</HAProject>

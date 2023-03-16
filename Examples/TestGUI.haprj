@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<HAProject version="0.1.1038.40564">
+  <HAClass Type="FolderRed" Text="TestGUI" IsExpanded="true" IsSelected="false" AllowDrag="true">
+    <Header>
+      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+      </HAFunc>
+    </Header>
+    <Body>
+      <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="true" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Text" Text="Make.bat" IsExpanded="false" IsSelected="true" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="69" SelectionLength="0">%WINDIR%\Microsoft.NET\Framework\v1.0.3705\csc /t:winexe TestGUI.cs
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </Body>
+    <Footer>
+      <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+      </HAFunc>
+    </Footer>
+    <HAClass Type="Public" Text="TestGUI" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <HAObject Type="Private" Text="f:static Form" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Private" Text="b:static Button" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+      <Header>
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+          <Source SelectionStart="67" SelectionLength="0">using System;
+using System.Drawing;
+using System.Windows.Forms;
+</Source>
+        </HAFunc>
+      </Header>
+      <Body>
+        <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="0" SelectionLength="0" />
+          <HAFunc Type="Public" Text="Main:static void" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="238" SelectionLength="0">f = new Form();
+f.ClientSize = new Size(110, 50);
+b = new Button();
+b.Location = new Point(10, 10);
+b.Size = new Size(90, 30);
+b.Text = "Exit";
+f.Controls.Add(b);
+b.Click += new EventHandler(__CLASS.b_Click);
+Application.Run(f);
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="b_Click:static void" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="sender" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="12" SelectionLength="0">f.Close();
+</Source>
+          </HAFunc>
+        </HAFunc>
+      </Body>
+      <Footer>
+        <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="0" />
+        </HAFunc>
+      </Footer>
+    </HAClass>
+  </HAClass>
+</HAProject>

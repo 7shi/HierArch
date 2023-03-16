@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Girl.Code;
 using Girl.Windows.Forms;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// HAFunc の概要の説明です。
@@ -45,6 +47,9 @@ namespace Girl.HierarchyArchitect
 		{
 			InitializeComponent();
 
+			this.mnuAccess    .Text = "関数(&U)";
+			this.mnuFolderGray.Text = "仮想フォルダ(&V)";
+
 			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
 				{
 					mnuType = new MenuItem("種類変更(&T)", new MenuItem[]
@@ -68,16 +73,21 @@ namespace Girl.HierarchyArchitect
 		protected override void MenuNodeChild_Click(object sender, System.EventArgs e)
 		{
 			HATreeNode p = (HATreeNode)this.SelectedNode;
-			if (p == null) return;
-
 			HATreeNode n = this.NewNode;
 			if (p == this.Header || p == this.Footer)
 			{
 				n.Text = "新しい項目";
 				n.Type = HAType.Text;
 			}
-			p.Nodes.Add(n);
-			p.SetIcon();
+			if (p != null)
+			{
+				p.Nodes.Add(n);
+				p.SetIcon();
+			}
+			else
+			{
+				this.Nodes.Add(n);
+			}
 			n.EnsureVisible();
 			this.SelectedNode = n;
 			n.BeginEdit();
@@ -194,23 +204,29 @@ namespace Girl.HierarchyArchitect
 			{
 				this.Enabled = true;
 				this.BackColor = System.Drawing.SystemColors.Window;
-				this.BeginUpdate();
 				this.Header = cls.Header.Clone() as HAFuncNode;
 				this.Body   = cls.Body  .Clone() as HAFuncNode;
 				this.Footer = cls.Footer.Clone() as HAFuncNode;
-				if (this.OwnerClass.Type == HAType.Public
-					|| this.OwnerClass.Type == HAType.Protected
-					|| this.OwnerClass.Type == HAType.Private)
+				if (this.OwnerClass.IsObject)
 				{
+					this.BeginUpdate();
 					this.Nodes.Add(this.Header);
 					this.Nodes.Add(this.Body);
 					this.Nodes.Add(this.Footer);
+					this.ApplyState();
+					this.EndUpdate();
 				}
-				else
+				else if (this.Body.Nodes.Count > 0)
 				{
-					this.Nodes.Add(this.Body);
+					this.BeginUpdate();
+					foreach (TreeNode n in this.Body.Nodes)
+					{
+						this.Nodes.Add(n.Clone() as HAFuncNode);
+					}
+					this.Body.Nodes.Clear();
+					this.ApplyState();
+					this.EndUpdate();
 				}
-				this.ApplyState();
 				if (this.SelectedNode == null && this.Nodes.Count > 0)
 				{
 					this.SelectedNode = this.Nodes[0];
@@ -221,7 +237,6 @@ namespace Girl.HierarchyArchitect
 					this.TargetNode = this.SelectedNode as HAFuncNode;
 					this.SetView();
 				}
-				this.EndUpdate();
 			}
 			else
 			{
@@ -396,14 +411,79 @@ namespace Girl.HierarchyArchitect
 			}
 		} 
 
+		public void FromHds(XmlTextReader xr)
+		{
+			this.Type = HAType.Text;
+			if (xr.Name != "node" || xr.NodeType != XmlNodeType.Element) return;
+
+			this.Text = xr.GetAttribute("title");
+			this.m_IsExpanded = (xr.GetAttribute("open") == "true");
+			string icon = xr.GetAttribute("icon");
+			if (xr.IsEmptyElement) return;
+
+			HAFuncNode n;
+			while (xr.Read())
+			{
+				if (xr.Name == "node" && xr.NodeType == XmlNodeType.Element)
+				{
+					n = new HAFuncNode();
+					this.Nodes.Add(n);
+					n.FromHds(xr);
+				}
+				else if (xr.Name == "node" && xr.NodeType == XmlNodeType.EndElement)
+				{
+					break;
+				}
+				else if (xr.Name == "para" && xr.NodeType == XmlNodeType.Element
+					&& !xr.IsEmptyElement && xr.Read())
+				{
+					string text = xr.ReadString();
+					if (text.IndexOf("\r\n") < 0)
+					{
+						if (text.IndexOf("\n") >= 0)
+						{
+							text = text.Replace("\n", "\r\n");
+						}
+						else
+						{
+							text = text.Replace("\r", "\r\n");
+						}
+					}
+					if (!text.StartsWith("\r\n"))
+					{
+						this.Source = text;
+					}
+					else
+					{
+						this.Source = text.Substring(2, text.Length - 2);
+					}
+				}
+			}
+
+			if (this.Nodes.Count > 0)
+			{
+				if (this.m_IsExpanded) Expand();
+				this.m_Type = (HAType)Enum.Parse(typeof(HAType), "folder" + icon, true);
+			}
+			else
+			{
+				this.m_Type = (HAType)Enum.Parse(typeof(HAType), "text" + icon, true);
+			}
+			this.SetIcon();
+		}
+
 		#endregion
 
 		#region Generation
 
-		public void Generate(CodeWriter cw, HAType classType)
+		public void GenerateClass(CodeWriter cw)
 		{
 			HAType t = this.Type;
-			if (this.IsObject)
+			if (t == HAType.Comment)
+			{
+				return;
+			}
+			else if (this.IsObject)
 			{
 				this.GenerateFunc(cw);
 			}
@@ -415,7 +495,7 @@ namespace Girl.HierarchyArchitect
 
 			foreach (TreeNode n in this.Nodes)
 			{
-				(n as HAFuncNode).Generate(cw, classType);
+				(n as HAFuncNode).GenerateClass(cw);
 			}
 
 			if (t.ToString().StartsWith("Folder"))
@@ -432,32 +512,18 @@ namespace Girl.HierarchyArchitect
 
 			string code = this.Type.ToString().ToLower()
 				+ " " + new ObjectParser(this.Text).FunctionDeclaration + "(";
-			bool first = true;
+			StringBuilder sb = new StringBuilder();
 			foreach (Object obj in this.Args)
 			{
-				HAObjectNode n = obj as HAObjectNode;
-				if (n == null || !n.IsObject) continue;
-
-				if (!first)
-				{
-					code += ", ";
-				}
-				else
-				{
-					first = false;
-				}
-				code += new ObjectParser(n.Text).ObjectDeclaration;
+				(obj as HAObjectNode).Generate(cw, sb);
 			}
-			code += ")";
+			code += sb.ToString() + ")";
 
 			cw.WriteStartBlock(cw.ReplaceKeywords(code));
 			cw.SetStart();
 			foreach (Object obj in this.Objects)
 			{
-				HAObjectNode n = obj as HAObjectNode;
-				if (n == null || !n.IsObject) continue;
-
-				cw.WriteCode(new ObjectParser(n.Text).ObjectDeclaration + ";");
+				(obj as HAObjectNode).Generate(cw);
 			}
 			if (this.Source != "")
 			{
@@ -465,6 +531,44 @@ namespace Girl.HierarchyArchitect
 				cw.WriteCodes(cw.ReplaceKeywords(this.Source));
 			}
 			cw.WriteEndBlock();
+		}
+
+		public void GenerateFolder(string path)
+		{
+			if (this.Type == HAType.Comment)
+			{
+				return;
+			}
+			else if (this.IsText)
+			{
+				string target = path;
+				if (!target.EndsWith("\\")) target += "\\";
+				target += new ObjectParser(this.Text).Name;
+				this.GenerateFile(target);
+			}
+
+			foreach (TreeNode n in this.Nodes)
+			{
+				(n as HAFuncNode).GenerateFolder(path);
+			}
+		}
+
+		public void GenerateFile(string target)
+		{
+			FileStream fs;
+			try
+			{
+				fs = new FileStream(target, FileMode.Create);
+			}
+			catch
+			{
+				return;
+			}
+
+			StreamWriter sw = new StreamWriter(fs);
+			sw.Write(this.Source);
+			sw.Close();
+			fs.Close();
 		}
 
 		#endregion

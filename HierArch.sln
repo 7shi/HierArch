@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 7.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierarchyArchitect", "HierarchyArchitect.csproj", "{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierArch", "HierArch\HierArch.csproj", "{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}"
 EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution

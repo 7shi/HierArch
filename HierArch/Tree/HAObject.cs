@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using Girl.Code;
 using Girl.Windows.Forms;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// HAObject の概要の説明です。
@@ -181,5 +183,46 @@ namespace Girl.HierarchyArchitect
 			}
 			base.SetIcon();
 		}
+
+		#region Generation
+
+		public void Generate(CodeWriter cw, StringBuilder sb)
+		{
+			HAType t = this.Type;
+			if (t == HAType.Comment)
+			{
+				return;
+			}
+			else if (this.IsObject)
+			{
+				if (sb.Length > 0) sb.Append(", ");
+				sb.Append(cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration));
+			}
+
+			foreach (TreeNode n in this.Nodes)
+			{
+				(n as HAObjectNode).Generate(cw, sb);
+			}
+		}
+
+		public void Generate(CodeWriter cw)
+		{
+			HAType t = this.Type;
+			if (t == HAType.Comment)
+			{
+				return;
+			}
+			else if (this.IsObject)
+			{
+				cw.WriteCode(cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration) + ";");
+			}
+
+			foreach (TreeNode n in this.Nodes)
+			{
+				(n as HAObjectNode).Generate(cw);
+			}
+		}
+
+		#endregion
 	}
 }

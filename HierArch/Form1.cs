@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Data;
 using Girl.Windows.Forms;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// SDI アプリケーションの雛型です。
@@ -33,7 +33,7 @@ namespace Girl.HierarchyArchitect
 		private System.Windows.Forms.ToolBarButton tbEditPaste;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-		public Girl.HierarchyArchitect.View view1;
+		public Girl.HierArch.View view1;
 		private System.Windows.Forms.MainMenu mainMenu1;
 		private System.Windows.Forms.MenuItem mnuFile;
 		private System.Windows.Forms.MenuItem mnuFileNew;
@@ -135,7 +135,7 @@ namespace Girl.HierarchyArchitect
 			this.statusBar1 = new System.Windows.Forms.StatusBar();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-			this.view1 = new Girl.HierarchyArchitect.View();
+			this.view1 = new Girl.HierArch.View();
 			this.mainMenu1 = new System.Windows.Forms.MainMenu();
 			this.mnuFile = new System.Windows.Forms.MenuItem();
 			this.mnuFileNew = new System.Windows.Forms.MenuItem();
@@ -239,13 +239,13 @@ namespace Girl.HierarchyArchitect
 			// openFileDialog1
 			// 
 			this.openFileDialog1.DefaultExt = "haprj";
-			this.openFileDialog1.Filter = "Hierarchy Architect プロジェクト (*.haprj)|*.haprj|すべてのファイル (*.*)|*.*";
+			this.openFileDialog1.Filter = "HierArch プロジェクト (*.haprj)|*.haprj|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
 			// 
 			// saveFileDialog1
 			// 
 			this.saveFileDialog1.DefaultExt = "haprj";
 			this.saveFileDialog1.FileName = "doc1";
-			this.saveFileDialog1.Filter = "Hierarchy Architect プロジェクト (*.haprj)|*.haprj|すべてのファイル (*.*)|*.*";
+			this.saveFileDialog1.Filter = "HierArch プロジェクト (*.haprj)|*.haprj|すべてのファイル (*.*)|*.*";
 			// 
 			// view1
 			// 
@@ -468,7 +468,7 @@ namespace Girl.HierarchyArchitect
 																		  this.toolBar1});
 			this.Menu = this.mainMenu1;
 			this.Name = "Form1";
-			this.Text = "Hierarchy Architect";
+			this.Text = "HierArch";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.ResumeLayout(false);
 

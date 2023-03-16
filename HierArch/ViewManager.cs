@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Girl.Windows.Forms;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// View メニューの設定を保持します。

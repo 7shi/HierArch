@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// ノードの Text から名前と属性を分離します。
@@ -82,6 +82,7 @@ namespace Girl.HierarchyArchitect
 			get
 			{
 				if (this.IsSpecial) return this.Name;
+				if (this.Type == "") return "void " + this.Name;
 				return this.Type + " " + this.Name;
 			}
 		}

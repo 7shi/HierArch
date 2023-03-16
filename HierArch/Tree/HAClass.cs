@@ -7,7 +7,7 @@ using System.Xml;
 using Girl.Code;
 using Girl.Windows.Forms;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// HAClass の概要の説明です。
@@ -42,9 +42,13 @@ namespace Girl.HierarchyArchitect
 		{
 			InitializeComponent();
 
-            this.mnuFolderRed .Text = "実行ファイル(&E)";
-            this.mnuFolderBlue.Text = "ライブラリ(&L)";
-            this.mnuFolderGray.Text = "仮想フォルダ(&V)";
+			this.mnuAccess     .Text = "クラス(&C)";
+			this.mnuFolderRed  .Text = "GUI 実行ファイル(&W)";
+            this.mnuFolderBlue .Text = "CUI 実行ファイル(&E)";
+			this.mnuFolderGreen.Text = "ライブラリ(&L)";
+			this.mnuFolderBrown.Text = "モジュール(&M)";
+            this.mnuFolderGray .Text = "仮想フォルダ(&V)";
+
 			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
 				{
 					mnuType = new MenuItem("種類変更(&T)", new MenuItem[]
@@ -90,37 +94,40 @@ namespace Girl.HierarchyArchitect
 			mnuType  .Enabled = mnuDelete.Enabled = (n != null && n.AllowDrag);
 		}
 
+		public void InitNode(HAClassNode n)
+		{
+			n.Header = new HAFuncNode("ヘッダ");
+			n.Header.Type = HAType.Text;
+			n.Header.m_IsSelected = true;
+			n.Header.AllowDrag = false;
+			n.Header.Comment = "ここにソースコードの注釈を書きます。\r\n";
+			n.Header.Source  = "using System;\r\n";
+
+			n.Body = new HAFuncNode("本体");
+			n.Body.Type = HAType.Class;
+			n.Body.m_IsExpanded = true;
+			n.Body.AllowDrag = false;
+			n.Body.Comment = "<summary>\r\nここにクラスの説明を書きます。\r\n</summary>\r\n";
+
+			HAFuncNode cst = new HAFuncNode("__CLASS");
+			cst.Comment = "<summary>\r\nコンストラクタです。\r\n</summary>\r\n";
+			n.Body.Nodes.Add(cst);
+
+			HAFuncNode dst = new HAFuncNode("~__CLASS");
+			dst.Comment = "<summary>\r\nデストラクタです。\r\n</summary>\r\n";
+			n.Body.Nodes.Add(dst);
+
+			n.Footer = new HAFuncNode("フッタ");
+			n.Footer.Type = HAType.Text;
+			n.Footer.AllowDrag = false;
+		}
+
 		protected override HATreeNode NewNode
 		{
 			get
 			{
 				HAClassNode ret = new HAClassNode("新しいクラス");
-
-				ret.Header = new HAFuncNode("ヘッダ");
-				ret.Header.Type = HAType.Text;
-				ret.Header.m_IsSelected = true;
-				ret.Header.AllowDrag = false;
-				ret.Header.Comment = "ここにソースコードの注釈を書きます。\r\n";
-				ret.Header.Source  = "using System;\r\n";
-
-				ret.Body = new HAFuncNode("本体");
-				ret.Body.Type = HAType.Class;
-				ret.Body.m_IsExpanded = true;
-				ret.Body.AllowDrag = false;
-				ret.Body.Comment = "<summary>\r\nここにクラスの説明を書きます。\r\n</summary>\r\n";
-
-				HAFuncNode cst = new HAFuncNode("__CLASS");
-				cst.Comment = "<summary>\r\nコンストラクタです。\r\n</summary>\r\n";
-				ret.Body.Nodes.Add(cst);
-
-				HAFuncNode dst = new HAFuncNode("~__CLASS");
-				dst.Comment = "<summary>\r\nデストラクタです。\r\n</summary>\r\n";
-				ret.Body.Nodes.Add(dst);
-
-				ret.Footer = new HAFuncNode("フッタ");
-				ret.Footer.Type = HAType.Text;
-				ret.Footer.AllowDrag = false;
-
+				this.InitNode(ret);
 				return ret;
 			}
 		}
@@ -143,6 +150,13 @@ namespace Girl.HierarchyArchitect
 
 			this.TargetNode.Header = this.FuncTreeView.Header.Clone() as HAFuncNode;
 			this.TargetNode.Body   = this.FuncTreeView.Body  .Clone() as HAFuncNode;
+			if (this.FuncTreeView.Body.TreeView == null)
+			{
+				foreach (TreeNode n in this.FuncTreeView.Nodes)
+				{
+					this.TargetNode.Body.Nodes.Add(n.Clone() as HAFuncNode);
+				}
+			}
 			this.TargetNode.Footer = this.FuncTreeView.Footer.Clone() as HAFuncNode;
 		}
 
@@ -259,6 +273,20 @@ namespace Girl.HierarchyArchitect
 			}
 		}
 
+		public string Namespace
+		{
+			get
+			{
+				ObjectParser op = new ObjectParser(this.Text);
+				string ns = (this.IsFolder) ? op.Type : "";
+				if (ns.IndexOf('.') >= 0 || this.Parent == null) return ns;
+
+				string pns = (this.Parent as HAClassNode).Namespace;
+				if (pns != "") return (ns != "") ? pns + "." + ns : pns;
+				return ns;
+			}
+		}
+
 		#region XML
 
 		public override void WriteXml(XmlTextWriter xw)
@@ -309,7 +337,28 @@ namespace Girl.HierarchyArchitect
 				while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace);
 				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Footer.FromXml(xr);
 			}
-		} 
+		}
+
+		public void FromHds(XmlTextReader xr)
+		{
+			this.Type = HAType.Text;
+			if (xr.Name != "hds" || xr.NodeType != XmlNodeType.Element || xr.IsEmptyElement) return;
+
+			HAFuncNode n;
+			while (xr.Read())
+			{
+				if (xr.Name == "node" && xr.NodeType == XmlNodeType.Element)
+				{
+					n = new HAFuncNode();
+					this.Body.Nodes.Add(n);
+					n.FromHds(xr);
+				}
+				else if (xr.Name == "hds" && xr.NodeType == XmlNodeType.EndElement)
+				{
+					break;
+				}
+			}
+		}
 
 		#endregion
 
@@ -320,9 +369,13 @@ namespace Girl.HierarchyArchitect
 			HAType t = this.Type;
 			string target = path;
 			if (!target.EndsWith("\\")) target += "\\";
-			target += this.Text;
+			target += new ObjectParser(this.Text).Name;
 
-			if (t.ToString().StartsWith("Folder") && !t.ToString().StartsWith("FolderGray"))
+			if (t == HAType.Comment)
+			{
+				return;
+			}
+			else if (this.IsRealFolder)
 			{
 				if (!new DirectoryInfo(target).Exists)
 				{
@@ -336,6 +389,10 @@ namespace Girl.HierarchyArchitect
 					}
 				}
 				path = target;
+				foreach (TreeNode n in this.Body.Nodes)
+				{
+					(n as HAFuncNode).GenerateFolder(path);
+				}
 			}
 			else if (this.IsObject)
 			{
@@ -348,12 +405,12 @@ namespace Girl.HierarchyArchitect
 			}
 		}
 
-		private void GenerateClass(string fn)
+		private void GenerateClass(string target)
 		{
 			FileStream fs;
 			try
 			{
-				fs = new FileStream(fn, FileMode.Create);
+				fs = new FileStream(target, FileMode.Create);
 			}
 			catch
 			{
@@ -361,7 +418,8 @@ namespace Girl.HierarchyArchitect
 			}
 
 			CodeWriter cw = new CodeWriter(fs);
-			cw.ClassName = this.Text;
+			ObjectParser op = new ObjectParser(this.Text);
+			cw.ClassName = op.Name;
 
 			// Header
 			if (this.Header.Comment != "")
@@ -374,24 +432,32 @@ namespace Girl.HierarchyArchitect
 				cw.WriteCodes(this.Header.Source);
 			}
 
+			// Namespace
+			string ns = this.Namespace;
+			if (ns != "")
+			{
+				cw.WriteBlankLine();
+				cw.WriteStartBlock("namespace " + ns);
+			}
+
 			// Body
 			cw.WriteBlankLine();
 			if (this.Body.Comment != "") cw.WriteCodes("/// ", this.Body.Comment);
-			cw.WriteStartBlock(this.Type.ToString().ToLower() + " class " + this.Text);
-			cw.SetStart();
+			string classdecl = this.Type.ToString().ToLower() + " class " + op.Name;
+			if (op.Type != "") classdecl += " : " + op.Type;
+			cw.WriteStartBlock(classdecl);
 			if (this.Body.Source != "") cw.WriteCodes(this.Body.Source);
 			foreach (Object obj in this.Members)
 			{
-				HAMemberNode n = obj as HAMemberNode;
-				if (n == null || !n.IsObject) continue;
-
-				cw.WriteCode(n.Type.ToString().ToLower() + " " + new ObjectParser(n.Text).ObjectDeclaration + ";");
+				(obj as HAMemberNode).Generate(cw);
 			}
 			foreach (Object obj in this.Body.Nodes)
 			{
-				(obj as HAFuncNode).Generate(cw, this.Type);
+				(obj as HAFuncNode).GenerateClass(cw);
 			}
 			cw.WriteEndBlock();
+
+			if (ns != "") cw.WriteEndBlock();
 
 			// Footer
 			if (this.Footer.Comment != "")

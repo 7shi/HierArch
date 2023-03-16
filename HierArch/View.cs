@@ -6,7 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using Girl.Windows.Forms;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// Document に対応する View です。
@@ -101,31 +101,31 @@ namespace Girl.HierarchyArchitect
 		private void InitializeComponent()
 		{
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.txtSource = new System.Windows.Forms.TextBox();
 			this.opaqueSplitter4 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.txtComment = new System.Windows.Forms.TextBox();
+			this.txtSource = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tabFunc = new System.Windows.Forms.TabControl();
 			this.tpFunc = new System.Windows.Forms.TabPage();
-			this.tvFunc = new Girl.HierarchyArchitect.HAFunc();
+			this.tvFunc = new Girl.HierArch.HAFunc();
 			this.opaqueSplitter3 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.tabClass = new System.Windows.Forms.TabControl();
 			this.tpClass = new System.Windows.Forms.TabPage();
-			this.tvClass = new Girl.HierarchyArchitect.HAClass();
+			this.tvClass = new Girl.HierArch.HAClass();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.tabObject = new System.Windows.Forms.TabControl();
 			this.tpObject = new System.Windows.Forms.TabPage();
+			this.tvObject = new Girl.HierArch.HAObject();
 			this.opaqueSplitter6 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.tabArg = new System.Windows.Forms.TabControl();
 			this.tpArg = new System.Windows.Forms.TabPage();
+			this.tvArg = new Girl.HierArch.HAObject();
 			this.opaqueSplitter5 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.tabMember = new System.Windows.Forms.TabControl();
 			this.tpMember = new System.Windows.Forms.TabPage();
+			this.tvMember = new Girl.HierArch.HAMember();
 			this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.opaqueSplitter2 = new Girl.Windows.Forms.OpaqueSplitter();
-			this.tvMember = new HAMember();
-			this.tvArg = new HAObject();
-			this.tvObject = new HAObject();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.tabFunc.SuspendLayout();
@@ -150,20 +150,8 @@ namespace Girl.HierarchyArchitect
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel2.Location = new System.Drawing.Point(179, 0);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(221, 424);
+			this.panel2.Size = new System.Drawing.Size(218, 424);
 			this.panel2.TabIndex = 0;
-			// 
-			// txtSource
-			// 
-			this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtSource.HideSelection = false;
-			this.txtSource.Location = new System.Drawing.Point(0, 123);
-			this.txtSource.Multiline = true;
-			this.txtSource.Name = "txtSource";
-			this.txtSource.Size = new System.Drawing.Size(221, 301);
-			this.txtSource.TabIndex = 1;
-			this.txtSource.Text = "";
-			this.txtSource.WordWrap = false;
 			// 
 			// opaqueSplitter4
 			// 
@@ -171,20 +159,40 @@ namespace Girl.HierarchyArchitect
 			this.opaqueSplitter4.Location = new System.Drawing.Point(0, 120);
 			this.opaqueSplitter4.Name = "opaqueSplitter4";
 			this.opaqueSplitter4.Opaque = true;
-			this.opaqueSplitter4.Size = new System.Drawing.Size(221, 3);
+			this.opaqueSplitter4.Size = new System.Drawing.Size(218, 3);
 			this.opaqueSplitter4.TabIndex = 3;
 			this.opaqueSplitter4.TabStop = false;
 			// 
 			// txtComment
 			// 
+			this.txtComment.AcceptsReturn = true;
+			this.txtComment.AcceptsTab = true;
 			this.txtComment.Dock = System.Windows.Forms.DockStyle.Top;
+			this.txtComment.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.txtComment.HideSelection = false;
 			this.txtComment.Multiline = true;
 			this.txtComment.Name = "txtComment";
-			this.txtComment.Size = new System.Drawing.Size(221, 120);
+			this.txtComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.txtComment.Size = new System.Drawing.Size(218, 120);
 			this.txtComment.TabIndex = 2;
 			this.txtComment.Text = "";
 			this.txtComment.WordWrap = false;
+			// 
+			// txtSource
+			// 
+			this.txtSource.AcceptsReturn = true;
+			this.txtSource.AcceptsTab = true;
+			this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.txtSource.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.txtSource.HideSelection = false;
+			this.txtSource.Location = new System.Drawing.Point(0, 123);
+			this.txtSource.Multiline = true;
+			this.txtSource.Name = "txtSource";
+			this.txtSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.txtSource.Size = new System.Drawing.Size(218, 301);
+			this.txtSource.TabIndex = 1;
+			this.txtSource.Text = "";
+			this.txtSource.WordWrap = false;
 			// 
 			// panel1
 			// 
@@ -305,6 +313,17 @@ namespace Girl.HierarchyArchitect
 			this.tpObject.TabIndex = 0;
 			this.tpObject.Text = "変数";
 			// 
+			// tvObject
+			// 
+			this.tvObject.AllowDrop = true;
+			this.tvObject.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tvObject.HideSelection = false;
+			this.tvObject.ItemHeight = 16;
+			this.tvObject.LabelEdit = true;
+			this.tvObject.Name = "tvObject";
+			this.tvObject.Size = new System.Drawing.Size(168, 124);
+			this.tvObject.TabIndex = 0;
+			// 
 			// opaqueSplitter6
 			// 
 			this.opaqueSplitter6.Dock = System.Windows.Forms.DockStyle.Top;
@@ -336,6 +355,17 @@ namespace Girl.HierarchyArchitect
 			this.tpArg.TabIndex = 0;
 			this.tpArg.Text = "引数";
 			// 
+			// tvArg
+			// 
+			this.tvArg.AllowDrop = true;
+			this.tvArg.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tvArg.HideSelection = false;
+			this.tvArg.ItemHeight = 16;
+			this.tvArg.LabelEdit = true;
+			this.tvArg.Name = "tvArg";
+			this.tvArg.Size = new System.Drawing.Size(168, 84);
+			this.tvArg.TabIndex = 0;
+			// 
 			// opaqueSplitter5
 			// 
 			this.opaqueSplitter5.Dock = System.Windows.Forms.DockStyle.Top;
@@ -366,6 +396,17 @@ namespace Girl.HierarchyArchitect
 			this.tpMember.TabIndex = 0;
 			this.tpMember.Text = "メンバ";
 			// 
+			// tvMember
+			// 
+			this.tvMember.AllowDrop = true;
+			this.tvMember.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tvMember.HideSelection = false;
+			this.tvMember.ItemHeight = 16;
+			this.tvMember.LabelEdit = true;
+			this.tvMember.Name = "tvMember";
+			this.tvMember.Size = new System.Drawing.Size(168, 135);
+			this.tvMember.TabIndex = 0;
+			// 
 			// opaqueSplitter1
 			// 
 			this.opaqueSplitter1.Location = new System.Drawing.Point(176, 0);
@@ -385,38 +426,11 @@ namespace Girl.HierarchyArchitect
 			this.opaqueSplitter2.TabIndex = 4;
 			this.opaqueSplitter2.TabStop = false;
 			// 
-			// tvMember
-			// 
-			this.tvMember.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvMember.ImageIndex = -1;
-			this.tvMember.Name = "tvMember";
-			this.tvMember.SelectedImageIndex = -1;
-			this.tvMember.Size = new System.Drawing.Size(168, 135);
-			this.tvMember.TabIndex = 0;
-			// 
-			// tvArg
-			// 
-			this.tvArg.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvArg.ImageIndex = -1;
-			this.tvArg.Name = "tvArg";
-			this.tvArg.SelectedImageIndex = -1;
-			this.tvArg.Size = new System.Drawing.Size(168, 84);
-			this.tvArg.TabIndex = 0;
-			// 
-			// tvObject
-			// 
-			this.tvObject.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvObject.ImageIndex = -1;
-			this.tvObject.Name = "tvObject";
-			this.tvObject.SelectedImageIndex = -1;
-			this.tvObject.Size = new System.Drawing.Size(168, 124);
-			this.tvObject.TabIndex = 0;
-			// 
 			// View
 			// 
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.opaqueSplitter2,
 																		  this.panel2,
+																		  this.opaqueSplitter2,
 																		  this.opaqueSplitter1,
 																		  this.panel1,
 																		  this.panel3});

@@ -3,9 +3,10 @@ using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
+using Girl.Code;
 using Girl.Windows.Forms;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// HAMember の概要の説明です。
@@ -36,6 +37,8 @@ namespace Girl.HierarchyArchitect
 		public HAMember()
 		{
 			InitializeComponent();
+
+			this.mnuAccess.Text = "変数(&O)";
 
 			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
 				{
@@ -166,5 +169,28 @@ namespace Girl.HierarchyArchitect
 				return new HAMemberNode();
 			}
 		}
+
+		#region Generation
+
+		public void Generate(CodeWriter cw)
+		{
+			HAType t = this.Type;
+			if (t == HAType.Comment)
+			{
+				return;
+			}
+			else if (this.IsObject)
+			{
+				cw.WriteCode(t.ToString().ToLower() + " "
+					+ cw.ReplaceKeywords(new ObjectParser(this.Text).ObjectDeclaration) + ";");
+			}
+
+			foreach (TreeNode n in this.Nodes)
+			{
+				(n as HAMemberNode).Generate(cw);
+			}
+		}
+
+		#endregion
 	}
 }

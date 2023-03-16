@@ -55,6 +55,7 @@ namespace Girl.Code
 			this.WriteCode("{");
 			this.m_Indent++;
 			this.MakeIndent();
+			this.SetStart();
 		}
 
 		public void WriteEndBlock()

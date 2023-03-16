@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Girl.Windows.Forms;
 
-namespace Girl.HierarchyArchitect
+namespace Girl.HierArch
 {
 	/// <summary>
 	/// HATree の概要の説明です。
@@ -86,8 +86,8 @@ namespace Girl.HierarchyArchitect
 					this.mnuFolderRed    = new MenuItem("赤色(&R)", MenuNodeTypeHandler),
 					this.mnuFolderBlue   = new MenuItem("青色(&B)", MenuNodeTypeHandler),
 					this.mnuFolderGreen  = new MenuItem("緑色(&G)", MenuNodeTypeHandler),
-					this.mnuFolderGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler),
-					this.mnuFolderBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler)
+					this.mnuFolderBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler),
+					this.mnuFolderGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler)
 				});
 
 			this.mnuText = new MenuItem("テキスト(&T)", new MenuItem[]
@@ -96,8 +96,8 @@ namespace Girl.HierarchyArchitect
 					this.mnuTextRed    = new MenuItem("赤色(&R)", MenuNodeTypeHandler),
 					this.mnuTextBlue   = new MenuItem("青色(&B)", MenuNodeTypeHandler),
 					this.mnuTextGreen  = new MenuItem("緑色(&G)", MenuNodeTypeHandler),
-					this.mnuTextGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler),
-					this.mnuTextBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler)
+					this.mnuTextBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler),
+					this.mnuTextGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler)
 				});
 
 			this.mnuEtc = new MenuItem("その他(&E)", new MenuItem[]
@@ -370,10 +370,59 @@ namespace Girl.HierarchyArchitect
 			}
 		}
 
+		public bool IsText
+		{
+			get
+			{
+				switch (this.m_Type)
+				{
+					case HAType.Text:
+					case HAType.TextBlue:
+					case HAType.TextBrown:
+					case HAType.TextGray:
+					case HAType.TextGreen:
+					case HAType.TextRed:
+						return true;
+				}
+				return false;
+			}
+		}
+
+		public bool IsFolder
+		{
+			get
+			{
+				return (this.IsRealFolder
+					|| this.m_Type == HAType.FolderGray || this.m_Type == HAType.FolderGray_Open);
+			}
+		}
+
+		public bool IsRealFolder
+		{
+			get
+			{
+				switch (this.m_Type)
+				{
+					case HAType.Folder:
+					case HAType.Folder_Open:
+					case HAType.FolderBlue:
+					case HAType.FolderBule_Open:
+					case HAType.FolderBrown:
+					case HAType.FolderBrown_Open:
+					case HAType.FolderGreen:
+					case HAType.FolderGreen_Open:
+					case HAType.FolderRed:
+					case HAType.FolderRed_Open:
+						return true;
+				}
+				return false;
+			}
+		}
+
 		public override void SetIcon()
 		{
-			int t = (int)m_Type;
-			if (m_Type.ToString().StartsWith("Folder"))
+			int t = (int)this.m_Type;
+			if (this.IsFolder)
 			{
 				if (m_Type.ToString().EndsWith("_Open")) t--;
 				if (this.Nodes.Count > 0 && this.IsExpanded) t++;

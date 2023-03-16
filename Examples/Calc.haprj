@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<HAProject version="0.1.1038.40564">
+  <HAClass Type="FolderRed" Text="Calc:HierArch.Test" IsExpanded="true" IsSelected="false" AllowDrag="true">
+    <Header>
+      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+      </HAFunc>
+    </Header>
+    <Body>
+      <HAFunc Type="Class" Text="本体" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Text" Text="Make.bat" IsExpanded="false" IsSelected="true" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="66" SelectionLength="0">%WINDIR%\Microsoft.NET\Framework\v1.0.3705\csc /t:winexe Calc.cs
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </Body>
+    <Footer>
+      <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+      </HAFunc>
+    </Footer>
+    <HAClass Type="Public" Text="Calc:Form" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <HAObject Type="Private" Text="num1:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Private" Text="plus:Label" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Private" Text="num2:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Private" Text="equal:Label" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Private" Text="num3:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Private" Text="button:Button" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+      <Header>
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+          <Source SelectionStart="67" SelectionLength="0">using System;
+using System.Drawing;
+using System.Windows.Forms;
+</Source>
+        </HAFunc>
+      </Header>
+      <Body>
+        <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="0" SelectionLength="0" />
+          <HAFunc Type="Public" Text="Main:static void" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="33" SelectionLength="0">Application.Run(new __CLASS());
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="35" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="59" SelectionLength="0">this.Text = "Calc";
+this.ClientSize = new Size(170, 70);
+
+num1   = new TextBox();
+num2   = new TextBox();
+num3   = new TextBox();
+plus   = new Label();
+equal  = new Label();
+button = new Button();
+
+num1  .SetBounds( 10, 10, 30, 20);
+num2  .SetBounds( 70, 10, 30, 20);
+num3  .SetBounds(130, 10, 30, 20);
+plus  .SetBounds( 50, 10, 10, 20);
+equal .SetBounds(110, 10, 10, 20);
+button.SetBounds( 50, 40, 70, 20);
+
+num3  .Text = "?";
+plus  .Text = "+";
+equal .Text = "=";
+button.Text = "計算";
+
+this.Controls.AddRange(new Control[] {
+	num1, num2, num3, plus, equal, button });
+
+button.Click += new EventHandler(this.button_Click);
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="button_Click" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="sender" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+              <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <HAObject Type="Private" Text="a:double" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="b:double" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="c:double" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="107" SelectionLength="0">a = Convert.ToDouble(num1.Text);
+b = Convert.ToDouble(num2.Text);
+c = a + b;
+num3.Text = c.ToString();
+</Source>
+          </HAFunc>
+        </HAFunc>
+      </Body>
+      <Footer>
+        <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="0" />
+        </HAFunc>
+      </Footer>
+    </HAClass>
+  </HAClass>
+</HAProject>

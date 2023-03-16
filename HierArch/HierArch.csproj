@@ -9,14 +9,14 @@
             <Settings
                 ApplicationIcon = "App.ico"
                 AssemblyKeyContainerName = ""
-                AssemblyName = "HierarchyArchitect"
+                AssemblyName = "HierArch"
                 AssemblyOriginatorKeyFile = ""
                 DefaultClientScript = "JScript"
                 DefaultHTMLPageLayout = "Grid"
                 DefaultTargetSchema = "IE50"
                 DelaySign = "false"
                 OutputType = "WinExe"
-                RootNamespace = "Girl.HierarchyArchitect"
+                RootNamespace = "Girl.HierArch"
                 StartupObject = ""
             >
                 <Config
