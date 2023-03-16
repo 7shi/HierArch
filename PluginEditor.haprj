@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<HAProject version="0.1.1094.24498">
+  <HAClass Type="Folder" Text="PluginEditor" IsExpanded="true" IsSelected="false" AllowDrag="true">
+    <Header>
+      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+      </HAFunc>
+    </Header>
+    <Body>
+      <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Comment" Text="LocalHeader" IsExpanded="false" IsSelected="true" AllowDrag="true">
+          <Arguments />
+          <Comment SelectionStart="72" SelectionLength="0">フォルダの関数欄に作成した "LocalHeader" 名の注釈は特別です。
+ソース欄がフォルダ内すべてのクラスにコメントとして挿入されます。
+</Comment>
+          <Source SelectionStart="71" SelectionLength="0">このファイルは ..\PluginEditor.haprj から自動生成されています。
+編集は必ずそちらを通すようにして、直接書き換えないでください。
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </Body>
+    <Footer>
+      <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+      </HAFunc>
+    </Footer>
+    <HAClass Type="Public" Text="PluginEditorDoc:Document" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <HAObject Type="Public" Text="Text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+      <Header>
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="104" SelectionLength="0">using System;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using Girl.Windows.Forms;
+</Source>
+        </HAFunc>
+      </Header>
+      <Body>
+        <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="0" SelectionLength="0" />
+          <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="16" SelectionLength="0">this.Text = "";
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Open:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="580" SelectionLength="0">FileStream fs;
+bool isUtf8 = false;
+try
+{
+	// UTF-8 決め打ち
+	fs = new FileStream(FullName, FileMode.Open);
+	if (fs.Length &gt; 2)
+	{
+		byte[] bom = new byte[3];
+		fs.Read(bom, 0, 3);
+		if (bom[0] == 0xef &amp;&amp; bom[1] == 0xbb &amp;&amp; bom[2] == 0xbf)
+		{
+			isUtf8 = true;
+		}
+		else
+		{
+			fs.Position = 0;
+		}
+	}
+}
+catch
+{
+	return false;
+}
+
+Cursor cur = Cursor.Current;
+Cursor.Current = Cursors.WaitCursor;
+StreamReader sr = new StreamReader(fs, isUtf8 ? Encoding.UTF8 : Encoding.Default);
+this.Text = sr.ReadToEnd();
+sr.Close();
+fs.Close();
+Changed = false;
+Cursor.Current = cur;
+return true;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Save:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="331" SelectionLength="0">FileStream fs;
+try
+{
+	// UTF-8 決め打ち
+	fs = new FileStream(FullName, FileMode.Create);
+}
+catch
+{
+	return false;
+}
+
+Cursor cur = Cursor.Current;
+Cursor.Current = Cursors.WaitCursor;
+StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+sw.Write(this.Text);
+sw.Close();
+fs.Close();
+Changed = false;
+Cursor.Current = cur;
+return true;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="get_BuildDateTime:static string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="25" SelectionLength="0">return "__DATETIME_NOW";
+</Source>
+          </HAFunc>
+        </HAFunc>
+      </Body>
+      <Footer>
+        <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="0" />
+        </HAFunc>
+      </Footer>
+    </HAClass>
+  </HAClass>
+</HAProject>

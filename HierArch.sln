@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Girl", "Girl\Girl.csproj", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginEditor", "PluginEditor\PluginEditor.csproj", "{1E7AB179-CA56-4D87-837A-E9C03D4885E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		ConfigName.0 = Debug
@@ -12,6 +14,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectDependencies) = postSolution
 		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.0 = {9084494D-A49E-4CA4-A433-8411E47A7176}
+		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.1 = {1E7AB179-CA56-4D87-837A-E9C03D4885E3}
+		{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}.0 = {18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}
+		{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}.1 = {18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}
+		{1E7AB179-CA56-4D87-837A-E9C03D4885E3}.0 = {9084494D-A49E-4CA4-A433-8411E47A7176}
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
 		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Debug.ActiveCfg = Debug|.NET
@@ -24,6 +30,10 @@ Global
 		{9084494D-A49E-4CA4-A433-8411E47A7176}.Release.Build.0 = Release|.NET
 		{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}.Debug.ActiveCfg = Debug
 		{D52A5618-36F9-460E-96F5-B4AA61EAF7FD}.Release.ActiveCfg = Release
+		{1E7AB179-CA56-4D87-837A-E9C03D4885E3}.Debug.ActiveCfg = Debug|.NET
+		{1E7AB179-CA56-4D87-837A-E9C03D4885E3}.Debug.Build.0 = Debug|.NET
+		{1E7AB179-CA56-4D87-837A-E9C03D4885E3}.Release.ActiveCfg = Release|.NET
+		{1E7AB179-CA56-4D87-837A-E9C03D4885E3}.Release.Build.0 = Release|.NET
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

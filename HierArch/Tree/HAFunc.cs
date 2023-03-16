@@ -155,7 +155,7 @@ namespace Girl.HierArch
 			}
 			if (this.SourceTextBox  != null)
 			{
-				this.TargetNode.Source                = this.SourceTextBox .Text;
+				this.TargetNode.Source                = this.SourceTextBox.Code;
 				this.TargetNode.SourceSelectionStart  = this.SourceTextBox.SelectionStart;
 				this.TargetNode.SourceSelectionLength = this.SourceTextBox.SelectionLength;
 			}
@@ -191,8 +191,7 @@ namespace Girl.HierArch
 						this.SourceTextBox.DetectUrls = true;
 					}
 					this.SourceTextBox.Enabled = true;
-					this.SourceTextBox.Clear();
-					this.SourceTextBox.Text = this.TargetNode.Source;
+					this.SourceTextBox.Code = this.TargetNode.Source;
 					this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
 					this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
 				}

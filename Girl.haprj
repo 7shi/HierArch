@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<HAProject version="0.1.1088.3257">
+<HAProject version="0.1.1094.24498">
   <HAClass Type="FolderGreen" Text="Girl:Girl" IsExpanded="true" IsSelected="false" AllowDrag="true">
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
@@ -47,10 +47,10 @@
           <Source SelectionStart="0" SelectionLength="0" />
           <HAFunc Type="Comment" Text="LocalHeader" IsExpanded="false" IsSelected="true" AllowDrag="true">
             <Arguments />
-            <Comment SelectionStart="74" SelectionLength="0">フォルダの関数欄に作成した "LocalHeader" 名の注釈は特別です。
+            <Comment SelectionStart="72" SelectionLength="0">フォルダの関数欄に作成した "LocalHeader" 名の注釈は特別です。
 ソース欄がフォルダ内すべてのクラスにコメントとして挿入されます。
 </Comment>
-            <Source SelectionStart="73" SelectionLength="0">このファイルは ..\..\Girl.haprj から自動生成されています。
+            <Source SelectionStart="71" SelectionLength="0">このファイルは ..\..\Girl.haprj から自動生成されています。
 編集は必ずそちらを通すようにして、直接書き換えないでください。
 </Source>
           </HAFunc>
@@ -78,7 +78,7 @@
           <HAObject Type="Public" Text="Color_Directive:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
         </HAObject>
         <Header>
-          <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+          <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="54" SelectionLength="0">using System;
@@ -96,13 +96,13 @@ using System.Text;
 &lt;/summary&gt;
 </Comment>
             <Source SelectionStart="0" SelectionLength="0" />
-            <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="244" SelectionLength="0">this.reader   = null;
+              <Source SelectionStart="236" SelectionLength="0">this.reader   = null;
 this.keyWords = null;
 
 this.Color_Default   = Color.Black;
@@ -115,7 +115,7 @@ this.Color_Directive = Color.DarkMagenta;
             <HAFunc Type="Protected" Text="Init:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="0" SelectionLength="0">this.source     = new StringBuilder();
+              <Source SelectionStart="104" SelectionLength="0">this.source     = new StringBuilder();
 this.lineNumber = 1;
 this.text       = "";
 this.spacing    = "";
@@ -455,10 +455,10 @@ for (;;)
 return this.text.Length &gt; 0;
 </Source>
             </HAFunc>
-            <HAFunc Type="Private" Text="ReadChar:int" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <HAFunc Type="Private" Text="ReadChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="397" SelectionLength="0">if (this.nextChar != -1) 
+              <Source SelectionStart="376" SelectionLength="0">if (this.nextChar != -1) 
 {
 	this.curChar = this.nextChar;
 	this.nextChar = -1;
@@ -491,10 +491,11 @@ return this.curChar;
                 <Source SelectionStart="66" SelectionLength="0">return this.text.StartsWith("/*") || this.text.StartsWith("//");
 </Source>
               </HAFunc>
-              <HAFunc Type="Public" Text="get_IsString:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <HAFunc Type="Public" Text="get_IsString:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="65" SelectionLength="0">return this.text.StartsWith("\"") || this.text.StartsWith("'");
+                <Source SelectionStart="77" SelectionLength="0">return this.text.StartsWith("\"") || this.text.StartsWith("'")
+	|| this.text.StartsWith("@\"");
 </Source>
               </HAFunc>
               <HAFunc Type="Public" Text="get_IsDirective:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
@@ -537,7 +538,7 @@ return this.curChar;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="829" SelectionLength="0">this.keyWords = new string[]
+              <Source SelectionStart="806" SelectionLength="0">this.keyWords = new string[]
 	{
 		"abstract", "as", "base", "bool",
 		"break", "byte", "case", "catch",
@@ -593,7 +594,7 @@ return this.curChar;
           <Source SelectionStart="0" SelectionLength="0" />
           <HAFunc Type="Comment" Text="LocalHeader" IsExpanded="false" IsSelected="true" AllowDrag="true">
             <Arguments />
-            <Comment SelectionStart="74" SelectionLength="0">フォルダの関数欄に作成した "LocalHeader" 名の注釈は特別です。
+            <Comment SelectionStart="72" SelectionLength="0">フォルダの関数欄に作成した "LocalHeader" 名の注釈は特別です。
 ソース欄がフォルダ内すべてのクラスにコメントとして挿入されます。
 </Comment>
             <Source SelectionStart="18" SelectionLength="0">このファイルは ..\..\Girl.haprj から自動生成されています。
@@ -2548,10 +2549,10 @@ return Encoding.ASCII;
         <HAClass Type="Public" Text="ApplicationDataManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
           <HAObject Type="Private" Text="dataPath:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
           <Header>
-            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="95" SelectionLength="0">using System;
+              <Source SelectionStart="91" SelectionLength="0">using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -2566,19 +2567,19 @@ using System.Xml.Serialization;
 &lt;/summary&gt;
 </Comment>
               <Source SelectionStart="0" SelectionLength="0" />
-              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
                 <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+                <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-                <Source SelectionStart="23" SelectionLength="0">this.dataPath = null;
+                <Source SelectionStart="22" SelectionLength="0">this.dataPath = null;
 </Source>
               </HAFunc>
               <HAFunc Type="Public" Text="get_DataPath:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="235" SelectionLength="0">if(this.dataPath != null) return this.dataPath;
+                <Source SelectionStart="222" SelectionLength="0">if(this.dataPath != null) return this.dataPath;
 
 string path = Application.LocalUserAppDataPath;
 string ret = Directory.GetParent(path).FullName;
@@ -2596,7 +2597,7 @@ return ret;
               <HAFunc Type="Public" Text="set_DataPath:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="24" SelectionLength="0">this.dataPath = value;
+                <Source SelectionStart="23" SelectionLength="0">this.dataPath = value;
 </Source>
               </HAFunc>
               <HAFunc Type="Public" Text="Load:object" IsExpanded="false" IsSelected="false" AllowDrag="true">
@@ -2605,10 +2606,10 @@ return ret;
                   <HAObject Type="Private" Text="dataType:Type" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="327" SelectionLength="0">object ret = null;
+                <Source SelectionStart="132" SelectionLength="0">object ret = null;
 XmlSerializer xs = new XmlSerializer(dataType);
 string path = this.DataPath;
-if (!path.EndsWith("\\")) path += "\\";
+if (!path.EndsWith(@"\")) path += @"\";
 FileStream fs;
 try
 {
@@ -2626,8 +2627,7 @@ catch
 {
 }
 fs.Close();
-return ret;
-</Source>
+return ret;</Source>
               </HAFunc>
               <HAFunc Type="Public" Text="Save" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments>
@@ -2635,11 +2635,10 @@ return ret;
                   <HAObject Type="Private" Text="data:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="158" SelectionLength="0">XmlSerializer xs = new XmlSerializer(data.GetType());
-StreamWriter sw = new StreamWriter(DataPath + "\\" + fileName);
+                <Source SelectionStart="102" SelectionLength="0">XmlSerializer xs = new XmlSerializer(data.GetType());
+StreamWriter sw = new StreamWriter(DataPath + @"\" + fileName);
 xs.Serialize(sw, data);
-sw.Close();
-</Source>
+sw.Close();</Source>
               </HAFunc>
             </HAFunc>
           </Body>
@@ -4307,7 +4306,7 @@ this.SelectionColor = c;
         <HAClass Type="Public" Text="CodeEditor:ExRichTextBox" IsExpanded="false" IsSelected="true" AllowDrag="true">
           <HAObject Type="Public" Text="Parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
           <Header>
-            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
               <Source SelectionStart="135" SelectionLength="0">using System;
@@ -4328,13 +4327,14 @@ using Girl.Rtf;
 &lt;/summary&gt;
 </Comment>
               <Source SelectionStart="0" SelectionLength="0" />
-              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-                <Source SelectionStart="156" SelectionLength="0">this.AcceptsTab = true;
+                <Source SelectionStart="181" SelectionLength="0">this.AcceptsTab = true;
+this.DetectUrls = false;
 this.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
 this.WordWrap = false;
 this.Font = new Font("ＭＳ ゴシック", 9);
@@ -4365,14 +4365,14 @@ if (this.Parser != null)
 this.Focus();
 </Source>
               </HAFunc>
-              <HAFunc Type="Public" Text="get_Text:override string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <HAFunc Type="Public" Text="get_Code:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
                 <HAObject Type="Private" Text="prev:char" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="236" SelectionLength="0">sb = new StringBuilder();
+                <Source SelectionStart="63" SelectionLength="0">sb = new StringBuilder();
 prev = '\0';
-foreach (char ch in base.Text)
+foreach (char ch in this.Text)
 {
 	if (ch == '\r')
 	{
@@ -4390,12 +4390,12 @@ foreach (char ch in base.Text)
 return sb.ToString();
 </Source>
               </HAFunc>
-              <HAFunc Type="Public" Text="set_Text:override string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <HAFunc Type="Public" Text="set_Code:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="75" SelectionLength="0">if (this.Parser == null || value == null)
+                <Source SelectionStart="601" SelectionLength="0">if (this.Parser == null || value == null)
 {
-	base.Text = value;
+	this.Text = value;
 	return;
 }
 
@@ -4416,6 +4416,7 @@ if (this.Parser.Spacing != "")
 	rd.AppendText(this.Parser.Spacing);
 	if (this.Parser.Spacing.EndsWith("\n")) rd.AppendLine();
 }
+this.SelectionColor = this.ForeColor;
 this.Rtf = rd.ToRtf();
 </Source>
               </HAFunc>

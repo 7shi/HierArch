@@ -243,7 +243,8 @@ namespace Girl.Coding
 		{
 			get
 			{
-				return this.text.StartsWith("\"") || this.text.StartsWith("'");
+				return this.text.StartsWith("\"") || this.text.StartsWith("'")
+					|| this.text.StartsWith("@\"");
 			}
 		}
 

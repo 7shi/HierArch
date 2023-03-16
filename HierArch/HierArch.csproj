@@ -87,6 +87,11 @@
                     AssemblyName = "Girl"
                     HintPath = "..\Girl\bin\Debug\Girl.dll"
                 />
+                <Reference
+                    Name = "PluginEditor"
+                    Project = "{1E7AB179-CA56-4D87-837A-E9C03D4885E3}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
@@ -139,158 +144,6 @@
                     RelPath = "ViewManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Icons\Folder\Folder.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\Folder_Open.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderBlue.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderBlue_Open.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderBrown.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderBrown_Open.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderGray.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderGray_Open.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderGreen.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderGreen_Open.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderRed.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Folder\FolderRed_Open.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Text\Text.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Text\TextBlue.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Text\TextBrown.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Text\TextGray.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Text\TextGreen.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Text\TextRed.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\Build.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\EditCopy.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\EditCut.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\EditPaste.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\EditRedo.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\EditUndo.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\FileNew.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\FileOpen.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\FileSave.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\Generate.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\ToolBar\Run.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\Class.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\Comment.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\Module.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\Point.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\PointRed.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\Private.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\Protected.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\Public.png"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Icons\Type\Smile.png"
-                    BuildAction = "Content"
                 />
                 <File
                     RelPath = "Parser\ObjectParser.cs"

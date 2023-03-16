@@ -108,7 +108,8 @@ namespace Girl.Coding
 
 		public string ReplaceKeywords(string str)
 		{
-			return new Regex(@"\b__CLASS\b").Replace(str, this.ClassName);
+			string ret = new Regex(@"\b__CLASS\b").Replace(str, this.ClassName);
+			return new Regex(@"\b__DATETIME_NOW\b").Replace(ret, DateTime.Now.ToString());
 		}
 	}
 }

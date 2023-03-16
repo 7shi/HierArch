@@ -53,7 +53,7 @@ namespace Girl.Windows.Forms
 			object ret = null;
 			XmlSerializer xs = new XmlSerializer(dataType);
 			string path = this.DataPath;
-			if (!path.EndsWith("\\")) path += "\\";
+			if (!path.EndsWith(@"\")) path += @"\";
 			FileStream fs;
 			try
 			{
@@ -77,7 +77,7 @@ namespace Girl.Windows.Forms
 		public void Save(string fileName, object data)
 		{
 			XmlSerializer xs = new XmlSerializer(data.GetType());
-			StreamWriter sw = new StreamWriter(DataPath + "\\" + fileName);
+			StreamWriter sw = new StreamWriter(DataPath + @"\" + fileName);
 			xs.Serialize(sw, data);
 			sw.Close();
 		}

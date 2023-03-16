@@ -180,5 +180,13 @@ namespace Girl.HierArch
 			fs.Close();
 			return true;
 		}
+
+		public static string BuildDateTime
+		{
+			get
+			{
+				return "2002/12/30 15:36:46";
+			}
+		}
 	}
 }

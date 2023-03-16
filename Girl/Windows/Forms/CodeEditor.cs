@@ -24,6 +24,7 @@ namespace Girl.Windows.Forms
 		public CodeEditor()
 		{
 			this.AcceptsTab = true;
+			this.DetectUrls = false;
 			this.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
 			this.WordWrap = false;
 			this.Font = new Font("ＭＳ ゴシック", 9);
@@ -51,7 +52,7 @@ namespace Girl.Windows.Forms
 			this.Focus();
 		}
 
-		public override string Text
+		public string Code
 		{
 			get
 			{
@@ -60,7 +61,7 @@ namespace Girl.Windows.Forms
 
 				sb = new StringBuilder();
 				prev = '\0';
-				foreach (char ch in base.Text)
+				foreach (char ch in this.Text)
 				{
 					if (ch == '\r')
 					{
@@ -82,7 +83,7 @@ namespace Girl.Windows.Forms
 			{
 				if (this.Parser == null || value == null)
 				{
-					base.Text = value;
+					this.Text = value;
 					return;
 				}
 				
@@ -103,6 +104,7 @@ namespace Girl.Windows.Forms
 					rd.AppendText(this.Parser.Spacing);
 					if (this.Parser.Spacing.EndsWith("\n")) rd.AppendLine();
 				}
+				this.SelectionColor = this.ForeColor;
 				this.Rtf = rd.ToRtf();
 			}
 		}

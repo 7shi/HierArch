@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<HAProject version="0.1.1088.3257">
-  <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="true" AllowDrag="true">
+<HAProject version="0.1.1094.24498">
+  <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="false" AllowDrag="true">
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
         <Arguments />
@@ -18,10 +18,12 @@
 &lt;/summary&gt;
 </Comment>
         <Source SelectionStart="0" SelectionLength="0" />
-        <HAFunc Type="Text" Text="プログラミング" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Text" Text="プログラミング" IsExpanded="false" IsSelected="true" AllowDrag="true">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="18" SelectionLength="0">コンストラクタでのbaseサポート
+          <Source SelectionStart="5" SelectionLength="0">パーサが変
+括弧閉じの通過が変
+コンストラクタでのbaseサポート
 メンバの初期化
 enumのサポート
 スプレッドシートでの一括編集
@@ -50,7 +52,7 @@ XmlDocViewerとの統合とリフレクション
 中央管理システム
 </Source>
         </HAFunc>
-        <HAFunc Type="Text" Text="テキスト生成" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <HAFunc Type="Text" Text="テキスト生成" IsExpanded="false" IsSelected="false" AllowDrag="true">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="7" SelectionLength="0">プラグイン化
@@ -102,10 +104,10 @@ XmlDocViewerとの統合とリフレクション
         <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
     </Footer>
-    <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="false" AllowDrag="true">
+    <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="true" AllowDrag="true">
       <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="true" AllowDrag="true" />
       <Header>
-        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="122" SelectionLength="0">using System;
@@ -198,7 +200,7 @@ return true;
           <HAFunc Type="Public" Text="Save:override bool" IsExpanded="true" IsSelected="false" AllowDrag="true">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="348" SelectionLength="0">this.ClassTreeView.StoreData();
+            <Source SelectionStart="331" SelectionLength="0">this.ClassTreeView.StoreData();
 bool ret = false;
 string lfn = this.FullName.ToLower();
 if (lfn.EndsWith(".haprj"))
@@ -289,6 +291,12 @@ fs.Close();
 return true;
 </Source>
             </HAFunc>
+          </HAFunc>
+          <HAFunc Type="Public" Text="get_BuildDateTime:static string" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="25" SelectionLength="0">return "__DATETIME_NOW";
+</Source>
           </HAFunc>
         </HAFunc>
       </Body>
@@ -1256,7 +1264,7 @@ fs.Close();
         <HAObject Type="Public" Text="ArgTreeView:HAObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Public" Text="ObjectTreeView:HAObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Public" Text="CommentTextBox:ExRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Public" Text="SourceTextBox:CodeEditor" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="SourceTextBox:CodeEditor" IsExpanded="false" IsSelected="true" AllowDrag="true" />
         <HAObject Type="Public" Text="OwnerClass:HAClassNode" IsExpanded="true" IsSelected="false" AllowDrag="true">
           <HAObject Type="Public" Text="Header:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Public" Text="Body:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
@@ -1264,7 +1272,7 @@ fs.Close();
         </HAObject>
         <HAObject Type="Public" Text="TargetNode:HAFuncNode" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Private" Text="textFont:Font" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <Header>
           <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
             <Arguments />
@@ -1389,10 +1397,10 @@ mnuType.Enabled = mnuAppend.Enabled = mnuInsert.Enabled
               <Source SelectionStart="33" SelectionLength="0">return new HAFuncNode("新しい関数");
 </Source>
             </HAFunc>
-            <HAFunc Type="Public" Text="StoreData" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAFunc Type="Public" Text="StoreData" IsExpanded="false" IsSelected="true" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="973" SelectionLength="0">if (this.TargetNode == null) return;
+              <Source SelectionStart="525" SelectionLength="0">if (this.TargetNode == null) return;
 
 this.StoreState();
 
@@ -1418,7 +1426,7 @@ if (this.CommentTextBox != null)
 }
 if (this.SourceTextBox  != null)
 {
-	this.TargetNode.Source                = this.SourceTextBox .Text;
+	this.TargetNode.Source                = this.SourceTextBox.Code;
 	this.TargetNode.SourceSelectionStart  = this.SourceTextBox.SelectionStart;
 	this.TargetNode.SourceSelectionLength = this.SourceTextBox.SelectionLength;
 }
@@ -1427,7 +1435,7 @@ if (this.SourceTextBox  != null)
             <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="582" SelectionLength="0">if (this.TargetNode != null)
+              <Source SelectionStart="309" SelectionLength="0">if (this.TargetNode != null)
 {
 	if (this.ArgTreeView    != null) this.ArgTreeView   .SetView(this.TargetNode.Args);
 	if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(this.TargetNode.Objects);
@@ -1455,8 +1463,7 @@ if (this.SourceTextBox  != null)
 			this.SourceTextBox.DetectUrls = true;
 		}
 		this.SourceTextBox.Enabled = true;
-		this.SourceTextBox.Clear();
-		this.SourceTextBox.Text = this.TargetNode.Source;
+		this.SourceTextBox.Code = this.TargetNode.Source;
 		this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
 		this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
 	}
@@ -1482,7 +1489,7 @@ else
 }
 </Source>
             </HAFunc>
-            <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments>
                 <HAObject Type="Private" Text="cls:HAClassNode" IsExpanded="false" IsSelected="true" AllowDrag="true" />
               </Arguments>

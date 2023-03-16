@@ -17,6 +17,7 @@ namespace Girl.HierArch
 		private static WindowSizeData m_Data1;
 		private static ViewData m_Data2;
 		private static ArrayList m_Forms = new ArrayList();
+		private static PluginEditor.Form1 pluginEditor = new PluginEditor.Form1();
 
 		private HADoc m_Doc = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
@@ -95,6 +96,8 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem cmEditDelete;
 		private System.Windows.Forms.MenuItem cmEditSeparator2;
 		private System.Windows.Forms.MenuItem cmEditSelectAll;
+		private System.Windows.Forms.MenuItem mnuOptionSeparator1;
+		private System.Windows.Forms.MenuItem mnuOptionEditPlugin;
 		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
 		public Form1()
@@ -234,6 +237,8 @@ namespace Girl.HierArch
 			this.mnuOptionSmartTab = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartHome = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartParenthesis = new System.Windows.Forms.MenuItem();
+			this.mnuOptionSeparator1 = new System.Windows.Forms.MenuItem();
+			this.mnuOptionEditPlugin = new System.Windows.Forms.MenuItem();
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
 			this.mnuHelpHomePage = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
@@ -621,7 +626,9 @@ namespace Girl.HierArch
 																					  this.mnuOptionSmartEnter,
 																					  this.mnuOptionSmartTab,
 																					  this.mnuOptionSmartHome,
-																					  this.mnuOptionSmartParenthesis});
+																					  this.mnuOptionSmartParenthesis,
+																					  this.mnuOptionSeparator1,
+																					  this.mnuOptionEditPlugin});
 			this.menuItem1.Text = "オプション(&O)";
 			// 
 			// mnuOptionSmartEnter
@@ -643,6 +650,18 @@ namespace Girl.HierArch
 			// 
 			this.mnuOptionSmartParenthesis.Index = 3;
 			this.mnuOptionSmartParenthesis.Text = "自動括弧挿入(&P)";
+			// 
+			// mnuOptionSeparator1
+			// 
+			this.mnuOptionSeparator1.Index = 4;
+			this.mnuOptionSeparator1.Text = "-";
+			// 
+			// mnuOptionEditPlugin
+			// 
+			this.mnuOptionEditPlugin.Enabled = false;
+			this.mnuOptionEditPlugin.Index = 5;
+			this.mnuOptionEditPlugin.Text = "プラグイン編集(&D)";
+			this.mnuOptionEditPlugin.Click += new System.EventHandler(this.mnuOptionEditPlugin_Click);
 			// 
 			// mnuHelp
 			// 
@@ -895,6 +914,11 @@ namespace Girl.HierArch
 			Cursor.Current = cur;
 		}
 
+		private void mnuOptionEditPlugin_Click(object sender, System.EventArgs e)
+		{
+			if (!Form1.pluginEditor.Visible) Form1.pluginEditor.Show();
+		}
+
 		private void menuHelpHomePage_Click(object sender, System.EventArgs e)
 		{
 			System.Diagnostics.Process.Start("http://www.egroups.co.jp/files/miscprj-dev/HierArch/");
@@ -903,7 +927,8 @@ namespace Girl.HierArch
 		private void mnuHelpAbout_Click(object sender, System.EventArgs e)
 		{
 			About a = new About();
-			a.label1.Text = m_sCaption/*ProductName*/ + " Version " + ProductVersion;
+			a.label1.Text = m_sCaption/*ProductName*/ + " Version " + ProductVersion
+				+ " (" + HADoc.BuildDateTime + ")";
 			a.ShowDialog(this);
 			a.Dispose();
 		}
