@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using Girl.Rtf;
 
 namespace Girl.Coding
 {
@@ -16,9 +17,12 @@ namespace Girl.Coding
 		protected TextReader reader;
 		protected StringBuilder source;
 		protected int lineNumber;
+		protected int pos;
 		protected string text;
 		protected string spacing;
 		protected string[] keyWords;
+		protected RtfDocument rtf;
+		protected string access;
 		public Color Color_Default;
 		public Color Color_KeyWord;
 		public Color Color_Comment;
@@ -46,15 +50,26 @@ namespace Girl.Coding
 			this.lineNumber = 1;
 			this.text       = "";
 			this.spacing    = "";
+			this.rtf        = new RtfDocument();
 		}
 
 		public virtual bool Read()
 		{
-			return false;
+			if (this.text.Length < 1) return false;
+			
+			this.rtf.AppendText(this.spacing);
+			this.rtf.AppendText(this.text, this.TextColor);
+			return true;
 		}
 
 		public void Close()
 		{
+			if (this.spacing != "")
+			{
+				this.rtf.AppendText(this.spacing);
+				if (this.spacing.EndsWith("\n")) this.rtf.AppendLine();
+			}
+			
 			this.reader = null;
 		}
 
@@ -87,6 +102,14 @@ namespace Girl.Coding
 			get
 			{
 				return this.lineNumber;
+			}
+		}
+
+		public int Pos
+		{
+			get
+			{
+				return this.pos;
 			}
 		}
 
@@ -176,6 +199,28 @@ namespace Girl.Coding
 			}
 		}
 
+		public string Rtf
+		{
+			get
+			{
+				return this.rtf.ToRtf();
+			}
+		}
+
+		public string Access
+		{
+			get
+			{
+				return this.access;
+			}
+		}
+
 		#endregion
+
+		public virtual void Parse()
+		{
+			while (this.Read());
+			this.Close();
+		}
 	}
 }

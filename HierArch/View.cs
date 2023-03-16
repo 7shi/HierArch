@@ -13,10 +13,10 @@ namespace Girl.HierArch
 	/// </summary>
 	public class View : System.Windows.Forms.UserControl
 	{
+		public System.Windows.Forms.Panel panel1;
 		public event EventHandler Changed;
-		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Panel panel3;
+		public System.Windows.Forms.Panel panel3;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter2;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter3;
@@ -217,6 +217,8 @@ namespace Girl.HierArch
 			// txtSource
 			// 
 			this.txtSource.AcceptsTab = true;
+			this.txtSource.Code = "";
+			this.txtSource.DetectUrls = false;
 			this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtSource.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F);
 			this.txtSource.HideSelection = false;

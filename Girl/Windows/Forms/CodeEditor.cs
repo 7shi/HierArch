@@ -87,26 +87,31 @@ namespace Girl.Windows.Forms
 					return;
 				}
 				
-				RtfDocument rd = new RtfDocument();
-				rd.CurrentFont = this.Font;
 				StringReader sr = new StringReader(value);
 				this.Parser.Reader = sr;
 				this.Parser.Color_Default = this.ForeColor;
-				while (this.Parser.Read())
-				{
-					rd.AppendText(this.Parser.Spacing);
-					rd.AppendText(this.Parser.Text, this.Parser.TextColor);
-				}
-				this.Parser.Close();
+				this.Parser.Parse();
 				sr.Close();
-				if (this.Parser.Spacing != "")
-				{
-					rd.AppendText(this.Parser.Spacing);
-					if (this.Parser.Spacing.EndsWith("\n")) rd.AppendLine();
-				}
-				this.SelectionColor = this.ForeColor;
-				this.Rtf = rd.ToRtf();
+				
+				this.Rtf = this.Parser.Rtf;
 			}
+		}
+
+		public void Reanalyze()
+		{
+			int pos = this.SelectionStart;
+			int len = this.SelectionLength;
+			
+			InternalHScrollBar hbar = new InternalHScrollBar(this);
+			InternalVScrollBar vbar = new InternalVScrollBar(this);
+			int hpos = hbar.Pos;
+			int vpos = vbar.Pos;
+			
+			this.Code = this.Code;
+			this.SelectionStart  = pos;
+			this.SelectionLength = len;
+			hbar.Pos = hpos;
+			vbar.Pos = vpos;
 		}
 	}
 }

@@ -179,8 +179,10 @@ namespace Girl.Windows.Forms
 				RichTextBox rtb = this.target as RichTextBox;
 				if (rtb.SelectionLength > 0)
 				{
-					Clipboard.SetDataObject(
-						new DataObject(DataFormats.Rtf, rtb.SelectedRtf));
+					DataObject obj = new DataObject();
+					obj.SetData(DataFormats.Rtf, rtb.SelectedRtf);
+					obj.SetData(rtb.SelectedText);
+					Clipboard.SetDataObject(obj);
 				}
 			}
 			else if (this.target is TextBoxBase)

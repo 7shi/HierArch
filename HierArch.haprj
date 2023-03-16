@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <HAProject version="0.1.1108.8648">
-  <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="true" AllowDrag="true">
+  <HAClass Type="Text" Text="ToDo" IsExpanded="false" IsSelected="false" AllowDrag="true">
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
         <Arguments />
@@ -99,12 +99,13 @@ XmlDocViewerとの統合とリフレクション
       </HAFunc>
     </Footer>
     <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="false" AllowDrag="true">
-      <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+      <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Public" Text="ViewInfo:HAViewInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" />
       <Header>
         <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="197" SelectionLength="0">using System;
+          <Source SelectionStart="229" SelectionLength="0">using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Drawing;
@@ -112,6 +113,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Serialization;
 using Girl.Windows.Forms;
 </Source>
         </HAFunc>
@@ -130,7 +132,8 @@ using Girl.Windows.Forms;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-            <Source SelectionStart="51" SelectionLength="0">this.ClassTreeView = null;
+            <Source SelectionStart="85" SelectionLength="0">this.ClassTreeView = null;
+this.ViewInfo = new HAViewInfo();
 
 this.InitUserPlugin();
 </Source>
@@ -144,13 +147,13 @@ if (p &lt; 0) return ret;
 return ret.Substring(0, p);
 </Source>
           </HAFunc>
-          <HAFunc Type="Public" Text="Open:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <HAFunc Type="Public" Text="Open:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true">
             <Arguments />
             <HAObject Type="Private" Text="fs:FileStream" IsExpanded="false" IsSelected="false" AllowDrag="true" />
             <HAObject Type="Private" Text="xr:XmlTextReader" IsExpanded="false" IsSelected="false" AllowDrag="true" />
             <HAObject Type="Private" Text="n:HAClassNode" IsExpanded="false" IsSelected="true" AllowDrag="true" />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="0" SelectionLength="0">try
+            <Source SelectionStart="273" SelectionLength="0">try
 {
 	fs = new FileStream(FullName, FileMode.Open);
 }
@@ -161,7 +164,12 @@ catch
 xr = new XmlTextReader(fs);
 while (xr.Read())
 {
-	if (xr.Name == "HAClass" &amp;&amp; xr.NodeType == XmlNodeType.Element)
+	if (xr.Name == "HAViewInfo" &amp;&amp; xr.NodeType == XmlNodeType.Element)
+	{
+		this.ViewInfo = new XmlSerializer(
+			typeof(HAViewInfo)).Deserialize(xr) as HAViewInfo;
+	}
+	else if (xr.Name == "HAClass" &amp;&amp; xr.NodeType == XmlNodeType.Element)
 	{
 		n = new HAClassNode();
 		this.ClassTreeView.Nodes.Add(n);
@@ -179,6 +187,7 @@ while (xr.Read())
 		n.Body.Nodes.Clear();
 		this.ClassTreeView.Nodes.Add(n);
 		n.FromHds(xr);
+		this.ViewInfo.InitHds();
 	}
 	else if (xr.Name == "hds" &amp;&amp; xr.NodeType == XmlNodeType.EndElement)
 	{
@@ -221,7 +230,7 @@ return ret;
               <Arguments />
               <HAObject Type="Private" Text="fs:FileStream" IsExpanded="false" IsSelected="true" AllowDrag="true" />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="475" SelectionLength="0">try
+              <Source SelectionStart="297" SelectionLength="0">try
 {
 	fs = new FileStream(this.FullName, FileMode.Create);
 }
@@ -234,30 +243,39 @@ xw.Formatting = Formatting.Indented;
 xw.WriteStartDocument();
 xw.WriteStartElement("HAProject");
 xw.WriteAttributeString("version" , Application.ProductVersion);
+
+XmlSerializer xs = new XmlSerializer(typeof(HAViewInfo));
+xs.Serialize(xw, this.ViewInfo);
+
 foreach (TreeNode n in this.ClassTreeView.Nodes)
 {
 	(n as HAClassNode).ToXml(xw);
 }
+
 xw.WriteEndElement();
 xw.WriteEndDocument();
 xw.Flush();
 xw.Close();
 fs.Close();
+
 return true;
 </Source>
             </HAFunc>
             <HAFunc Type="Private" Text="SaveHds:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="870" SelectionLength="0">HAClassNode n = this.ClassTreeView.SelectedNode as HAClassNode;
+              <Source SelectionStart="269" SelectionLength="0">HAClassNode n = this.ClassTreeView.SelectedNode as HAClassNode;
 if (n == null)
 {
 	MessageBox.Show("クラスが選択されていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 	return false;
 }
 
-if (MessageBox.Show("HDS 形式では現在開かれているクラスだけが保存されます。", "確認",
-	MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
+string msg = "HDS 形式では現在開かれているクラスだけが保存されます。\r\n"
+	+ "注釈, メンバ, 引数, 変数は保存されません。";
+
+if (MessageBox.Show(msg, "確認", MessageBoxButtons.OKCancel,
+	MessageBoxIcon.Information) == DialogResult.Cancel)
 {
 	return false;
 }
@@ -324,16 +342,21 @@ return ret;
               <Source SelectionStart="54" SelectionLength="0">return ApplicationDataManager.SearchFolder("Plugin");
 </Source>
             </HAFunc>
-            <HAFunc Type="Private" Text="InitUserPlugin" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <HAFunc Type="Private" Text="InitUserPlugin" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="496" SelectionLength="0">string dir1 = __CLASS.SysPluginDir;
+              <Source SelectionStart="100" SelectionLength="0">string dir1 = __CLASS.SysPluginDir;
 if (dir1 == null) return;
 
 string dir2 = __CLASS.UserPluginDir;
 
 DirectoryInfo di = new DirectoryInfo(dir1);
 foreach (FileInfo fi in di.GetFiles("*.cs"))
+{
+	string source = dir2 + @"\" + fi.Name;
+	if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
+}
+foreach (FileInfo fi in di.GetFiles("*.miopt"))
 {
 	string source = dir2 + @"\" + fi.Name;
 	if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
@@ -387,6 +410,159 @@ parameters.CompilerOptions = "/target:library";
 return icc.CompileAssemblyFromFile(parameters, source);
 </Source>
             </HAFunc>
+          </HAFunc>
+        </HAFunc>
+      </Body>
+      <Footer>
+        <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="0" />
+        </HAFunc>
+      </Footer>
+    </HAClass>
+    <HAClass Type="Public" Text="HAViewInfo" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <HAObject Type="Public" Text="X:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+      <HAObject Type="Public" Text="Y:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Public" Text="Width:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Public" Text="Height:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Public" Text="State:FormWindowState" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      <HAObject Type="Folder" Text="Show" IsExpanded="true" IsSelected="false" AllowDrag="true">
+        <HAObject Type="Public" Text="ShowClass:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="ShowFunc:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="ShowComment:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="ShowMember:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="ShowArg:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="ShowObject:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+      </HAObject>
+      <HAObject Type="Folder" Text="Size" IsExpanded="true" IsSelected="false" AllowDrag="true">
+        <HAObject Type="Public" Text="LeftPanelWidth:int" IsExpanded="true" IsSelected="false" AllowDrag="true">
+          <HAObject Type="Public" Text="ClassHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        </HAObject>
+        <HAObject Type="Public" Text="CommentHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="RightPanelWidth:int" IsExpanded="true" IsSelected="false" AllowDrag="true">
+          <HAObject Type="Public" Text="MemberHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Public" Text="ObjectHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        </HAObject>
+      </HAObject>
+      <Header>
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="64" SelectionLength="0">using System;
+using System.Drawing;
+using System.Windows.Forms;
+</Source>
+        </HAFunc>
+      </Header>
+      <Body>
+        <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+          <Arguments />
+          <Comment SelectionStart="37" SelectionLength="0">&lt;summary&gt;
+ウィンドウの状態を保持します。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="0" SelectionLength="0" />
+          <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="13" SelectionLength="0">this.Init();
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Init" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="329" SelectionLength="0">this.X = this.Y = this.Width = this.Height = 0;
+this.State = FormWindowState.Normal;
+
+this.ShowClass = this.ShowFunc = this.ShowComment
+	= this.ShowMember = this.ShowArg = this.ShowObject
+	= true;
+
+this.LeftPanelWidth = this.ClassHeight
+	= this.CommentHeight = this.RightPanelWidth
+	= this.MemberHeight = this.ObjectHeight
+	= 0;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="InitHds" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="110" SelectionLength="0">this.Init();
+
+this.ShowClass = this.ShowComment
+	= this.ShowMember = this.ShowArg = this.ShowObject
+	= false;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Apply" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="form1:Form1" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="262" SelectionLength="0">if (this.Width &gt; 0 &amp;&amp; this.Height &gt; 0)
+{
+	Rectangle r1 = new Rectangle(
+		this.X, this.Y, this.Width, this.Height);
+	Rectangle r2 = Screen.GetWorkingArea(r1);
+	if (r1.IntersectsWith(r2))
+	{
+		form1.SetDesktopBounds(
+			r1.X, r1.Y, r1.Width, r1.Height);
+	}
+	else
+	{
+		form1.Size = new Size(
+			this.Width, this.Height);
+	}
+	form1.WindowState = this.State;
+}
+
+form1.SetClassVisible  (this.ShowClass  );
+form1.SetFuncVisible   (this.ShowFunc   );
+form1.SetCommentVisible(this.ShowComment);
+form1.SetMemberVisible (this.ShowMember );
+form1.SetArgVisible    (this.ShowArg    );
+form1.SetObjectVisible (this.ShowObject );
+
+if (this.LeftPanelWidth  &gt; 0) form1.view1.panel1    .Width  = this.LeftPanelWidth;
+if (this.ClassHeight     &gt; 0) form1.view1.tabClass  .Height = this.ClassHeight;
+if (this.CommentHeight   &gt; 0) form1.view1.txtComment.Height = this.CommentHeight;
+if (this.RightPanelWidth &gt; 0) form1.view1.panel3    .Width  = this.RightPanelWidth;
+if (this.MemberHeight    &gt; 0) form1.view1.tabMember .Height = this.MemberHeight;
+if (this.ObjectHeight    &gt; 0) form1.view1.tabObject .Height = this.ObjectHeight;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Store" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <Arguments>
+              <HAObject Type="Private" Text="form1:Form1" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="172" SelectionLength="0">Rectangle rect = form1.sizeMonitor.Rect;
+this.X      = rect.X;
+this.Y      = rect.Y;
+this.Width  = rect.Width;
+this.Height = rect.Height;
+
+this.State = form1.WindowState;
+
+this.ShowClass   = form1.view1.tabClass  .Visible;
+this.ShowFunc    = form1.view1.tabFunc   .Visible;
+this.ShowComment = form1.view1.txtComment.Visible;
+this.ShowMember  = form1.view1.tabMember .Visible;
+this.ShowArg     = form1.view1.tabArg    .Visible;
+this.ShowObject  = form1.view1.tabObject .Visible;
+
+this.LeftPanelWidth  = form1.view1.panel1    .Width ;
+this.ClassHeight     = form1.view1.tabClass  .Height;
+this.CommentHeight   = form1.view1.txtComment.Height;
+this.RightPanelWidth = form1.view1.panel3    .Width ;
+this.MemberHeight    = form1.view1.tabMember .Height;
+this.ObjectHeight    = form1.view1.tabObject .Height;
+</Source>
           </HAFunc>
         </HAFunc>
       </Body>

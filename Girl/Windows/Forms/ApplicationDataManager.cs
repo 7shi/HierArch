@@ -101,7 +101,7 @@ namespace Girl.Windows.Forms
 			if (!path.EndsWith(@"\")) path += @"\";
 			
 			XmlSerializer xs = new XmlSerializer(data.GetType());
-			StreamWriter sw = new StreamWriter(path + fileName);
+			StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
 			xs.Serialize(sw, data);
 			sw.Close();
 		}

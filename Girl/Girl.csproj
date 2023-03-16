@@ -147,6 +147,31 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Coding\ASTClass.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Coding\ASTMethod.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Coding\ASTNamespace.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Coding\ASTObject.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Coding\ASTRegion.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Coding\CParserBase.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

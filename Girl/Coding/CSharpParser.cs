@@ -2,6 +2,7 @@
 // 編集は必ずそちらを通すようにして、直接書き換えないでください。
 
 using System;
+using System.Collections;
 
 namespace Girl.Coding
 {
@@ -10,6 +11,8 @@ namespace Girl.Coding
 	/// </summary>
 	public class CSharpParser : CParserBase
 	{
+		protected ArrayList objects;
+
 		/// <summary>
 		/// コンストラクタです。
 		/// </summary>
@@ -38,6 +41,63 @@ namespace Girl.Coding
 					"using", "virtual", "volatile", "void",
 					"while"
 				};
+		}
+
+		protected override void Init()
+		{
+			base.Init();
+			
+			this.objects = new ArrayList();
+			this.access  = "private";
+		}
+
+		public override bool Read()
+		{
+			bool ret = base.Read();
+			if (this.text == "public"
+				|| this.text == "protected"
+				|| this.text == "private")
+			{
+				this.access = this.text;
+			}
+			else if (this.text == "}")
+			{
+				this.access = "private";
+			}
+			return ret;
+		}
+
+		public override void Parse()
+		{
+			string text;
+			
+			while (this.Read())
+			{
+				text = this.Text;
+				
+				if (text == "namespace")
+				{
+					ASTNamespace an = new ASTNamespace();
+					an.ParseDeclaration(this);
+					this.objects.Add(an);
+				}
+				else if (text == "class")
+				{
+					ASTClass ac = new ASTClass();
+					ac.ParseDeclaration(this);
+					this.objects.Add(ac);
+				}
+			}
+			
+			this.Close();
+		}
+
+		public ArrayList Objects
+		{
+			get
+			{
+				return this.objects;
+			}
 		}
 	}
 }

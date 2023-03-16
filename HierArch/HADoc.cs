@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Serialization;
 using Girl.Windows.Forms;
 
 namespace Girl.HierArch
@@ -19,6 +20,7 @@ namespace Girl.HierArch
 	public class HADoc : Document
 	{
 		public HAClass ClassTreeView;
+		public HAViewInfo ViewInfo;
 
 		/// <summary>
 		/// コンストラクタです。
@@ -26,6 +28,7 @@ namespace Girl.HierArch
 		public HADoc()
 		{
 			this.ClassTreeView = null;
+			this.ViewInfo = new HAViewInfo();
 			
 			this.InitUserPlugin();
 		}
@@ -58,7 +61,12 @@ namespace Girl.HierArch
 			xr = new XmlTextReader(fs);
 			while (xr.Read())
 			{
-				if (xr.Name == "HAClass" && xr.NodeType == XmlNodeType.Element)
+				if (xr.Name == "HAViewInfo" && xr.NodeType == XmlNodeType.Element)
+				{
+					this.ViewInfo = new XmlSerializer(
+						typeof(HAViewInfo)).Deserialize(xr) as HAViewInfo;
+				}
+				else if (xr.Name == "HAClass" && xr.NodeType == XmlNodeType.Element)
 				{
 					n = new HAClassNode();
 					this.ClassTreeView.Nodes.Add(n);
@@ -76,6 +84,7 @@ namespace Girl.HierArch
 					n.Body.Nodes.Clear();
 					this.ClassTreeView.Nodes.Add(n);
 					n.FromHds(xr);
+					this.ViewInfo.InitHds();
 				}
 				else if (xr.Name == "hds" && xr.NodeType == XmlNodeType.EndElement)
 				{
@@ -131,15 +140,21 @@ namespace Girl.HierArch
 			xw.WriteStartDocument();
 			xw.WriteStartElement("HAProject");
 			xw.WriteAttributeString("version" , Application.ProductVersion);
+			
+			XmlSerializer xs = new XmlSerializer(typeof(HAViewInfo));
+			xs.Serialize(xw, this.ViewInfo);
+			
 			foreach (TreeNode n in this.ClassTreeView.Nodes)
 			{
 				(n as HAClassNode).ToXml(xw);
 			}
+			
 			xw.WriteEndElement();
 			xw.WriteEndDocument();
 			xw.Flush();
 			xw.Close();
 			fs.Close();
+			
 			return true;
 		}
 
@@ -152,8 +167,11 @@ namespace Girl.HierArch
 				return false;
 			}
 			
-			if (MessageBox.Show("HDS 形式では現在開かれているクラスだけが保存されます。", "確認",
-				MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
+			string msg = "HDS 形式では現在開かれているクラスだけが保存されます。\r\n"
+				+ "注釈, メンバ, 引数, 変数は保存されません。";
+			
+			if (MessageBox.Show(msg, "確認", MessageBoxButtons.OKCancel,
+				MessageBoxIcon.Information) == DialogResult.Cancel)
 			{
 				return false;
 			}
@@ -190,7 +208,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return "2003/01/13 5:01:27";
+				return "2003/01/19 17:18:13";
 			}
 		}
 
@@ -234,6 +252,11 @@ namespace Girl.HierArch
 			
 			DirectoryInfo di = new DirectoryInfo(dir1);
 			foreach (FileInfo fi in di.GetFiles("*.cs"))
+			{
+				string source = dir2 + @"\" + fi.Name;
+				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
+			}
+			foreach (FileInfo fi in di.GetFiles("*.miopt"))
 			{
 				string source = dir2 + @"\" + fi.Name;
 				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);

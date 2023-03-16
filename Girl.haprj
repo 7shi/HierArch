@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<HAProject version="0.1.1094.30068">
+<HAProject version="0.1.1108.8648">
   <HAClass Type="FolderGreen" Text="Girl:Girl" IsExpanded="true" IsSelected="false" AllowDrag="true">
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
@@ -67,24 +67,28 @@
         <HAObject Type="Protected" Text="reader:TextReader" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Protected" Text="source:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Protected" Text="lineNumber:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Protected" Text="pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Protected" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Protected" Text="spacing:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Protected" Text="keyWords:string[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Protected" Text="rtf:RtfDocument" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Protected" Text="access:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
         <HAObject Type="Folder" Text="Color" IsExpanded="true" IsSelected="false" AllowDrag="true">
           <HAObject Type="Public" Text="Color_Default:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Public" Text="Color_KeyWord:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Public" Text="Color_Comment:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Public" Text="Color_String:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Public" Text="Color_Directive:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Public" Text="Color_Directive:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         </HAObject>
         <Header>
           <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="54" SelectionLength="0">using System;
+            <Source SelectionStart="88" SelectionLength="0">using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using Girl.Rtf;
 </Source>
           </HAFunc>
         </Header>
@@ -96,13 +100,13 @@ using System.Text;
 &lt;/summary&gt;
 </Comment>
             <Source SelectionStart="0" SelectionLength="0" />
-            <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="236" SelectionLength="0">this.reader   = null;
+              <Source SelectionStart="244" SelectionLength="0">this.reader   = null;
 this.keyWords = null;
 
 this.Color_Default   = Color.Black;
@@ -112,25 +116,36 @@ this.Color_String    = Color.Magenta;
 this.Color_Directive = Color.DarkMagenta;
 </Source>
             </HAFunc>
-            <HAFunc Type="Protected" Text="Init:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAFunc Type="Protected" Text="Init:virtual" IsExpanded="false" IsSelected="true" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="104" SelectionLength="0">this.source     = new StringBuilder();
+              <Source SelectionStart="141" SelectionLength="0">this.source     = new StringBuilder();
 this.lineNumber = 1;
 this.text       = "";
 this.spacing    = "";
+this.rtf        = new RtfDocument();
 </Source>
             </HAFunc>
             <HAFunc Type="Public" Text="Read:virtual bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="15" SelectionLength="0">return false;
+              <Source SelectionStart="137" SelectionLength="0">if (this.text.Length &lt; 1) return false;
+
+this.rtf.AppendText(this.spacing);
+this.rtf.AppendText(this.text, this.TextColor);
+return true;
 </Source>
             </HAFunc>
             <HAFunc Type="Public" Text="Close" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="21" SelectionLength="0">this.reader = null;
+              <Source SelectionStart="142" SelectionLength="0">if (this.spacing != "")
+{
+	this.rtf.AppendText(this.spacing);
+	if (this.spacing.EndsWith("\n")) this.rtf.AppendLine();
+}
+
+this.reader = null;
 </Source>
             </HAFunc>
             <HAFunc Type="Folder" Text="Properties" IsExpanded="true" IsSelected="false" AllowDrag="true">
@@ -159,13 +174,19 @@ this.Init();
               <HAFunc Type="Public" Text="get_LineNumber:int" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="25" SelectionLength="0">return this.lineNumber;
+                <Source SelectionStart="24" SelectionLength="0">return this.lineNumber;
+</Source>
+              </HAFunc>
+              <HAFunc Type="Public" Text="get_Pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="17" SelectionLength="0">return this.pos;
 </Source>
               </HAFunc>
               <HAFunc Type="Public" Text="get_Text:string" IsExpanded="true" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="19" SelectionLength="0">return this.text;
+                <Source SelectionStart="18" SelectionLength="0">return this.text;
 </Source>
                 <HAFunc Type="Public" Text="get_IsKeyWord:virtual bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
                   <Arguments />
@@ -229,9 +250,28 @@ return this.Color_Default;
               <HAFunc Type="Public" Text="get_KeyWords:string[]" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="23" SelectionLength="0">return this.keyWords;
+                <Source SelectionStart="22" SelectionLength="0">return this.keyWords;
 </Source>
               </HAFunc>
+              <HAFunc Type="Public" Text="get_Rtf:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="25" SelectionLength="0">return this.rtf.ToRtf();
+</Source>
+              </HAFunc>
+              <HAFunc Type="Public" Text="get_Access:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="20" SelectionLength="0">return this.access;
+</Source>
+              </HAFunc>
+            </HAFunc>
+            <HAFunc Type="Public" Text="Parse:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="35" SelectionLength="0">while (this.Read());
+this.Close();
+</Source>
             </HAFunc>
           </HAFunc>
         </Body>
@@ -251,13 +291,12 @@ return this.Color_Default;
         <HAObject Type="Private" Text="nextChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Private" Text="curLineNum:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
         <HAObject Type="Private" Text="prePos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="curPos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <HAObject Type="Private" Text="curPos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
         <Header>
           <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="33" SelectionLength="0">using System;
+            <Source SelectionStart="31" SelectionLength="0">using System;
 using System.IO;
 </Source>
           </HAFunc>
@@ -306,12 +345,12 @@ this.curPos     =  0;
 this.pos        =  0;
 </Source>
             </HAFunc>
-            <HAFunc Type="Public" Text="Read:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAFunc Type="Public" Text="Read:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true">
               <Arguments />
               <HAObject Type="Private" Text="ch:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
               <HAObject Type="Private" Text="st:State" IsExpanded="false" IsSelected="true" AllowDrag="true" />
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="1542" SelectionLength="0">this.preText = this.text;
+              <Source SelectionStart="416" SelectionLength="0">this.preText = this.text;
 this.text = this.spacing = "";
 ch = -1;
 st = State.Normal;
@@ -331,7 +370,7 @@ for (;;)
 		|| st == State.Char || st == State.Comment1)
 	{
 	}
-	else if (st == State.Comment2)
+	else if (st == State.Comment2 || st == State.Directive)
 	{
 		if (ch == '\r' || ch == '\n')
 		{
@@ -452,7 +491,7 @@ for (;;)
 	}
 }
 
-return this.text.Length &gt; 0;
+return base.Read();
 </Source>
             </HAFunc>
             <HAFunc Type="Private" Text="ReadChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true">
@@ -491,11 +530,10 @@ return this.curChar;
                 <Source SelectionStart="66" SelectionLength="0">return this.text.StartsWith("/*") || this.text.StartsWith("//");
 </Source>
               </HAFunc>
-              <HAFunc Type="Public" Text="get_IsString:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true">
+              <HAFunc Type="Public" Text="get_IsString:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments />
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="77" SelectionLength="0">return this.text.StartsWith("\"") || this.text.StartsWith("'")
-	|| this.text.StartsWith("@\"");
+                <Source SelectionStart="65" SelectionLength="0">return this.text.StartsWith("\"") || this.text.StartsWith("'");
 </Source>
               </HAFunc>
               <HAFunc Type="Public" Text="get_IsDirective:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
@@ -516,11 +554,13 @@ return this.curChar;
         </Footer>
       </HAClass>
       <HAClass Type="Public" Text="CSharpParser:CParserBase" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAObject Type="Protected" Text="objects:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
         <Header>
           <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="15" SelectionLength="0">using System;
+            <Source SelectionStart="40" SelectionLength="0">using System;
+using System.Collections;
 </Source>
           </HAFunc>
         </Header>
@@ -532,13 +572,13 @@ return this.curChar;
 &lt;/summary&gt;
 </Comment>
             <Source SelectionStart="0" SelectionLength="0" />
-            <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
+            <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
               <Arguments />
               <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="806" SelectionLength="0">this.keyWords = new string[]
+              <Source SelectionStart="0" SelectionLength="0">this.keyWords = new string[]
 	{
 		"abstract", "as", "base", "bool",
 		"break", "byte", "case", "catch",
@@ -563,6 +603,64 @@ return this.curChar;
 	};
 </Source>
             </HAFunc>
+            <HAFunc Type="Protected" Text="Init:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="72" SelectionLength="0">base.Init();
+
+this.objects = new ArrayList();
+this.access  = "private";
+</Source>
+            </HAFunc>
+            <HAFunc Type="Public" Text="Read:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="206" SelectionLength="0">bool ret = base.Read();
+if (this.text == "public"
+	|| this.text == "protected"
+	|| this.text == "private")
+{
+	this.access = this.text;
+}
+else if (this.text == "}")
+{
+	this.access = "private";
+}
+return ret;
+</Source>
+            </HAFunc>
+            <HAFunc Type="Public" Text="Parse:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="0" SelectionLength="0">string text;
+
+while (this.Read())
+{
+	text = this.Text;
+	
+	if (text == "namespace")
+	{
+		ASTNamespace an = new ASTNamespace();
+		an.ParseDeclaration(this);
+		this.objects.Add(an);
+	}
+	else if (text == "class")
+	{
+		ASTClass ac = new ASTClass();
+		ac.ParseDeclaration(this);
+		this.objects.Add(ac);
+	}
+}
+
+this.Close();
+</Source>
+            </HAFunc>
+            <HAFunc Type="Public" Text="get_Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="21" SelectionLength="0">return this.objects;
+</Source>
+            </HAFunc>
           </HAFunc>
         </Body>
         <Footer>
@@ -572,6 +670,463 @@ return this.curChar;
             <Source SelectionStart="0" SelectionLength="0" />
           </HAFunc>
         </Footer>
+      </HAClass>
+      <HAClass Type="Public" Text="ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAObject Type="Public" Text="Name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="Pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Public" Text="DeclarationPos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        <HAObject Type="Protected" Text="objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <Header>
+          <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="40" SelectionLength="0">using System;
+using System.Collections;
+</Source>
+          </HAFunc>
+        </Header>
+        <Body>
+          <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+            <Arguments />
+            <Comment SelectionStart="10" SelectionLength="0">&lt;summary&gt;
+抽象構文木の要素を表します。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="0" SelectionLength="0" />
+            <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="28" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+              <Source SelectionStart="84" SelectionLength="0">this.Name = "";
+this.Pos = this.DeclarationPos = 0;
+this.objects = new ArrayList();
+</Source>
+            </HAFunc>
+            <HAFunc Type="Public" Text="get_Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="21" SelectionLength="0">return this.objects;
+</Source>
+            </HAFunc>
+          </HAFunc>
+        </Body>
+        <Footer>
+          <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+            <Arguments />
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="0" SelectionLength="0" />
+          </HAFunc>
+        </Footer>
+        <HAClass Type="Public" Text="ASTNamespace:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Header>
+            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="32" SelectionLength="0">using System;
+using System.Text;</Source>
+            </HAFunc>
+          </Header>
+          <Body>
+            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="39" SelectionLength="0">&lt;summary&gt;
+抽象構文木での名前空間を表します。
+&lt;/summary&gt;
+</Comment>
+              <Source SelectionStart="0" SelectionLength="0" />
+              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+                <Source SelectionStart="0" SelectionLength="0" />
+              </HAFunc>
+              <HAFunc Type="Public" Text="ParseDeclaration" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="34" SelectionLength="0">this.DeclarationPos = parser.Pos;
+string text;
+StringBuilder sb = new StringBuilder();
+
+while (parser.Read())
+{
+	text = parser.Text;
+	
+	if (text == "{")
+	{
+		this.Name = sb.ToString();
+		this.Parse(parser);
+		break;
+	}
+	else
+	{
+		sb.Append(text);
+	}
+}
+</Source>
+              </HAFunc>
+              <HAFunc Type="Public" Text="Parse" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="48" SelectionLength="0">string text;
+int level = 0;
+bool first = true;
+
+while (parser.Read())
+{
+	if (first)
+	{
+		this.Pos = parser.Pos;
+		first = false;
+	}
+	text = parser.Text;
+	
+	if (text == "{")
+	{
+		level++;
+	}
+	else if (text == "}")
+	{
+		level--;
+		if (level &lt; 0) break;
+	}
+	else if (text == "class")
+	{
+		ASTClass ac = new ASTClass();
+		ac.ParseDeclaration(parser);
+		this.objects.Add(ac);
+	}
+}
+</Source>
+              </HAFunc>
+            </HAFunc>
+          </Body>
+          <Footer>
+            <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="0" SelectionLength="0" />
+            </HAFunc>
+          </Footer>
+        </HAClass>
+        <HAClass Type="Public" Text="ASTClass:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <HAObject Type="Public" Text="Access:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <Header>
+            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="40" SelectionLength="0">using System;
+using System.Collections;
+</Source>
+            </HAFunc>
+          </Header>
+          <Body>
+            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+              <Source SelectionStart="0" SelectionLength="0" />
+              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments />
+                <Comment SelectionStart="26" SelectionLength="0">&lt;summary&gt;
+抽象構文木でのクラスを表します。
+&lt;/summary&gt;
+</Comment>
+                <Source SelectionStart="0" SelectionLength="0" />
+              </HAFunc>
+              <HAFunc Type="Public" Text="ParseDeclaration" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="34" SelectionLength="0">this.DeclarationPos = parser.Pos;
+string text;
+
+while (parser.Read())
+{
+	text = parser.Text;
+	if (this.Name == "") this.Name = text;
+	if (text == "{")
+	{
+		this.Access = parser.Access;
+		this.Parse(parser);
+		break;
+	}
+}
+</Source>
+              </HAFunc>
+              <HAFunc Type="Public" Text="Parse" IsExpanded="true" IsSelected="true" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="913" SelectionLength="0">int level = 0;
+bool ignore = false;
+string text = parser.Text, preText;
+int pos = parser.Pos, prePos;
+bool first = true;
+Stack region = new Stack();
+
+while (parser.Read())
+{
+	if (first)
+	{
+		this.Pos = parser.Pos;
+		first = false;
+	}
+	preText = text;
+	prePos  = pos;
+	text = parser.Text;
+	pos  = parser.Pos;
+	
+	if (text == "{")
+	{
+		if (level == 0 &amp;&amp; !ignore)
+		{
+			this.ParseProperty(parser, region, preText, prePos);
+		}
+		else
+		{
+			level++;
+		}
+	}
+	else if (text == "}")
+	{
+		level--;
+		if (level &lt; 0) break;
+	}
+	else if (text == "=" || text == "delegate")
+	{
+		ignore = true;
+	}
+	else if (text == ";")
+	{
+		ignore = false;
+	}
+	else if (text == "(" &amp;&amp; level == 0 &amp;&amp; !ignore)
+	{
+		ASTMethod am = new ASTMethod();
+		am.Name = preText;
+		am.DeclarationPos = prePos;
+		am.ParseDeclaration(parser);
+		this.AddObject(region, am);
+		ignore = false;
+	}
+	else if (text == "class" || text == "struct" || text == "enum")
+	{
+		ASTClass ac = new ASTClass();
+		ac.ParseDeclaration(parser);
+		this.objects.Add(ac);
+	}
+	else if (text.StartsWith("#region"))
+	{
+		ASTRegion ar = new ASTRegion(text, pos);
+		this.AddObject(region, ar);
+		region.Push(ar);
+	}
+	else if (text == "#endregion")
+	{
+		if (region.Count &gt; 0) region.Pop();
+	}
+}
+</Source>
+                <HAFunc Type="Private" Text="ParseProperty" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments>
+                    <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                    <HAObject Type="Private" Text="region:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                    <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                  </Arguments>
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="313" SelectionLength="0">string text = parser.Text, preText, access = parser.Access;
+
+while (parser.Read())
+{
+	preText = text;
+	text = parser.Text;
+	
+	if (text == "{")
+	{
+		ASTMethod am = new ASTMethod();
+		am.Name = preText + "_" + name;
+		am.Access = access;
+		am.DeclarationPos = pos;
+		am.Parse(parser);
+		this.AddObject(region, am);
+	}
+	else if (text == "}")
+	{
+		break;
+	}
+}
+</Source>
+                </HAFunc>
+                <HAFunc Type="Private" Text="AddObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments>
+                    <HAObject Type="Private" Text="region:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    <HAObject Type="Private" Text="ao:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                  </Arguments>
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="64" SelectionLength="0">if (region.Count &lt; 1)
+{
+	this.objects.Add(ao);
+}
+else
+{
+	(region.Peek() as ASTObject).Objects.Add(ao);
+}
+</Source>
+                </HAFunc>
+              </HAFunc>
+            </HAFunc>
+          </Body>
+          <Footer>
+            <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="0" SelectionLength="0" />
+            </HAFunc>
+          </Footer>
+        </HAClass>
+        <HAClass Type="Public" Text="ASTMethod:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <HAObject Type="Public" Text="Access:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <Header>
+            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+            </HAFunc>
+          </Header>
+          <Body>
+            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="39" SelectionLength="0">&lt;summary&gt;
+抽象構文木でのメソッドを表します。
+&lt;/summary&gt;
+</Comment>
+              <Source SelectionStart="0" SelectionLength="0" />
+              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments />
+                <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+                <Source SelectionStart="0" SelectionLength="0" />
+              </HAFunc>
+              <HAFunc Type="Public" Text="ParseDeclaration" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="118" SelectionLength="0">this.Access = parser.Access;
+
+while (parser.Read())
+{
+	if (parser.Text == "{")
+	{
+		this.Parse(parser);
+		break;
+	}
+}
+</Source>
+              </HAFunc>
+              <HAFunc Type="Public" Text="Parse" IsExpanded="false" IsSelected="true" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="47" SelectionLength="0">int level = 0;
+string text;
+bool first = true;
+
+while (parser.Read())
+{
+	if (first)
+	{
+		this.Pos = parser.Pos;
+		first = false;
+	}
+	text = parser.Text;
+	
+	if (text == "{")
+	{
+		level++;
+	}
+	else if (text == "}")
+	{
+		level--;
+		if (level &lt; 0) break;
+	}
+}
+</Source>
+              </HAFunc>
+            </HAFunc>
+          </Body>
+          <Footer>
+            <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="0" SelectionLength="0" />
+            </HAFunc>
+          </Footer>
+        </HAClass>
+        <HAClass Type="Public" Text="ASTRegion:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <Header>
+            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="0" SelectionLength="0">using System;
+</Source>
+            </HAFunc>
+          </Header>
+          <Body>
+            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+抽象構文木でのリージョンを表します。
+&lt;/summary&gt;
+</Comment>
+              <Source SelectionStart="0" SelectionLength="0" />
+              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
+                <Arguments>
+                  <HAObject Type="Private" Text="region:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                  <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                </Arguments>
+                <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+                <Source SelectionStart="188" SelectionLength="0">int p = 8, len = region.Length;
+for (; p &lt; len; p++)
+{
+	char ch = region[p];
+	if (ch != ' ' &amp;&amp; ch != '\t') break;
+}
+this.Name = region.Substring(p);
+
+this.Pos = this.DeclarationPos = pos;
+</Source>
+              </HAFunc>
+            </HAFunc>
+          </Body>
+          <Footer>
+            <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+              <Arguments />
+              <Comment SelectionStart="0" SelectionLength="0" />
+              <Source SelectionStart="0" SelectionLength="0" />
+            </HAFunc>
+          </Footer>
+        </HAClass>
       </HAClass>
     </HAClass>
     <HAClass Type="Folder" Text="Rtf:Rtf" IsExpanded="false" IsSelected="false" AllowDrag="true">
@@ -2510,7 +3065,7 @@ return Encoding.ASCII;
           <Source SelectionStart="0" SelectionLength="0" />
         </HAFunc>
       </Footer>
-      <HAClass Type="Folder" Text="Forms:Forms" IsExpanded="true" IsSelected="false" AllowDrag="true">
+      <HAClass Type="Folder" Text="Forms:Forms" IsExpanded="true" IsSelected="true" AllowDrag="true">
         <Header>
           <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
             <Arguments />
@@ -2546,7 +3101,7 @@ return Encoding.ASCII;
             <Source SelectionStart="0" SelectionLength="0" />
           </HAFunc>
         </Footer>
-        <HAClass Type="Public" Text="ApplicationDataManager" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <HAClass Type="Public" Text="ApplicationDataManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
           <HAObject Type="Private" Text="dataPath:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
           <Header>
             <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
@@ -2653,17 +3208,17 @@ fs.Close();
 return ret;
 </Source>
               </HAFunc>
-              <HAFunc Type="Public" Text="Save" IsExpanded="false" IsSelected="false" AllowDrag="true">
+              <HAFunc Type="Public" Text="Save" IsExpanded="false" IsSelected="true" AllowDrag="true">
                 <Arguments>
                   <HAObject Type="Private" Text="fileName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
                   <HAObject Type="Private" Text="data:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="213" SelectionLength="0">string path = this.DataPath;
+                <Source SelectionStart="235" SelectionLength="0">string path = this.DataPath;
 if (!path.EndsWith(@"\")) path += @"\";
 
 XmlSerializer xs = new XmlSerializer(data.GetType());
-StreamWriter sw = new StreamWriter(path + fileName);
+StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
 xs.Serialize(sw, data);
 sw.Close();
 </Source>
@@ -2674,7 +3229,7 @@ sw.Close();
                   <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
                 <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="129" SelectionLength="0">string path = this.DataPath;
+                <Source SelectionStart="145" SelectionLength="0">string path = this.DataPath;
 if (!path.EndsWith(@"\")) path += @"\";
 
 StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
@@ -2682,7 +3237,7 @@ sw.Write(text);
 sw.Close();
 </Source>
               </HAFunc>
-              <HAFunc Type="Public" Text="SearchFolder:static string" IsExpanded="false" IsSelected="true" AllowDrag="true">
+              <HAFunc Type="Public" Text="SearchFolder:static string" IsExpanded="false" IsSelected="false" AllowDrag="true">
                 <Arguments>
                   <HAObject Type="Private" Text="folder:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 </Arguments>
@@ -2855,7 +3410,7 @@ base.OnSplitterMoving(e);
             </HAFunc>
           </Footer>
         </HAClass>
-        <HAClass Type="Public" Text="ContextManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAClass Type="Public" Text="ContextManager" IsExpanded="true" IsSelected="false" AllowDrag="true">
           <HAObject Type="Protected" Text="flags:bool[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Protected" Text="cmdList:ArrayList[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
           <HAObject Type="Protected" Text="handlers:EventHandler[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
@@ -2883,11 +3438,11 @@ MenuItem, ToolBarButton, Button の状態を管理します。
                 <Arguments />
                 <HAObject Type="Private" Text="len:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
                 <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                <Comment SelectionStart="35" SelectionLength="0">&lt;summary&gt;
+                <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-                <Source SelectionStart="329" SelectionLength="0">len = this.MaxActions;
+                <Source SelectionStart="311" SelectionLength="0">len = this.MaxActions;
 
 this.flags = new bool[len];
 for (i = 0; i &lt; len; i++)
@@ -3045,18 +3600,17 @@ for (i = 0; i &lt; len; i++)
               <Source SelectionStart="0" SelectionLength="0" />
             </HAFunc>
           </Footer>
-        </HAClass>
-        <HAClass Type="Public" Text="EditManager:ContextManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
-          <HAObject Type="Private" Text="controls:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <HAObject Type="Private" Text="target:Control" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Private" Text="forms:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <Header>
-            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="54" SelectionLength="0">このクラスは[STAThread]でのみ正常動作します。
+          <HAClass Type="Public" Text="EditManager:ContextManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAObject Type="Private" Text="controls:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="target:Control" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="forms:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <Header>
+              <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="54" SelectionLength="0">このクラスは[STAThread]でのみ正常動作します。
 [MTAThread]では使用しないでください。
 </Comment>
-              <Source SelectionStart="194" SelectionLength="0">using System;
+                <Source SelectionStart="194" SelectionLength="0">using System;
 using System.Collections;
 using System.Windows.Forms;
 
@@ -3074,23 +3628,23 @@ namespace Girl.Windows.Forms
 	}
 }
 </Source>
-            </HAFunc>
-          </Header>
-          <Body>
-            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="43" SelectionLength="0">&lt;summary&gt;
+              </HAFunc>
+            </Header>
+            <Body>
+              <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="43" SelectionLength="0">&lt;summary&gt;
 テキストボックスの状態を管理します。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="0" SelectionLength="0" />
-              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="35" SelectionLength="0">&lt;summary&gt;
+                <Source SelectionStart="0" SelectionLength="0" />
+                <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="35" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-                <Source SelectionStart="423" SelectionLength="0">this.controls = new ArrayList();
+                  <Source SelectionStart="423" SelectionLength="0">this.controls = new ArrayList();
 this.target   = null;
 
 this.handlers = new EventHandler[]
@@ -3106,62 +3660,62 @@ this.handlers = new EventHandler[]
 
 this.forms = new ArrayList();
 </Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="get_MaxActions:override int" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="55" SelectionLength="0">return (int)Enum.GetNames(typeof(EditAction)).Length;
-</Source>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Command" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="action:EditAction" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                  </Arguments>
+                </HAFunc>
+                <HAFunc Type="Public" Text="get_MaxActions:override int" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="39" SelectionLength="0">this.SetCommand((int)action, target);
+                  <Source SelectionStart="55" SelectionLength="0">return (int)Enum.GetNames(typeof(EditAction)).Length;
 </Source>
                 </HAFunc>
-                <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="action:EditAction" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    <HAObject Type="Private" Text="targets:params object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                  </Arguments>
+                <HAFunc Type="Folder" Text="Command" IsExpanded="true" IsSelected="false" AllowDrag="true">
+                  <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="76" SelectionLength="0">foreach (object obj in targets)
+                  <Source SelectionStart="0" SelectionLength="0" />
+                  <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="action:EditAction" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="39" SelectionLength="0">this.SetCommand((int)action, target);
+</Source>
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="action:EditAction" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      <HAObject Type="Private" Text="targets:params object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="76" SelectionLength="0">foreach (object obj in targets)
 {
 	this.SetCommand((int)action, obj);
 }
 </Source>
+                  </HAFunc>
                 </HAFunc>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Control Management" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Public" Text="get_Controls:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <HAFunc Type="Folder" Text="Control Management" IsExpanded="true" IsSelected="false" AllowDrag="true">
                   <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="23" SelectionLength="0">return this.controls;
+                  <Source SelectionStart="0" SelectionLength="0" />
+                  <HAFunc Type="Public" Text="get_Controls:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="23" SelectionLength="0">return this.controls;
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="get_Target:Control" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="21" SelectionLength="0">return this.target;
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="get_Target:Control" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="21" SelectionLength="0">return this.target;
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="AddControl" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="control:Control" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <HAObject Type="Private" Text="f:Form" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="0" SelectionLength="0">if (control == null || this.controls.Contains(control)) return;
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="AddControl" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="control:Control" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <HAObject Type="Private" Text="f:Form" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="0" SelectionLength="0">if (control == null || this.controls.Contains(control)) return;
 
 control.Disposed += new EventHandler(this.control_Disposed);
 control.Enter    += new EventHandler(this.control_Enter);
@@ -3194,60 +3748,62 @@ if (f == null || this.forms.Contains(f)) return;
 this.forms.Add(f);
 f.Activated += new EventHandler(this.form_Activated);
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="RemoveControl" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="control:Control" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="81" SelectionLength="0">if (!this.controls.Contains(control)) return;
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="RemoveControl" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="control:Control" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="81" SelectionLength="0">if (!this.controls.Contains(control)) return;
 
 this.controls.Remove(control);
 </Source>
+                  </HAFunc>
                 </HAFunc>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Edit" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Public" Text="Undo:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <HAFunc Type="Folder" Text="Edit" IsExpanded="true" IsSelected="false" AllowDrag="true">
                   <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="99" SelectionLength="0">if (this.target is TextBoxBase)
+                  <Source SelectionStart="0" SelectionLength="0" />
+                  <HAFunc Type="Public" Text="Undo:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="99" SelectionLength="0">if (this.target is TextBoxBase)
 {
 	(this.target as TextBoxBase).Undo();
 }
 this.CheckStatus();
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="Redo:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="78" SelectionLength="0">if (this.target is RichTextBox)
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="Redo:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="78" SelectionLength="0">if (this.target is RichTextBox)
 {
 	(this.target as RichTextBox).Redo();
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="Cut:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="73" SelectionLength="0">if (this.target is TextBoxBase)
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="Cut:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="73" SelectionLength="0">if (this.target is TextBoxBase)
 {
 	(this.target as TextBoxBase).Cut();
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="Copy:virtual" IsExpanded="false" IsSelected="true" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="279" SelectionLength="0">if (this.target is RichTextBox)
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="Copy:virtual" IsExpanded="false" IsSelected="true" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="262" SelectionLength="0">if (this.target is RichTextBox)
 {
 	RichTextBox rtb = this.target as RichTextBox;
 	if (rtb.SelectionLength &gt; 0)
 	{
-		Clipboard.SetDataObject(
-			new DataObject(DataFormats.Rtf, rtb.SelectedRtf));
+		DataObject obj = new DataObject();
+		obj.SetData(DataFormats.Rtf, rtb.SelectedRtf);
+		obj.SetData(rtb.SelectedText);
+		Clipboard.SetDataObject(obj);
 	}
 }
 else if (this.target is TextBoxBase)
@@ -3255,111 +3811,111 @@ else if (this.target is TextBoxBase)
 	(this.target as TextBoxBase).Copy();
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="Paste:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="79" SelectionLength="0">if (this.target is TextBoxBase)
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="Paste:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="79" SelectionLength="0">if (this.target is TextBoxBase)
 {
 	(this.target as TextBoxBase).Paste();
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="Delete:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="89" SelectionLength="0">if (this.target is TextBoxBase)
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="Delete:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="89" SelectionLength="0">if (this.target is TextBoxBase)
 {
 	(this.target as TextBoxBase).SelectedText = "";
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="SelectAll:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="83" SelectionLength="0">if (this.target is TextBoxBase)
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="SelectAll:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="83" SelectionLength="0">if (this.target is TextBoxBase)
 {
 	(this.target as TextBoxBase).SelectAll();
 }
 </Source>
+                  </HAFunc>
+                  <HAFunc Type="Folder" Text="Handlers" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="0" SelectionLength="0" />
+                    <HAFunc Type="Private" Text="cmd_Undo" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="9" SelectionLength="0">this.Undo();
+</Source>
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="cmd_Redo" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="9" SelectionLength="0">this.Redo();
+</Source>
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="cmd_Cut" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="8" SelectionLength="0">this.Cut();
+</Source>
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="cmd_Copy" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="9" SelectionLength="0">this.Copy();
+</Source>
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="cmd_Paste" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="10" SelectionLength="0">this.Paste();
+</Source>
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="cmd_Delete" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="11" SelectionLength="0">this.Delete();
+</Source>
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="cmd_SelectAll" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="19" SelectionLength="0">this.SelectAll();
+</Source>
+                    </HAFunc>
+                  </HAFunc>
                 </HAFunc>
-                <HAFunc Type="Folder" Text="Handlers" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <HAFunc Type="Folder" Text="Check Status" IsExpanded="true" IsSelected="false" AllowDrag="true">
                   <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
                   <Source SelectionStart="0" SelectionLength="0" />
-                  <HAFunc Type="Private" Text="cmd_Undo" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
+                  <HAFunc Type="Public" Text="CheckStatus" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
                     <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="9" SelectionLength="0">this.Undo();
-</Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="cmd_Redo" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="9" SelectionLength="0">this.Redo();
-</Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="cmd_Cut" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="8" SelectionLength="0">this.Cut();
-</Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="cmd_Copy" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="9" SelectionLength="0">this.Copy();
-</Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="cmd_Paste" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="10" SelectionLength="0">this.Paste();
-</Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="cmd_Delete" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="11" SelectionLength="0">this.Delete();
-</Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="cmd_SelectAll" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="19" SelectionLength="0">this.SelectAll();
-</Source>
-                  </HAFunc>
-                </HAFunc>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Check Status" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Public" Text="CheckStatus" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="153" SelectionLength="0">if (!this.target.Visible || !this.target.Enabled)
+                    <Source SelectionStart="153" SelectionLength="0">if (!this.target.Visible || !this.target.Enabled)
 {
 	this.SetStatus(false);
 }
@@ -3368,13 +3924,13 @@ else if (this.target is TextBoxBase)
 	this.CheckTextBoxBase();
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Private" Text="CheckTextBoxBase" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <HAObject Type="Private" Text="tbb:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="440" SelectionLength="0">tbb = this.target as TextBoxBase;
+                  </HAFunc>
+                  <HAFunc Type="Private" Text="CheckTextBoxBase" IsExpanded="true" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <HAObject Type="Private" Text="tbb:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="440" SelectionLength="0">tbb = this.target as TextBoxBase;
 
 this.SetStatus((int)EditAction.Undo, tbb.CanUndo);
 
@@ -3394,12 +3950,12 @@ else if (tbb is RichTextBox)
 	this.CheckRichTextBox();
 }
 </Source>
-                  <HAFunc Type="Private" Text="CheckTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments />
-                    <HAObject Type="Private" Text="tb:TextBox" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="358" SelectionLength="0">tb = this.target as TextBox;
+                    <HAFunc Type="Private" Text="CheckTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments />
+                      <HAObject Type="Private" Text="tb:TextBox" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="358" SelectionLength="0">tb = this.target as TextBox;
 
 this.SetStatus((int)EditAction.Redo, false);
 
@@ -3419,13 +3975,13 @@ if (data != null)
 }
 this.SetStatus((int)EditAction.Paste, status);
 </Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="CheckRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments />
-                    <HAObject Type="Private" Text="rtb:RichTextBox" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="91" SelectionLength="298">rtb = this.target as RichTextBox;
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="CheckRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments />
+                      <HAObject Type="Private" Text="rtb:RichTextBox" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="91" SelectionLength="298">rtb = this.target as RichTextBox;
 
 this.SetStatus((int)EditAction.Redo, rtb.CanRedo);
 
@@ -3445,92 +4001,92 @@ if (data != null)
 }
 this.SetStatus((int)EditAction.Paste, status);
 </Source>
+                    </HAFunc>
                   </HAFunc>
-                </HAFunc>
-                <HAFunc Type="Folder" Text="Handlers" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="0" SelectionLength="0" />
-                  <HAFunc Type="Private" Text="control_Disposed" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
+                  <HAFunc Type="Folder" Text="Handlers" IsExpanded="true" IsSelected="false" AllowDrag="true">
+                    <Arguments />
                     <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="91" SelectionLength="0">if (this.target == sender) this.SetStatus(false);
+                    <Source SelectionStart="0" SelectionLength="0" />
+                    <HAFunc Type="Private" Text="control_Disposed" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="91" SelectionLength="0">if (this.target == sender) this.SetStatus(false);
 this.RemoveControl(sender as Control);
 </Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="control_Enter" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="55" SelectionLength="0">this.target = sender as Control;
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="control_Enter" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="55" SelectionLength="0">this.target = sender as Control;
 this.CheckStatus();
 </Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="form_Activated" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="57" SelectionLength="0">if (this.target == null) return;
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="form_Activated" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="57" SelectionLength="0">if (this.target == null) return;
 
 this.CheckStatus();
 </Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="target_Event" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="54" SelectionLength="0">if (sender != target) return;
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="target_Event" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="54" SelectionLength="0">if (sender != target) return;
 
 this.CheckStatus();
 </Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="textBox_MouseMove" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="11" SelectionLength="0">this.target_Event(sender, EventArgs.Empty);
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="textBox_MouseMove" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="11" SelectionLength="0">this.target_Event(sender, EventArgs.Empty);
 </Source>
-                  </HAFunc>
-                  <HAFunc Type="Private" Text="textBox_KeyUpDown" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                    <Arguments>
-                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                      <HAObject Type="Private" Text="e:KeyEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    </Arguments>
-                    <Comment SelectionStart="0" SelectionLength="0" />
-                    <Source SelectionStart="45" SelectionLength="0">this.target_Event(sender, EventArgs.Empty);
+                    </HAFunc>
+                    <HAFunc Type="Private" Text="textBox_KeyUpDown" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                      <Arguments>
+                        <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                        <HAObject Type="Private" Text="e:KeyEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      </Arguments>
+                      <Comment SelectionStart="0" SelectionLength="0" />
+                      <Source SelectionStart="45" SelectionLength="0">this.target_Event(sender, EventArgs.Empty);
 </Source>
+                    </HAFunc>
                   </HAFunc>
                 </HAFunc>
               </HAFunc>
-            </HAFunc>
-          </Body>
-          <Footer>
-            <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="0" SelectionLength="0" />
-            </HAFunc>
-          </Footer>
-        </HAClass>
-        <HAClass Type="Public" Text="CodeEditorManager:ContextManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
-          <HAObject Type="Public" Text="IndentString:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Public" Text="menuOptions:Hashtable" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <Header>
-            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="228" SelectionLength="0">using System;
+            </Body>
+            <Footer>
+              <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="0" SelectionLength="0" />
+              </HAFunc>
+            </Footer>
+          </HAClass>
+          <HAClass Type="Public" Text="CodeEditorManager:ContextManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAObject Type="Public" Text="IndentString:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Public" Text="menuOptions:Hashtable" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <Header>
+              <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="228" SelectionLength="0">using System;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
@@ -3546,23 +4102,23 @@ namespace Girl.Windows.Forms
 	}
 }
 </Source>
-            </HAFunc>
-          </Header>
-          <Body>
-            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="50" SelectionLength="0">&lt;summary&gt;
+              </HAFunc>
+            </Header>
+            <Body>
+              <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="50" SelectionLength="0">&lt;summary&gt;
 TextBox にコード入力支援機能を付加します。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="0" SelectionLength="0" />
-              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+                <Source SelectionStart="0" SelectionLength="0" />
+                <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-                <Source SelectionStart="175" SelectionLength="0">this.IndentString = "\t";
+                  <Source SelectionStart="175" SelectionLength="0">this.IndentString = "\t";
 this.menuOptions = new Hashtable();
 this.handlers = new EventHandler[]
 	{
@@ -3571,19 +4127,19 @@ this.handlers = new EventHandler[]
 
 this.SetStatus(true);
 </Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="get_MaxActions:override int" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="43" SelectionLength="0">return (int)Enum.GetNames(typeof(CodeEditorOption)).Length;
+                </HAFunc>
+                <HAFunc Type="Public" Text="get_MaxActions:override int" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="43" SelectionLength="0">return (int)Enum.GetNames(typeof(CodeEditorOption)).Length;
 </Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="GetIndent:static string" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments>
-                  <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                </Arguments>
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="360" SelectionLength="0">int len = text.Length;
+                </HAFunc>
+                <HAFunc Type="Public" Text="GetIndent:static string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments>
+                    <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                  </Arguments>
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="360" SelectionLength="0">int len = text.Length;
 if (len &lt; 1) return "";
 
 int pos;
@@ -3606,131 +4162,131 @@ else
 }
 return text.Substring(0, pos);
 </Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="SetTarget" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments>
-                  <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                </Arguments>
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="140" SelectionLength="0">textBox.KeyDown  += new KeyEventHandler     (this.textBox_KeyDown );
+                </HAFunc>
+                <HAFunc Type="Public" Text="SetTarget" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments>
+                    <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                  </Arguments>
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="140" SelectionLength="0">textBox.KeyDown  += new KeyEventHandler     (this.textBox_KeyDown );
 textBox.KeyPress += new KeyPressEventHandler(this.textBox_KeyPress);
 </Source>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Command" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="option:CodeEditorOption" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="39" SelectionLength="0">this.SetCommand((int)option, target);
-</Source>
                 </HAFunc>
-                <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="option:CodeEditorOption" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    <HAObject Type="Private" Text="targets:params object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                  </Arguments>
+                <HAFunc Type="Folder" Text="Command" IsExpanded="true" IsSelected="false" AllowDrag="true">
+                  <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="76" SelectionLength="0">foreach (object obj in targets)
+                  <Source SelectionStart="0" SelectionLength="0" />
+                  <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="option:CodeEditorOption" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="39" SelectionLength="0">this.SetCommand((int)option, target);
+</Source>
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="option:CodeEditorOption" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      <HAObject Type="Private" Text="targets:params object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="76" SelectionLength="0">foreach (object obj in targets)
 {
 	this.SetCommand((int)option, obj);
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Protected" Text="SetHandler:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="118" SelectionLength="0">if (target is MenuItem)
+                  </HAFunc>
+                  <HAFunc Type="Protected" Text="SetHandler:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="118" SelectionLength="0">if (target is MenuItem)
 {
 	this.menuOptions[target] = action;
 	(target as MenuItem).Click += this.handlers[0];
 }
 </Source>
+                  </HAFunc>
                 </HAFunc>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Properties" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Public" Text="get_SmartEnter:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                <HAFunc Type="Folder" Text="Properties" IsExpanded="false" IsSelected="false" AllowDrag="true">
                   <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="54" SelectionLength="0">return this.flags[(int)CodeEditorOption.SmartEnter];
+                  <Source SelectionStart="0" SelectionLength="0" />
+                  <HAFunc Type="Public" Text="get_SmartEnter:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="54" SelectionLength="0">return this.flags[(int)CodeEditorOption.SmartEnter];
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="set_SmartEnter:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="58" SelectionLength="0">this.SetStatus((int)CodeEditorOption.SmartEnter, value);
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="set_SmartEnter:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="58" SelectionLength="0">this.SetStatus((int)CodeEditorOption.SmartEnter, value);
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="get_SmartTab:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="52" SelectionLength="0">return this.flags[(int)CodeEditorOption.SmartTab];
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="get_SmartTab:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="52" SelectionLength="0">return this.flags[(int)CodeEditorOption.SmartTab];
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="set_SmartTab:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="45" SelectionLength="0">this.SetStatus((int)CodeEditorOption.SmartTab, value);
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="set_SmartTab:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="45" SelectionLength="0">this.SetStatus((int)CodeEditorOption.SmartTab, value);
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="get_SmartHome:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="53" SelectionLength="0">return this.flags[(int)CodeEditorOption.SmartHome];
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="get_SmartHome:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="53" SelectionLength="0">return this.flags[(int)CodeEditorOption.SmartHome];
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="set_SmartHome:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="57" SelectionLength="0">this.SetStatus((int)CodeEditorOption.SmartHome, value);
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="set_SmartHome:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="57" SelectionLength="0">this.SetStatus((int)CodeEditorOption.SmartHome, value);
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="get_SmartParenthesis:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="60" SelectionLength="0">return this.flags[(int)CodeEditorOption.SmartParenthesis];
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="get_SmartParenthesis:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="60" SelectionLength="0">return this.flags[(int)CodeEditorOption.SmartParenthesis];
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="set_SmartParenthesis:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="64" SelectionLength="0">this.SetStatus((int)CodeEditorOption.SmartParenthesis, value);
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="set_SmartParenthesis:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="64" SelectionLength="0">this.SetStatus((int)CodeEditorOption.SmartParenthesis, value);
 </Source>
-                </HAFunc>
-                <HAFunc Type="Protected" Text="SetProperty:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="116" SelectionLength="0">if (target is MenuItem)
+                  </HAFunc>
+                  <HAFunc Type="Protected" Text="SetProperty:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="116" SelectionLength="0">if (target is MenuItem)
 {
 	MenuItem mi = target as MenuItem;
 	if (mi.Checked != status) mi.Checked = status;
 }
 </Source>
+                  </HAFunc>
                 </HAFunc>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Process" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Private" Text="ProcessEnter" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
+                <HAFunc Type="Folder" Text="Process" IsExpanded="true" IsSelected="false" AllowDrag="true">
+                  <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="1573" SelectionLength="0">int ln = TextBoxPlus.GetCurrentLine(textBox);
+                  <Source SelectionStart="0" SelectionLength="0" />
+                  <HAFunc Type="Private" Text="ProcessEnter" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="1573" SelectionLength="0">int ln = TextBoxPlus.GetCurrentLine(textBox);
 int cl = TextBoxPlus.GetCurrentColumn(textBox);
 string crtext = TextBoxPlus.GetLineText(textBox, ln);
 string crind  = __CLASS.GetIndent(crtext);
@@ -3799,13 +4355,13 @@ else
 }
 if (pos &gt;= 0) textBox.SelectionStart = pos;
 </Source>
-                </HAFunc>
-                <HAFunc Type="Private" Text="ProcessHome:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="21" SelectionLength="0">int clm = TextBoxPlus.GetCurrentColumn(textBox);
+                  </HAFunc>
+                  <HAFunc Type="Private" Text="ProcessHome:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="21" SelectionLength="0">int clm = TextBoxPlus.GetCurrentColumn(textBox);
 int ind = __CLASS.GetIndent(TextBoxPlus.GetLineText(textBox, TextBoxPlus.GetCurrentLine(textBox))).Length;
 if (clm == 0 &amp;&amp; ind &gt; 0)
 {
@@ -3819,14 +4375,14 @@ else if (ind &lt; clm)
 }
 return false;
 </Source>
-                </HAFunc>
-                <HAFunc Type="Private" Text="ProcessParenthesis:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <HAObject Type="Private" Text="ch:char" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="986" SelectionLength="0">int pos = textBox.SelectionStart;
+                  </HAFunc>
+                  <HAFunc Type="Private" Text="ProcessParenthesis:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <HAObject Type="Private" Text="ch:char" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="986" SelectionLength="0">int pos = textBox.SelectionStart;
 char prv1 = pos &gt; 0 ? textBox.Text[pos - 1] : '\0';
 char prv2 = pos &gt; 1 ? textBox.Text[pos - 2] : '\0';
 char curr = pos &lt; textBox.TextLength ? textBox.Text[pos] : '\0';
@@ -3878,14 +4434,14 @@ switch (ch)
 }
 return false;
 </Source>
-                </HAFunc>
-                <HAFunc Type="Private" Text="ProcessTab" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <HAObject Type="Private" Text="shift:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="503" SelectionLength="0">int pos = textBox.SelectionStart;
+                  </HAFunc>
+                  <HAFunc Type="Private" Text="ProcessTab" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <HAObject Type="Private" Text="shift:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="503" SelectionLength="0">int pos = textBox.SelectionStart;
 int len = textBox.SelectionLength;
 int sl = TextBoxPlus.GetLine(textBox, pos);
 int el = TextBoxPlus.GetLine(textBox, pos + len);
@@ -3928,14 +4484,14 @@ int nlen = textBox.SelectionStart - sp;
 textBox.SelectionStart = sp;
 textBox.SelectionLength = nlen;
 </Source>
-                </HAFunc>
-                <HAFunc Type="Private" Text="InsertText" IsExpanded="false" IsSelected="true" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                    <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="161" SelectionLength="0">RichTextBox rtb = textBox as RichTextBox;
+                  </HAFunc>
+                  <HAFunc Type="Private" Text="InsertText" IsExpanded="false" IsSelected="true" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                      <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="161" SelectionLength="0">RichTextBox rtb = textBox as RichTextBox;
 if (rtb != null)
 {
 	rtb.SelectionColor = rtb.ForeColor;
@@ -3943,19 +4499,19 @@ if (rtb != null)
 }
 textBox.SelectedText = text;
 </Source>
+                  </HAFunc>
                 </HAFunc>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Event Handler" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Private" Text="textBox_KeyDown" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <HAObject Type="Private" Text="e:KeyEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
+                <HAFunc Type="Folder" Text="Event Handler" IsExpanded="true" IsSelected="false" AllowDrag="true">
+                  <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="130" SelectionLength="0">TextBoxBase textBox = sender as TextBoxBase;
+                  <Source SelectionStart="0" SelectionLength="0" />
+                  <HAFunc Type="Private" Text="textBox_KeyDown" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <HAObject Type="Private" Text="e:KeyEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="130" SelectionLength="0">TextBoxBase textBox = sender as TextBoxBase;
 if (textBox == null) return;
 
 if (e.KeyCode == Keys.Enter &amp;&amp; this.SmartEnter)
@@ -3987,14 +4543,14 @@ else if (e.KeyCode == Keys.Tab &amp;&amp; this.SmartTab &amp;&amp; (e.Shift || t
 	e.Handled = true;
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Private" Text="textBox_KeyPress" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <HAObject Type="Private" Text="e:KeyPressEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="493" SelectionLength="0">TextBoxBase textBox = sender as TextBoxBase;
+                  </HAFunc>
+                  <HAFunc Type="Private" Text="textBox_KeyPress" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <HAObject Type="Private" Text="e:KeyPressEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="493" SelectionLength="0">TextBoxBase textBox = sender as TextBoxBase;
 if (textBox == null) return;
 
 if (e.KeyChar == (char)13 &amp;&amp; this.SmartEnter &amp;&amp; textBox is TextBox)
@@ -4016,30 +4572,31 @@ else if (e.KeyChar &gt;= ' ' &amp;&amp; textBox is RichTextBox)
 	e.Handled = true;
 }
 </Source>
-                </HAFunc>
-                <HAFunc Type="Private" Text="menuItem_Click" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <HAObject Type="Private" Text="mi:MenuItem" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="148" SelectionLength="0">mi = sender as MenuItem;
+                  </HAFunc>
+                  <HAFunc Type="Private" Text="menuItem_Click" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <HAObject Type="Private" Text="mi:MenuItem" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="148" SelectionLength="0">mi = sender as MenuItem;
 if (mi == null || !this.menuOptions.Contains(mi)) return;
 
 this.SetStatus((int)this.menuOptions[sender], !mi.Checked);
 </Source>
+                  </HAFunc>
                 </HAFunc>
               </HAFunc>
-            </HAFunc>
-          </Body>
-          <Footer>
-            <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="0" SelectionLength="0" />
-            </HAFunc>
-          </Footer>
+            </Body>
+            <Footer>
+              <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="0" SelectionLength="0" />
+              </HAFunc>
+            </Footer>
+          </HAClass>
         </HAClass>
         <HAClass Type="Public" Text="TextBoxPlus" IsExpanded="false" IsSelected="false" AllowDrag="true">
           <Header>
@@ -4153,7 +4710,7 @@ return "";
             </HAFunc>
           </Footer>
         </HAClass>
-        <HAClass Type="Public" Text="ExRichTextBox:RichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAClass Type="Public" Text="ExRichTextBox:RichTextBox" IsExpanded="true" IsSelected="false" AllowDrag="true">
           <Header>
             <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
               <Arguments />
@@ -4371,14 +4928,13 @@ this.SelectionColor = c;
               <Source SelectionStart="0" SelectionLength="0" />
             </HAFunc>
           </Footer>
-        </HAClass>
-        <HAClass Type="Public" Text="CodeEditor:ExRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
-          <HAObject Type="Public" Text="Parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <Header>
-            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="135" SelectionLength="0">using System;
+          <HAClass Type="Public" Text="CodeEditor:ExRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAObject Type="Public" Text="Parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <Header>
+              <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="135" SelectionLength="0">using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -4386,23 +4942,23 @@ using System.Windows.Forms;
 using Girl.Coding;
 using Girl.Rtf;
 </Source>
-            </HAFunc>
-          </Header>
-          <Body>
-            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="41" SelectionLength="0">&lt;summary&gt;
+              </HAFunc>
+            </Header>
+            <Body>
+              <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="41" SelectionLength="0">&lt;summary&gt;
 ソースコードを編集するための RichTextBox です。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="0" SelectionLength="0" />
-              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+                <Source SelectionStart="0" SelectionLength="0" />
+                <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-                <Source SelectionStart="181" SelectionLength="0">this.AcceptsTab = true;
+                  <Source SelectionStart="181" SelectionLength="0">this.AcceptsTab = true;
 this.DetectUrls = false;
 this.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
 this.WordWrap = false;
@@ -4410,13 +4966,13 @@ this.Font = new Font("ＭＳ ゴシック", 9);
 
 this.Parser = null;
 </Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="JumpToError" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments>
-                  <HAObject Type="Private" Text="p:Point" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                </Arguments>
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="397" SelectionLength="0">if (p.X &lt; 0 || p.Y &lt; 0) return;
+                </HAFunc>
+                <HAFunc Type="Public" Text="JumpToError" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments>
+                    <HAObject Type="Private" Text="p:Point" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                  </Arguments>
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="397" SelectionLength="0">if (p.X &lt; 0 || p.Y &lt; 0) return;
 
 this.SelectionStart = this.GetLinePosition(p.Y) + p.X;
 this.SelectionLength = 0;
@@ -4433,13 +4989,13 @@ if (this.Parser != null)
 }
 this.Focus();
 </Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="get_Code:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                <HAObject Type="Private" Text="prev:char" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="63" SelectionLength="0">sb = new StringBuilder();
+                </HAFunc>
+                <HAFunc Type="Public" Text="get_Code:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                  <HAObject Type="Private" Text="prev:char" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="236" SelectionLength="0">sb = new StringBuilder();
 prev = '\0';
 foreach (char ch in this.Text)
 {
@@ -4458,73 +5014,79 @@ foreach (char ch in this.Text)
 }
 return sb.ToString();
 </Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="set_Code:string" IsExpanded="false" IsSelected="true" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="601" SelectionLength="0">if (this.Parser == null || value == null)
+                </HAFunc>
+                <HAFunc Type="Public" Text="set_Code:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="250" SelectionLength="0">if (this.Parser == null || value == null)
 {
 	this.Text = value;
 	return;
 }
 
-RtfDocument rd = new RtfDocument();
-rd.CurrentFont = this.Font;
 StringReader sr = new StringReader(value);
 this.Parser.Reader = sr;
 this.Parser.Color_Default = this.ForeColor;
-while (this.Parser.Read())
-{
-	rd.AppendText(this.Parser.Spacing);
-	rd.AppendText(this.Parser.Text, this.Parser.TextColor);
-}
-this.Parser.Close();
+this.Parser.Parse();
 sr.Close();
-if (this.Parser.Spacing != "")
-{
-	rd.AppendText(this.Parser.Spacing);
-	if (this.Parser.Spacing.EndsWith("\n")) rd.AppendLine();
-}
-this.SelectionColor = this.ForeColor;
-this.Rtf = rd.ToRtf();
+
+this.Rtf = this.Parser.Rtf;
 </Source>
+                </HAFunc>
+                <HAFunc Type="Public" Text="Reanalyze" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="332" SelectionLength="0">int pos = this.SelectionStart;
+int len = this.SelectionLength;
+
+InternalHScrollBar hbar = new InternalHScrollBar(this);
+InternalVScrollBar vbar = new InternalVScrollBar(this);
+int hpos = hbar.Pos;
+int vpos = vbar.Pos;
+
+this.Code = this.Code;
+this.SelectionStart  = pos;
+this.SelectionLength = len;
+hbar.Pos = hpos;
+vbar.Pos = vpos;
+</Source>
+                </HAFunc>
               </HAFunc>
-            </HAFunc>
-          </Body>
-          <Footer>
-            <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="0" SelectionLength="0" />
-            </HAFunc>
-          </Footer>
-        </HAClass>
-        <HAClass Type="Public" Text="LinkRichTextBox:ExRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
-          <HAObject Type="Public" Text="LinkTargetNotify:event LinkTargetEventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Public" Text="LinkTargetClicked:event LinkTargetEventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Private" Text="oldCursor:Cursor" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Private" Text="linkColor:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Private" Text="links:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Private" Text="linkTarget:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <Header>
-            <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="90" SelectionLength="0">using System;
+            </Body>
+            <Footer>
+              <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="0" SelectionLength="0" />
+              </HAFunc>
+            </Footer>
+          </HAClass>
+          <HAClass Type="Public" Text="LinkRichTextBox:ExRichTextBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
+            <HAObject Type="Public" Text="LinkTargetNotify:event LinkTargetEventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Public" Text="LinkTargetClicked:event LinkTargetEventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="oldCursor:Cursor" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="linkColor:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="links:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="linkTarget:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <Header>
+              <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="90" SelectionLength="0">using System;
 using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 </Source>
-            </HAFunc>
-          </Header>
-          <Body>
-            <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="44" SelectionLength="0">&lt;summary&gt;
+              </HAFunc>
+            </Header>
+            <Body>
+              <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="44" SelectionLength="0">&lt;summary&gt;
 リンクをサポートした読み取り専用の RichTextBox です。
 &lt;/summary&gt;
 </Comment>
-              <Source SelectionStart="0" SelectionLength="0">public struct LinkTargetInfo 
+                <Source SelectionStart="0" SelectionLength="0">public struct LinkTargetInfo 
 {
 	public int Start, Length;
 	public object Target;
@@ -4549,59 +5111,59 @@ public class LinkTargetEventArgs : EventArgs
 
 public delegate void LinkTargetEventHandler(object sender, LinkTargetEventArgs e);
 </Source>
-              <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+                <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-                <Source SelectionStart="149" SelectionLength="0">this.ReadOnly   = true;
+                  <Source SelectionStart="149" SelectionLength="0">this.ReadOnly   = true;
 this.oldCursor  = this.Cursor;
 this.linkColor  = Color.Blue;
 this.links      = new ArrayList();
 this.linkTarget = null;
 </Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="get_LinkColor:Color" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="24" SelectionLength="0">return this.linkColor;
-</Source>
-              </HAFunc>
-              <HAFunc Type="Public" Text="set_LinkColor:Color" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="25" SelectionLength="0">this.linkColor = value;
-</Source>
-              </HAFunc>
-              <HAFunc Type="Folder" Text="Link" IsExpanded="true" IsSelected="false" AllowDrag="true">
-                <Arguments />
-                <Comment SelectionStart="0" SelectionLength="0" />
-                <Source SelectionStart="0" SelectionLength="0" />
-                <HAFunc Type="Public" Text="Clear:new void" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                </HAFunc>
+                <HAFunc Type="Public" Text="get_LinkColor:Color" IsExpanded="false" IsSelected="false" AllowDrag="true">
                   <Arguments />
                   <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="29" SelectionLength="0">this.SetTarget(null);
+                  <Source SelectionStart="24" SelectionLength="0">return this.linkColor;
+</Source>
+                </HAFunc>
+                <HAFunc Type="Public" Text="set_LinkColor:Color" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="25" SelectionLength="0">this.linkColor = value;
+</Source>
+                </HAFunc>
+                <HAFunc Type="Folder" Text="Link" IsExpanded="true" IsSelected="false" AllowDrag="true">
+                  <Arguments />
+                  <Comment SelectionStart="0" SelectionLength="0" />
+                  <Source SelectionStart="0" SelectionLength="0" />
+                  <HAFunc Type="Public" Text="Clear:new void" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments />
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="29" SelectionLength="0">this.SetTarget(null);
 this.links.Clear();
 base.Clear();
 </Source>
-                </HAFunc>
-                <HAFunc Type="Public" Text="AppendLink" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-                    <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="134" SelectionLength="0">this.links.Add(new LinkTargetInfo(this.TextLength, text.Length, target));
+                  </HAFunc>
+                  <HAFunc Type="Public" Text="AppendLink" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+                      <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="134" SelectionLength="0">this.links.Add(new LinkTargetInfo(this.TextLength, text.Length, target));
 this.AppendText(text, this.LinkColor, FontStyle.Underline);
 </Source>
-                </HAFunc>
-                <HAFunc Type="Protected" Text="OnMouseMove:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="304" SelectionLength="0">base.OnMouseMove(e);
+                  </HAFunc>
+                  <HAFunc Type="Protected" Text="OnMouseMove:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="304" SelectionLength="0">base.OnMouseMove(e);
 
 int pos = this.GetCharIndexFromPosition(new Point(e.X, e.Y));
 object target = null;
@@ -4617,33 +5179,33 @@ foreach (object obj in this.links)
 }
 this.SetTarget(target);
 </Source>
-                </HAFunc>
-                <HAFunc Type="Protected" Text="OnMouseLeave:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="44" SelectionLength="0">base.OnMouseLeave(e);
+                  </HAFunc>
+                  <HAFunc Type="Protected" Text="OnMouseLeave:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="44" SelectionLength="0">base.OnMouseLeave(e);
 this.SetTarget(null);
 </Source>
-                </HAFunc>
-                <HAFunc Type="Protected" Text="OnMouseDown:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="165" SelectionLength="0">base.OnMouseDown(e);
+                  </HAFunc>
+                  <HAFunc Type="Protected" Text="OnMouseDown:override" IsExpanded="false" IsSelected="false" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="165" SelectionLength="0">base.OnMouseDown(e);
 if (this.linkTarget == null || this.LinkTargetClicked == null) return;
 
 this.LinkTargetClicked(this, new LinkTargetEventArgs(this.linkTarget));
 </Source>
-                </HAFunc>
-                <HAFunc Type="Private" Text="SetTarget" IsExpanded="false" IsSelected="true" AllowDrag="true">
-                  <Arguments>
-                    <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-                  </Arguments>
-                  <Comment SelectionStart="0" SelectionLength="0" />
-                  <Source SelectionStart="236" SelectionLength="0">if (target == this.linkTarget) return;
+                  </HAFunc>
+                  <HAFunc Type="Private" Text="SetTarget" IsExpanded="false" IsSelected="true" AllowDrag="true">
+                    <Arguments>
+                      <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+                    </Arguments>
+                    <Comment SelectionStart="0" SelectionLength="0" />
+                    <Source SelectionStart="236" SelectionLength="0">if (target == this.linkTarget) return;
 
 this.linkTarget = target;
 this.Cursor = (target == null) ? this.oldCursor : Cursors.Hand;
@@ -4651,17 +5213,18 @@ if (this.LinkTargetNotify == null) return;
 
 this.LinkTargetNotify(this, new LinkTargetEventArgs(target));
 </Source>
+                  </HAFunc>
                 </HAFunc>
               </HAFunc>
-            </HAFunc>
-          </Body>
-          <Footer>
-            <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
-              <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="0" SelectionLength="0" />
-            </HAFunc>
-          </Footer>
+            </Body>
+            <Footer>
+              <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+                <Arguments />
+                <Comment SelectionStart="0" SelectionLength="0" />
+                <Source SelectionStart="0" SelectionLength="0" />
+              </HAFunc>
+            </Footer>
+          </HAClass>
         </HAClass>
         <HAClass Type="Public" Text="ExComboBox:ComboBox" IsExpanded="false" IsSelected="false" AllowDrag="true">
           <HAObject Type="Public" Text="EnterKeyPress:event EventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" />

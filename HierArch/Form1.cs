@@ -15,9 +15,9 @@ namespace Girl.HierArch
 	/// </summary>
 	public class Form1 : System.Windows.Forms.Form
 	{
-		private static WindowSizeData m_Data1;
-		private static ViewData m_Data2;
-		private static ArrayList m_Forms = new ArrayList();
+		public WindowSizeMonitor sizeMonitor;
+		private static ViewData viewData;
+		private static ArrayList forms = new ArrayList();
 
 		private HADoc document = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
@@ -157,6 +157,8 @@ namespace Girl.HierArch
 
 			// 出力タブを非表示にします。
 			this.mnuViewOutput_Click(this, EventArgs.Empty);
+
+			this.sizeMonitor = new WindowSizeMonitor(this);
 		}
 
 		/// <summary>
@@ -173,8 +175,8 @@ namespace Girl.HierArch
 			}
 			base.Dispose(disposing);
 
-			m_Forms.Remove(this);
-			if (m_Forms.Count == 0) Application.Exit();
+			Form1.forms.Remove(this);
+			if (Form1.forms.Count == 0) Application.Exit();
 		}
 
 		#region Windows Form Designer generated code
@@ -820,6 +822,7 @@ namespace Girl.HierArch
 																		  this.statusBar1});
 			this.Menu = this.mainMenu1;
 			this.Name = "Form1";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
 			this.Text = "HierArch";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.tabControl1.ResumeLayout(false);
@@ -838,8 +841,7 @@ namespace Girl.HierArch
 			Application.AddMessageFilter(new MouseWheelMessageFilter());
 
 			ApplicationDataManager adm = new ApplicationDataManager();
-			m_Data1 = WindowSizeData.Load(adm);
-			m_Data2 = ViewData.Load(adm);
+			Form1.viewData = ViewData.Load(adm);
 
 			Form1 f;
 			if (args.GetLength(0) < 1)
@@ -858,22 +860,20 @@ namespace Girl.HierArch
 			}
 			Application.Run();
 
-			m_Data1.Save(adm);
-			m_Data2.Save(adm);
+			Form1.viewData.Save(adm);
 		}
 
 		private static Form1 CreateForm()
 		{
 			Form1 ret = new Form1();
-			m_Forms.Add(ret);
-			new WindowSizeManager(ret, m_Data1, true);
-			new ViewManager(ret, m_Data2);
+			Form1.forms.Add(ret);
+			new ViewManager(ret, Form1.viewData);
 			return ret;
 		}
 
 		private static void Exit()
 		{
-			ArrayList list = (ArrayList)m_Forms.Clone();
+			ArrayList list = (ArrayList)Form1.forms.Clone();
 			foreach(Form1 f in list)
 			{
 				f.Close();
@@ -927,40 +927,82 @@ namespace Girl.HierArch
 
 		private void mnuViewClass_Click(object sender, System.EventArgs e)
 		{
-			bool v = this.mnuViewClass.Checked = !this.view1.tabClass.Visible;
-			this.view1.SetPanel1(v, this.view1.tabFunc.Visible);
+			this.SetClassVisible(!this.view1.tabClass.Visible);
+		}
+
+		public void SetClassVisible(bool visible)
+		{
+			if (visible == this.view1.tabClass.Visible) return;
+
+			this.mnuViewClass.Checked = visible;
+			this.view1.SetPanel1(visible, this.view1.tabFunc.Visible);
 		}
 
 		private void mnuViewFunc_Click(object sender, System.EventArgs e)
 		{
-			bool v = this.mnuViewFunc.Checked = !this.view1.tabFunc.Visible;
-			this.view1.SetPanel1(this.view1.tabClass.Visible, v);
+			this.SetFuncVisible(!this.view1.tabFunc.Visible);
+		}
+
+		public void SetFuncVisible(bool visible)
+		{
+			if (visible == this.view1.tabFunc.Visible) return;
+
+			this.mnuViewFunc.Checked = visible;
+			this.view1.SetPanel1(this.view1.tabClass.Visible, visible);
 		}
 
 		private void mnuViewMember_Click(object sender, System.EventArgs e)
 		{
-			bool v = this.mnuViewMember.Checked = !this.view1.tabMember.Visible;
-			this.view1.SetPanel3(v, this.view1.tabArg.Visible, this.view1.tabObject.Visible);
+			this.SetMemberVisible(!this.view1.tabMember.Visible);
+		}
+
+		public void SetMemberVisible(bool visible)
+		{
+			if (visible == this.view1.tabMember.Visible) return;
+
+			this.mnuViewMember.Checked = visible;
+			this.view1.SetPanel3(visible, this.view1.tabArg.Visible, this.view1.tabObject.Visible);
 		}
 
 		private void mnuViewArg_Click(object sender, System.EventArgs e)
 		{
-			bool v = this.mnuViewArg.Checked = !this.view1.tabArg.Visible;
-			this.view1.SetPanel3(this.view1.tabMember.Visible, v, this.view1.tabObject.Visible);
+			this.SetArgVisible(!this.view1.tabArg.Visible);
+		}
+
+		public void SetArgVisible(bool visible)
+		{
+			if (visible == this.view1.tabArg.Visible) return;
+
+			this.mnuViewArg.Checked = visible;
+			this.view1.SetPanel3(this.view1.tabMember.Visible, visible, this.view1.tabObject.Visible);
 		}
 
 		private void mnuViewObject_Click(object sender, System.EventArgs e)
 		{
-			bool v = this.mnuViewObject.Checked = !this.view1.tabObject.Visible;
-			this.view1.SetPanel3(this.view1.tabMember.Visible, this.view1.tabArg.Visible, v);
+			this.SetObjectVisible(!this.view1.tabObject.Visible);
+		}
+
+		public void SetObjectVisible(bool visible)
+		{
+			if (visible == this.view1.tabObject.Visible) return;
+
+			this.mnuViewObject.Checked = visible;
+			this.view1.SetPanel3(this.view1.tabMember.Visible, this.view1.tabArg.Visible, visible);
 		}
 
 		private void mnuViewComment_Click(object sender, System.EventArgs e)
 		{
+			this.SetCommentVisible(!this.view1.txtComment.Visible);
+		}
+
+		public void SetCommentVisible(bool visible)
+		{
+			if (visible == this.view1.txtComment.Visible) return;
+
 			this.view1.txtComment.Visible
 				= this.view1.opaqueSplitter4.Visible
 				= this.mnuViewComment.Checked
-				= !this.view1.txtComment.Visible;
+				= visible;
 		}
 
 		private void mnuViewOutput_Click(object sender, System.EventArgs e)
@@ -1034,7 +1076,7 @@ namespace Girl.HierArch
 
 		public bool Open()
 		{
-			openFileDialog1.FileName = document.FullName;
+			openFileDialog1.FileName = this.document.FullName;
 			if(openFileDialog1.ShowDialog(this) == DialogResult.Cancel)
 			{
 				view1.Focus();
@@ -1042,7 +1084,7 @@ namespace Girl.HierArch
 			}
 
 			Form1 target = this;
-			if(document.Changed || document.FullName != "")
+			if(this.document.Changed || this.document.FullName != "")
 			{
 				target = CreateForm();
 				target.Show();
@@ -1052,8 +1094,8 @@ namespace Girl.HierArch
 
 		public bool Open(string fn)
 		{
-			document.FullName = fn;
-			bool ret = document.Open();
+			this.document.FullName = fn;
+			bool ret = this.document.Open();
 			SetCaption();
 			SetDocument();
 			view1.Focus();
@@ -1062,31 +1104,30 @@ namespace Girl.HierArch
 
 		public bool Save()
 		{
-			if(document.FullName == "") return SaveAs();
+			if(this.document.FullName == "") return SaveAs();
 
-			bool ret = document.Save();
+			this.document.ViewInfo.Store(this);
+			bool ret = this.document.Save();
 			SetCaption();
 			return ret;
 		}
 
 		public bool SaveAs()
 		{
-			saveFileDialog1.FileName = document.FullName;
+			saveFileDialog1.FileName = this.document.FullName;
 			DialogResult res = saveFileDialog1.ShowDialog(this);
 			view1.Focus();
 			if(res == DialogResult.Cancel) return false;
 
-			document.FullName = saveFileDialog1.FileName;
-			bool ret = document.Save();
-			SetCaption();
-			return ret;
+			this.document.FullName = saveFileDialog1.FileName;
+			return this.Save();
 		}
 
 		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if(document.Changed)
+			if (this.document.Changed)
 			{
-				string msg = string.Format("ファイル {0} の内容は変更されています。\r\n\r\n変更を保存しますか?", document.Name);
+				string msg = string.Format("ファイル {0} の内容は変更されています。\r\n\r\n変更を保存しますか?", this.document.Name);
 				DialogResult res = MessageBox.Show(this, msg, m_sCaption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
 				if(res == DialogResult.Yes)
 				{
@@ -1101,20 +1142,21 @@ namespace Girl.HierArch
 
 		public void SetDocument()
 		{
-			view1.SetDocument(document);
+			if (this.Visible) this.document.ViewInfo.Apply(this);
+			this.view1.SetDocument(this.document);
 		}
 
 		public void SetCaption()
 		{
-			statusBar1.Text = document.FullName;
-			Text = document.Name + " - " + m_sCaption + (document.Changed ? "*" : "");
+			statusBar1.Text = this.document.FullName;
+			Text = this.document.Name + " - " + m_sCaption + (this.document.Changed ? "*" : "");
 		}
 
 		private void view1_Changed(object sender, System.EventArgs e)
 		{
-			if(document.Changed) return;
+			if(this.document.Changed) return;
 
-			document.Changed = true;
+			this.document.Changed = true;
 			SetCaption();
 		}
 

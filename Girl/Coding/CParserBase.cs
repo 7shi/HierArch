@@ -30,7 +30,6 @@ namespace Girl.Coding
 		private int curLineNum;
 		private int prePos;
 		private int curPos;
-		private int pos;
 
 		/// <summary>
 		/// コンストラクタです。
@@ -80,7 +79,7 @@ namespace Girl.Coding
 					|| st == State.Char || st == State.Comment1)
 				{
 				}
-				else if (st == State.Comment2)
+				else if (st == State.Comment2 || st == State.Directive)
 				{
 					if (ch == '\r' || ch == '\n')
 					{
@@ -201,7 +200,7 @@ namespace Girl.Coding
 				}
 			}
 			
-			return this.text.Length > 0;
+			return base.Read();
 		}
 
 		private int ReadChar()
@@ -243,8 +242,7 @@ namespace Girl.Coding
 		{
 			get
 			{
-				return this.text.StartsWith("\"") || this.text.StartsWith("'")
-					|| this.text.StartsWith("@\"");
+				return this.text.StartsWith("\"") || this.text.StartsWith("'");
 			}
 		}
 

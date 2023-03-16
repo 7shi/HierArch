@@ -30,47 +30,89 @@ namespace Girl.Windows.Forms
 	/// </summary>
 	public class WindowSizeManager
 	{
-		private Form m_Form;
-		private WindowSizeData m_Data;
-		private FormWindowState m_WindowState;
-		private Size m_Size;
+		private Form form;
+		private WindowSizeData data;
+		private FormWindowState state;
+		private Size size;
 
 		public WindowSizeManager(Form form, WindowSizeData data, bool hasMenu)
 		{
-			m_Form = form;
-			m_Form.Resize += new EventHandler(Form_Resize);
-			m_Form.Closed += new EventHandler(Form_Closed);
+			this.form = form;
+			this.form.Resize += new EventHandler(Form_Resize);
+			this.form.Closed += new EventHandler(Form_Closed);
 
-			m_Data = data;
-			m_WindowState = m_Data.WindowState;
-			m_Size        = m_Data.WindowSize;
+			this.data  = data;
+			this.state = data.WindowState;
+			this.size  = data.WindowSize;
 
-			m_Form.WindowState = m_WindowState;
-			if (!m_Size.IsEmpty)
+			this.form.WindowState = this.state;
+			if (!this.size.IsEmpty)
 			{
 				if (hasMenu)
 				{
 					Object obj = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop\WindowMetrics").GetValue("MenuHeight", "-270");
-					m_Size.Height -= (Convert.ToInt32((String)obj) / -15 + 1);
+					this.size.Height -= (Convert.ToInt32((String)obj) / -15 + 1);
 				}
-				m_Form.Size = m_Size;
+				this.form.Size = this.size;
 			}
 			else
 			{
-				m_Size = m_Form.Size;
+				this.size = this.form.Size;
 			}
 		}
 
 		private void Form_Resize(object sender, EventArgs e)
 		{
-			if (m_Form.WindowState == FormWindowState.Normal) m_Size = m_Form.Size;
-			m_WindowState = m_Form.WindowState;
+			if (this.form.WindowState == FormWindowState.Normal) this.size = this.form.Size;
+			this.state = this.form.WindowState;
 		}
 
 		private void Form_Closed(object sender, System.EventArgs e)
 		{
-			m_Data.WindowState = m_WindowState;
-			m_Data.WindowSize  = m_Size;
+			this.data.WindowState = this.state;
+			this.data.WindowSize  = this.size;
+		}
+	}
+
+	/// <summary>
+	/// フォームのサイズを監視します。
+	/// </summary>
+	public class WindowSizeMonitor
+	{
+		private Form form;
+		private Rectangle rect;
+
+		public WindowSizeMonitor(Form form)
+		{
+			this.form  = form;
+			this.rect  = form.DesktopBounds;
+
+			form.Move   += new EventHandler(Form_Move  );
+			form.Resize += new EventHandler(Form_Resize);
+		}
+
+		private void Form_Move(object sender, EventArgs e)
+		{
+			if (this.form.WindowState != FormWindowState.Normal) return;
+
+			this.rect.X = this.form.DesktopLocation.X;
+			this.rect.Y = this.form.DesktopLocation.Y;
+		}
+
+		private void Form_Resize(object sender, EventArgs e)
+		{
+			if (this.form.WindowState != FormWindowState.Normal) return;
+
+			this.rect.Width  = this.form.Width ;
+			this.rect.Height = this.form.Height;
+		}
+
+		public Rectangle Rect
+		{
+			get
+			{
+				return this.rect;
+			}
 		}
 	}
 }
