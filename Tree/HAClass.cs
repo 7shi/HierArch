@@ -111,17 +111,14 @@ namespace Girl.HierarchyArchitect
 			if (this.TargetNode == null || this.FuncTreeView == null) return;
 
 			this.StoreState();
-			this.FuncTreeView.StoreData();
+
+			this.FuncTreeView  .StoreData();
 			this.MemberTreeView.StoreState();
 			this.TargetNode.Functions.Clear();
 			this.TargetNode.Members  .Clear();
-
-			if (this.MemberTreeView.Nodes.Count > 0)
+			foreach (TreeNode n in this.MemberTreeView.Nodes)
 			{
-				foreach (TreeNode n in this.MemberTreeView.Nodes[0].Nodes)
-				{
-					if (n is HAMemberNode) this.TargetNode.Members.Add(n.Clone());
-				}
+				if (n is HAMemberNode) this.TargetNode.Members.Add(n.Clone());
 			}
 
 			foreach (TreeNode n in this.FuncTreeView.Nodes)
@@ -135,34 +132,17 @@ namespace Girl.HierarchyArchitect
 			Cursor curOrig = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
 
-			if (this.MemberTreeView != null)
+			if (this.TargetNode != null)
 			{
-				this.MemberTreeView.Nodes.Clear();
-				if (this.TargetNode != null)
-				{
-					HAMemberNode root = new HAMemberNode("クラス");
-					root.Type = this.TargetNode.Type;
-					root.AllowDrag = false;
-					this.MemberTreeView.Nodes.Add(root);
-					this.MemberTreeView.SetView(this.TargetNode.Members);
-				}
-				else
-				{
-					this.MemberTreeView.SetView(null);
-				}
+				if (this.MemberTreeView != null) this.MemberTreeView.SetView(this.TargetNode.Members);
+				if (this.FuncTreeView   != null) this.FuncTreeView  .SetView(this.TargetNode.Functions);
 			}
-
-			if (this.FuncTreeView != null)
+			else
 			{
-				if (this.TargetNode != null)
-				{
-					this.FuncTreeView.SetView(this.TargetNode.Functions);
-				}
-				else
-				{
-					this.FuncTreeView.SetView(null);
-				}
+				if (this.MemberTreeView != null) this.MemberTreeView.SetView(null);
+				if (this.FuncTreeView   != null) this.FuncTreeView  .SetView(null);
 			}
+			this.SetState();
 
 			Cursor.Current = curOrig;
 		}

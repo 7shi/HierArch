@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
@@ -25,6 +26,7 @@ namespace Girl.Windows.Forms
 		private bool m_bDragged = false;
 		private bool m_bScrolling = false;
 		private bool m_bDisturbSelection = false;
+		public ArrayList MoveTarget = new ArrayList();
 
 		enum DragStatus { None, Previous, Child, Next };
 		private DragStatus m_DragStatus = DragStatus.None;
@@ -36,6 +38,19 @@ namespace Girl.Windows.Forms
 
 			m_tmrToggle.Interval = 1200;
 			m_tmrToggle.Elapsed += new ElapsedEventHandler(OnTimedToggle);
+		}
+
+		public bool IsMoveTarget
+		{
+			get
+			{
+				if (m_ndDrag != null) return true;
+				foreach (Object o in MoveTarget)
+				{
+					if (o is DnDTreeView && ((DnDTreeView)o).m_ndDrag != null) return true;
+				}
+				return false;
+			}
 		}
 
 		#region XML
@@ -160,22 +175,19 @@ namespace Girl.Windows.Forms
 			SetDragTarget(p);
 
 			m_bDragged = true;
-			if (m_ndDrag != null)
+			if (IsMoveTarget)
 			{
 				if ((e.KeyState & 8) != 0)  // Control
 				{
 					e.Effect = DragDropEffects.Copy;
 				}
+				else if (m_ndDrag != null && m_ndDrag.IsAncestorOf(m_ndDragTarget))
+				{
+					e.Effect = DragDropEffects.None;
+				}
 				else
 				{
-					if (m_ndDrag.IsAncestorOf(m_ndDragTarget))
-					{
-						e.Effect = DragDropEffects.None;
-					}
-					else
-					{
-						e.Effect = DragDropEffects.Move;
-					}
+					e.Effect = DragDropEffects.Move;
 				}
 			}
 			else

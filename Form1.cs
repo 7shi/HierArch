@@ -470,7 +470,10 @@ namespace Girl.HierarchyArchitect
 
 		private void mnuHelpAbout_Click(object sender, System.EventArgs e)
 		{
-			MessageBox.Show(this, m_sCaption/*ProductName*/ + " ver." + ProductVersion, "About...");
+			About a = new About();
+			a.label1.Text = m_sCaption/*ProductName*/ + " Version " + ProductVersion;
+			a.ShowDialog(this);
+			a.Dispose();
 		}
 
 		private void toolBar1_ButtonClick(object sender, System.Windows.Forms.ToolBarButtonClickEventArgs e)

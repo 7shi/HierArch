@@ -29,8 +29,6 @@ namespace Girl.HierarchyArchitect
 			this.ContextMenu = this.contextMenu1;
 			this.HideSelection = false;
 			this.LabelEdit = true;
-			this.ShowRootLines = false;
-
 		}
 	
 		private MenuItem mnuType;
@@ -67,8 +65,8 @@ namespace Girl.HierarchyArchitect
 
 		protected override void SetState()
 		{
-			HAMemberNode n = (HAMemberNode)this.SelectedNode;
-			bool flag = (n != null && n.AllowDrag);
+			HAMemberNode n = this.SelectedNode as HAMemberNode;
+			bool flag = (n != null);
 			mnuType  .Enabled = flag;
 			mnuDelete.Enabled = flag;
 		}
@@ -85,25 +83,24 @@ namespace Girl.HierarchyArchitect
 		{
 			this.IgnoreChange = true;
 			this.SelectedNode = null;
+			this.Nodes.Clear();
 			if (list != null)
 			{
 				this.Enabled = true;
 				this.BackColor = System.Drawing.SystemColors.Window;
-				if (list.Count > 0 && this.Nodes.Count > 0)
+				if (list.Count > 0)
 				{
-					TreeNodeCollection root = this.Nodes[0].Nodes;
 					this.BeginUpdate();
 					foreach (Object obj in list)
 					{
-						if (obj is HAMemberNode) root.Add((HAMemberNode)((HAMemberNode)obj).Clone());
+						if (obj is HAMemberNode) Nodes.Add((HAMemberNode)((HAMemberNode)obj).Clone());
 					}
 					this.ApplyState();
-					this.EndUpdate();
 					if (this.SelectedNode != null)
 					{
 						this.SelectedNode.EnsureVisible();
 					}
-					this.Nodes[0].Expand();
+					this.EndUpdate();
 				}
 			}
 			else
@@ -112,6 +109,7 @@ namespace Girl.HierarchyArchitect
 				this.BackColor = System.Drawing.SystemColors.ControlLight;
 			}
 			this.IgnoreChange = false;
+			this.SetState();
 		}
 
 		#region XML

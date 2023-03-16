@@ -13,9 +13,10 @@ namespace Girl.HierarchyArchitect
 	public class HAFunc : HATree
 	{
 		private System.Windows.Forms.ContextMenu contextMenu1;
+		public HAObject ArgTreeView = null;
 		public HAObject ObjectTreeView = null;
-		public System.Windows.Forms.TextBox CommentTextBox = null;
-		public System.Windows.Forms.TextBox SourceTextBox  = null;
+		public TextBox CommentTextBox = null;
+		public TextBox SourceTextBox  = null;
 
 		private void InitializeComponent()
 		{
@@ -78,6 +79,21 @@ namespace Girl.HierarchyArchitect
 			if (this.TargetNode == null) return;
 
 			this.StoreState();
+
+			this.ArgTreeView   .StoreState();
+			this.ObjectTreeView.StoreState();
+			this.TargetNode.Args   .Clear();
+			this.TargetNode.Objects.Clear();
+			foreach (TreeNode n in this.ArgTreeView.Nodes)
+			{
+				if (n is HAObjectNode) this.TargetNode.Args.Add(n.Clone());
+			}
+
+			foreach (TreeNode n in this.ObjectTreeView.Nodes)
+			{
+				if (n is HAObjectNode) this.TargetNode.Objects.Add(n.Clone());
+			}
+
 			if (this.CommentTextBox != null) this.TargetNode.Comment = this.CommentTextBox.Text;
 			if (this.SourceTextBox  != null) this.TargetNode.Source  = this.SourceTextBox .Text;
 		}
@@ -86,6 +102,8 @@ namespace Girl.HierarchyArchitect
 		{
 			if (this.TargetNode != null)
 			{
+				if (this.ArgTreeView    != null) this.ArgTreeView   .SetView(this.TargetNode.Args);
+				if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(this.TargetNode.Objects);
 				if (this.CommentTextBox != null)
 				{
 					this.CommentTextBox.Enabled = true;
@@ -99,6 +117,8 @@ namespace Girl.HierarchyArchitect
 			}
 			else
 			{
+				if (this.ArgTreeView    != null) this.ArgTreeView   .SetView(null);
+				if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(null);
 				if (this.CommentTextBox != null)
 				{
 					this.CommentTextBox.Enabled = false;
@@ -131,13 +151,13 @@ namespace Girl.HierarchyArchitect
 						if (obj is HAFuncNode) this.Nodes.Add((HAFuncNode)((HAFuncNode)obj).Clone());
 					}
 					this.ApplyState();
-					this.EndUpdate();
 					if (this.SelectedNode != null)
 					{
 						this.SelectedNode.EnsureVisible();
-						this.TargetNode = (HAFuncNode)this.SelectedNode;
+						this.TargetNode = this.SelectedNode as HAFuncNode;
 						this.SetView();
 					}
+					this.EndUpdate();
 				}
 			}
 			else
@@ -146,6 +166,7 @@ namespace Girl.HierarchyArchitect
 				this.BackColor = System.Drawing.SystemColors.ControlLight;
 			}
 			this.IgnoreChange = false;
+			this.SetState();
 		}
 
 		protected override void OnAfterSelect(System.Windows.Forms.TreeViewEventArgs e)
@@ -240,13 +261,13 @@ namespace Girl.HierarchyArchitect
 			xw.WriteStartElement("Arguments");
 			foreach (Object obj in this.Args)
 			{
-				if (obj is HAObjectNode) ((HAObjectNode)obj).ToXml(xw);
+				if (obj is HAObjectNode) (obj as HAObjectNode).ToXml(xw);
 			}
 			xw.WriteEndElement();
 
 			foreach (Object obj in this.Objects)
 			{
-				if (obj is HAObjectNode) ((HAObjectNode)obj).ToXml(xw);
+				if (obj is HAObjectNode) (obj as HAObjectNode).ToXml(xw);
 			}
 
 			xw.WriteStartElement("Comment");

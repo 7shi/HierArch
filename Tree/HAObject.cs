@@ -29,8 +29,6 @@ namespace Girl.HierarchyArchitect
 			this.ContextMenu = this.contextMenu1;
 			this.HideSelection = false;
 			this.LabelEdit = true;
-			this.ShowRootLines = false;
-
 		}
 	
 		public HAObject()
@@ -69,6 +67,39 @@ namespace Girl.HierarchyArchitect
 				ret.Type = HAType.Private;
 				return ret;
 			}
+		}
+
+		public void SetView(ArrayList list)
+		{
+			this.IgnoreChange = true;
+			this.SelectedNode = null;
+			this.Nodes.Clear();
+			if (list != null)
+			{
+				this.Enabled = true;
+				this.BackColor = System.Drawing.SystemColors.Window;
+				if (list.Count > 0)
+				{
+					this.BeginUpdate();
+					foreach (Object obj in list)
+					{
+						if (obj is HAObjectNode) Nodes.Add((obj as HAObjectNode).Clone() as HAObjectNode);
+					}
+					this.ApplyState();
+					if (this.SelectedNode != null)
+					{
+						this.SelectedNode.EnsureVisible();
+					}
+					this.EndUpdate();
+				}
+			}
+			else
+			{
+				this.Enabled = false;
+				this.BackColor = System.Drawing.SystemColors.ControlLight;
+			}
+			this.IgnoreChange = false;
+			this.SetState();
 		}
 
 		#region XML
