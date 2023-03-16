@@ -8,9 +8,9 @@ using Girl.Windows.Forms;
 namespace Girl.HierarchyArchitect
 {
 	/// <summary>
-	/// HAFunc の概要の説明です。
+	/// HAMember の概要の説明です。
 	/// </summary>
-	public class HAFunc : HATree
+	public class HAMember : HATree
 	{
 		private System.Windows.Forms.ContextMenu contextMenu1;
 		private System.Windows.Forms.MenuItem cm1Child;
@@ -18,13 +18,10 @@ namespace Girl.HierarchyArchitect
 		private System.Windows.Forms.MenuItem cm1Insert;
 		private System.Windows.Forms.MenuItem cm1Separator1;
 		private System.Windows.Forms.MenuItem cm1Delete;
-		public HAObject ObjectTreeView = null;
-		public System.Windows.Forms.TextBox CommentTextBox = null;
-		public System.Windows.Forms.TextBox SourceTextBox  = null;
 
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(HAFunc));
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(HAMember));
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.cm1Child = new System.Windows.Forms.MenuItem();
 			this.cm1Append = new System.Windows.Forms.MenuItem();
@@ -74,7 +71,7 @@ namespace Girl.HierarchyArchitect
 			this.cm1Delete.Text = "削除";
 			this.cm1Delete.Click += new System.EventHandler(this.cmDelete_Click);
 			// 
-			// HAFunc
+			// HAMember
 			// 
 			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1;
@@ -83,7 +80,7 @@ namespace Girl.HierarchyArchitect
 
 		}
 	
-		public HAFunc()
+		public HAMember()
 		{
 			InitializeComponent();
 			this.ImageList = this.imageList1;
@@ -92,7 +89,7 @@ namespace Girl.HierarchyArchitect
 		protected override void StartDrag()
 		{
 			this.Focus();
-			this.StoreData();
+			this.StoreState();
 			base.StartDrag();
 		}
 
@@ -103,61 +100,8 @@ namespace Girl.HierarchyArchitect
 
 		private TreeNode MakeNewNode()
 		{
-			TreeNode ret = new HAFuncNode("新しい関数");
+			TreeNode ret = new HAMemberNode("新しいメンバ");
 			return ret;
-		}
-
-		public HAFuncNode TargetNode = null;
-
-		public void StoreData()
-		{
-			if (this.TargetNode == null) return;
-
-			this.StoreState();
-			if (this.CommentTextBox != null) this.TargetNode.Comment = this.CommentTextBox.Text;
-			if (this.SourceTextBox  != null) this.TargetNode.Source  = this.SourceTextBox .Text;
-		}
-
-		public void SetView()
-		{
-			if (this.TargetNode != null)
-			{
-				if (this.CommentTextBox != null)
-				{
-					this.CommentTextBox.Enabled = true;
-					this.CommentTextBox.Text = this.TargetNode.Comment;
-				}
-				if (this.SourceTextBox != null)
-				{
-					this.SourceTextBox.Enabled = true;
-					this.SourceTextBox.Text = this.TargetNode.Source;
-				}
-			}
-			else
-			{
-				if (this.CommentTextBox != null)
-				{
-					this.CommentTextBox.Enabled = false;
-					this.CommentTextBox.Text = "";
-				}
-				if (this.SourceTextBox != null)
-				{
-					this.SourceTextBox.Enabled = false;
-					this.SourceTextBox.Text = "";
-				}
-			}
-		}
-
-		protected override void OnAfterSelect(System.Windows.Forms.TreeViewEventArgs e)
-		{
-			base.OnAfterSelect(e);
-			if (this.IgnoreChange) return;
-
-			this.StoreData();
-			if (this.TargetNode == e.Node) return;
-
-			this.TargetNode = (HAFuncNode)e.Node;
-			this.SetView();
 		}
 
 		#region XML
@@ -168,9 +112,9 @@ namespace Girl.HierarchyArchitect
 			bool first = true;
 			while (xr.Read())
 			{
-				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element)
+				if (xr.Name == "HAObject" && xr.NodeType == XmlNodeType.Element)
 				{
-					dn = new HAFuncNode();
+					dn = new HAMemberNode();
 					nc.Insert(index, dn);
 					dn.FromXml(xr);
 					index++;
@@ -247,75 +191,35 @@ namespace Girl.HierarchyArchitect
 			this.Nodes.Remove(n);
 			SetState();
 		}
-	}
 
-	/// <summary>
-	/// HAFuncNode の概要の説明です。
-	/// </summary>
-	public class HAFuncNode : HATreeNode
-	{
-		public string Comment = "";
-		public string Source  = "";
-
-		public HAFuncNode()
+		/// <summary>
+		/// HAMemberNode の概要の説明です。
+		/// </summary>
+		public class HAMemberNode : HATreeNode
 		{
-		}
-
-		public HAFuncNode(string text) : base(text)
-		{
-		}
-
-		public override string XmlName
-		{
-			get
+			public HAMemberNode()
 			{
-				return "HAFunc";
+			}
+
+			public HAMemberNode(string text) : base(text)
+			{
+			}
+
+			public override string XmlName
+			{
+				get
+				{
+					return "HAObject";
+				}
+			}
+
+			public override HATreeNode NewNode
+			{
+				get
+				{
+					return new HAMemberNode();
+				}
 			}
 		}
-
-		public override HATreeNode NewNode
-		{
-			get
-			{
-				return new HAFuncNode();
-			}
-		}
-
-		public override object Clone()
-		{
-			HAFuncNode ret = (HAFuncNode)base.Clone();
-			ret.Comment = this.Comment;
-			ret.Source  = this.Source;
-			return ret;
-		}
-
-		#region XML
-
-		public override void WriteXml(XmlTextWriter xw)
-		{
-			base.WriteXml(xw);
-
-			xw.WriteStartElement("Comment");
-			xw.WriteString(this.Comment);
-			xw.WriteEndElement();
-
-			xw.WriteStartElement("Source");
-			xw.WriteString(this.Source);
-			xw.WriteEndElement();
-		}
-
-		public override void ReadXmlNode(XmlTextReader xr)
-		{
-			if (xr.Name == "Comment" && xr.NodeType == XmlNodeType.Element)
-			{
-				if (!xr.IsEmptyElement && xr.Read()) this.Comment = xr.ReadString();
-			}
-			else if (xr.Name == "Source" && xr.NodeType == XmlNodeType.Element)
-			{
-				if (!xr.IsEmptyElement && xr.Read()) this.Source = xr.ReadString();
-			}
-		} 
-
-		#endregion
 	}
 }

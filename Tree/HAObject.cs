@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 using Girl.Windows.Forms;
 
 namespace Girl.HierarchyArchitect
 {
 	/// <summary>
-	/// CustomControl1 の概要の説明です。
+	/// HAObject の概要の説明です。
 	/// </summary>
 	public class HAObject : HATree
 	{
@@ -20,6 +21,7 @@ namespace Girl.HierarchyArchitect
 
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(HAObject));
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.cm1Child = new System.Windows.Forms.MenuItem();
 			this.cm1Append = new System.Windows.Forms.MenuItem();
@@ -27,29 +29,9 @@ namespace Girl.HierarchyArchitect
 			this.cm1Separator1 = new System.Windows.Forms.MenuItem();
 			this.cm1Delete = new System.Windows.Forms.MenuItem();
 			// 
-			// cm1Child
+			// imageList1
 			// 
-			this.cm1Child.Text = "下に追加";
-			this.cm1Child.Click += new System.EventHandler(this.cmChild_Click);
-			// 
-			// cm1Append
-			// 
-			this.cm1Append.Text = "後に追加";
-			this.cm1Append.Click += new System.EventHandler(this.cmAppend_Click);
-			// 
-			// cm1Insert
-			// 
-			this.cm1Insert.Text = "前に追加";
-			this.cm1Insert.Click += new System.EventHandler(this.cmInsert_Click);
-			// 
-			// cm1Separator1
-			// 
-			this.cm1Separator1.Text = "-";
-			// 
-			// cm1Delete
-			// 
-			this.cm1Delete.Text = "削除";
-			this.cm1Delete.Click += new System.EventHandler(this.cmDelete_Click);
+			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
 			// 
 			// contextMenu1
 			// 
@@ -60,16 +42,55 @@ namespace Girl.HierarchyArchitect
 																						 this.cm1Separator1,
 																						 this.cm1Delete});
 			// 
+			// cm1Child
+			// 
+			this.cm1Child.Index = 0;
+			this.cm1Child.Text = "下に追加";
+			this.cm1Child.Click += new System.EventHandler(this.cmChild_Click);
+			// 
+			// cm1Append
+			// 
+			this.cm1Append.Index = 1;
+			this.cm1Append.Text = "後に追加";
+			this.cm1Append.Click += new System.EventHandler(this.cmAppend_Click);
+			// 
+			// cm1Insert
+			// 
+			this.cm1Insert.Index = 2;
+			this.cm1Insert.Text = "前に追加";
+			this.cm1Insert.Click += new System.EventHandler(this.cmInsert_Click);
+			// 
+			// cm1Separator1
+			// 
+			this.cm1Separator1.Index = 3;
+			this.cm1Separator1.Text = "-";
+			// 
+			// cm1Delete
+			// 
+			this.cm1Delete.Index = 4;
+			this.cm1Delete.Text = "削除";
+			this.cm1Delete.Click += new System.EventHandler(this.cmDelete_Click);
+			// 
 			// HAObject
 			// 
+			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1;
-			this.ItemHeight = 14;
+			this.HideSelection = false;
+			this.LabelEdit = true;
 
 		}
 	
 		public HAObject()
 		{
 			InitializeComponent();
+			this.ImageList = this.imageList1;
+		}
+
+		protected override void StartDrag()
+		{
+			this.Focus();
+			this.StoreState();
+			base.StartDrag();
 		}
 
 		protected override void SetState()
@@ -79,9 +100,36 @@ namespace Girl.HierarchyArchitect
 
 		private TreeNode MakeNewNode()
 		{
-			TreeNode ret = new DnDTreeNode("新しいオブジェクト");
+			HAObjectNode ret = new HAObjectNode("新しいオブジェクト");
+			ret.Type = HAType.Private;
 			return ret;
 		}
+
+		#region XML
+
+		public override void FromXml(XmlTextReader xr, TreeNodeCollection nc, int index)
+		{
+			DnDTreeNode dn;
+			bool first = true;
+			while (xr.Read())
+			{
+				if (xr.Name == "HAObject" && xr.NodeType == XmlNodeType.Element)
+				{
+					dn = new HAObjectNode();
+					nc.Insert(index, dn);
+					dn.FromXml(xr);
+					index++;
+					if (first)
+					{
+						dn.EnsureVisible();
+						SelectedNode = dn;
+						first = false;
+					}
+				}
+			}
+		}
+
+		#endregion
 
 		private void cmChild_Click(object sender, System.EventArgs e)
 		{
@@ -143,6 +191,49 @@ namespace Girl.HierarchyArchitect
 			if (n == null) return;
 			this.Nodes.Remove(n);
 			SetState();
+		}
+	}
+
+	/// <summary>
+	/// HAObjectNode の概要の説明です。
+	/// </summary>
+	public class HAObjectNode : HATreeNode
+	{
+		public HAObjectNode()
+		{
+		}
+
+		public HAObjectNode(string text) : base(text)
+		{
+		}
+
+		public override string XmlName
+		{
+			get
+			{
+				return "HAObject";
+			}
+		}
+
+		public override HATreeNode NewNode
+		{
+			get
+			{
+				return new HAObjectNode();
+			}
+		}
+
+		public override void SetIcon()
+		{
+			switch (this.m_Type)
+			{
+				case HAType.Public:
+				case HAType.Protected:
+				case HAType.Private:
+					this.SelectedImageIndex = (int)HAType.PointRed;
+					this.ImageIndex         = (int)HAType.Point;
+					return;
+			}
 		}
 	}
 }

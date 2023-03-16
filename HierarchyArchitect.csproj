@@ -126,27 +126,135 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Icons\EditCopy.png"
+                    RelPath = "Icons\Folder\Folder.png"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "Icons\EditCut.png"
+                    RelPath = "Icons\Folder\Folder_Open.png"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "Icons\EditPaste.png"
+                    RelPath = "Icons\Folder\FolderBlue.png"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "Icons\FileNew.png"
+                    RelPath = "Icons\Folder\FolderBlue_Open.png"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "Icons\FileOpen.png"
+                    RelPath = "Icons\Folder\FolderBrown.png"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "Icons\FileSave.png"
+                    RelPath = "Icons\Folder\FolderBrown_Open.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Folder\FolderGray.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Folder\FolderGray_Open.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Folder\FolderGreen.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Folder\FolderGreen_Open.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Folder\FolderRed.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Folder\FolderRed_Open.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Text\Text.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Text\TextBlue.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Text\TextBrown.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Text\TextGray.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Text\TextGreen.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Text\TextRed.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\EditCopy.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\EditCut.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\EditPaste.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\FileNew.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\FileOpen.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\ToolBar\FileSave.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\Class.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\Comment.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\Module.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\Point.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\PointRed.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\Private.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\Protected.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\Public.png"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Icons\Type\Smile.png"
                     BuildAction = "Content"
                 />
                 <File
@@ -227,6 +335,16 @@
                 <File
                     RelPath = "Tree\HAFunc.resx"
                     DependentUpon = "HAFunc.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Tree\HAMember.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Tree\HAMember.resx"
+                    DependentUpon = "HAMember.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

@@ -48,6 +48,7 @@ namespace Girl.Windows.Forms
 			{
 				if (xr.Name == "DnDTreeNode" && xr.NodeType == XmlNodeType.Element)
 				{
+					if (first) this.BeginUpdate();
 					dn = new DnDTreeNode();
 					nc.Insert(index, dn);
 					dn.FromXml(xr);
@@ -60,6 +61,7 @@ namespace Girl.Windows.Forms
 					}
 				}
 			}
+			if (!first) this.EndUpdate();
 		}
 
 		#endregion
@@ -284,7 +286,6 @@ namespace Girl.Windows.Forms
 			if (e.Effect == DragDropEffects.None) return;
 
 			Cursor.Current = Cursors.WaitCursor;
-			BeginUpdate();
 			TreeNode n = null;
 			int index = -1;
 			switch (m_DragStatus)
@@ -310,7 +311,6 @@ namespace Girl.Windows.Forms
 			xr.Close();
 			sr.Close();
 			m_DragStatus = DragStatus.None;
-			EndUpdate();
 			Cursor.Current = Cursors.Default;
 		}
 

@@ -270,7 +270,7 @@ namespace Girl.Windows.Forms
 			get
 			{
 				int ret = TextWidth + 4;
-				if (TreeView.ImageList != null) ret += TreeView.ImageList.ImageSize.Width;
+				if (TreeView.ImageList != null) ret += TreeView.ImageList.ImageSize.Width + 3;
 				return ret;
 			}
 		}
@@ -279,9 +279,7 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				int ret = GetNodeFont().Height + 2;
-				if (TreeView.ImageList != null) ret = Math.Max(ret, TreeView.ImageList.ImageSize.Height);
-				return ret;
+				return this.TreeView.ItemHeight;
 			}
 		}
 

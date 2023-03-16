@@ -29,8 +29,10 @@ namespace Girl.HierarchyArchitect
 		private System.Windows.Forms.TextBox txtSource;
 		private System.Windows.Forms.Panel panel3;
 		private System.Windows.Forms.TextBox txtComment;
-		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter6;
+		private HAMember tvMember;
 		private HAObject tvObject;
+		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
+		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter6;
 
 		public View()
 		{
@@ -38,9 +40,11 @@ namespace Girl.HierarchyArchitect
 			InitializeComponent();
 
 			// TODO: InitForm を呼び出しの後に初期化処理を追加します。
-			this.tvClass.FuncTreeView  = this.tvFunc;
-			this.tvFunc.CommentTextBox = this.txtComment;
-            this.tvFunc.SourceTextBox  = this.txtSource;
+			this.tvClass.MemberTreeView = this.tvMember;
+			this.tvClass.FuncTreeView   = this.tvFunc;
+			this.tvFunc.ObjectTreeView  = this.tvObject;
+			this.tvFunc.CommentTextBox  = this.txtComment;
+            this.tvFunc.SourceTextBox   = this.txtSource;
 			tvClass.SetView();
 		}
 
@@ -74,6 +78,8 @@ namespace Girl.HierarchyArchitect
 			this.tvClass = new Girl.HierarchyArchitect.HAClass();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.tvObject = new Girl.HierarchyArchitect.HAObject();
+			this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
+			this.tvMember = new Girl.HierarchyArchitect.HAMember();
 			this.opaqueSplitter4 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.opaqueSplitter6 = new Girl.Windows.Forms.OpaqueSplitter();
@@ -117,12 +123,9 @@ namespace Girl.HierarchyArchitect
 			// 
 			// tvFunc
 			// 
-			this.tvFunc.AllowDrop = true;
 			this.tvFunc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvFunc.HideSelection = false;
 			this.tvFunc.ImageIndex = -1;
 			this.tvFunc.ItemHeight = 14;
-			this.tvFunc.LabelEdit = true;
 			this.tvFunc.Location = new System.Drawing.Point(0, 155);
 			this.tvFunc.Name = "tvFunc";
 			this.tvFunc.SelectedImageIndex = -1;
@@ -142,12 +145,9 @@ namespace Girl.HierarchyArchitect
 			// 
 			// tvClass
 			// 
-			this.tvClass.AllowDrop = true;
 			this.tvClass.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tvClass.HideSelection = false;
 			this.tvClass.ImageIndex = -1;
 			this.tvClass.ItemHeight = 14;
-			this.tvClass.LabelEdit = true;
 			this.tvClass.Name = "tvClass";
 			this.tvClass.SelectedImageIndex = -1;
 			this.tvClass.Size = new System.Drawing.Size(152, 152);
@@ -157,7 +157,9 @@ namespace Girl.HierarchyArchitect
 			// panel2
 			// 
 			this.panel2.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				 this.tvObject});
+																				 this.tvObject,
+																				 this.opaqueSplitter1,
+																				 this.tvMember});
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
 			this.panel2.Location = new System.Drawing.Point(392, 0);
 			this.panel2.Name = "panel2";
@@ -166,17 +168,34 @@ namespace Girl.HierarchyArchitect
 			// 
 			// tvObject
 			// 
-			this.tvObject.AllowDrop = true;
 			this.tvObject.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvObject.HideSelection = false;
 			this.tvObject.ImageIndex = -1;
 			this.tvObject.ItemHeight = 14;
-			this.tvObject.LabelEdit = true;
+			this.tvObject.Location = new System.Drawing.Point(0, 211);
 			this.tvObject.Name = "tvObject";
 			this.tvObject.SelectedImageIndex = -1;
-			this.tvObject.Size = new System.Drawing.Size(152, 312);
-			this.tvObject.TabIndex = 6;
-			this.tvObject.Enter += new System.EventHandler(this.TreeView_Enter);
+			this.tvObject.Size = new System.Drawing.Size(152, 101);
+			this.tvObject.TabIndex = 1;
+			// 
+			// opaqueSplitter1
+			// 
+			this.opaqueSplitter1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.opaqueSplitter1.Location = new System.Drawing.Point(0, 208);
+			this.opaqueSplitter1.Name = "opaqueSplitter1";
+			this.opaqueSplitter1.Opaque = true;
+			this.opaqueSplitter1.Size = new System.Drawing.Size(152, 3);
+			this.opaqueSplitter1.TabIndex = 3;
+			this.opaqueSplitter1.TabStop = false;
+			// 
+			// tvMember
+			// 
+			this.tvMember.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tvMember.ImageIndex = -1;
+			this.tvMember.ItemHeight = 14;
+			this.tvMember.Name = "tvMember";
+			this.tvMember.SelectedImageIndex = -1;
+			this.tvMember.Size = new System.Drawing.Size(152, 208);
+			this.tvMember.TabIndex = 0;
 			// 
 			// opaqueSplitter4
 			// 
