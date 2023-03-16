@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasControl:CanvasObject" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 11:18:34">
+  <HAObject Type="Folder" Text="EventHandlers" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 0:33:49">
+    <HAObject Type="Public" Text="Click:event EventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/27 23:08:30" />
+    <HAObject Type="Public" Text="DoubleClick:event EventHandler" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/27 23:08:30" />
+    <HAObject Type="Public" Text="MouseDown:event MouseEventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 0:23:14" />
+    <HAObject Type="Public" Text="MouseUp:event MouseEventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 0:23:37" />
+    <HAObject Type="Public" Text="MouseMove:event MouseEventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 0:23:41" />
+    <HAObject Type="Public" Text="MouseEnter:event EventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/27 23:08:30" />
+    <HAObject Type="Public" Text="MouseLeave:event EventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/27 23:08:30" />
+  </HAObject>
+  <HAObject Type="Protected" Text="isUnderMouse:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 9:28:02" />
+  <HAObject Type="Protected" Text="button:MouseButtons" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 11:31:10" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/28 0:25:26">
+      <Arguments />
+      <Comment SelectionStart="19" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="64" SelectionLength="0">using System;
+using System.Drawing;
+using System.Windows.Forms;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/07/01 12:43:56">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="120" SelectionLength="0">public __CLASS() : base() {}
+public __CLASS(float x, float y, float width, float height) : base(x, y, width, height) {}
+public __CLASS(RectangleF rect) : base(rect) {}
+</Source>
+      <HAFunc Type="Protected" Text="Init:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/04 19:52:38">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="95" SelectionLength="0">base.Init();
+
+this.isUnderMouse = false;
+this.button = MouseButtons.None;
+this.enabled = true;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="SendMessage" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 11:18:34">
+        <Arguments>
+          <HAObject Type="Private" Text="msg:Canvas.Messages" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/27 23:06:02" />
+          <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/27 23:06:09" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="132" SelectionLength="0">switch (msg)
+{
+	case Canvas.Messages.Click:
+		this.OnClick(e);
+		break;
+	case Canvas.Messages.DoubleClick:
+		this.OnDoubleClick(e);
+		break;
+	case Canvas.Messages.MouseDown:
+		this.OnMouseDown(e as MouseEventArgs);
+		break;
+	case Canvas.Messages.MouseUp:
+		this.OnMouseUp(e as MouseEventArgs);
+		break;
+	case Canvas.Messages.MouseMove:
+		this.OnMouseMove(e as MouseEventArgs);
+		break;
+	case Canvas.Messages.MouseEnter:
+		this.OnMouseEnter(e);
+		break;
+	case Canvas.Messages.MouseLeave:
+		this.OnMouseLeave(e);
+		break;
+}
+</Source>
+        <HAFunc Type="Protected" Text="OnClick:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 0:25:34">
+          <Arguments>
+            <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/27 23:06:32" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="45" SelectionLength="0">if (this.Click != null) this.Click(this, e);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnDoubleClick:virtual" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/11 11:16:29">
+          <Arguments>
+            <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/27 23:06:32" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="57" SelectionLength="0">if (this.DoubleClick != null) this.DoubleClick(this, e);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnMouseDown:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 11:44:25">
+          <Arguments>
+            <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 0:23:00" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="79" SelectionLength="0">this.button |= e.Button;
+
+if (this.MouseDown != null) this.MouseDown(this, e);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnMouseUp:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 11:44:16">
+          <Arguments>
+            <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 0:23:00" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="78" SelectionLength="0">this.button &amp;= ~(e.Button);
+
+if (this.MouseUp != null) this.MouseUp(this, e);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnMouseMove:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 13:25:05">
+          <Arguments>
+            <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 0:23:00" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="53" SelectionLength="0">if (this.MouseMove != null) this.MouseMove(this, e);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnMouseEnter:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 9:28:53">
+          <Arguments>
+            <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/27 23:06:32" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="82" SelectionLength="0">if (this.MouseEnter != null) this.MouseEnter(this, e);
+
+this.isUnderMouse = true;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnMouseLeave:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 9:28:59">
+          <Arguments>
+            <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/27 23:06:32" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="83" SelectionLength="0">if (this.MouseLeave != null) this.MouseLeave(this, e);
+
+this.isUnderMouse = false;
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_IsUnderMouse:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 10:55:47">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="26" SelectionLength="0">return this.isUnderMouse;
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/27 22:41:19">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+  <HAClass Link="CanvasButton.hacls" />
+</HAClass>

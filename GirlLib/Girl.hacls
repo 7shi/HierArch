@@ -27,9 +27,11 @@
     </HAFunc>
   </Footer>
   <HAClass Link="Girl/Coding.hacls" />
+  <HAClass Link="Girl/Colections.hacls" />
   <HAClass Link="Girl/Net.hacls" />
   <HAClass Link="Girl/Rtf.hacls" />
   <HAClass Link="Girl/Text.hacls" />
+  <HAClass Link="Girl/Drawing.hacls" />
   <HAClass Link="Girl/Windows.hacls" />
   <HAClass Link="Girl/Xml.hacls" />
 </HAClass>

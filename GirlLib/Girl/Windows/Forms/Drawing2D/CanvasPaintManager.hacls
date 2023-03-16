@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasPaintManager" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 9:33:32">
+  <HAObject Type="Protected" Text="target:Control" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/19 14:06:27" />
+  <HAObject Type="Public" Text="CanvasCollection:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/19 14:07:55" />
+  <HAObject Type="Public" Text="SmoothingMode:SmoothingMode" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/20 11:22:31" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/20 11:23:12">
+      <Arguments />
+      <Comment SelectionStart="19" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="100" SelectionLength="0">using System;
+using System.Collections;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/06/19 14:37:02">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/20 11:22:48">
+        <Arguments>
+          <HAObject Type="Private" Text="target:Control" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/19 14:07:26" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="170" SelectionLength="0">this.target = target;
+this.target.Paint += new PaintEventHandler(this.target_Paint);
+this.CanvasCollection = new ArrayList();
+this.SmoothingMode = SmoothingMode.Default;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Private" Text="target_Paint" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/02 9:33:32">
+        <Arguments>
+          <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/13 14:56:47" />
+          <HAObject Type="Private" Text="e:PaintEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/13 14:55:40" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="163" SelectionLength="0">SmoothingMode old = e.Graphics.SmoothingMode;
+e.Graphics.SmoothingMode = this.SmoothingMode;
+
+foreach (object obj in this.CanvasCollection)
+{
+	(obj as Canvas).Draw(e);
+}
+
+e.Graphics.SmoothingMode = old;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Target:Control" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/19 16:45:53">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="20" SelectionLength="0">return this.target;
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/19 14:04:49">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

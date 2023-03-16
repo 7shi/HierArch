@@ -51,7 +51,7 @@ namespace Girl.Windows.Forms
 				if (hasMenu)
 				{
 					Object obj = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop\WindowMetrics").GetValue("MenuHeight", "-270");
-					this.size.Height -= (Convert.ToInt32((String)obj) / -15 + 1);
+					if (data.WindowState == FormWindowState.Normal) this.size.Height -= (Convert.ToInt32((String)obj) / -15 + 1);
 				}
 				this.form.Size = this.size;
 			}

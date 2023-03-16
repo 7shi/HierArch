@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="XmlObjectSerializer" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/15 22:00:27">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/07/15 21:59:56">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="169" SelectionLength="0">using System;
+using System.Collections;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Printing;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
+using Girl.Drawing;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/07/15 20:45:33">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="54" SelectionLength="0">private static Hashtable resources = new Hashtable();
+</Source>
+      <HAFunc Type="Public" Text="Write:virtual" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 13:04:56">
+        <Arguments>
+          <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:39:37" />
+          <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 0:51:16" />
+          <HAObject Type="Private" Text="obj:object" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:39:45" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="813" SelectionLength="0">if (obj == null) return;
+
+string objname = obj.GetType().Name;
+if (name == null) name = objname;
+switch (objname)
+{
+	case "Boolean":
+		this.WriteBoolean(xw, name, (Boolean)obj);
+		return;
+	case "RectangleF":
+		this.WriteRectangleF(xw, name, (RectangleF)obj);
+		return;
+	case "Pen":
+		this.WritePen(xw, name, obj as Pen);
+		return;
+	case "SolidBrush":
+		this.WriteSolidBrush(xw, name, obj as SolidBrush);
+		return;
+	case "Font":
+		this.WriteFont(xw, name, obj as Font);
+		return;
+	case "AdjustableArrowCap":
+		this.WriteAdjustableArrowCap(xw, name, obj as AdjustableArrowCap);
+		return;
+	case "Matrix":
+		this.WriteMatrix(xw, name, obj as Matrix);
+		return;
+	case "PaperSize":
+		this.WritePaperSize(xw, name, obj as PaperSize);
+		return;
+	case "Margins":
+		this.WriteMargins(xw, name, obj as Margins);
+		return;
+}
+</Source>
+        <HAFunc Type="Public" Text="WriteBoolean" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 12:57:12">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 23:07:38" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 23:07:40" />
+            <HAObject Type="Private" Text="b:Boolean" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 23:07:44" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="108" SelectionLength="0">xw.WriteStartElement(name);
+xw.WriteAttributeString("Value", XmlConvert.ToString(b));
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteRectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 23:25:27">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 23:07:38" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 23:07:40" />
+            <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 23:07:44" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="304" SelectionLength="0">xw.WriteStartElement(name);
+xw.WriteAttributeString("X", XmlConvert.ToString(rect.X));
+xw.WriteAttributeString("Y", XmlConvert.ToString(rect.Y));
+xw.WriteAttributeString("Width", XmlConvert.ToString(rect.Width));
+xw.WriteAttributeString("Height", XmlConvert.ToString(rect.Height));
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WritePen" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 16:45:28">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:41:42" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 22:08:13" />
+            <HAObject Type="Private" Text="pen:Pen" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:41:45" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="0">xw.WriteStartElement(name);
+xw.WriteAttributeString("Color", XmlConvert.ToString(pen.Color.ToArgb()));
+xw.WriteAttributeString("Width", XmlConvert.ToString(pen.Width));
+
+if (pen.StartCap == LineCap.Custom)
+{
+	xw.WriteStartElement("CustomStartCap");
+	this.Write(xw, null, pen.CustomStartCap);
+	xw.WriteEndElement();
+}
+
+if (pen.EndCap == LineCap.Custom)
+{
+	xw.WriteStartElement("CustomEndCap");
+	this.Write(xw, null, pen.CustomEndCap);
+	xw.WriteEndElement();
+}
+
+if (pen.CompoundArray != null &amp;&amp; pen.CompoundArray.Length &gt; 0)
+{
+	xw.WriteStartElement("CompoundArray");
+	new XmlSerializer(typeof(float[])).Serialize(xw, pen.CompoundArray);
+	xw.WriteEndElement();
+}
+
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteSolidBrush" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 23:25:40">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:41:42" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 22:08:19" />
+            <HAObject Type="Private" Text="brush:SolidBrush" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:41:45" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="127" SelectionLength="0">xw.WriteStartElement(name);
+xw.WriteAttributeString("Color", XmlConvert.ToString(brush.Color.ToArgb()));
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteFont" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 23:25:37">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:41:42" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 22:08:24" />
+            <HAObject Type="Private" Text="font:Font" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:41:45" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="216" SelectionLength="0">xw.WriteStartElement(name);
+xw.WriteAttributeString("Name", font.Name);
+xw.WriteAttributeString("Size", XmlConvert.ToString(font.Size));
+xw.WriteAttributeString("Style", font.Style.ToString());
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteAdjustableArrowCap" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 0:41:21">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 0:37:37" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 0:37:41" />
+            <HAObject Type="Private" Text="arrow:AdjustableArrowCap" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 0:37:43" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="258" SelectionLength="0">xw.WriteStartElement(name);
+xw.WriteAttributeString("Width", XmlConvert.ToString(arrow.Width));
+xw.WriteAttributeString("Height", XmlConvert.ToString(arrow.Height));
+xw.WriteAttributeString("Filled", XmlConvert.ToString(arrow.Filled));
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteMatrix" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 13:06:17">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 12:54:57" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 12:55:03" />
+            <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 12:55:05" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="95" SelectionLength="0">xw.WriteStartElement(name);
+new XmlSerializer(typeof(float[])).Serialize(xw, matrix.Elements);
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WritePaperSize" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 11:32:42">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 11:09:19" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 11:09:25" />
+            <HAObject Type="Private" Text="size:PaperSize" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/30 11:09:31" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="295" SelectionLength="0">xw.WriteStartElement(name);
+xw.WriteAttributeString("PaperName", size.PaperName);
+xw.WriteAttributeString("Kind", size.Kind.ToString());
+xw.WriteAttributeString("Width", XmlConvert.ToString(size.Width));
+xw.WriteAttributeString("Height", XmlConvert.ToString(size.Height));
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="WriteMargins" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 13:05:33">
+          <Arguments>
+            <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 13:03:12" />
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 13:03:15" />
+            <HAObject Type="Private" Text="margins:Margins" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/30 13:03:20" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="335" SelectionLength="0">xw.WriteStartElement(name);
+xw.WriteAttributeString("Left"  , XmlConvert.ToString(margins.Left ));
+xw.WriteAttributeString("Right" , XmlConvert.ToString(margins.Right));
+xw.WriteAttributeString("Top"   , XmlConvert.ToString(margins.Top  ));
+xw.WriteAttributeString("Bottom", XmlConvert.ToString(margins.Bottom));
+xw.WriteEndElement();
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Read:virtual object" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 13:06:46">
+        <Arguments>
+          <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 16:35:31" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="543" SelectionLength="0">if (xr.NodeType != XmlNodeType.Element) return null;
+
+switch (xr.Name)
+{
+	case "Boolean":
+		return this.ReadBoolean(xr);
+	case "RectangleF":
+		return this.ReadRectangleF(xr);
+	case "Pen":
+		return this.ReadPen(xr);
+	case "SolidBrush":
+		return this.ReadSolidBrush(xr);
+	case "Font":
+		return this.ReadFont(xr);
+	case "AdjustableArrowCap":
+		return this.ReadAdjustableArrowCap(xr);
+	case "Matrix":
+		return this.ReadMatrix(xr);
+	case "PaperSize":
+		return this.ReadPaperSize(xr);
+	case "Margins":
+		return this.ReadMargins(xr);
+}
+
+return null;
+</Source>
+        <HAFunc Type="Public" Text="ReadBoolean:Boolean" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 12:59:51">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 23:11:55" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="55" SelectionLength="0">return XmlConvert.ToBoolean(xr.GetAttribute("Value"));
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadRectangleF:RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 23:11:55">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 23:11:55" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="239" SelectionLength="0">return new RectangleF(
+	(float)XmlConvert.ToDouble(xr.GetAttribute("X")),
+	(float)XmlConvert.ToDouble(xr.GetAttribute("Y")),
+	(float)XmlConvert.ToDouble(xr.GetAttribute("Width")),
+	(float)XmlConvert.ToDouble(xr.GetAttribute("Height"))
+	);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadPen:Pen" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/15 20:45:48">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 22:41:04" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="1121" SelectionLength="0">string name = xr.Name;
+Pen ret = new Pen(Color.FromArgb(XmlConvert.ToInt32(xr.GetAttribute("Color"))),
+	(float)XmlConvert.ToDouble(xr.GetAttribute("Width")));
+
+if (!xr.IsEmptyElement)
+{
+	while (xr.Read())
+	{
+		if (xr.Name == name &amp;&amp; xr.NodeType == XmlNodeType.EndElement)
+		{
+			break;
+		}
+		else if (xr.Name == "CustomStartCap" &amp;&amp; xr.NodeType == XmlNodeType.Element
+			&amp;&amp; this.ReadNext(xr))
+		{
+			CustomLineCap cap = this.Read(xr) as CustomLineCap;
+			if (cap != null) ret.CustomStartCap = cap;
+		}
+		else if (xr.Name == "CustomEndCap" &amp;&amp; xr.NodeType == XmlNodeType.Element
+			&amp;&amp; this.ReadNext(xr))
+		{
+			CustomLineCap cap = this.Read(xr) as CustomLineCap;
+			if (cap != null) ret.CustomEndCap = cap;
+		}
+		else if (xr.Name == "CompoundArray" &amp;&amp; xr.NodeType == XmlNodeType.Element
+			&amp;&amp; this.ReadNext(xr)
+			&amp;&amp; xr.Name == "ArrayOfFloat" &amp;&amp; xr.NodeType == XmlNodeType.Element)
+		{
+			ret.CompoundArray = new XmlSerializer(typeof(float[])).Deserialize(xr) as float[];
+		}
+	}
+}
+
+string xml = this.GetXml(ret);
+if (resources.Contains(xml))
+{
+	ret.Dispose();
+	ret = resources[xml] as Pen;
+}
+else
+{
+	resources[xml] = ret;
+}
+
+return ret;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadSolidBrush:SolidBrush" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/15 20:45:53">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 22:41:04" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="245" SelectionLength="0">SolidBrush ret = new SolidBrush(Color.FromArgb(XmlConvert.ToInt32(xr.GetAttribute("Color"))));
+
+string xml = this.GetXml(ret);
+if (resources.Contains(xml))
+{
+	ret.Dispose();
+	ret = resources[xml] as SolidBrush;
+}
+else
+{
+	resources[xml] = ret;
+}
+
+return ret;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadFont:Font" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/15 22:00:27">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 22:41:04" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="17" SelectionLength="0">Font ret;
+try
+{
+	ret = new Font(
+		xr.GetAttribute("Name"),
+		(float)XmlConvert.ToDouble(xr.GetAttribute("Size")),
+		(FontStyle)Enum.Parse(typeof(FontStyle), xr.GetAttribute("Style")));
+}
+catch
+{
+	return Control.DefaultFont;
+}
+
+string xml = this.GetXml(ret);
+if (resources.Contains(xml))
+{
+	ret.Dispose();
+	ret = resources[xml] as Font;
+}
+else
+{
+	resources[xml] = ret;
+}
+
+return ret;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadAdjustableArrowCap:AdjustableArrowCap" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 0:50:24">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 22:41:04" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="193" SelectionLength="0">return new AdjustableArrowCap(
+	(float)XmlConvert.ToDouble(xr.GetAttribute("Width")),
+	(float)XmlConvert.ToDouble(xr.GetAttribute("Height")),
+	XmlConvert.ToBoolean(xr.GetAttribute("Filled")));
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadMatrix:Matrix" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 16:42:38">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 12:56:36" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="269" SelectionLength="0">if (!this.ReadNext(xr)
+	|| xr.Name != "ArrayOfFloat" || xr.NodeType != XmlNodeType.Element)
+{
+	return null;
+}
+
+float[] elems = new XmlSerializer(typeof(float[])).Deserialize(xr) as float[];
+return new Matrix(elems[0], elems[1], elems[2], elems[3], elems[4], elems[5]);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadPaperSize:PaperSize" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 11:20:37">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/30 11:15:44" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="147" SelectionLength="0">return new PaperSize(xr.GetAttribute("PaperName"),
+	XmlConvert.ToInt32(xr.GetAttribute("Width")),
+	XmlConvert.ToInt32(xr.GetAttribute("Height")));
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadPaperSize:PaperSize" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 11:36:11">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 11:15:44" />
+            <HAObject Type="Private" Text="settings:PrinterSettings" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/30 11:33:07" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="261" SelectionLength="0">PaperKind kind = (PaperKind)Enum.Parse(typeof(PaperKind), xr.GetAttribute("Kind"));
+if (kind == PaperKind.Custom) return this.ReadPaperSize(xr);
+
+foreach (PaperSize sz in settings.PaperSizes)
+{
+	if (sz.Kind == kind) return sz;
+}
+
+return this.ReadPaperSize(xr);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ReadMargins:Margins" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 13:06:33">
+          <Arguments>
+            <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 12:56:36" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="207" SelectionLength="0">return new Margins(
+	XmlConvert.ToInt32(xr.GetAttribute("Left")),
+	XmlConvert.ToInt32(xr.GetAttribute("Right")),
+	XmlConvert.ToInt32(xr.GetAttribute("Top")),
+	XmlConvert.ToInt32(xr.GetAttribute("Bottom")));
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="ReadNext:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 13:19:29">
+        <Arguments>
+          <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 13:11:05" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="93" SelectionLength="0">while (xr.Read())
+{
+	if (xr.NodeType != XmlNodeType.Whitespace) return true;
+}
+return false;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="GetXml:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/15 20:47:35">
+        <Arguments>
+          <HAObject Type="Private" Text="obj:object" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/15 20:43:25" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="153" SelectionLength="0">StringWriter sw = new StringWriter();
+XmlTextWriter xw = new XmlTextWriter(sw);
+this.Write(xw, null, obj);
+xw.Close();
+sw.Close();
+return sw.ToString();
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/26 15:37:12">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

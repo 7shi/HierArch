@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasSerializer:XmlObjectSerializer" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 21:51:59">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/30 12:47:39">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="48" SelectionLength="0">using System;
+using System.Xml;
+using Girl.Xml;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/06/30 12:34:22">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="Write:override" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/30 12:33:41">
+        <Arguments>
+          <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:39:37" />
+          <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 0:51:16" />
+          <HAObject Type="Private" Text="obj:object" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 15:39:45" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="259" SelectionLength="0">if (obj == null) return;
+
+string objname = obj.GetType().Name;
+if (name == null) name = objname;
+
+if (obj is CanvasObject)
+{
+	xw.WriteStartElement(name);
+	(obj as CanvasObject).WriteXml(this, xw);
+	xw.WriteEndElement();
+	return;
+}
+
+base.Write(xw, name, obj);
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Read:override object" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 21:51:59">
+        <Arguments>
+          <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 16:35:31" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="449" SelectionLength="0">if (xr.NodeType != XmlNodeType.Element) return null;
+
+CanvasObject co = null;
+switch (xr.Name)
+{
+	case "CanvasLine":
+		co = new CanvasLine();
+		break;
+	case "CanvasLines":
+		co = new CanvasLines();
+		break;
+	case "CanvasPolygon":
+		co = new CanvasPolygon();
+		break;
+	case "CanvasRectangle":
+		co = new CanvasRectangle();
+		break;
+	case "CanvasEllipse":
+		co = new CanvasEllipse();
+		break;
+	case "CanvasString":
+		co = new CanvasString();
+		break;
+	case "CanvasLineEx":
+		co = new CanvasLineEx();
+		break;
+}
+if (co != null)
+{
+	co.ReadXml(this, xr);
+	return co;
+}
+
+return base.Read(xr);
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/26 15:37:12">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasString:CanvasObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:55:08">
+  <HAObject Type="Protected" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/13 17:46:46" />
+  <HAObject Type="Protected" Text="font:Font" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/23 15:47:19" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/07/11 14:21:54">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="134" SelectionLength="0">using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
+using Girl.Drawing;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/07/01 12:43:36">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="237" SelectionLength="0">public __CLASS() : base() {}
+public __CLASS(string text) : this(0, 0, text) {}
+public __CLASS(PointF pt, string text) : this(pt.X, pt.Y, text) {}
+
+public __CLASS(float x, float y, string text) : base(x, y, 0F, 0F)
+{
+	this.Text = text;
+}
+</Source>
+      <HAFunc Type="Protected" Text="Init:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/30 13:52:54">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="117" SelectionLength="0">base.Init();
+
+this.text = null;
+this.font = Control.DefaultFont;
+this.brush = Brushes.Black;
+this.resizable = false;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Draw:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:55:08">
+        <Arguments>
+          <HAObject Type="Private" Text="g:Graphics" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/20 0:22:17" />
+        </Arguments>
+        <HAObject Type="Private" Text="r:RectangleF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/23 16:04:04" />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="333" SelectionLength="0">if (!this.CheckDraw(g) || this.brush == null
+	|| this.text == null || this.font == null) return;
+
+StringFormat format = new StringFormat();
+format.Alignment = StringAlignment.Center;
+@[Rectangle(r) = Rectangle(this.rect)の絶対値]
+r.Size = g.MeasureString(this.text, this.font);
+g.DrawString(this.text, this.font, this.brush, r, format);
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 15:54:47">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="16" SelectionLength="0">return this.text;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="set_Text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 15:49:27">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="35" SelectionLength="0">this.text = value;
+this.SetSize();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Font:Font" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 15:49:38">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="18" SelectionLength="0">return this.font;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="set_Font:Font" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 15:49:58">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="35" SelectionLength="0">this.font = value;
+this.SetSize();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Protected" Text="SetSize" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/08 10:10:39">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="171" SelectionLength="0">Graphics g = Canvas.DefaultGraphics;
+string text = this.text;
+if (text == null || text.Length &lt; 1) text = "WW";
+this.Size = g.MeasureString(text, this.font);
+g.Dispose();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Protected" Text="WriteXmlData:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 9:40:34">
+        <Arguments>
+          <HAObject Type="Private" Text="serializer:CanvasSerializer" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 20:09:24" />
+          <HAObject Type="Private" Text="xw:XmlWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 19:56:16" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="156" SelectionLength="0">base.WriteXmlData(serializer, xw);
+
+serializer.Write(xw, "Font", this.font);
+xw.WriteStartElement("Text");
+xw.WriteString(this.text);
+xw.WriteEndElement();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Protected" Text="ReadXmlData:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 9:40:39">
+        <Arguments>
+          <HAObject Type="Private" Text="serializer:CanvasSerializer" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 20:07:05" />
+          <HAObject Type="Private" Text="xr:XmlReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 20:07:10" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="180" SelectionLength="0">if (xr.Name == "Font")
+{
+	this.font = serializer.ReadFont(xr);
+	return;
+}
+else if (xr.Name == "Text")
+{
+	this.text = xr.ReadString();
+	return;
+}
+
+base.ReadXmlData(serializer, xr);
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/13 14:29:16">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

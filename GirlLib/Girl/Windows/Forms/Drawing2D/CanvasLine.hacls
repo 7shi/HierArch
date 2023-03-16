@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasLine:CanvasObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/14 7:43:06">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/07/05 20:53:16">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="116" SelectionLength="0">using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using Girl.Drawing;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/07/12 8:25:21">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="248" SelectionLength="0">public __CLASS() : base() {}
+public __CLASS(float x, float y, float width, float height) : base(x, y, width, height) {}
+public __CLASS(RectangleF rect) : base(rect) {}
+
+public __CLASS(PointF pt1, PointF pt2) : base()
+{
+	this.SetPoints(pt1, pt2);
+}
+</Source>
+      <HAFunc Type="Protected" Text="Init:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/09 9:16:28">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="36" SelectionLength="0">base.Init();
+
+this.editPath = true;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Draw:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:51:42">
+        <Arguments>
+          <HAObject Type="Private" Text="g:Graphics" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/20 0:22:02" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="26" SelectionLength="0">if (!this.CheckDraw(g) || this.pen == null) return;
+
+g.DrawLine(this.pen, this.rect.Left, this.rect.Top, this.rect.Right, this.rect.Bottom);
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="SetPoints" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 8:26:04">
+        <Arguments>
+          <HAObject Type="Private" Text="pt1:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 8:24:50" />
+          <HAObject Type="Private" Text="pt2:PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/12 8:24:54" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="74" SelectionLength="0">this.Bounds = new RectangleF(pt1.X, pt1.Y, pt2.X - pt1.X, pt2.Y - pt1.Y);
+</Source>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="交差" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/09 9:18:36">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="Contains:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 23:57:39">
+          <Arguments>
+            <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/21 21:54:02" />
+            <HAObject Type="Private" Text="angle:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/21 15:35:31" />
+            <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/13 15:53:34" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="273" SelectionLength="0">Matrix m = matrix.Clone();
+this.Rotate(m, angle);
+float sc = Geometry.GetScale(m);
+PointF[] pts = new PointF[] {this.rect.Location, new PointF(this.rect.Right, this.rect.Bottom)};
+m.TransformPoints(pts);
+m.Dispose();
+
+return __CLASS.Contains(this, sc, pts[0], pts[1], pt);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="Contains:static bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/10 14:28:00">
+          <Arguments>
+            <HAObject Type="Private" Text="co:CanvasObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 23:52:34" />
+            <HAObject Type="Private" Text="sc:float" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/24 23:54:35" />
+            <HAObject Type="Private" Text="pt1:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/13 15:53:34" />
+            <HAObject Type="Private" Text="pt2:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 23:52:38" />
+            <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 23:53:53" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="360" SelectionLength="0">const float min = 3F;
+float w = (co.Pen != null) ? co.Pen.Width * sc / 2F + min : min;
+
+Geometry.LineEquation le1 = new Geometry.LineEquation(pt1, pt2);
+Geometry.LineEquation le2 = le1.GetCrossLine(pt);
+if (!le1.Contains(le2.pt2)
+	&amp;&amp; Geometry.GetDistance(pt, pt1) &gt; w
+	&amp;&amp; Geometry.GetDistance(pt, pt2) &gt; w)
+{
+	return false;
+}
+
+return le1.GetDistance(pt) &lt;= w;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="IntersectsWith:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/01 23:01:48">
+          <Arguments>
+            <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/21 21:43:51" />
+            <HAObject Type="Private" Text="angle:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/21 15:34:13" />
+            <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/13 15:50:39" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="342" SelectionLength="0">Matrix m = matrix.Clone();
+this.Rotate(m, angle);
+m.Invert();
+PointF[] pts = Geometry.ConvertToPoints(rect);
+m.TransformPoints(pts);
+m.Dispose();
+
+Geometry.LineEquation le = new Geometry.LineEquation(this.rect);
+return le.IntersectsWith(Geometry.ConvertToEquations(pts))
+	|| Geometry.Contains(pts, le.pt1)
+	|| Geometry.Contains(pts, le.pt2);
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="編集" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 16:22:39">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="InitSelection:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 21:54:13">
+          <Arguments>
+            <HAObject Type="Private" Text="sel:CanvasObjectSelection" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/23 5:10:33" />
+          </Arguments>
+          <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="263" SelectionLength="0">base.InitSelection(sel);
+
+CanvasObject[] cos = new CanvasObject[]
+	{
+		sel.Borders[0], new CanvasLine()
+	};
+cos[1].Pen = cos[0].Pen;
+sel.Borders = cos;
+
+sel.Add(new CanvasCorner(this, 'E', Cursors.SizeAll));
+sel.Add(new CanvasCorner(this, 'E', Cursors.SizeAll));
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="SetSelection:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 8:43:14">
+          <Arguments>
+            <HAObject Type="Private" Text="sel:CanvasObjectSelection" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/23 20:16:27" />
+            <HAObject Type="Private" Text="transform:Matrix" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 5:07:25" />
+            <HAObject Type="Private" Text="angle:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 5:08:03" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="318" SelectionLength="0">base.SetSelection(sel, transform, angle);
+
+PointF[] pts = Geometry.ConvertToPoints(this.rect);
+Matrix m = transform.Clone();
+this.Rotate(m, angle);
+m.TransformPoints(pts);
+m.Dispose();
+
+(sel.Borders[1] as CanvasLine).SetPoints(pts[0], pts[2]);
+sel.Corners[8].CenterPoint = pts[0];
+sel.Corners[9].CenterPoint = pts[2];
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="Resize:override" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/14 7:43:06">
+          <Arguments>
+            <HAObject Type="Private" Text="corner:CanvasCorner" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/13 19:14:21" />
+            <HAObject Type="Private" Text="x:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 11:27:36" />
+            <HAObject Type="Private" Text="y:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:32:00" />
+            <HAObject Type="Private" Text="transform:Matrix" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 15:52:26" />
+            <HAObject Type="Private" Text="angle:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 15:52:30" />
+            <HAObject Type="Private" Text="modifier:Keys" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/07 6:59:12" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="829" SelectionLength="0">int index = corner.Index;
+if (index &lt; 8)
+{
+	base.Resize(corner, x, y, transform, angle, modifier);
+	return;
+}
+
+Matrix m = transform.Clone();
+this.Rotate(m, angle);
+m.Invert();
+PointF pt = Geometry.TransformPoint(m, x, y);
+m.Dispose();
+
+PointF cpt = this.CenterPoint;
+
+bool shift = (modifier &amp; Keys.Shift) != 0;
+float x1 = this.rect.Left, y1 = this.rect.Top, x2 = this.rect.Right, y2 = this.rect.Bottom;
+switch (index)
+{
+	case 8:
+		x1 = pt.X;
+		y1 = pt.Y;
+		if (shift)
+		{
+			float dx = Math.Abs(x2 - x1), dy = Math.Abs(y2 - y1);
+			if (dx &gt; dy) y1 = y2; else x1 = x2;
+		}
+		break;
+	case 9:
+		x2 = pt.X;
+		y2 = pt.Y;
+		if (shift)
+		{
+			float dx = Math.Abs(x2 - x1), dy = Math.Abs(y2 - y1);
+			if (dx &gt; dy) y2 = y1; else x2 = x1;
+		}
+		break;
+}
+this.Bounds = RectangleF.FromLTRB(x1, y1, x2, y2);
+
+this.AdjustPosition(cpt, angle);
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/13 14:29:16">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

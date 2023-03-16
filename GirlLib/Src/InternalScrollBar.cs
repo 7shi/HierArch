@@ -9,14 +9,14 @@ namespace Girl.Windows.Forms
 	/// </summary>
 	public class InternalScrollBar
 	{
-		private Control m_Control;
-		protected Win32API.SB m_fnBar;
-		protected Win32API.WS m_Style;
-		protected Win32API.WM m_Msg;
+		private Control control;
+		protected Win32API.SB fnBar;
+		protected Win32API.WS style;
+		protected Win32API.WM message;
 
 		public InternalScrollBar(Control ctrl)
 		{
-			m_Control = ctrl;
+			this.control = ctrl;
 		}
 
 		public Win32API.ScrollInfo GetScrollInfo(Win32API.SIF fMask)
@@ -24,7 +24,7 @@ namespace Girl.Windows.Forms
 			Win32API.ScrollInfo ret = new Win32API.ScrollInfo();
 			ret.cbSize = 28;
 			ret.fMask = (uint)fMask;
-			if (Visible) Win32API.GetScrollInfo(m_Control.Handle, (int)m_fnBar, ref ret);
+			if (Visible) Win32API.GetScrollInfo(this.control.Handle, (int)this.fnBar, ref ret);
 			return ret;
 		}
 
@@ -32,8 +32,8 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				long style = Win32API.GetWindowLong(m_Control.Handle, (int)Win32API.GWL.Style);
-				return (style & (long)m_Style) != 0;
+				int style = Win32API.GetWindowLong(this.control.Handle, (int)Win32API.GWL.Style);
+				return (style & (int)this.style) != 0;
 			}
 		}
 
@@ -54,8 +54,8 @@ namespace Girl.Windows.Forms
 				si2.fMask = (uint)Win32API.SIF.Pos;
 				si2.nPos = Math.Min(Math.Max(value, si1.nMin), si1.nMax - Math.Max((int)si1.nPage - 1, 0));
 				if (si1.nPos == si2.nPos) return;
-				Win32API.SetScrollInfo(m_Control.Handle, (int)m_fnBar, ref si2, true);
-				Win32API.SendMessage(m_Control.Handle, (int)m_Msg, (IntPtr)(((int)Win32API.SB.ThumbPosition) + ((si2.nPos & 0xffff) << 16)), IntPtr.Zero);
+				Win32API.SetScrollInfo(this.control.Handle, (int)this.fnBar, ref si2, true);
+				Win32API.SendMessage(this.control.Handle, (int)this.message, (IntPtr)(((int)Win32API.SB.ThumbPosition) + ((si2.nPos & 0xffff) << 16)), IntPtr.Zero);
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace Girl.Windows.Forms
 			{
 				if (CanIncrease)
 				{
-					Win32API.SendMessage(m_Control.Handle, (int)m_Msg, (IntPtr)Win32API.SB.LineDown, IntPtr.Zero);
+					Win32API.SendMessage(this.control.Handle, (int)this.message, (IntPtr)Win32API.SB.LineDown, IntPtr.Zero);
 				}
 			}
 		}
@@ -97,7 +97,7 @@ namespace Girl.Windows.Forms
 			{
 				if (CanDecrease)
 				{
-					Win32API.SendMessage(m_Control.Handle, (int)m_Msg, (IntPtr)Win32API.SB.LineUp, IntPtr.Zero);
+					Win32API.SendMessage(this.control.Handle, (int)this.message, (IntPtr)Win32API.SB.LineUp, IntPtr.Zero);
 				}
 			}
 		}
@@ -132,9 +132,9 @@ namespace Girl.Windows.Forms
 	{
 		public InternalHScrollBar(Control ctrl) : base(ctrl)
 		{
-			m_fnBar = Win32API.SB.Horz;
-			m_Style = Win32API.WS.HScroll;
-			m_Msg   = Win32API.WM.HScroll;
+			this.fnBar = Win32API.SB.Horz;
+			this.style = Win32API.WS.HScroll;
+			this.message = Win32API.WM.HScroll;
 		}
 	}
 
@@ -145,9 +145,9 @@ namespace Girl.Windows.Forms
 	{
 		public InternalVScrollBar(Control ctrl) : base(ctrl)
 		{
-			m_fnBar = Win32API.SB.Vert;
-			m_Style = Win32API.WS.VScroll;
-			m_Msg   = Win32API.WM.VScroll;
+			this.fnBar = Win32API.SB.Vert;
+			this.style = Win32API.WS.VScroll;
+			this.message = Win32API.WM.VScroll;
 		}
 	}
 }

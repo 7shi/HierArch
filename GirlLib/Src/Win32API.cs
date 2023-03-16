@@ -100,9 +100,16 @@ namespace Girl.Windows.API
 		);
 
 		[DllImport("User32.dll")]
-		public static extern long GetWindowLong(
+		public static extern int GetWindowLong(
 			IntPtr hWnd,  // ウィンドウのハンドル
 			int nIndex    // 取得する値のオフセット
+		);
+
+		[DllImport("User32.dll")]
+		public static extern int SetWindowLong(
+			IntPtr hWnd,   // ウィンドウのハンドル
+			int nIndex,    // 設定する値のオフセット
+			int dwNewLong  // 新しい値
 		);
 
 		[DllImport("User32.dll")]

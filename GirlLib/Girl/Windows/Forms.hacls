@@ -34,4 +34,11 @@
   <HAClass Link="Forms/ExRichTextBox.hacls" />
   <HAClass Link="Forms/ExComboBox.hacls" />
   <HAClass Link="Forms/FontComboBox.hacls" />
+  <HAClass Link="Forms/MouseWheelMessageFilter.hacls" />
+  <HAClass Link="Forms/MenuItemEx.hacls" />
+  <HAClass Link="Forms/FloatingToolBar.hacls" />
+  <HAClass Link="Forms/CenterPointDialog.hacls" />
+  <HAClass Link="Forms/TabControlEx.hacls" />
+  <HAClass Link="Forms/ControlEx.hacls" />
+  <HAClass Link="Forms/Drawing2D.hacls" />
 </HAClass>

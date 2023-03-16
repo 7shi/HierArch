@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Folder" Text="Xml:Xml" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54">
+<HAClass Type="Folder" Text="Drawing:Drawing" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/04 17:38:06">
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:54">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/05/27 22:54:01">
       <Arguments />
       <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
 </Comment>
@@ -10,7 +10,7 @@
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:54">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/05/27 22:54:01">
       <Arguments />
       <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 ここにクラスの説明を書きます。
@@ -20,12 +20,14 @@
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:54">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/27 22:54:01">
       <Arguments />
       <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
-  <HAClass Link="Xml/XmlParser.hacls" />
-  <HAClass Link="Xml/XmlObjectSerializer.hacls" />
+  <HAClass Link="Drawing/Canvas.hacls" />
+  <HAClass Link="Drawing/CanvasObject.hacls" />
+  <HAClass Link="Drawing/CanvasPaintManager.hacls" />
+  <HAClass Link="Drawing/DrawingBox.hacls" />
 </HAClass>

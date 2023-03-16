@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CenterPointDialog:Form" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:46:00">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/07/05 18:32:04">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="64" SelectionLength="0">using System;
+using System.Drawing;
+using System.Windows.Forms;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="true" AllowDrag="false" LastModified="2003/07/05 18:29:08">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:29:28">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="275" SelectionLength="0">this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+this.MaximizeBox = false;
+this.MinimizeBox = false;
+this.Name = "CanvasStringDialog";
+this.Opacity = 0.9;
+this.ShowInTaskbar = false;
+this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="GetCenterPoint:Point" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:30:30">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="84" SelectionLength="0">Point ret = this.Location;
+ret.Offset(this.Width / 2, this.Height / 2);
+return ret;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="SetCenterPoint" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:46:00">
+        <Arguments>
+          <HAObject Type="Private" Text="pos:Point" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/05 18:30:12" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="118" SelectionLength="0">int w = this.Width, h = this.Height;
+this.Bounds = AdjustToScreen(new Rectangle(pos.X - w / 2, pos.Y - h / 2, w, h));
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="SetCenterPoint" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:41:22">
+        <Arguments>
+          <HAObject Type="Private" Text="parent:Control" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:29:55" />
+          <HAObject Type="Private" Text="pos:Point" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/05 18:30:12" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="181" SelectionLength="0">int w = this.Width, h = this.Height;
+this.Bounds = AdjustToScreen(AdjustToRectangle(
+	new Rectangle(pos.X - w / 2, pos.Y - h / 2, w, h),
+	parent.RectangleToScreen(parent.Bounds)));
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="AdjustToScreen:static Rectangle" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:41:57">
+        <Arguments>
+          <HAObject Type="Private" Text="bounds:Rectangle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/05 18:36:25" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="65" SelectionLength="0">return AdjustToRectangle(bounds, Screen.GetWorkingArea(bounds));
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="AdjustToRectangle:static Rectangle" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:39:46">
+        <Arguments>
+          <HAObject Type="Private" Text="bounds:Rectangle" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 18:36:58" />
+          <HAObject Type="Private" Text="area:Rectangle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/05 18:37:11" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="295" SelectionLength="0">if (bounds.Right  &gt; area.Right ) bounds.X -= bounds.Right  - area.Right;
+if (bounds.Bottom &gt; area.Bottom) bounds.Y -= bounds.Bottom - area.Bottom;
+
+if (bounds.Left &lt; area.Left) bounds.X += area.Left - bounds.Left;
+if (bounds.Top  &lt; area.Top ) bounds.Y += area.Top  - bounds.Top;
+
+return bounds;
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/07/05 18:28:20">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

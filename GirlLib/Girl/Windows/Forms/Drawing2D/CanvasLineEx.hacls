@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasLineEx:CanvasPolygon" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 21:51:38">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/07/11 16:36:52">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="166" SelectionLength="0">using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
+using Girl.Drawing;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/07/12 21:51:38">
+      <Arguments />
+      <Comment SelectionStart="68" SelectionLength="0">&lt;summary&gt;
+CanvasLine, CanvasPolygon, CanvasLines を統合します。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="277" SelectionLength="0">public __CLASS() : base() {}
+public __CLASS(PointF[] points) : base(points) {}
+public __CLASS(PointF pt, PointF[] points) : base(pt, points) {}
+public __CLASS(float x, float y, PointF[] points) : base(x, y, points) {}
+public __CLASS(PointF pt1, PointF pt2) : base(pt1, pt2) {}
+</Source>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/07/10 14:12:27">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

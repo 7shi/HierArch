@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasGroup" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 16:15:54">
+  <HAObject Type="Protected" Text="guid:Guid" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 16:15:29" />
+  <HAObject Type="Public" Text="Group:CanvasGroup" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 16:04:33" />
+  <HAObject Type="Protected" Text="visible:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 16:04:52" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/26 0:40:16">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="122" SelectionLength="0">using System;
+using System.Collections;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/06/26 7:33:04">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 16:15:54">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="68" SelectionLength="0">this.guid = Guid.NewGuid();
+this.Group = null;
+this.visible = true;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="CanGroup:static bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 16:01:58">
+        <Arguments>
+          <HAObject Type="Private" Text="cos:CanvasObject[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 10:24:45" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="204" SelectionLength="0">if (cos == null || cos.Length &lt; 2) return false;
+
+CanvasGroup gr = cos[0].RootGroup;
+if (gr == null) return true;
+
+foreach (CanvasObject co in cos)
+{
+	if (co.RootGroup != gr) return true;
+}
+return false;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="CanUngroup:static bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 10:34:04">
+        <Arguments>
+          <HAObject Type="Private" Text="cos:CanvasObject[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 10:24:50" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="119" SelectionLength="0">if (cos == null) return false;
+
+foreach (CanvasObject co in cos)
+{
+	if (co.Group != null) return true;
+}
+return false;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_RootGroup:CanvasGroup" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 11:00:29">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="66" SelectionLength="0">if (this.Group == null) return this;
+return this.Group.RootGroup;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Visible:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 11:01:17">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="97" SelectionLength="0">if (!this.visible) return false;
+if (this.Group == null) return true;
+return this.Group.Visible;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="set_Visible:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 10:49:38">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="22" SelectionLength="0">this.visible = value;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Guid:Guid" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 16:15:45">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="18" SelectionLength="0">return this.guid;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="IsAncestorOf:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 11:44:33">
+        <Arguments>
+          <HAObject Type="Private" Text="gr:CanvasGroup" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 10:53:54" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="103" SelectionLength="0">if (gr == this) return true;
+if (this.Group == null) return false;
+return this.Group.IsAncestorOf(gr);
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Ungroup" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/26 13:01:44">
+        <Arguments>
+          <HAObject Type="Private" Text="gr:CanvasGroup" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/26 13:00:37" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="111" SelectionLength="0">if (this.Group == null) return;
+if (this.Group == gr)
+{
+	this.Group = null;
+	return;
+}
+this.Group.Ungroup(gr);
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/26 0:21:01">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

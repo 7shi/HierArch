@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasEllipse:CanvasObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:52:29">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/20 11:18:13">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="36" SelectionLength="0">using System;
+using System.Drawing;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/07/01 12:43:19">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+ここにクラスの説明を書きます。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="120" SelectionLength="0">public __CLASS() : base() {}
+public __CLASS(float x, float y, float width, float height) : base(x, y, width, height) {}
+public __CLASS(RectangleF rect) : base(rect) {}
+</Source>
+      <HAFunc Type="Public" Text="Draw:override" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/11 16:52:29">
+        <Arguments>
+          <HAObject Type="Private" Text="g:Graphics" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/20 0:22:17" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="32" SelectionLength="0">if (!this.CheckDraw(g)) return;
+
+__CLASS.DrawEllipse(this, g);
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="DrawEllipse:static" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 20:49:34">
+        <Arguments>
+          <HAObject Type="Private" Text="co:CanvasObject" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/23 20:45:03" />
+          <HAObject Type="Private" Text="g:Graphics" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/20 0:22:17" />
+        </Arguments>
+        <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/21 14:12:15" />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0">@[Rectangle(rect) = Rectangle(co.Bounds)の絶対値]
+if (co.Brush != null)
+{
+	g.FillEllipse(co.Brush, rect);
+}
+if (co.Pen != null)
+{
+	g.DrawEllipse(co.Pen, rect);
+}
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/20 11:11:50">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

@@ -1,0 +1,753 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="Geometry" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 21:53:52">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/07/13 18:02:43">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="94" SelectionLength="0">using System;
+using System.Collections;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="true" AllowDrag="false" LastModified="2003/07/13 21:53:52">
+      <Arguments />
+      <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
+幾何計算を行います。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="2126" SelectionLength="0">public struct LineEquation
+{
+	public PointF pt1, pt2;
+	public float a, b, c;
+	
+	public LineEquation(PointF pt1, PointF pt2)
+	{
+		this.pt1 = pt1;
+		this.pt2 = pt2;
+		this.a = pt2.Y - pt1.Y;
+		this.b = pt1.X - pt2.X;
+		this.c = pt2.X * pt1.Y - pt1.X * pt2.Y;
+	}
+	
+	public LineEquation(float x1, float y1, float x2, float y2)
+		: this(new PointF(x1, y1), new PointF(x2, y2))
+	{
+	}
+	
+	public LineEquation(RectangleF rect)
+		: this(rect.Location, new PointF(rect.Right, rect.Bottom))
+	{
+	}
+	
+	public bool IntersectsWith(LineEquation line)
+	{
+		float x, y;
+		if (this.b != 0)
+		{
+			float d = this.a * line.b - line.a * this.b;
+			if (d == 0) return false;
+			x = (this.b * line.c - line.b * this.c) / d;
+			y = -(this.c + this.a * x) / this.b;
+		}
+		else if (this.a != 0)
+		{
+			float d = line.a * this.b - this.a * line.b;
+			if (d == 0) return false;
+			y = (this.a * line.c - line.a * this.c) / d;
+			x = -(this.c + this.b * y) / this.a;
+		}
+		else
+		{
+			return false;
+		}
+		return this.Contains(x, y) &amp;&amp; line.Contains(x, y);
+	}
+	
+	public bool IntersectsWith(LineEquation[] lines)
+	{
+		foreach (LineEquation line in lines)
+		{
+			if (this.IntersectsWith(line)) return true;
+		}
+		return false;
+	}
+	
+	public PointF GetIntersectionPoint(LineEquation line)
+	{
+		float x, y;
+		if (this.b != 0)
+		{
+			float d = this.a * line.b - line.a * this.b;
+			if (d == 0) return PointF.Empty;
+			x = (this.b * line.c - line.b * this.c) / d;
+			y = -(this.c + this.a * x) / this.b;
+		}
+		else if (this.a != 0)
+		{
+			float d = line.a * this.b - this.a * line.b;
+			if (d == 0) return PointF.Empty;
+			y = (this.a * line.c - line.a * this.c) / d;
+			x = -(this.c + this.b * y) / this.a;
+		}
+		else
+		{
+			return PointF.Empty;
+		}
+		return new PointF(x, y);
+	}
+	
+	public bool Contains(PointF pt)
+	{
+		return this.Contains(pt.X, pt.Y);
+	}
+	
+	public bool Contains(float x, float y)
+	{
+		return (pt1.X == pt2.X)
+			? Math.Min(pt1.Y, pt2.Y) &lt;= y &amp;&amp; y &lt;= Math.Max(pt1.Y, pt2.Y)
+			: Math.Min(pt1.X, pt2.X) &lt;= x &amp;&amp; x &lt;= Math.Max(pt1.X, pt2.X);
+	}
+	
+	public float GetDistance(PointF pt)
+	{
+		if (pt1 == pt2)
+		{
+			return Geometry.GetDistance(pt1, pt);
+		}
+		return (float)(Math.Abs(this.a * pt.X + this.b * pt.Y + this.c)
+			/ Math.Sqrt(a * a + b * b));
+	}
+	
+	public LineEquation GetCrossLine(PointF pt)
+	{
+		LineEquation ret;
+		ret.a = this.b;
+		ret.b = -this.a;
+		ret.c = this.a * pt.Y - this.b * pt.X;
+		ret.pt1 = pt;
+		ret.pt2 = PointF.Empty;
+		ret.pt2 = this.GetIntersectionPoint(ret);
+		return ret;
+	}
+
+	public float Length
+	{
+		get
+		{
+			return Geometry.GetDistance(this.pt1, this.pt2);
+		}
+	}
+
+	public PointF[] SplitPoints(float space)
+	{
+		int len = (int)(this.Length / space) + 1;
+		PointF[] ret = new PointF[len];
+		ret[0] = this.pt1;
+		float dx = pt2.X - pt1.X, dy = pt2.Y - pt1.Y;
+		for (int i = 1; i &lt; len; i++)
+		{
+			float d = (float)i / (float)len;
+			ret[i] = new PointF(pt1.X + dx * d, pt1.Y + dy * d);
+		}
+		return ret;
+	}
+
+	public PointF GetRoutePoint(float distance)
+	{
+		float len = this.Length;
+		float dx = pt2.X - pt1.X, dy = pt2.Y - pt1.Y;
+		return new PointF(pt1.X + dx * distance / len, pt1.Y + dy * distance / len);
+	}
+}
+</Source>
+      <HAFunc Type="Folder" Text="アフィン変換" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 15:51:56">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="GetScale:static float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 15:52:11">
+          <Arguments>
+            <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/22 22:41:29" />
+          </Arguments>
+          <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+Matrix のスケールを求めます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="175" SelectionLength="0">PointF[] ptfs = new PointF[] {new PointF(1F, 0F)};
+matrix.TransformVectors(ptfs);
+double x = (double)ptfs[0].X, y = (double)ptfs[0].Y;
+return (float)Math.Sqrt(x * x + y * y);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="GetAngle:static float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 23:00:21">
+          <Arguments>
+            <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/22 22:59:25" />
+          </Arguments>
+          <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+Matrix の回転角度を求めます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="165" SelectionLength="0">PointF[] ptfs = new PointF[] {new PointF(1F, 0F)};
+matrix.TransformVectors(ptfs);
+return (float)(Math.Atan2((double)ptfs[0].Y, (double)ptfs[0].X) * 180D / Math.PI);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="TransformPoint:static PointF" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 22:58:55">
+          <Arguments>
+            <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/18 0:44:26" />
+            <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/18 0:44:16" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="78" SelectionLength="0">PointF[] pts = new PointF[] {pt};
+matrix.TransformPoints(pts);
+return pts[0];
+</Source>
+          <HAFunc Type="Public" Text="TransformPoint:static PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/25 15:35:11">
+            <Arguments>
+              <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/18 0:44:26" />
+              <HAObject Type="Private" Text="x:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/18 0:44:16" />
+              <HAObject Type="Private" Text="y:float" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/25 15:34:54" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="49" SelectionLength="0">return TransformPoint(matrix, new PointF(x, y));
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="TransformRectangle:static RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 21:09:58">
+          <Arguments>
+            <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/17 23:27:01" />
+            <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/17 22:26:31" />
+          </Arguments>
+          <Comment SelectionStart="48" SelectionLength="0">&lt;summary&gt;
+アフィン変換された長方形に外接する長方形を求めます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="99" SelectionLength="0">PointF[] pts = ConvertToPoints(rect);
+matrix.TransformPoints(pts);
+return ConvertToRectangle(pts);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ScaleAt:static" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 13:17:31">
+          <Arguments>
+            <HAObject Type="Private" Text="matrix:Matrix" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/02 11:01:14" />
+            <HAObject Type="Private" Text="scaleX:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 11:01:16" />
+            <HAObject Type="Private" Text="scaleY:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 11:01:42" />
+            <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 11:01:46" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="208" SelectionLength="0">PointF pt1 = TransformPoint(matrix, pt);
+matrix.Scale(scaleX, scaleY);
+
+Matrix m = matrix.Clone();
+m.Invert();
+PointF pt2 = TransformPoint(m, pt1);
+m.Dispose();
+
+matrix.Translate(pt2.X - pt.X, pt2.Y - pt.Y);
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="座標計算" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 18:08:56">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Public" Text="GetCenter:static PointF" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/08 18:54:08">
+          <Arguments>
+            <HAObject Type="Private" Text="pt1:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 20:20:25" />
+            <HAObject Type="Private" Text="pt2:PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/23 20:20:28" />
+          </Arguments>
+          <Comment SelectionStart="30" SelectionLength="0">&lt;summary&gt;
+中点を求めます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="61" SelectionLength="0">return new PointF((pt1.X + pt2.X) / 2, (pt1.Y + pt2.Y) / 2);
+</Source>
+          <HAFunc Type="Public" Text="GetCenter:static PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:49:49">
+            <Arguments>
+              <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/24 16:34:09" />
+            </Arguments>
+            <Comment SelectionStart="30" SelectionLength="0">&lt;summary&gt;
+重心を求めます。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="76" SelectionLength="0">return new PointF(rect.Left + rect.Width / 2, rect.Top  + rect.Height / 2);
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="GetCenter:static PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:49:50">
+            <Arguments>
+              <HAObject Type="Private" Text="poly:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/24 16:34:09" />
+            </Arguments>
+            <Comment SelectionStart="30" SelectionLength="0">&lt;summary&gt;
+重心を求めます。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="141" SelectionLength="0">float len = (float)poly.Length, x = 0F, y = 0F;
+foreach (PointF pt in poly)
+{
+	x += pt.X;
+	y += pt.Y;
+}
+return new PointF(x / len, y / len);
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="GetDistance:static float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 15:27:04">
+          <Arguments>
+            <HAObject Type="Private" Text="pt1:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 15:53:27" />
+            <HAObject Type="Private" Text="pt2:PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/24 15:53:32" />
+          </Arguments>
+          <Comment SelectionStart="34" SelectionLength="0">&lt;summary&gt;
+2点間の距離を求めます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="111" SelectionLength="0">double dx = (double)(pt1.X - pt2.X), dy = (double)(pt1.Y - pt2.Y);
+return (float)Math.Sqrt(dx * dx + dy * dy);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ExpandRectangle:static Rectangle" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 21:03:12">
+          <Arguments>
+            <HAObject Type="Private" Text="rect:Rectangle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/17 23:04:52" />
+            <HAObject Type="Private" Text="pt:Point" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/17 23:04:57" />
+          </Arguments>
+          <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+四角形に点が含まれるよう拡大します。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="325" SelectionLength="0">if (pt.X &lt; rect.Left)
+{
+	int dx = rect.Left - pt.X;
+	rect.X = pt.X;
+	rect.Width += dx;
+}
+else if (pt.X &gt; rect.Right)
+{
+	rect.Width += pt.X - rect.Right;
+}
+if (pt.Y &lt; rect.Top)
+{
+	int dy = rect.Top - pt.Y;
+	rect.Y = pt.Y;
+	rect.Height += dy;
+}
+else if (pt.Y &gt; rect.Bottom)
+{
+	rect.Height += pt.Y - rect.Bottom;
+}
+return rect;
+</Source>
+          <HAFunc Type="Public" Text="ExpandRectangle:static Rectangle" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 21:03:58">
+            <Arguments>
+              <HAObject Type="Private" Text="rect:Rectangle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/17 23:04:52" />
+              <HAObject Type="Private" Text="x:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/17 23:04:57" />
+              <HAObject Type="Private" Text="y:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 21:01:39" />
+            </Arguments>
+            <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+四角形に点が含まれるよう拡大します。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="29" SelectionLength="0">return ExpandRectangle(rect, new Point(x, y));
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="ExpandRectangle:static Rectangle" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 21:02:32">
+            <Arguments>
+              <HAObject Type="Private" Text="rect:Rectangle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 11:20:01" />
+              <HAObject Type="Private" Text="pts:Point[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 11:20:04" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="14" SelectionLength="0">foreach (Point pt in pts) rect = ExpandRectangle(rect, pt);
+return rect;
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ExpandRectangle:static RectangleF" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/03 0:18:07">
+          <Arguments>
+            <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/17 23:04:52" />
+            <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/17 23:04:57" />
+          </Arguments>
+          <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+四角形に点が含まれるよう拡大します。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="0" SelectionLength="0">if (pt.X &lt; rect.Left)
+{
+	float dx = rect.Left - pt.X;
+	rect.X = pt.X;
+	rect.Width += dx;
+}
+else if (pt.X &gt; rect.Right)
+{
+	rect.Width += pt.X - rect.Right;
+}
+if (pt.Y &lt; rect.Top)
+{
+	float dy = rect.Top - pt.Y;
+	rect.Y = pt.Y;
+	rect.Height += dy;
+}
+else if (pt.Y &gt; rect.Bottom)
+{
+	rect.Height += pt.Y - rect.Bottom;
+}
+return rect;
+</Source>
+          <HAFunc Type="Public" Text="ExpandRectangle:static RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 21:04:02">
+            <Arguments>
+              <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/17 23:04:52" />
+              <HAObject Type="Private" Text="x:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/17 23:04:57" />
+              <HAObject Type="Private" Text="y:float" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/05 21:01:39" />
+            </Arguments>
+            <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+四角形に点が含まれるよう拡大します。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="48" SelectionLength="0">return ExpandRectangle(rect, new PointF(x, y));
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="ExpandRectangle:static RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 21:01:21">
+            <Arguments>
+              <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 11:20:01" />
+              <HAObject Type="Private" Text="pts:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 11:20:04" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="0" SelectionLength="0">foreach (PointF pt in pts) rect = ExpandRectangle(rect, pt);
+return rect;
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ConvertToRectangle:static RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/03 0:20:01">
+          <Arguments>
+            <HAObject Type="Private" Text="poly:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/17 23:04:52" />
+          </Arguments>
+          <Comment SelectionStart="39" SelectionLength="0">&lt;summary&gt;
+多角形に外接する長方形を求めます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="220" SelectionLength="0">if (poly == null || poly.Length &lt; 0) return RectangleF.Empty;
+
+RectangleF ret = new RectangleF(poly[0], SizeF.Empty);
+int len = poly.Length;
+for (int i = 1; i &lt; len; i++) ret = ExpandRectangle(ret, poly[i]);
+return ret;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ConvertToPoints:static PointF[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 16:38:02">
+          <Arguments>
+            <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/19 9:44:23" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="182" SelectionLength="0">return new PointF[]
+	{
+		new PointF(rect.Left , rect.Top   ),
+		new PointF(rect.Right, rect.Top   ),
+		new PointF(rect.Right, rect.Bottom),
+		new PointF(rect.Left , rect.Bottom)
+	};
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="ConvertToEquations:static LineEquation[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 16:42:06">
+          <Arguments>
+            <HAObject Type="Private" Text="poly:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/22 0:49:39" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="197" SelectionLength="0">int len = poly.Length;
+LineEquation[] ret = new LineEquation[len];
+for (int i = 0; i &lt; len; i++)
+{
+	int j = i + 1;
+	if (j == len) j = 0;
+	ret[i] = new LineEquation(poly[i], poly[j]);
+}
+return ret;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="GetAngle:static float" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 9:30:58">
+          <Arguments>
+            <HAObject Type="Private" Text="pt1:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/19 17:21:18" />
+            <HAObject Type="Private" Text="pt2:PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/19 17:21:22" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="120" SelectionLength="0">double dx = (double)(pt2.X - pt1.X), dy = (double)(pt2.Y - pt1.Y);
+return (float)(Math.Atan2(dy, dx) * 180D / Math.PI);
+</Source>
+          <HAFunc Type="Public" Text="GetAngle:static float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:49:55">
+            <Arguments>
+              <HAObject Type="Private" Text="pt1:PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/22 18:31:54" />
+              <HAObject Type="Private" Text="pt2:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 18:31:57" />
+              <HAObject Type="Private" Text="pt3:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 18:31:59" />
+            </Arguments>
+            <Comment SelectionStart="59" SelectionLength="0">&lt;summary&gt;
+三角形の一辺の角度を求めます。
+&lt;/summary&gt;
+&lt;returns&gt;度数&lt;/returns&gt;
+</Comment>
+            <Source SelectionStart="103" SelectionLength="0">float ret = Math.Abs(GetAngle(pt2, pt1) - GetAngle(pt2, pt3));
+return (ret &lt; 180F) ? ret : 360F - ret;
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="Contains:static bool" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 18:50:50">
+          <Arguments>
+            <HAObject Type="Private" Text="pt1:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 18:44:51" />
+            <HAObject Type="Private" Text="pt2:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 18:44:54" />
+            <HAObject Type="Private" Text="pt3:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 18:44:57" />
+            <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/22 18:44:43" />
+          </Arguments>
+          <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+三角形に点が含まれるかを判断します。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="376" SelectionLength="0">float a123 = GetAngle(pt1, pt2, pt3);
+if (a123 &lt; GetAngle(pt1, pt2, pt) || a123 &lt; GetAngle(pt, pt2, pt3)) return false;
+
+float a231 = GetAngle(pt2, pt3, pt1);
+if (a231 &lt; GetAngle(pt2, pt3, pt) || a231 &lt; GetAngle(pt, pt3, pt1)) return false;
+
+float a312 = GetAngle(pt3, pt1, pt2);
+if (a312 &lt; GetAngle(pt3, pt1, pt) || a312 &lt; GetAngle(pt, pt1, pt2)) return false;
+
+return true;
+</Source>
+          <HAFunc Type="Public" Text="Contains:static bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:49:56">
+            <Arguments>
+              <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/21 21:02:30" />
+              <HAObject Type="Private" Text="poly:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/21 21:02:36" />
+            </Arguments>
+            <Comment SelectionStart="44" SelectionLength="0">&lt;summary&gt;
+長方形の中に四角形が含まれるかを判断します。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="79" SelectionLength="0">foreach (PointF pt in poly) if (!rect.Contains(pt)) return false;
+return true;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Contains:static bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:49:57">
+            <Arguments>
+              <HAObject Type="Private" Text="poly:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/22 18:52:45" />
+              <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 18:52:48" />
+            </Arguments>
+            <Comment SelectionStart="13" SelectionLength="0">&lt;summary&gt;
+多角形の中に多角形が含まれるかを判断します。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="138" SelectionLength="0">int len = poly.Length;
+for (int i = 1; i &lt; len - 1; i++)
+{
+	if (Contains(poly[0], poly[i], poly[i + 1], pt)) return true;
+}
+return false;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="Contains:static bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:49:59">
+            <Arguments>
+              <HAObject Type="Private" Text="poly1:PointF[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/22 18:52:45" />
+              <HAObject Type="Private" Text="poly2:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/22 18:52:48" />
+            </Arguments>
+            <Comment SelectionStart="13" SelectionLength="0">&lt;summary&gt;
+多角形の中に多角形が含まれるかを判断します。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="111" SelectionLength="0">int len = poly1.Length;
+foreach (PointF pt in poly2)
+{
+	if (!Contains(poly1, pt)) return false;
+}
+return true;
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="IntersectsWith:static bool" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/24 17:43:16">
+          <Arguments>
+            <HAObject Type="Private" Text="rect:RectangleF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/21 21:02:30" />
+            <HAObject Type="Private" Text="poly:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/21 21:02:36" />
+          </Arguments>
+          <Comment SelectionStart="42" SelectionLength="0">&lt;summary&gt;
+長方形と多角形が交差するかを判断します。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="52" SelectionLength="0">return IntersectsWith(ConvertToPoints(rect), poly);
+</Source>
+          <HAFunc Type="Public" Text="IntersectsWith:static bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:50:00">
+            <Arguments>
+              <HAObject Type="Private" Text="lines1:LineEquation[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/21 21:02:30" />
+              <HAObject Type="Private" Text="lines2:LineEquation[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/21 21:02:36" />
+            </Arguments>
+            <Comment SelectionStart="42" SelectionLength="0">&lt;summary&gt;
+多角形と多角形が交差するかを判断します。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="103" SelectionLength="0">foreach (LineEquation line in lines1)
+{
+	if (line.IntersectsWith(lines2)) return true;
+}
+return false;
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="IntersectsWith:static bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:50:02">
+            <Arguments>
+              <HAObject Type="Private" Text="poly1:PointF[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/21 21:02:30" />
+              <HAObject Type="Private" Text="poly2:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/21 21:02:36" />
+            </Arguments>
+            <Comment SelectionStart="42" SelectionLength="0">&lt;summary&gt;
+多角形と多角形が交差するかを判断します。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="144" SelectionLength="0">if (IntersectsWith(ConvertToEquations(poly1), ConvertToEquations(poly2))) return true;
+return Contains(poly1, poly2) || Contains(poly2, poly1);
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="Offset:static" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 21:39:15">
+          <Arguments>
+            <HAObject Type="Private" Text="pt:ref PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/02 20:36:33" />
+            <HAObject Type="Private" Text="dx:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 20:36:29" />
+            <HAObject Type="Private" Text="dy:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 20:36:37" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="24" SelectionLength="0">pt.X += dx;
+pt.Y += dy;
+</Source>
+          <HAFunc Type="Public" Text="Offset:static" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:50:03">
+            <Arguments>
+              <HAObject Type="Private" Text="pts:PointF[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 20:36:33" />
+              <HAObject Type="Private" Text="dx:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/02 20:36:29" />
+              <HAObject Type="Private" Text="dy:float" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/02 20:36:37" />
+            </Arguments>
+            <Comment SelectionStart="0" SelectionLength="0" />
+            <Source SelectionStart="138" SelectionLength="0">if (pts == null) return;
+
+int len = pts.Length;
+if (len &lt; 1) return;
+
+for (int i = 0; i &lt; len; i++)
+{
+	pts[i].X += dx;
+	pts[i].Y += dy;
+}
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="Inflate:static PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 20:16:36">
+          <Arguments>
+            <HAObject Type="Private" Text="x:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:47:52" />
+            <HAObject Type="Private" Text="y:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:44:19" />
+            <HAObject Type="Private" Text="cx:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:41:01" />
+            <HAObject Type="Private" Text="cy:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 17:04:50" />
+            <HAObject Type="Private" Text="dx:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:48:52" />
+            <HAObject Type="Private" Text="dy:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 14:48:55" />
+            <HAObject Type="Private" Text="signX:float" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 20:14:04" />
+            <HAObject Type="Private" Text="signY:float" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/11 20:14:08" />
+          </Arguments>
+          <Comment SelectionStart="42" SelectionLength="0">&lt;summary&gt;
+点を中心から指定した距離だけずらします。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="251" SelectionLength="0">float cdx = x - cx, cdy = y - cy;
+float sx = Math.Sign(cdx), sy = Math.Sign(cdy);
+if (sx == 0) sx = signX;
+if (sy == 0) sy = signY;
+x = cx + Math.Max(0, Math.Abs(cdx) + dx) * sx;
+y = cy + Math.Max(0, Math.Abs(cdy) + dy) * sy;
+return new PointF(x, y);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="GetRightAngled:static PointF" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 18:35:11">
+          <Arguments>
+            <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 17:58:39" />
+            <HAObject Type="Private" Text="pts:PointF[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 17:58:49" />
+            <HAObject Type="Private" Text="min:float" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/13 18:30:09" />
+          </Arguments>
+          <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+最も近くで直角に交わる点を求めます。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="415" SelectionLength="0">PointF ret = pt;
+int len = pts.Length;
+float[] dxs = new float[len], dys = new float[len];
+for (int i = 0; i &lt; len; i++)
+{
+	dxs[i] = pts[i].X - pt.X;
+	dys[i] = pts[i].Y - pt.Y;
+}
+int ix = GetMinimumIndex(dxs);
+int iy = GetMinimumIndex(dys);
+float dx = Math.Abs(dxs[ix]);
+float dy = Math.Abs(dys[iy]);
+if (dx &lt;= min || dx &lt;= dy)
+{
+	ret.X = pts[ix].X;
+}
+if (dy &lt;= min || dy &lt;= dx)
+{
+	ret.Y = pts[iy].Y;
+}
+return ret;
+</Source>
+          <HAFunc Type="Public" Text="GetRightAngled:static PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 18:32:54">
+            <Arguments>
+              <HAObject Type="Private" Text="pt:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 17:58:39" />
+              <HAObject Type="Private" Text="pts:PointF[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/13 17:58:49" />
+            </Arguments>
+            <Comment SelectionStart="40" SelectionLength="0">&lt;summary&gt;
+最も近くで直角に交わる点を求めます。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="35" SelectionLength="0">return GetRightAngled(pt, pts, 0);
+</Source>
+          </HAFunc>
+          <HAFunc Type="Public" Text="GetRightAngled:static PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 18:30:03">
+            <Arguments>
+              <HAObject Type="Private" Text="pt1:PointF" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 17:58:39" />
+              <HAObject Type="Private" Text="pt2:PointF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/13 17:58:49" />
+            </Arguments>
+            <Comment SelectionStart="35" SelectionLength="0">&lt;summary&gt;
+直角に交わる点を求めます。
+&lt;/summary&gt;
+</Comment>
+            <Source SelectionStart="154" SelectionLength="0">PointF ret = pt1;
+float dx = pt2.X - pt1.X, dy = pt2.Y - pt1.Y;
+if (Math.Abs(dx) &lt; Math.Abs(dy))
+{
+	ret.X = pt2.X;
+}
+else
+{
+	ret.Y = pt2.Y;
+}
+return ret;
+</Source>
+          </HAFunc>
+        </HAFunc>
+        <HAFunc Type="Public" Text="GetMinimumIndex:static int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 18:15:16">
+          <Arguments>
+            <HAObject Type="Private" Text="nums:float[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/13 18:12:39" />
+          </Arguments>
+          <Comment SelectionStart="45" SelectionLength="0">&lt;summary&gt;
+最も絶対値の小さい値のインデックスを返します。
+&lt;/summary&gt;
+</Comment>
+          <Source SelectionStart="175" SelectionLength="0">int ret = 0;
+float min = Math.Abs(nums[0]);
+for (int i = 1; i &lt; nums.Length; i++)
+{
+	float n = Math.Abs(nums[i]);
+	if (min &lt;= n) continue;
+	
+	min = n;
+	ret = i;
+}
+return ret;
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/13 13:26:47">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

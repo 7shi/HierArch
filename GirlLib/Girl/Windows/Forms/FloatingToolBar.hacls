@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="FloatingToolBar:Control" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/08/09 10:52:12">
+  <HAObject Type="Private" Text="target:Control" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:47:12" />
+  <HAObject Type="Private" Text="grip:CanvasGrip" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:47:19" />
+  <HAObject Type="Private" Text="back:CanvasRectangle" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:47:23" />
+  <HAObject Type="Private" Text="lines:CanvasLine[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:47:29" />
+  <HAObject Type="Private" Text="border:Canvas" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/17 20:47:47" />
+  <HAObject Type="Private" Text="canvas:Canvas" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:47:37" />
+  <HAObject Type="Private" Text="prevCount:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:47:49" />
+  <HAObject Type="Private" Text="prevIsHorizontal:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:47:53" />
+  <HAObject Type="Private" Text="isFloating:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:48:36" />
+  <HAObject Type="Private" Text="ignoreVisibleChanged:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:48:42" />
+  <HAObject Type="Private" Text="arrangedSize:SizeF" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:48:50" />
+  <HAObject Type="Private" Text="okDragging:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:48:56" />
+  <HAObject Type="Private" Text="isDragging:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:49:01" />
+  <HAObject Type="Private" Text="ptDown:Point" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:49:04" />
+  <HAObject Type="Private" Text="ptOrig:Point" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:49:07" />
+  <HAObject Type="Private" Text="floating:Form" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:49:10" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/08/09 10:52:12">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="212" SelectionLength="0">using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using Girl.Windows.Forms.Drawing2D;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/05/28 20:50:09">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="304" SelectionLength="0">private const int minimumSize = 26;
+
+#region Win32
+
+public const int WM_MOUSEACTIVATE = 0x0021;
+public const int MA_NOACTIVATE = 3;
+public const int SW_SHOWNOACTIVATE = 4;
+
+[DllImport("User32.dll")]
+public static extern bool ShowWindow(
+	IntPtr hWnd,  // ウィンドウのハンドル
+	int nCmdShow  // 表示状態
+);
+
+#endregion
+</Source>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 18:21:00">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="758" SelectionLength="0">this.SetStyle(ControlStyles.DoubleBuffer
+	| ControlStyles.UserPaint
+	| ControlStyles.AllPaintingInWmPaint,
+	true);
+
+this.target = null;
+this.prevCount = -1;
+this.prevIsHorizontal = false;
+this.isFloating = false;
+this.ignoreVisibleChanged = false;
+this.arrangedSize = Size.Empty;
+this.okDragging = false;
+this.isDragging = false;
+this.ptDown = Point.Empty;
+this.ptOrig = Point.Empty;
+this.floating = null;
+
+this.border = new Canvas(this);
+this.grip = new CanvasGrip();
+this.border.Items.Add(this.grip);
+this.back = new CanvasRectangle();
+this.back.Pen = null;
+this.back.Brush = SystemBrushes.ControlLight;
+this.border.Items.Add(this.back);
+this.lines = new CanvasLine[2];
+for (int i = 0; i &lt; 2; i++)
+{
+	this.lines[i] = new CanvasLine();
+	this.lines[i].Pen = SystemPens.ControlLight;
+	this.border.Items.Add(this.lines[i]);
+}
+
+this.canvas = new Canvas(this);
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Canvas:Canvas" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:33:59">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="20" SelectionLength="0">return this.canvas;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Folder" Text="Event Handlers" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:36:57">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
+        <HAFunc Type="Protected" Text="OnParentChanged:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:36:59">
+          <Arguments>
+            <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:34:10" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="77" SelectionLength="0">if (this.target == null) this.target = this.Parent;
+base.OnParentChanged(e);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnPaint:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/17 20:50:40">
+          <Arguments>
+            <HAObject Type="Private" Text="e:PaintEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:34:57" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="151" SelectionLength="0">if (this.prevCount != this.canvas.Items.Count)
+{
+	this.Arrange();
+	this.prevCount = this.canvas.Items.Count;
+}
+
+base.OnPaint(e);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnResize:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:37:01">
+          <Arguments>
+            <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:35:35" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="138" SelectionLength="0">base.OnResize(e);
+bool horz = this.IsHorizontal;
+if (this.ignoreVisibleChanged || this.prevIsHorizontal == horz) return;
+
+this.Arrange();
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnVisibleChanged:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:37:03">
+          <Arguments>
+            <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:36:09" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="21" SelectionLength="0">base.OnVisibleChanged(e);
+if (this.ignoreVisibleChanged) return;
+
+if (!this.Visible)
+{
+	if (this.Parent == this.floating)
+	{
+		this.ignoreVisibleChanged = true;
+		this.Dock = DockStyle.None;
+		this.Parent = this.target;
+		this.floating.Visible = false;
+		this.isFloating = true;
+		this.ignoreVisibleChanged = false;
+	}
+	else
+	{
+		this.isFloating = false;
+	}
+}
+else
+{
+	if (this.isFloating)
+	{
+		this.ignoreVisibleChanged = true;
+		this.Parent = this.floating;
+		this.Dock = DockStyle.Fill;
+		ShowWindow(this.floating.Handle, SW_SHOWNOACTIVATE);
+		this.ignoreVisibleChanged = false;
+	}
+	this.isFloating = false;
+}
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnMouseDown:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:38:24">
+          <Arguments>
+            <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:38:10" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="298" SelectionLength="0">base.OnMouseDown(e);
+if (e.Button != MouseButtons.Left) return;
+
+if (!(this.canvas.ItemUnderMouse is CanvasButton)
+	&amp;&amp; (e.X &lt; this.arrangedSize.Width &amp;&amp; e.Y &lt; this.arrangedSize.Height))
+{
+	this.okDragging = true;
+	this.ptDown = Cursor.Position;
+	this.ptOrig = this.GetFloatingLocation(e.X, e.Y);
+}
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnMouseMove:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/01 13:46:44">
+          <Arguments>
+            <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:38:42" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="2000" SelectionLength="0">base.OnMouseMove(e);
+
+if (e.Button == MouseButtons.None)
+{
+	Cursor cur = Cursors.Default;
+	if ((this.prevIsHorizontal &amp;&amp; e.X &lt; 8)
+		|| (!this.prevIsHorizontal &amp;&amp; e.Y &lt; 8))
+	{
+		cur = Cursors.SizeAll;
+	}
+	if (this.Cursor != cur) this.Cursor = cur;
+}
+if (e.Button != MouseButtons.Left || !this.okDragging) return;
+
+Point curpos = Cursor.Position;
+int dx = curpos.X - this.ptDown.X, dy = curpos.Y - this.ptDown.Y;
+if (!this.isDragging &amp;&amp; Math.Abs(dx) &lt; 3 &amp;&amp; Math.Abs(dy) &lt; 3) return;
+
+Point curpos2 = this.target.PointToClient(curpos);
+Rectangle rect = this.target.ClientRectangle;
+Rectangle rect2 = Rectangle.Inflate(rect, 32, 32);
+if (rect2.Contains(curpos2))
+{
+	DockStyle ds;
+	if (curpos2.Y &lt; 32)
+	{
+		ds = DockStyle.Top;
+	}
+	else if (curpos2.X &lt; 32)
+	{
+		ds = DockStyle.Left;
+	}
+	else if (curpos2.X &gt; rect.Width - 32)
+	{
+		ds = DockStyle.Right;
+	}
+	else if (curpos2.Y &gt; rect.Height - 32)
+	{
+		ds = DockStyle.Bottom;
+	}
+	else
+	{
+		ds = DockStyle.None;
+	}
+
+	if (ds != DockStyle.None)
+	{
+		if (this.floating != null &amp;&amp; this.floating.Visible)
+		{
+			this.ignoreVisibleChanged = true;
+			this.Dock = DockStyle.None;
+			this.Parent = this.target;
+			this.floating.Visible = false;
+			this.ignoreVisibleChanged = false;
+		}
+		if (this.Dock != ds)
+		{
+			this.Size = new Size(minimumSize, minimumSize);
+			this.Dock = ds;
+			this.Invalidate();
+		}
+		return;
+	}
+}
+
+// フローティング
+Point pt = this.ptOrig;
+pt.Offset(dx, dy);
+if (this.floating == null)
+{
+	this.floating = new Form();
+	this.floating.Bounds = new Rectangle(pt, Size.Empty);
+	this.floating.Owner = this.target.TopLevelControl as Form;
+	this.floating.FormBorderStyle = FormBorderStyle.None;
+	this.floating.ShowInTaskbar = false;
+	this.floating.CreateControl();
+}
+else if (!this.floating.Visible)
+{
+	this.ignoreVisibleChanged = true;
+	this.Dock = DockStyle.None;
+	this.Arrange();
+	this.Parent = this.floating;
+	this.Dock = DockStyle.Fill;
+	ShowWindow(this.floating.Handle, SW_SHOWNOACTIVATE);
+	this.floating.ClientSize = Size.Truncate(this.arrangedSize);
+	this.ignoreVisibleChanged = false;
+	this.SetTopMost();
+}
+else
+{
+	this.floating.Location = pt;
+	this.isDragging = true;
+}
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="OnMouseUp:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:39:27">
+          <Arguments>
+            <HAObject Type="Private" Text="e:MouseEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:38:42" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="63" SelectionLength="0">base.OnMouseUp(e);
+
+this.okDragging = this.isDragging = false;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Protected" Text="WndProc:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:40:43">
+          <Arguments>
+            <HAObject Type="Private" Text="m:ref Message" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:40:30" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="104" SelectionLength="0">if (m.Msg == WM_MOUSEACTIVATE)
+{
+	m.Result = new IntPtr(MA_NOACTIVATE);
+	return;
+}
+base.WndProc(ref m);
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Arrange" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/01 13:44:36">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="1181" SelectionLength="0">PointF pt;
+RectangleF r = this.ClientRectangle;
+this.prevIsHorizontal = this.IsHorizontal;
+if (this.prevIsHorizontal)
+{
+	this.grip.Bounds = new Rectangle(3, 5, 3, 16);
+	pt = new Point(8, 2);
+	foreach (object obj in this.canvas.Items)
+	{
+		CanvasObject dobj = obj as CanvasObject;
+		if (dobj is CanvasSeparator) dobj.Size = new Size(6, this.Height - 4);
+		dobj.Location = pt;
+		pt.X += dobj.Width;
+	}
+	this.back.Bounds = new RectangleF(2, 1, pt.X - 2, r.Height - 2);
+	this.lines[0].Bounds = new RectangleF(1, 2, 0, r.Height - 5);
+	this.lines[1].Bounds = new RectangleF(pt.X, 2, 0, r.Height - 5);
+	this.arrangedSize = new SizeF(pt.X + 2, r.Height);
+}
+else
+{
+	this.grip.Bounds = new Rectangle(5, 3, 16, 3);
+	pt = new Point(2, 8);
+	foreach (object obj in this.canvas.Items)
+	{
+		CanvasObject dobj = obj as CanvasObject;
+		if (dobj is CanvasSeparator) dobj.Size = new Size(this.Width - 4, 6);
+		dobj.Location = pt;
+		pt.Y += dobj.Height;
+	}
+	this.back.Bounds = new RectangleF(1, 2, r.Width - 2, pt.Y - 2);
+	this.lines[0].Bounds = new RectangleF(2, 1, r.Width - 5, 0);
+	this.lines[1].Bounds = new RectangleF(2, pt.Y, r.Width - 5, 0);
+	this.arrangedSize = new SizeF(r.Width, pt.Y + 2);
+}
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_IsHorizontal:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:37:42">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="68" SelectionLength="0">return this.Dock != DockStyle.Left &amp;&amp; this.Dock != DockStyle.Right;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="GetFloatingLocation:Point" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:39:57">
+        <Arguments>
+          <HAObject Type="Private" Text="x:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 20:39:47" />
+          <HAObject Type="Private" Text="y:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/28 20:39:48" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="210" SelectionLength="0">Point pt = new Point(x, y), ret = this.PointToScreen(pt);
+switch (this.Dock)
+{
+	case DockStyle.Left:
+	case DockStyle.Right:
+		ret.Offset(-y, -x);
+		break;
+	default:
+		ret.Offset(-x, -y);
+		break;
+}
+return ret;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="SetTopMost" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/28 22:29:34">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="180" SelectionLength="0">if (this.floating == null) return;
+
+Form f = this.target.TopLevelControl as Form;
+if (this.floating.TopMost == f.TopMost) return;
+
+this.floating.TopMost = f.TopMost;
+f.Activate();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="GetButton:CanvasButton" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/05 23:47:15">
+        <Arguments>
+          <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/05 23:45:54" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="142" SelectionLength="0">foreach (object obj in canvas.Items)
+{
+	CanvasButton cb = obj as CanvasButton;
+	if (cb != null &amp;&amp; cb.Name == name) return cb;
+}
+
+return null;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="SetButtonEnabled" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/07/06 17:16:51">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="125" SelectionLength="0">foreach (object obj in canvas.Items)
+{
+	CanvasButton cb = obj as CanvasButton;
+	if (cb != null) this.SetButtonEnabled(cb);
+}
+</Source>
+        <HAFunc Type="Public" Text="SetButtonEnabled" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/06 17:13:07">
+          <Arguments>
+            <HAObject Type="Private" Text="button:CanvasButton" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 12:17:58" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="184" SelectionLength="0">MenuItem mni = button.MenuItem;
+if (mni == null) return;
+
+bool enabled = mni.Enabled;
+if (button.Enabled == enabled) return;
+
+button.Enabled = enabled;
+this.canvas.Invalidate(button);
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="SetButtonEnabled" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/06 17:12:29">
+          <Arguments>
+            <HAObject Type="Private" Text="button:CanvasButton" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 12:17:58" />
+            <HAObject Type="Private" Text="enabled:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 12:18:04" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="171" SelectionLength="0">if (button.Enabled == enabled) return;
+
+button.Enabled = enabled;
+this.canvas.Invalidate(button);
+
+MenuItem mni = button.MenuItem;
+if (mni != null) mni.Enabled = enabled;
+</Source>
+        </HAFunc>
+        <HAFunc Type="Public" Text="SetButtonEnabled" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/06 17:12:32">
+          <Arguments>
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/06/27 12:17:58" />
+            <HAObject Type="Private" Text="enabled:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/27 12:18:04" />
+          </Arguments>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="54" SelectionLength="0">this.SetButtonEnabled(this.GetButton(name), enabled);
+</Source>
+        </HAFunc>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/28 20:32:26">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

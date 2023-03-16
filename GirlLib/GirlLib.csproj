@@ -1,8 +1,8 @@
 <VisualStudioProject>
     <CSHARP
         ProjectType = "Local"
-        ProductVersion = "7.0.9466"
-        SchemaVersion = "1.0"
+        ProductVersion = "7.10.3077"
+        SchemaVersion = "2.0"
         ProjectGuid = "{9084494D-A49E-4CA4-A433-8411E47A7176}"
     >
         <Build>
@@ -16,7 +16,10 @@
                 DefaultTargetSchema = "IE50"
                 DelaySign = "false"
                 OutputType = "Library"
+                PreBuildEvent = ""
+                PostBuildEvent = ""
                 RootNamespace = "Girl"
+                RunPostBuildEvent = "OnBuildSuccess"
                 StartupObject = ""
             >
                 <Config
@@ -30,6 +33,8 @@
                     DebugSymbols = "true"
                     FileAlignment = "4096"
                     IncrementalBuild = "true"
+                    NoStdLib = "false"
+                    NoWarn = ""
                     Optimize = "false"
                     OutputPath = "bin\Debug\"
                     RegisterForComInterop = "false"
@@ -48,6 +53,8 @@
                     DebugSymbols = "false"
                     FileAlignment = "4096"
                     IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
                     Optimize = "true"
                     OutputPath = "bin\Release\"
                     RegisterForComInterop = "false"
@@ -137,6 +144,21 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Girl\Collections\NumberStringComparer.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Drawing\Geometry.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Drawing\ImageManipulator.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Girl\Net\MimeDocument.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -187,6 +209,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Girl\Windows\Forms\CenterPointDialog.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Girl\Windows\Forms\CodeEditor.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
@@ -204,6 +231,11 @@
                 <File
                     RelPath = "Girl\Windows\Forms\ContextManager.cs"
                     SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\ControlEx.cs"
+                    SubType = "Component"
                     BuildAction = "Compile"
                 />
                 <File
@@ -227,6 +259,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Girl\Windows\Forms\FloatingToolBar.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Girl\Windows\Forms\FontComboBox.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
@@ -237,12 +274,142 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Girl\Windows\Forms\MenuItemEx.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\MouseWheelMessageFilter.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Girl\Windows\Forms\OpaqueSplitter.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Girl\Windows\Forms\TabControlEx.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Girl\Windows\Forms\TextBoxPlus.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\Canvas.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasButton.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasControl.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasCorner.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasEllipse.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasGrip.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasGroup.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasImage.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasLine.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasLineEx.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasLines.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasObject.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasObjectSelection.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasPaintManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasPolygon.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasRectangle.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasSeparator.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasSerializer.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasString.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\DrawingBox.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\DrawingBox.resx"
+                    DependentUpon = "DrawingBox.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Girl\Windows\Forms\Drawing2D\DrawingBoxContextMenu.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Girl\Xml\XmlObjectSerializer.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -273,11 +440,6 @@
                 />
                 <File
                     RelPath = "Src\InternalScrollBar.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Src\MouseWheelMessageFilter.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

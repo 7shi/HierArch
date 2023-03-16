@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasGrip:CanvasObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:54:52">
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/27 21:55:24">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="36" SelectionLength="0">using System;
+using System.Drawing;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/07/01 12:43:46">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="120" SelectionLength="0">public __CLASS() : base() {}
+public __CLASS(float x, float y, float width, float height) : base(x, y, width, height) {}
+public __CLASS(RectangleF rect) : base(rect) {}
+</Source>
+      <HAFunc Type="Protected" Text="Init:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/05/27 21:52:12">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="49" SelectionLength="0">base.Init();
+
+this.pen = SystemPens.ControlDark;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Draw:override" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/11 16:54:52">
+        <Arguments>
+          <HAObject Type="Private" Text="g:Graphics" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/27 21:54:20" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="33" SelectionLength="0">if (!this.CheckDraw(g)) return;
+
+float x1 = this.rect.Left, y1 = this.rect.Top;
+float x2 = this.rect.Right, y2 = this.rect.Bottom;
+
+if (this.Width &lt; this.Height)
+{
+	for (float y = y1; y &lt; y2; y += 2F)
+	{
+		g.DrawLine(pen, x1, y, x2 - 1F, y);
+	}
+}
+else
+{
+	for (float x = x1; x &lt; x2; x += 2F)
+	{
+		g.DrawLine(pen, x, y1, x, y2 - 1F);
+	}
+}
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/27 21:50:24">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>

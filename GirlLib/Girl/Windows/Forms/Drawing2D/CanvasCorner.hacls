@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="CanvasCorner:CanvasObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 21:51:09">
+  <HAObject Type="Public" Text="Selection:CanvasObjectSelection" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/07/11 20:58:11" />
+  <HAObject Type="Public" Text="Index:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 5:31:10" />
+  <HAObject Type="Protected" Text="target:CanvasObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 5:21:53" />
+  <HAObject Type="Protected" Text="cursor:Cursor" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 3:40:54" />
+  <HAObject Type="Protected" Text="type:char" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 20:46:05" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/06/23 3:42:45">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
+</Comment>
+      <Source SelectionStart="64" SelectionLength="0">using System;
+using System.Drawing;
+using System.Windows.Forms;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="true" AllowDrag="false" LastModified="2003/07/13 21:51:09">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="675" SelectionLength="0">protected static Brush selBrush = null;
+
+public __CLASS(CanvasObject target)
+	: base(0F, 0F, 6F, 6F)
+{
+	this.Selection = null;
+	this.Index = 0;
+	this.target = target;
+	this.cursor = Cursors.Default;
+	this.type = 'R';
+	this.pen = SystemPens.Highlight;
+	if (__CLASS.selBrush == null)
+	{
+		__CLASS.selBrush = new SolidBrush(MenuItemEx.GetSelectionColor(true));
+	}
+	this.brush = target.Resizable ? __CLASS.selBrush : Brushes.White;
+}
+
+public __CLASS(CanvasObject target, char type)
+	: this(target)
+{
+	this.type = type;
+	if (type == 'L') this.brush = Brushes.White;
+}
+
+public __CLASS(CanvasObject target, char type, Cursor cursor)
+	: this(target, type)
+{
+	this.cursor = cursor;
+}
+</Source>
+      <HAFunc Type="Public" Text="Draw:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/11 16:54:56">
+        <Arguments>
+          <HAObject Type="Private" Text="g:Graphics" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/20 0:22:17" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="33" SelectionLength="0">if (!this.CheckDraw(g)) return;
+
+if (type == 'E')
+{
+	CanvasEllipse.DrawEllipse(this, g);
+}
+else
+{
+	CanvasRectangle.DrawRectangle(this, g);
+}
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Target:CanvasObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/13 21:50:43">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="20" SelectionLength="0">return this.target;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Cursor:Cursor" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/06/23 3:41:13">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="20" SelectionLength="0">return this.cursor;
+</Source>
+        <HAFunc Type="Public" Text="set_Cursor:Cursor" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 8:09:54">
+          <Arguments />
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="21" SelectionLength="0">this.cursor = value;
+</Source>
+        </HAFunc>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_Type:char" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/07/12 8:09:52">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="18" SelectionLength="0">return this.type;
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/05/13 14:29:16">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>
