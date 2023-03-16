@@ -1,470 +1,146 @@
-<VisualStudioProject>
-    <CSHARP
-        ProjectType = "Local"
-        ProductVersion = "7.10.3077"
-        SchemaVersion = "2.0"
-        ProjectGuid = "{9084494D-A49E-4CA4-A433-8411E47A7176}"
-    >
-        <Build>
-            <Settings
-                ApplicationIcon = ""
-                AssemblyKeyContainerName = ""
-                AssemblyName = "GirlLib"
-                AssemblyOriginatorKeyFile = ""
-                DefaultClientScript = "JScript"
-                DefaultHTMLPageLayout = "Grid"
-                DefaultTargetSchema = "IE50"
-                DelaySign = "false"
-                OutputType = "Library"
-                PreBuildEvent = ""
-                PostBuildEvent = ""
-                RootNamespace = "Girl"
-                RunPostBuildEvent = "OnBuildSuccess"
-                StartupObject = ""
-            >
-                <Config
-                    Name = "Debug"
-                    AllowUnsafeBlocks = "false"
-                    BaseAddress = "285212672"
-                    CheckForOverflowUnderflow = "false"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = "DEBUG;TRACE"
-                    DocumentationFile = ""
-                    DebugSymbols = "true"
-                    FileAlignment = "4096"
-                    IncrementalBuild = "true"
-                    NoStdLib = "false"
-                    NoWarn = ""
-                    Optimize = "false"
-                    OutputPath = "bin\Debug\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "4"
-                />
-                <Config
-                    Name = "Release"
-                    AllowUnsafeBlocks = "false"
-                    BaseAddress = "285212672"
-                    CheckForOverflowUnderflow = "false"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = "TRACE"
-                    DocumentationFile = ""
-                    DebugSymbols = "false"
-                    FileAlignment = "4096"
-                    IncrementalBuild = "false"
-                    NoStdLib = "false"
-                    NoWarn = ""
-                    Optimize = "true"
-                    OutputPath = "bin\Release\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "4"
-                />
-            </Settings>
-            <References>
-                <Reference
-                    Name = "System"
-                    AssemblyName = "System"
-                    HintPath = "..\..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.dll"
-                />
-                <Reference
-                    Name = "System.Data"
-                    AssemblyName = "System.Data"
-                    HintPath = "..\..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Data.dll"
-                />
-                <Reference
-                    Name = "System.XML"
-                    AssemblyName = "System.Xml"
-                    HintPath = "..\..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
-                />
-                <Reference
-                    Name = "System.Drawing"
-                    AssemblyName = "System.Drawing"
-                    HintPath = "..\..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Drawing.dll"
-                />
-                <Reference
-                    Name = "System.Windows.Forms"
-                    AssemblyName = "System.Windows.Forms"
-                    HintPath = "..\..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Windows.Forms.dll"
-                />
-            </References>
-        </Build>
-        <Files>
-            <Include>
-                <File
-                    RelPath = "AssemblyInfo.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\ASTClass.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\ASTMethod.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\ASTNamespace.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\ASTObject.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\ASTRegion.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\CodeWriter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\CParserBase.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\CSharpParser.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Coding\ParserBase.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Collections\NumberStringComparer.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Drawing\Geometry.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Drawing\ImageManipulator.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Net\MimeDocument.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Net\MimeObject.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Rtf\RtfColorTable.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Rtf\RtfDocument.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Rtf\RtfFont.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Rtf\RtfFontTable.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Rtf\RtfHtmlConverter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Rtf\RtfObject.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Text\CharSetEncoding.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\ApplicationDataManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\CenterPointDialog.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\CodeEditor.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\CodeEditor.resx"
-                    DependentUpon = "CodeEditor.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\CodeEditorManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\ContextManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\ControlEx.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Document.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\EditManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\ExComboBox.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\ExRichTextBox.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\FloatingToolBar.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\FontComboBox.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\LinkRichTextBox.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\MenuItemEx.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\MouseWheelMessageFilter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\OpaqueSplitter.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\TabControlEx.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\TextBoxPlus.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\Canvas.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasButton.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasControl.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasCorner.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasEllipse.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasGrip.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasGroup.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasImage.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasLine.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasLineEx.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasLines.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasObject.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasObjectSelection.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasPaintManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasPolygon.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasRectangle.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasSeparator.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasSerializer.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\CanvasString.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\DrawingBox.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\DrawingBox.resx"
-                    DependentUpon = "DrawingBox.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Girl\Windows\Forms\Drawing2D\DrawingBoxContextMenu.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Xml\XmlObjectSerializer.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\Xml\XmlParser.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Src\DnDTreeView.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Src\DnDTreeView.resx"
-                    DependentUpon = "DnDTreeView.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Src\ExTreeView.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Src\ExTreeView.resx"
-                    DependentUpon = "ExTreeView.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Src\InternalScrollBar.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Src\RichTextToolBar.cs"
-                    SubType = "UserControl"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Src\RichTextToolBar.resx"
-                    DependentUpon = "RichTextToolBar.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Src\Win32API.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Src\WindowSize.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-            </Include>
-        </Files>
-    </CSHARP>
-</VisualStudioProject>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{C639AC7F-4152-4C1D-BD61-3155DAFCA79E}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GirlLib</RootNamespace>
+    <AssemblyName>GirlLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Girl\Coding\ASTClass.cs" />
+    <Compile Include="Girl\Coding\ASTMethod.cs" />
+    <Compile Include="Girl\Coding\ASTNamespace.cs" />
+    <Compile Include="Girl\Coding\ASTObject.cs" />
+    <Compile Include="Girl\Coding\ASTRegion.cs" />
+    <Compile Include="Girl\Coding\CodeWriter.cs" />
+    <Compile Include="Girl\Coding\CParserBase.cs" />
+    <Compile Include="Girl\Coding\CSharpParser.cs" />
+    <Compile Include="Girl\Coding\ParserBase.cs" />
+    <Compile Include="Girl\Collections\NumberStringComparer.cs" />
+    <Compile Include="Girl\Drawing\Geometry.cs" />
+    <Compile Include="Girl\Drawing\ImageManipulator.cs" />
+    <Compile Include="Girl\Net\MimeDocument.cs" />
+    <Compile Include="Girl\Net\MimeObject.cs" />
+    <Compile Include="Girl\Rtf\RtfColorTable.cs" />
+    <Compile Include="Girl\Rtf\RtfDocument.cs" />
+    <Compile Include="Girl\Rtf\RtfFont.cs" />
+    <Compile Include="Girl\Rtf\RtfFontTable.cs" />
+    <Compile Include="Girl\Rtf\RtfHtmlConverter.cs" />
+    <Compile Include="Girl\Rtf\RtfObject.cs" />
+    <Compile Include="Girl\Text\CharSetEncoding.cs" />
+    <Compile Include="Girl\Windows\Forms\ApplicationDataManager.cs" />
+    <Compile Include="Girl\Windows\Forms\CenterPointDialog.cs" />
+    <Compile Include="Girl\Windows\Forms\CodeEditor.cs" />
+    <Compile Include="Girl\Windows\Forms\CodeEditorManager.cs" />
+    <Compile Include="Girl\Windows\Forms\ContextManager.cs" />
+    <Compile Include="Girl\Windows\Forms\ControlEx.cs" />
+    <Compile Include="Girl\Windows\Forms\Document.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\Canvas.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasButton.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasControl.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasCorner.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasEllipse.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasGrip.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasGroup.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasImage.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasLine.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasLineEx.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasLines.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasObject.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasObjectSelection.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasPaintManager.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasPolygon.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasRectangle.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasSeparator.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasSerializer.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\CanvasString.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\DrawingBox.cs" />
+    <Compile Include="Girl\Windows\Forms\Drawing\DrawingBoxContextMenu.cs" />
+    <Compile Include="Girl\Windows\Forms\EditManager.cs" />
+    <Compile Include="Girl\Windows\Forms\ExComboBox.cs" />
+    <Compile Include="Girl\Windows\Forms\ExRichTextBox.cs" />
+    <Compile Include="Girl\Windows\Forms\FloatingToolBar.cs" />
+    <Compile Include="Girl\Windows\Forms\FontComboBox.cs" />
+    <Compile Include="Girl\Windows\Forms\LinkRichTextBox.cs" />
+    <Compile Include="Girl\Windows\Forms\MenuItemEx.cs" />
+    <Compile Include="Girl\Windows\Forms\MouseWheelMessageFilter.cs" />
+    <Compile Include="Girl\Windows\Forms\OpaqueSplitter.cs" />
+    <Compile Include="Girl\Windows\Forms\TabControlEx.cs" />
+    <Compile Include="Girl\Windows\Forms\TextBoxPlus.cs" />
+    <Compile Include="Girl\Xml\XmlObjectSerializer.cs" />
+    <Compile Include="Girl\Xml\XmlParser.cs" />
+    <Compile Include="Src\DnDTreeView.cs" />
+    <Compile Include="Src\ExTreeView.cs" />
+    <Compile Include="Src\InternalScrollBar.cs" />
+    <Compile Include="Src\RichTextToolBar.cs" />
+    <Compile Include="Src\Win32API.cs" />
+    <Compile Include="Src\WindowSize.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Girl" />
+    <Folder Include="Girl\Coding" />
+    <Folder Include="Girl\Collections" />
+    <Folder Include="Girl\Drawing" />
+    <Folder Include="Girl\Net" />
+    <Folder Include="Girl\Rtf" />
+    <Folder Include="Girl\Text" />
+    <Folder Include="Girl\Windows" />
+    <Folder Include="Girl\Windows\Forms" />
+    <Folder Include="Girl\Windows\Forms\Drawing" />
+    <Folder Include="Girl\Xml" />
+    <Folder Include="Src" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Girl\Windows\Forms\Drawing\DrawingBox.resx">
+      <DependentUpon>DrawingBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Src\DnDTreeView.resx">
+      <DependentUpon>DnDTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Src\ExTreeView.resx">
+      <DependentUpon>ExTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Src\RichTextToolBar.resx">
+      <DependentUpon>RichTextToolBar.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
