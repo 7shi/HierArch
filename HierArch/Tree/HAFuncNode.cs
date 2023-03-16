@@ -31,8 +31,10 @@ namespace Girl.HierArch
 		public int SourceSelectionLength;
 		public HAFuncNode PropertyPair;
 
-		private void Init()
+		public override void Init()
 		{
+			base.Init();
+			
 			this.Args    = new ArrayList();
 			this.Objects = new ArrayList();
 			this.Comment = "";
@@ -49,13 +51,10 @@ namespace Girl.HierArch
 		/// </summary>
 		public HAFuncNode()
 		{
-			this.Init();
 		}
 
 		public HAFuncNode(string text)
 		{
-			this.Init();
-			
 			this.Text = text;
 		}
 

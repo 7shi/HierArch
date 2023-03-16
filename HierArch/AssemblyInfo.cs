@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("HierArch")]
 [assembly: AssemblyDescription("汎用階層化エディタ")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Global Interactive Revolution Laboratory")]
 [assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("Public Domain")]
 [assembly: AssemblyTrademark("")]

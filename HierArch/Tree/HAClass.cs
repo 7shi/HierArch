@@ -20,9 +20,12 @@ namespace Girl.HierArch
 	{
 		private ContextMenu contextMenu1;
 		private MenuItem mnuType;
+		private MenuItem mnuLink;
+		private MenuItem mnuProp;
 		public HAMember MemberTreeView;
 		public HAFunc FuncTreeView;
 		private HAClassNode TargetNode;
+		public Font LinkFont;
 
 		/// <summary>
 		/// コンストラクタです。
@@ -61,14 +64,85 @@ namespace Girl.HierArch
 					this.mnuInsert,
 					new MenuItem("-"),
 					this.mnuDelete,
-					this.mnuRename
+					this.mnuRename,
+					new MenuItem("-"),
+					mnuLink = new MenuItem("リンク(&L)"),
+					new MenuItem("-"),
+					mnuProp = new MenuItem("プロパティ(&R)")
 				});
+			
+			mnuLink.Click += new EventHandler(this.OnNodeLink);
+			mnuProp.Click += new EventHandler(this.OnNodeProp);
+			
+			this.LinkFont = new Font(this.Font, FontStyle.Italic);
 		}
 
 		protected override void OnNodeTypeChanged(object sender, EventArgs e)
 		{
 			this.StoreData();
 			this.SetView();
+		}
+
+		protected void OnNodeLink(object sender, EventArgs e)
+		{
+			if (this.TargetNode == null) return;
+			
+			if (this.TargetNode.Link == string.Empty)
+			{
+				SaveFileDialog sfd = new SaveFileDialog();
+				sfd.Filter = "HierArch クラス (*.hacls)|*.hacls|すべてのファイル (*.*)|*.*";
+				DialogResult dr = sfd.ShowDialog();
+				sfd.Dispose();
+				if (dr == DialogResult.Cancel) return;
+				
+				string link = new Uri(sfd.FileName).AbsoluteUri;
+				if (!this.TargetNode.IsValidLink(link))
+				{
+					MessageBox.Show(
+						"リンク先が重複しています。", "エラー",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Warning);
+					return;
+				}
+				
+				this.TargetNode.Link = link;
+			}
+			else
+			{
+				this.TargetNode.Link = string.Empty;
+			}
+			this.OnChanged(this, EventArgs.Empty);
+			this.SetState();
+		}
+
+		protected void OnNodeProp(object sender, EventArgs e)
+		{
+			if (this.TargetNode == null) return;
+			
+			string target = this.TargetNode.TargetFileName;
+			if (target == string.Empty)
+			{
+				target = "プロジェクト";
+			}
+			else if (target.StartsWith("file://"))
+			{
+				target = new Uri(target).LocalPath;
+			}
+			
+			string link = this.TargetNode.Link;
+			if (link == string.Empty)
+			{
+				link = "なし";
+			}
+			else if (link.StartsWith("file://"))
+			{
+				link = new Uri(link).LocalPath;
+				target = "リンク先";
+			}
+			
+			MessageBox.Show(
+				string.Format("保存先: {0}\r\nリンク先: {1}", target, link),
+				string.Format("{0} のプロパティ", this.TargetNode.Text));
 		}
 
 		protected override void StartDrag()
@@ -87,7 +161,10 @@ namespace Girl.HierArch
 			}
 			
 			HAClassNode n = this.SelectedNode as HAClassNode;
-			mnuType.Enabled = mnuDelete.Enabled = mnuRename.Enabled = (n != null && n.AllowDrag);
+			mnuType.Enabled = mnuDelete.Enabled = mnuRename.Enabled
+				= mnuLink.Enabled = mnuProp.Enabled
+				= (n != null && n.AllowDrag);
+			mnuLink.Checked = (n != null && n.Link != string.Empty);
 		}
 
 		public void InitNode(HAClassNode n)

@@ -15,9 +15,21 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_2888412EBBEDCB74408E2F1617ABD24B"
+        "MsmKey" = "8:_1038DAD0F3F84DF385EBC444D5FB533F"
+        "OwnerKey" = "8:_484F2D20978AD0D553F59BB702EF31C7"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1038DAD0F3F84DF385EBC444D5FB533F"
         "OwnerKey" = "8:_F987151AEAC045F8B0D147CD786447FA"
-        "MsmSig" = "8:tinoc:\\documents and settings\\tino\\my documents\\visual studio projects\\hierarch\\tino\\bin\\debug\\tino.dll"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1038DAD0F3F84DF385EBC444D5FB533F"
+        "OwnerKey" = "8:_45B3ADBF04959B1FE6DA41FC3924B048"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
         }
         "Entry"
         {
@@ -36,6 +48,12 @@
         "MsmKey" = "8:_45B3ADBF04959B1FE6DA41FC3924B048"
         "OwnerKey" = "8:_F987151AEAC045F8B0D147CD786447FA"
         "MsmSig" = "8:hierarchlibc:\\documents and settings\\tino\\my documents\\visual studio projects\\hierarch\\hierarchlib\\obj\\debug\\hierarchlib.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_484F2D20978AD0D553F59BB702EF31C7"
+        "OwnerKey" = "8:_F987151AEAC045F8B0D147CD786447FA"
+        "MsmSig" = "8:girlc:\\documents and settings\\tino\\my documents\\visual studio projects\\girl\\obj\\debug\\girl.dll"
         }
         "Entry"
         {
@@ -73,24 +91,6 @@
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:hierarchc:\\documents and settings\\tino\\my documents\\visual studio projects\\hierarch\\hierarch\\obj\\debug\\hierarch.exe"
         }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB6A0D3B0E834B24B2ED26E00DA0A5F5"
-        "OwnerKey" = "8:_45B3ADBF04959B1FE6DA41FC3924B048"
-        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB6A0D3B0E834B24B2ED26E00DA0A5F5"
-        "OwnerKey" = "8:_F987151AEAC045F8B0D147CD786447FA"
-        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB6A0D3B0E834B24B2ED26E00DA0A5F5"
-        "OwnerKey" = "8:_2888412EBBEDCB74408E2F1617ABD24B"
-        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
-        }
     }
     "Configurations"
     {
@@ -99,7 +99,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Setup.msi"
+        "OutputFilename" = "8:Debug\\HierArch.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -115,7 +115,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Setup.msi"
+        "OutputFilename" = "8:Release\\HierArch.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -143,37 +143,6 @@
         }
         "File"
         {
-            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_2888412EBBEDCB74408E2F1617ABD24B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Girl, Version=1.0.1114.31162, Culture=neutral"
-                "ScatterAssemblies"
-                {
-                    "_2888412EBBEDCB74408E2F1617ABD24B"
-                    {
-                    "Name" = "8:Girl.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Girl.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_9E3CA33DC5CB422C8AED01FFAEE0B47B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_2C5AB922DFB740A48154BA6474E17B3F"
             {
             "SourcePath" = "8:..\\Plugin\\TextBrown.cs.miopt"
@@ -218,7 +187,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:HierArchLib, Version=1.0.1114.31243, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:HierArchLib, Version=1.0.1122.1130, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_45B3ADBF04959B1FE6DA41FC3924B048"
@@ -228,6 +197,37 @@
                     }
                 }
             "SourcePath" = "8:HierArchLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_9E3CA33DC5CB422C8AED01FFAEE0B47B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_484F2D20978AD0D553F59BB702EF31C7"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Girl, Version=1.0.1122.1135, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_484F2D20978AD0D553F59BB702EF31C7"
+                    {
+                    "Name" = "8:Girl.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Girl.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_9E3CA33DC5CB422C8AED01FFAEE0B47B"
@@ -600,19 +600,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:HierArch"
-        "ProductCode" = "8:{75A6B5E2-5DE9-4521-A8E4-C364E049B81F}"
-        "PackageCode" = "8:{0A22CD57-6FF0-4FEE-96C1-20847EEC4395}"
+        "ProductCode" = "8:{AB9F077D-22F3-49F1-BBD3-072A3724C293}"
+        "PackageCode" = "8:{B16B08FF-F306-476A-BFF3-1721C3B724B2}"
         "UpgradeCode" = "8:{5B6CAD24-4D00-47B0-9CC1-A659D6BF7E15}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.0.1"
-        "Manufacturer" = "8:Girl"
+        "ProductVersion" = "8:1.0.2"
+        "Manufacturer" = "8:Global Interactive Revolution Laboratory"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:HierArch"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Girl"
+        "ARPCONTACT" = "8:Global Interactive Revolution Laboratory"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -627,7 +627,7 @@
         }
         "MergeModule"
         {
-            "{AC8774A4-3E09-11D3-8E14-00C04F6837D0}:_FB6A0D3B0E834B24B2ED26E00DA0A5F5"
+            "{AC8774A4-3E09-11D3-8E14-00C04F6837D0}:_1038DAD0F3F84DF385EBC444D5FB533F"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

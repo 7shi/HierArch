@@ -46,19 +46,17 @@ namespace Girl.HierArch
 
 		public override bool Open()
 		{
-			FileStream fs;
 			XmlTextReader xr;
 			HAClassNode n;
 
 			try
 			{
-				fs = new FileStream(FullName, FileMode.Open);
+				xr = new XmlTextReader(this.FullName);
 			}
 			catch
 			{
 				return false;
 			}
-			xr = new XmlTextReader(fs);
 			while (xr.Read())
 			{
 				if (xr.Name == "HAViewInfo" && xr.NodeType == XmlNodeType.Element)
@@ -92,7 +90,7 @@ namespace Girl.HierArch
 				}
 			}
 			xr.Close();
-			fs.Close();
+			
 			this.ClassTreeView.ApplyState();
 			if (this.ClassTreeView.SelectedNode == null && this.ClassTreeView.Nodes.Count > 0)
 			{
@@ -125,17 +123,16 @@ namespace Girl.HierArch
 
 		private bool SaveHAPrj()
 		{
-			FileStream fs;
+			XmlTextWriter xw;
 
 			try
 			{
-				fs = new FileStream(this.FullName, FileMode.Create);
+				xw = new XmlTextWriter(this.FullName, Encoding.UTF8);
 			}
 			catch
 			{
 				return false;
 			}
-			XmlTextWriter xw = new XmlTextWriter(fs, null);
 			xw.Formatting = Formatting.Indented;
 			xw.WriteStartDocument();
 			xw.WriteStartElement("HAProject");
@@ -153,13 +150,14 @@ namespace Girl.HierArch
 			xw.WriteEndDocument();
 			xw.Flush();
 			xw.Close();
-			fs.Close();
 			
 			return true;
 		}
 
 		private bool SaveHds()
 		{
+			StreamWriter sw;
+
 			HAClassNode n = this.ClassTreeView.SelectedNode as HAClassNode;
 			if (n == null)
 			{
@@ -176,16 +174,14 @@ namespace Girl.HierArch
 				return false;
 			}
 			
-			FileStream fs;
 			try
 			{
-				fs = new FileStream(this.FullName, FileMode.Create);
+				sw = new StreamWriter(this.FullName, false, Encoding.UTF8);
 			}
 			catch
 			{
 				return false;
 			}
-			StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
 			sw.NewLine = "\n";
 			XmlTextWriter xw = new XmlTextWriter(sw);
 			xw.Formatting = Formatting.Indented;
@@ -200,7 +196,6 @@ namespace Girl.HierArch
 			xw.WriteEndDocument();
 			xw.Flush();
 			xw.Close();
-			fs.Close();
 			return true;
 		}
 
@@ -208,7 +203,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return "2003/01/19 17:18:13";
+				return "2003/01/26 23:37:56";
 			}
 		}
 

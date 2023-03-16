@@ -6,14 +6,14 @@ using System.Runtime.CompilerServices;
 // 属性セットを通して制御されます。アセンブリに関連付けられている 
 // 情報を変更するには、これらの属性値を変更してください。
 //
-[assembly: AssemblyTitle("")]
+[assembly: AssemblyTitle("Library for HierArch")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Global Interactive Revolution Laboratory")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Public Domain")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]		
+[assembly: AssemblyCulture("")]
 
 //
 // アセンブリのバージョン情報は、以下の 4 つの属性で構成されます :

@@ -24,9 +24,14 @@ namespace Girl.HierArch
 		public HAFuncNode Body;
 		public HAFuncNode Footer;
 
-		private void Init()
+		public override void Init()
 		{
+			base.Init();
+			
 			this.Members = new ArrayList();
+			this.Header  = new HAFuncNode();
+			this.Body    = new HAFuncNode();
+			this.Footer  = new HAFuncNode();
 		}
 
 		/// <summary>
@@ -34,13 +39,10 @@ namespace Girl.HierArch
 		/// </summary>
 		public HAClassNode()
 		{
-			this.Init();
 		}
 
 		public HAClassNode(string text)
 		{
-			this.Init();
-			
 			this.Text = text;
 		}
 
@@ -108,19 +110,16 @@ namespace Girl.HierArch
 			}
 			else if (xr.Name == "Header" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
 			{
-				this.Header = new HAFuncNode();
 				while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace);
 				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Header.FromXml(xr);
 			}
 			else if (xr.Name == "Body" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
 			{
-				this.Body = new HAFuncNode();
 				while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace);
 				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Body.FromXml(xr);
 			}
 			else if (xr.Name == "Footer" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
 			{
-				this.Footer = new HAFuncNode();
 				while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace);
 				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Footer.FromXml(xr);
 			}

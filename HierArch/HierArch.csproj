@@ -83,13 +83,13 @@
                     HintPath = "..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
                 />
                 <Reference
-                    Name = "Girl"
-                    AssemblyName = "Girl"
-                    HintPath = "..\Girl\bin\Debug\Girl.dll"
-                />
-                <Reference
                     Name = "HierArchLib"
                     Project = "{E94400D0-807D-4A6C-9763-18E652FBD44D}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "GirlLib"
+                    Project = "{9084494D-A49E-4CA4-A433-8411E47A7176}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>

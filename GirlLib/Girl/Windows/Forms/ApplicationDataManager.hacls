@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAClass Type="Public" Text="ApplicationDataManager" IsExpanded="false" IsSelected="false" AllowDrag="true">
+  <HAObject Type="Private" Text="dataPath:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+  <Header>
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="49" SelectionLength="0">このファイルは ApplicationDataManager.hacls から生成されています。
+</Comment>
+      <Source SelectionStart="110" SelectionLength="0">using System;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+</Source>
+    </HAFunc>
+  </Header>
+  <Body>
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="29" SelectionLength="0">&lt;summary&gt;
+アプリケーションの設定を管理します。
+&lt;/summary&gt;
+</Comment>
+      <Source SelectionStart="0" SelectionLength="0" />
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
+コンストラクタです。
+&lt;/summary&gt;
+</Comment>
+        <Source SelectionStart="22" SelectionLength="0">this.dataPath = null;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="get_DataPath:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="222" SelectionLength="0">if(this.dataPath != null) return this.dataPath;
+
+string path = Application.LocalUserAppDataPath;
+string ret = Directory.GetParent(path).FullName;
+try
+{
+	Directory.Delete(path);
+}
+catch
+{
+}
+this.dataPath = ret;
+return ret;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="set_DataPath:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments />
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="23" SelectionLength="0">this.dataPath = value;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Load:object" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="fileName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="dataType:Type" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="67" SelectionLength="0">object ret = null;
+XmlSerializer xs = new XmlSerializer(dataType);
+string path = this.DataPath;
+if (!path.EndsWith(@"\")) path += @"\";
+FileStream fs;
+try
+{
+	fs = new FileStream(path + fileName, FileMode.Open);
+}
+catch
+{
+	return ret;
+}
+try
+{
+	ret = xs.Deserialize(fs);
+}
+catch
+{
+}
+fs.Close();
+return ret;</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="LoadString:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="fileName:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="290" SelectionLength="0">string path = this.DataPath;
+if (!path.EndsWith(@"\")) path += @"\";
+FileStream fs;
+try
+{
+	fs = new FileStream(path + fileName, FileMode.Open);
+}
+catch
+{
+	return null;
+}
+StreamReader sr = new StreamReader(fs, Encoding.UTF8);
+string ret = sr.ReadToEnd();
+sr.Close();
+fs.Close();
+return ret;
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="Save" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="fileName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="data:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="235" SelectionLength="0">string path = this.DataPath;
+if (!path.EndsWith(@"\")) path += @"\";
+
+XmlSerializer xs = new XmlSerializer(data.GetType());
+StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
+xs.Serialize(sw, data);
+sw.Close();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="SaveString" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="fileName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="145" SelectionLength="0">string path = this.DataPath;
+if (!path.EndsWith(@"\")) path += @"\";
+
+StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
+sw.Write(text);
+sw.Close();
+</Source>
+      </HAFunc>
+      <HAFunc Type="Public" Text="SearchFolder:static string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Arguments>
+          <HAObject Type="Private" Text="folder:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+        </Arguments>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="266" SelectionLength="0">DirectoryInfo di = new FileInfo(Application.ExecutablePath).Directory;
+
+for (; di != null &amp;&amp; di.Exists; di = di.Parent)
+{
+	string path = di.FullName;
+	if (!path.EndsWith(@"\")) path += @"\";
+	path += folder;
+	if (Directory.Exists(path)) return path;
+}
+
+return null;
+</Source>
+      </HAFunc>
+    </HAFunc>
+  </Body>
+  <Footer>
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <Arguments />
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
+    </HAFunc>
+  </Footer>
+</HAClass>
