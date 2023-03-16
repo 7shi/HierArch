@@ -17,7 +17,6 @@ namespace Girl.HierArch
 		private static WindowSizeData m_Data1;
 		private static ViewData m_Data2;
 		private static ArrayList m_Forms = new ArrayList();
-		private static PluginEditor.Form1 pluginEditor = new PluginEditor.Form1();
 
 		private HADoc m_Doc = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
@@ -916,7 +915,7 @@ namespace Girl.HierArch
 
 		private void mnuOptionEditPlugin_Click(object sender, System.EventArgs e)
 		{
-			if (!Form1.pluginEditor.Visible) Form1.pluginEditor.Show();
+			//if (!Form1.pluginEditor.Visible) Form1.pluginEditor.Show();
 		}
 
 		private void menuHelpHomePage_Click(object sender, System.EventArgs e)
