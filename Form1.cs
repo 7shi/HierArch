@@ -18,7 +18,7 @@ namespace Girl.HierarchyArchitect
 		private static ViewData m_Data2;
 		private static ArrayList m_Forms = new ArrayList();
 
-		private Document m_Doc = new Document();
+		private HADoc m_Doc = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
 		private string m_sCaption;
 		public System.Windows.Forms.ToolBar toolBar1;
@@ -82,6 +82,8 @@ namespace Girl.HierarchyArchitect
 			// ここで定義した情報は mnuViewItem_Click() で使用されます。
 			m_tblView.Add(mnuViewToolBar  , toolBar1  );
 			m_tblView.Add(mnuViewStatusBar, statusBar1);
+
+			m_Doc.ClassTreeView = view1.tvClass;
 		}
 
 		/// <summary>
@@ -184,16 +186,19 @@ namespace Girl.HierarchyArchitect
 			// 
 			// tbEditCut
 			// 
+			this.tbEditCut.Enabled = false;
 			this.tbEditCut.ImageIndex = 3;
 			this.tbEditCut.ToolTipText = "切り取り (Ctrl+X)";
 			// 
 			// tbEditCopy
 			// 
+			this.tbEditCopy.Enabled = false;
 			this.tbEditCopy.ImageIndex = 4;
 			this.tbEditCopy.ToolTipText = "コピー (Ctrl+C)";
 			// 
 			// tbEditPaste
 			// 
+			this.tbEditPaste.Enabled = false;
 			this.tbEditPaste.ImageIndex = 5;
 			this.tbEditPaste.ToolTipText = "貼り付け (Ctrl+V)";
 			// 
@@ -300,18 +305,21 @@ namespace Girl.HierarchyArchitect
 			// 
 			// mnuEditCut
 			// 
+			this.mnuEditCut.Enabled = false;
 			this.mnuEditCut.Index = 0;
 			this.mnuEditCut.Shortcut = System.Windows.Forms.Shortcut.CtrlX;
 			this.mnuEditCut.Text = "切り取り(&T)";
 			// 
 			// mnuEditCopy
 			// 
+			this.mnuEditCopy.Enabled = false;
 			this.mnuEditCopy.Index = 1;
 			this.mnuEditCopy.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
 			this.mnuEditCopy.Text = "コピー(&C)";
 			// 
 			// mnuEditPaste
 			// 
+			this.mnuEditPaste.Enabled = false;
 			this.mnuEditPaste.Index = 2;
 			this.mnuEditPaste.Shortcut = System.Windows.Forms.Shortcut.CtrlV;
 			this.mnuEditPaste.Text = "貼り付け(&P)";

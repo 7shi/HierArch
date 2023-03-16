@@ -106,14 +106,9 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "TVFunc.cs"
-                    SubType = "Component"
+                    RelPath = "HADoc.cs"
+                    SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "TVFunc.resx"
-                    DependentUpon = "TVFunc.cs"
-                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "View.cs"
@@ -213,6 +208,46 @@
                     RelPath = "Girl\WindowSize.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Tree\HAClass.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Tree\HAClass.resx"
+                    DependentUpon = "HAClass.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Tree\HAFunc.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Tree\HAFunc.resx"
+                    DependentUpon = "HAFunc.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Tree\HAObject.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Tree\HAObject.resx"
+                    DependentUpon = "HAObject.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Tree\HATree.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Tree\HATree.resx"
+                    DependentUpon = "HATree.cs"
+                    BuildAction = "EmbeddedResource"
                 />
             </Include>
         </Files>

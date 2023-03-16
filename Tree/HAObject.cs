@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Windows.Forms;
 using Girl.Windows.Forms;
 
@@ -11,7 +9,7 @@ namespace Girl.HierarchyArchitect
 	/// <summary>
 	/// CustomControl1 の概要の説明です。
 	/// </summary>
-	public class TVFunc : DnDTreeView
+	public class HAObject : HATree
 	{
 		private System.Windows.Forms.ContextMenu contextMenu1;
 		private System.Windows.Forms.MenuItem cm1Child;
@@ -62,26 +60,26 @@ namespace Girl.HierarchyArchitect
 																						 this.cm1Separator1,
 																						 this.cm1Delete});
 			// 
-			// TVFunc
+			// HAObject
 			// 
 			this.ContextMenu = this.contextMenu1;
 			this.ItemHeight = 14;
 
 		}
 	
-		public TVFunc()
+		public HAObject()
 		{
 			InitializeComponent();
 		}
 
-		public void SetButtons()
+		protected override void SetState()
 		{
 			cm1Delete.Enabled = (this.SelectedNode != null);
 		}
 
 		private TreeNode MakeNewNode()
 		{
-			TreeNode ret = new DnDTreeNode("新しい関数");
+			TreeNode ret = new DnDTreeNode("新しいオブジェクト");
 			return ret;
 		}
 
@@ -144,7 +142,7 @@ namespace Girl.HierarchyArchitect
 			TreeNode n = this.SelectedNode;
 			if (n == null) return;
 			this.Nodes.Remove(n);
-			SetButtons();
+			SetState();
 		}
 	}
 }

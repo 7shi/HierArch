@@ -18,7 +18,7 @@ namespace Girl.Windows.Forms
 	{
 		private DnDTreeNode m_ndDrag = null;
 		private Point m_ptDown = new Point();
-		private bool m_fDrag = false;
+		private bool m_bDrag = false;
 		private System.Timers.Timer m_tmrScroll = new System.Timers.Timer();
 		private System.Timers.Timer m_tmrToggle = new System.Timers.Timer();
 		private DnDTreeNode m_ndDragTarget = null;
@@ -71,7 +71,7 @@ namespace Girl.Windows.Forms
 			base.OnMouseDown(e);
 			if (e.Button != MouseButtons.Left) return;
 
-			m_fDrag = false;
+			m_bDrag = false;
 			m_ndDrag = (DnDTreeNode)GetNodeAt(e.X, e.Y);
 			m_ptDown.X = e.X;
 			m_ptDown.Y = e.Y;
@@ -79,9 +79,9 @@ namespace Girl.Windows.Forms
 			if (m_ndDrag != null && !m_ndDrag.AllowDrag) m_ndDrag = null;
 		}
 
-		private void StartDrag()
+		protected virtual void StartDrag()
 		{
-			m_fDrag = true;
+			m_bDrag = true;
 			m_ndDragTarget = null;
 			SelectedNode = m_ndDrag;
 			m_bDisturbSelection = true;
@@ -103,7 +103,7 @@ namespace Girl.Windows.Forms
 				if (n != null) n.EnsureVisible();
 			}
 
-			m_fDrag = false;
+			m_bDrag = false;
 			m_ndDrag = null;
 			m_ndDragTarget = null;
 			m_bDragged = false;
@@ -112,7 +112,13 @@ namespace Girl.Windows.Forms
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			base.OnMouseMove(e);
-			if (m_ndDrag == null || m_fDrag || e.Button != MouseButtons.Left ||
+			if (m_ndDrag == null) return;
+			if (e.Button == MouseButtons.None)
+			{
+				m_ndDrag = null;
+				return;
+			}
+			if (m_bDrag || e.Button != MouseButtons.Left ||
 				Math.Abs(m_ptDown.X - e.X) < 3 || Math.Abs(m_ptDown.Y - e.Y) < 3) return;
 
 			StartDrag();
@@ -121,7 +127,7 @@ namespace Girl.Windows.Forms
 		protected override void OnMouseLeave(EventArgs e)
 		{
 			base.OnMouseLeave(e);
-			if (m_ndDrag == null || m_fDrag) return;
+			if (m_ndDrag == null || m_bDrag) return;
 
 			StartDrag();
 		}
@@ -465,6 +471,13 @@ namespace Girl.Windows.Forms
 
 		public DnDTreeNode(string text) : base(text)
 		{
+		}
+
+		public override object Clone()
+		{
+			DnDTreeNode ret = (DnDTreeNode)base.Clone();
+			ret.m_bAllowDrag = this.m_bAllowDrag;
+			return ret;
 		}
 
 		#region XML
