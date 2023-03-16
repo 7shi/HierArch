@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierarchyArchitect", "HierarchyArchitect.csproj", "{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Debug.ActiveCfg = Debug|.NET
+		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Debug.Build.0 = Debug|.NET
+		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Release.ActiveCfg = Release|.NET
+		{18A5AB43-DA5B-47B3-ACA7-10B5B13F8770}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
