@@ -53,13 +53,13 @@
     <Folder Include="Uploader" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Base\HAAccountManager.cs" />
     <Compile Include="Base\HADoc.cs" />
     <Compile Include="Base\HAMacroForm.cs" />
     <Compile Include="Base\HAViewInfo.cs" />
     <Compile Include="Parser\ObjectParser.cs" />
     <Compile Include="Src\About.cs" />
-    <Compile Include="Src\AssemblyInfo.cs" />
     <Compile Include="Src\Form1.cs" />
     <Compile Include="Src\HATree.cs" />
     <Compile Include="Src\View.cs" />
