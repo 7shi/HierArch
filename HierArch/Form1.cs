@@ -62,6 +62,7 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuViewComment;
 		private System.Windows.Forms.MenuItem mnuCode;
 		private System.Windows.Forms.MenuItem mnuCodeGenerateAll;
+		private System.Windows.Forms.MenuItem mnuHelpHomePage;
 		private System.ComponentModel.IContainer components;
 
 		public Form1()
@@ -163,6 +164,7 @@ namespace Girl.HierArch
 			this.mnuCode = new System.Windows.Forms.MenuItem();
 			this.mnuCodeGenerateAll = new System.Windows.Forms.MenuItem();
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
+			this.mnuHelpHomePage = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
@@ -449,12 +451,19 @@ namespace Girl.HierArch
 			// 
 			this.mnuHelp.Index = 4;
 			this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					this.mnuHelpHomePage,
 																					this.mnuHelpAbout});
 			this.mnuHelp.Text = "ヘルプ(&H)";
 			// 
+			// mnuHelpHomePage
+			// 
+			this.mnuHelpHomePage.Index = 0;
+			this.mnuHelpHomePage.Text = "ホームページ(&H)";
+			this.mnuHelpHomePage.Click += new System.EventHandler(this.menuHelpHomePage_Click);
+			// 
 			// mnuHelpAbout
 			// 
-			this.mnuHelpAbout.Index = 0;
+			this.mnuHelpAbout.Index = 1;
 			this.mnuHelpAbout.Text = "バージョン情報(&A)";
 			this.mnuHelpAbout.Click += new System.EventHandler(this.mnuHelpAbout_Click);
 			// 
@@ -629,6 +638,11 @@ namespace Girl.HierArch
 			Cursor.Current = Cursors.WaitCursor;
 			this.view1.GenerateAll(path);
 			Cursor.Current = cur;
+		}
+
+		private void menuHelpHomePage_Click(object sender, System.EventArgs e)
+		{
+			System.Diagnostics.Process.Start("http://www.egroups.co.jp/files/miscprj-dev/HierArch/");
 		}
 
 		private void mnuHelpAbout_Click(object sender, System.EventArgs e)

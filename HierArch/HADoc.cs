@@ -21,6 +21,17 @@ namespace Girl.HierArch
 			//
 		}
 
+		public string ShortName
+		{
+			get
+			{
+				string ret = this.Name;
+				int p = ret.LastIndexOf('.');
+				if (p < 0) return ret;
+				return ret.Substring(0, p);
+			}
+		}
+
 		public override bool Open()
 		{
 			FileStream fs;
@@ -49,7 +60,7 @@ namespace Girl.HierArch
 				else if (xr.Name == "hds" && xr.NodeType == XmlNodeType.Element)
 				{
 					n = new HAClassNode();
-					n.Text = this.Name;
+					n.Text = this.ShortName;
 					this.ClassTreeView.InitNode(n);
 					n.Body.Nodes.Clear();
 					this.ClassTreeView.Nodes.Add(n);

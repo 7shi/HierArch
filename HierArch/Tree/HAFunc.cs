@@ -621,6 +621,43 @@ namespace Girl.HierArch
 			fs.Close();
 		}
 
+		public void GenerateText(StreamWriter sw, string chapter, bool concat)
+		{
+			sw.WriteLine();
+			sw.WriteLine();
+			sw.WriteLine(string.Format("  {0} {1}", chapter, this.Text));
+			sw.WriteLine();
+			if (concat)
+			{
+				StringReader sr = new StringReader(this.Source);
+				string line;
+				while ((line = sr.ReadLine()) != null)
+				{
+					if (line == "")
+					{
+						sw.WriteLine();
+					}
+					else
+					{
+						sw.Write(line);
+					}
+				}
+				sr.Close();
+				sw.WriteLine();
+			}
+			else
+			{
+				sw.WriteLine(this.Source);
+			}
+
+			int i = 1;
+			foreach (TreeNode n in this.Nodes)
+			{
+				(n as HAFuncNode).GenerateText(sw, chapter + "." + i.ToString(), concat);
+				i++;
+			}
+		}
+
 		#endregion
 	}
 }

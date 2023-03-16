@@ -398,6 +398,10 @@ namespace Girl.HierArch
 			{
 				this.GenerateClass(target + ".cs");
 			}
+			else if (this.IsText)
+			{
+				this.GenerateText(target + ".txt");
+			}
 
 			foreach (TreeNode n in this.Nodes)
 			{
@@ -472,6 +476,30 @@ namespace Girl.HierArch
 			}
 
 			cw.Close();
+			fs.Close();
+		}
+
+		private void GenerateText(string target)
+		{
+			FileStream fs;
+			try
+			{
+				fs = new FileStream(target, FileMode.Create);
+			}
+			catch
+			{
+				return;
+			}
+
+			StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.Default);
+			sw.WriteLine(string.Format("  **** {0} ****", this.Text));
+			int i = 1;
+			foreach (Object obj in this.Body.Nodes)
+			{
+				(obj as HAFuncNode).GenerateText(sw, i.ToString(), this.Type == HAType.TextBlue);
+				i++;
+			}
+			sw.Close();
 			fs.Close();
 		}
 
