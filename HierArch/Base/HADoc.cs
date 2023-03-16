@@ -35,13 +35,20 @@ namespace Girl.HierArch
 
 		private void InitMacro()
 		{
-			string macro = HADoc.UserDir + @"\Macro.hamcr";
-			if (File.Exists(macro)) return;
 			string dir = ApplicationDataManager.SearchFolder("Data");
 			if (dir == null) return;
-			string macro_orig = dir + @"\Macro.hamcr";
-			if (!File.Exists(macro_orig)) return;
-			File.Copy(macro_orig, macro);
+			string macro1 = HADoc.UserDir + @"\Macro.hamcr";
+			if (!File.Exists(macro1))
+			{
+				string macro_orig = dir + @"\Macro.hamcr";
+				if (File.Exists(macro_orig)) File.Copy(macro_orig, macro1);
+			}
+			string macro2 = HADoc.UserDir + @"\Macro.hacls";
+			if (!File.Exists(macro2))
+			{
+				string macro_orig = dir + @"\Macro.hacls";
+				if (File.Exists(macro_orig)) File.Copy(macro_orig, macro2);
+			}
 		}
 
 		public string ShortName
@@ -204,7 +211,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return "2003/03/21 23:31:25";
+				return "2003/05/04 23:53:34";
 			}
 		}
 

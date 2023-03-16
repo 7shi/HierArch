@@ -1589,7 +1589,7 @@ if (this.TargetNode != null) this.TargetNode.LastModified = DateTime.Now;
 if (this.Property   != null) this.Property.Refresh();
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="OnRefreshNode:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 20:19:34">
+        <HAFunc Type="Public" Text="OnRefreshNode:override" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 20:19:34">
           <Arguments>
             <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 20:17:02" />
             <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 20:17:05" />
@@ -1607,7 +1607,7 @@ this.SetView();
             <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="358" SelectionLength="0">HATreeNode p = (HATreeNode)this.SelectedNode;
+          <Source SelectionStart="338" SelectionLength="0">HATreeNode p = (HATreeNode)this.SelectedNode;
 HATreeNode n = this.NewNode;
 if (p == this.Header || p == this.Footer)
 {
@@ -1632,7 +1632,7 @@ this.OnChanged(this, EventArgs.Empty);
         <HAFunc Type="Protected" Text="StartDrag:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:23:00">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="53" SelectionLength="0">this.Focus();
+          <Source SelectionStart="50" SelectionLength="0">this.Focus();
 this.StoreData();
 base.StartDrag();
 </Source>
@@ -1640,7 +1640,7 @@ base.StartDrag();
         <HAFunc Type="Protected" Text="SetState:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:23:00">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="284" SelectionLength="0">if (this.Nodes.Count &lt; 1 &amp;&amp; this.TargetNode != null)
+          <Source SelectionStart="275" SelectionLength="0">if (this.Nodes.Count &lt; 1 &amp;&amp; this.TargetNode != null)
 {
 	this.TargetNode = null;
 	this.SetView();
@@ -1700,7 +1700,7 @@ if (this.SourceTextBox != null)
 }
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/02 22:54:00">
+        <HAFunc Type="Public" Text="SetView" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 22:54:00">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="1273" SelectionLength="0">bool flag = this.IgnoreChanged;
@@ -1900,7 +1900,7 @@ while (xr.Read())
       </HAFunc>
     </Footer>
   </HAClass>
-  <HAClass Type="Public" Text="HAFuncNode:HATreeNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/21 22:51:54">
+  <HAClass Type="Public" Text="HAFuncNode:HATreeNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/22 2:11:05">
     <HAObject Type="Public" Text="Args:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38" />
     <HAObject Type="Public" Text="Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38" />
     <HAObject Type="Public" Text="Comment:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38" />
@@ -1979,19 +1979,19 @@ this.Property = new HAFuncProperty(this);
         <HAFunc Type="Public" Text="get_XmlName:override string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="18" SelectionLength="0">return "HAFunc";
+          <Source SelectionStart="17" SelectionLength="0">return "HAFunc";
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="get_NewNode:override HATreeNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="26" SelectionLength="0">return new HAFuncNode();
+          <Source SelectionStart="25" SelectionLength="0">return new HAFuncNode();
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="get_Color:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 13:21:38">
+        <HAFunc Type="Public" Text="get_Color:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 13:21:38">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="537" SelectionLength="0">switch (this.Type)
+          <Source SelectionStart="513" SelectionLength="0">switch (this.Type)
 {
 	case HAType.FolderBlue:
 	case HAType.FolderBule_Open:
@@ -2135,24 +2135,24 @@ foreach (TreeNode n in this.Nodes)
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="0" SelectionLength="0" />
-          <HAFunc Type="Public" Text="WriteXml:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/02 22:55:26">
+          <HAFunc Type="Public" Text="WriteXml:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/22 2:11:05">
             <Arguments>
               <HAObject Type="Private" Text="xw:XmlTextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:48:53" />
             </Arguments>
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="933" SelectionLength="0">base.WriteXml(xw);
+            <Source SelectionStart="0" SelectionLength="0">base.WriteXml(xw);
 
 xw.WriteStartElement("Arguments");
-foreach (Object obj in this.Args)
+@[object配列(this.Args)を型(HAObjectNode)だけ反復子(objn)で評価
 {
-	if (obj is HAObjectNode) (obj as HAObjectNode).ToXml(xw);
-}
+	objn.ToXml(xw);
+}]
 xw.WriteEndElement();
 
-foreach (Object obj in this.Objects)
+@[object配列(this.Objects)を型(HAObjectNode)だけ反復子(objn)で評価
 {
-	if (obj is HAObjectNode) (obj as HAObjectNode).ToXml(xw);
-}
+	objn.ToXml(xw);
+}]
 
 xw.WriteStartElement("Comment");
 xw.WriteAttributeString("SelectionStart" , XmlConvert.ToString(this.CommentSelectionStart));
@@ -2250,7 +2250,7 @@ xw.WriteEndElement();
               <HAObject Type="Private" Text="xr:XmlTextReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
             </Arguments>
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="1257" SelectionLength="0">this.Type = HAType.Text;
+            <Source SelectionStart="1200" SelectionLength="0">this.Type = HAType.Text;
 if (xr.Name != "node" || xr.NodeType != XmlNodeType.Element) return;
 
 this.Text = xr.GetAttribute("title");
@@ -2382,18 +2382,18 @@ cw.WriteBlankLine();
 this.PropertyPair.GenerateProperty(cw);
 </Source>
             </HAFunc>
-            <HAFunc Type="Private" Text="GenerateFunction" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 21:43:37">
+            <HAFunc Type="Private" Text="GenerateFunction" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/22 2:06:59">
               <Arguments>
                 <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:49:42" />
                 <HAObject Type="Private" Text="op:ObjectParser" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:49:42" />
               </Arguments>
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="287" SelectionLength="0">string code = op.FunctionDeclaration + "(";
+              <Source SelectionStart="289" SelectionLength="0">string code = op.FunctionDeclaration + "(";
 StringBuilder sb = new StringBuilder();
-foreach (Object obj in this.Args)
+@[object配列(this.Args)を型(HAObjectNode)だけ反復子(objn)で評価
 {
-	(obj as HAObjectNode).Generate(cw, sb);
-}
+	objn.Generate(cw, sb);
+}]
 code += sb.ToString() + ")";
 cw.WriteStartBlock(cw.ReplaceKeywords(code));
 
@@ -2402,21 +2402,21 @@ this.GenerateFuncCode(cw);
 cw.WriteEndBlock();
 </Source>
             </HAFunc>
-            <HAFunc Type="Private" Text="GenerateFuncCode" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/21 22:51:54">
+            <HAFunc Type="Private" Text="GenerateFuncCode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/22 2:05:50">
               <Arguments>
                 <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 13:05:11" />
               </Arguments>
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="225" SelectionLength="0">cw.SetStart();
-foreach (Object obj in this.Objects)
+              <Source SelectionStart="229" SelectionLength="0">cw.SetStart();
+@[object配列(this.Objects)を型(HAObjectNode)だけ反復子(objn)で評価
 {
-	(obj as HAObjectNode).Generate(cw);
-}
-if (this.Source != "")
+	objn.Generate(cw);
+}]
+@[文字列(this.Source)が有効なら
 {
 	cw.WriteBlankLine();
 	Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null, null);
-}
+}]
 </Source>
             </HAFunc>
           </HAFunc>

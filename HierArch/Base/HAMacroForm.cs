@@ -176,13 +176,15 @@ namespace Girl.HierArch
 						sb.Append(text);
 						break;
 						case "__YIELD":
-						cw.WriteStartBlock("for (;;)  // __YIELD");
+						//cw.WriteStartBlock("for (;;)  // __YIELD");
 						if (block != null)
 						{
-							this.WriteCode(cw, block, null, replace, history);
+							cw.WriteCode("// begin __YIELD");
+							this.WriteCode(cw, block, null, null, history);
+							cw.WriteCode("// end __YIELD");
 						}
-						cw.WriteCode("break;");
-						cw.WriteEndBlock();
+						//cw.WriteCode("break;");
+						//cw.WriteEndBlock();
 						break;
 						default: if (sb.Length > 0 && !no_space) sb.Append(' ');
 						sb.Append(text);
@@ -306,23 +308,35 @@ namespace Girl.HierArch
 						if (sb.Length > 0) sb.Append(", ");
 						sb.Append(args[j]);
 					}
-					replace.Add(op.Name, sb.ToString());
+					replace[op.Name] = sb.ToString();
 				}
 				else
 				{
-					replace.Add(op.Name, args[i]);
+					replace[op.Name] = args[i];
 				}
 			}
 			int level = history.Count - 1;
 			int num = 0;
-			foreach (object obj in n.Objects)
+			// Macro: object配列(n.Objects)を型(HAObjectNode)だけ反復子(objn)で評価
 			{
-				string type = new ObjectParser((obj as HAObjectNode).Text).Type;
-				if (type != null && type.Length > 0)
+				foreach (object __0_0 in n.Objects)
 				{
-					cw.WriteCode(string.Format("{0} __{1}_{2};", type, level, num));
+					HAObjectNode objn = __0_0 as HAObjectNode;
+					if (objn == null) continue;
+					// begin __YIELD
+					string type = new ObjectParser(objn.Text).Type;
+					// Macro: 文字列(type)が有効なら
+					{
+						if (type != null && type.Length > 0)
+						{
+							// begin __YIELD
+							cw.WriteCode(string.Format("{0} __{1}_{2};", type, level, num));
+							// end __YIELD
+						}
+					}
+					num++;
+					// end __YIELD
 				}
-				num++;
 			}
 			this.WriteCode(cw, n.Source, block, replace, history);
 			cw.WriteEndBlock();

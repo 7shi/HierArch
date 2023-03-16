@@ -35,7 +35,7 @@
       <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
-  <HAClass Type="Public" Text="HAMacroForm:Form1" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/21 23:31:22">
+  <HAClass Type="Public" Text="HAMacroForm:Form1" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/22 2:24:53">
     <HAObject Type="Private" Text="macros:Hashtable" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/15 17:35:08" />
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/03/16 2:28:06">
@@ -133,7 +133,7 @@ foreach (TreeNode n in node.Nodes)
 return macros[name] as HAFuncNode;
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="WriteCode" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/03/21 22:56:11">
+        <HAFunc Type="Public" Text="WriteCode" IsExpanded="true" IsSelected="true" AllowDrag="true" LastModified="2003/03/22 2:24:53">
           <Arguments>
             <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 22:59:36" />
             <HAObject Type="Private" Text="source:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/15 21:07:34" />
@@ -142,7 +142,7 @@ return macros[name] as HAFuncNode;
             <HAObject Type="Private" Text="history:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:17:33" />
           </Arguments>
           <Comment SelectionStart="0" SelectionLength="0" />
-          <Source SelectionStart="1921" SelectionLength="0">StringBuilder sb = new StringBuilder();
+          <Source SelectionStart="1964" SelectionLength="0">StringBuilder sb = new StringBuilder();
 CSharpParser csp = new CSharpParser();
 StringReader sr = new StringReader(source);
 csp.Reader = sr;
@@ -240,13 +240,15 @@ while (csp.Read())
 				sb.Append(text);
 				break;
 			case "__YIELD":
-				cw.WriteStartBlock("for (;;)  // __YIELD");
+				//cw.WriteStartBlock("for (;;)  // __YIELD");
 				if (block != null)
 				{
-					this.WriteCode(cw, block, null, replace, history);
+					cw.WriteCode("// begin __YIELD");
+					this.WriteCode(cw, block, null, null, history);
+					cw.WriteCode("// end __YIELD");
 				}
-				cw.WriteCode("break;");
-				cw.WriteEndBlock();
+				//cw.WriteCode("break;");
+				//cw.WriteEndBlock();
 				break;
 			default:
 				if (sb.Length &gt; 0 &amp;&amp; !no_space) sb.Append(' ');
@@ -356,7 +358,7 @@ while (csp.Read())
 return (sb != null) ? sb.ToString() : null;
 </Source>
             </HAFunc>
-            <HAFunc Type="Private" Text="WriteMacro" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/03/21 23:31:22">
+            <HAFunc Type="Private" Text="WriteMacro" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/22 2:02:36">
               <Arguments>
                 <HAObject Type="Private" Text="cw:CodeWriter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 2:43:03" />
                 <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 2:43:08" />
@@ -365,7 +367,7 @@ return (sb != null) ? sb.ToString() : null;
                 <HAObject Type="Private" Text="history:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:22:35" />
               </Arguments>
               <Comment SelectionStart="0" SelectionLength="0" />
-              <Source SelectionStart="974" SelectionLength="0">if (!this.macros.Contains(name)) return;
+              <Source SelectionStart="935" SelectionLength="0">if (!this.macros.Contains(name)) return;
 
 HAFuncNode n = this.macros[name] as HAFuncNode;
 if (history == null)
@@ -395,24 +397,24 @@ for (int i = 0; i &lt; c1 &amp;&amp; i &lt; c2; i++)
 			if (sb.Length &gt; 0) sb.Append(", ");
 			sb.Append(args[j]);
 		}
-		replace.Add(op.Name, sb.ToString());
+		replace[op.Name] = sb.ToString();
 	}
 	else
 	{
-		replace.Add(op.Name, args[i]);
+		replace[op.Name] = args[i];
 	}
 }
 int level = history.Count - 1;
 int num = 0;
-foreach (object obj in n.Objects)
+@[object配列(n.Objects)を型(HAObjectNode)だけ反復子(objn)で評価
 {
-	string type = new ObjectParser((obj as HAObjectNode).Text).Type;
-	if (type != null &amp;&amp; type.Length &gt; 0)
+	string type = new ObjectParser(objn.Text).Type;
+	@[文字列(type)が有効なら
 	{
 		cw.WriteCode(string.Format("{0} __{1}_{2};", type, level, num));
-	}
+	}]
 	num++;
-}
+}]
 this.WriteCode(cw, n.Source, block, replace, history);
 cw.WriteEndBlock();
 </Source>
@@ -494,7 +496,7 @@ foreach (TreeNode n in node.Nodes)
       </HAFunc>
     </Footer>
   </HAClass>
-  <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:53:41">
+  <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/04 23:53:31">
     <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <HAObject Type="Public" Text="ViewInfo:HAViewInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <Header>
@@ -522,7 +524,7 @@ using Girl.Windows.Forms;
 &lt;/summary&gt;
 </Comment>
         <Source SelectionStart="0" SelectionLength="0" />
-        <HAFunc Type="Public" Text="__CLASS" IsExpanded="true" IsSelected="true" AllowDrag="true" LastModified="2003/03/16 5:48:34">
+        <HAFunc Type="Public" Text="__CLASS" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:48:34">
           <Arguments />
           <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
@@ -534,19 +536,25 @@ this.ViewInfo = new HAViewInfo();
 this.InitMacro();
 this.InitUserPlugin();
 </Source>
-          <HAFunc Type="Private" Text="InitMacro" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/03/16 5:53:41">
+          <HAFunc Type="Private" Text="InitMacro" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/05/04 23:53:31">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
-            <Source SelectionStart="0" SelectionLength="0">string macro = __CLASS.UserDir + @"\Macro.hamcr";
-if (File.Exists(macro)) return;
-
-string dir = ApplicationDataManager.SearchFolder("Data");
+            <Source SelectionStart="457" SelectionLength="0">string dir = ApplicationDataManager.SearchFolder("Data");
 if (dir == null) return;
 
-string macro_orig = dir + @"\Macro.hamcr";
-if (!File.Exists(macro_orig)) return;
+string macro1 = __CLASS.UserDir + @"\Macro.hamcr";
+if (!File.Exists(macro1))
+{
+	string macro_orig = dir + @"\Macro.hamcr";
+	if (File.Exists(macro_orig)) File.Copy(macro_orig, macro1);
+}
 
-File.Copy(macro_orig, macro);
+string macro2 = __CLASS.UserDir + @"\Macro.hacls";
+if (!File.Exists(macro2))
+{
+	string macro_orig = dir + @"\Macro.hacls";
+	if (File.Exists(macro_orig)) File.Copy(macro_orig, macro2);
+}
 </Source>
           </HAFunc>
         </HAFunc>

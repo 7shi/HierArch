@@ -194,14 +194,28 @@ namespace Girl.HierArch
 		{
 			base.WriteXml(xw);
 			xw.WriteStartElement("Arguments");
-			foreach (Object obj in this.Args)
+			// Macro: object配列(this.Args)を型(HAObjectNode)だけ反復子(objn)で評価
 			{
-				if (obj is HAObjectNode)(obj as HAObjectNode).ToXml(xw);
+				foreach (object __0_0 in this.Args)
+				{
+					HAObjectNode objn = __0_0 as HAObjectNode;
+					if (objn == null) continue;
+					// begin __YIELD
+					objn.ToXml(xw);
+					// end __YIELD
+				}
 			}
 			xw.WriteEndElement();
-			foreach (Object obj in this.Objects)
+			// Macro: object配列(this.Objects)を型(HAObjectNode)だけ反復子(objn)で評価
 			{
-				if (obj is HAObjectNode)(obj as HAObjectNode).ToXml(xw);
+				foreach (object __0_0 in this.Objects)
+				{
+					HAObjectNode objn = __0_0 as HAObjectNode;
+					if (objn == null) continue;
+					// begin __YIELD
+					objn.ToXml(xw);
+					// end __YIELD
+				}
 			}
 			xw.WriteStartElement("Comment");
 			xw.WriteAttributeString("SelectionStart", XmlConvert.ToString(this.CommentSelectionStart));
@@ -404,9 +418,16 @@ namespace Girl.HierArch
 		{
 			string code = op.FunctionDeclaration + "(";
 			StringBuilder sb = new StringBuilder();
-			foreach (Object obj in this.Args)
+			// Macro: object配列(this.Args)を型(HAObjectNode)だけ反復子(objn)で評価
 			{
-				(obj as HAObjectNode).Generate(cw, sb);
+				foreach (object __0_0 in this.Args)
+				{
+					HAObjectNode objn = __0_0 as HAObjectNode;
+					if (objn == null) continue;
+					// begin __YIELD
+					objn.Generate(cw, sb);
+					// end __YIELD
+				}
 			}
 			code += sb.ToString() + ")";
 			cw.WriteStartBlock(cw.ReplaceKeywords(code));
@@ -417,14 +438,26 @@ namespace Girl.HierArch
 		private void GenerateFuncCode(CodeWriter cw)
 		{
 			cw.SetStart();
-			foreach (Object obj in this.Objects)
+			// Macro: object配列(this.Objects)を型(HAObjectNode)だけ反復子(objn)で評価
 			{
-				(obj as HAObjectNode).Generate(cw);
+				foreach (object __0_0 in this.Objects)
+				{
+					HAObjectNode objn = __0_0 as HAObjectNode;
+					if (objn == null) continue;
+					// begin __YIELD
+					objn.Generate(cw);
+					// end __YIELD
+				}
 			}
-			if (this.Source != "")
+			// Macro: 文字列(this.Source)が有効なら
 			{
-				cw.WriteBlankLine();
-				Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null, null);
+				if (this.Source != null && this.Source.Length > 0)
+				{
+					// begin __YIELD
+					cw.WriteBlankLine();
+					Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null, null);
+					// end __YIELD
+				}
 			}
 		}
 
