@@ -89,6 +89,7 @@ namespace Girl.Windows.Forms
 			m_bDisturbSelection = true;
 			m_DragStatus = DragStatus.None;
 
+			Cursor curOrig = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
 			StringWriter sw = new StringWriter();
 			XmlTextWriter xw = new XmlTextWriter(sw);
@@ -96,7 +97,7 @@ namespace Girl.Windows.Forms
 			m_ndDrag.ToXml(xw);
 			xw.Close();
 			sw.Close();
-			Cursor.Current = Cursors.Default;
+			Cursor.Current = curOrig;
 			DragDropEffects result = DoDragDrop(sw.ToString(), DragDropEffects.All);
 			if (result == DragDropEffects.Move)
 			{
@@ -285,6 +286,7 @@ namespace Girl.Windows.Forms
 			Refresh();
 			if (e.Effect == DragDropEffects.None) return;
 
+			Cursor curOrig = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
 			TreeNode n = null;
 			int index = -1;
@@ -311,7 +313,7 @@ namespace Girl.Windows.Forms
 			xr.Close();
 			sr.Close();
 			m_DragStatus = DragStatus.None;
-			Cursor.Current = Cursors.Default;
+			Cursor.Current = curOrig;
 		}
 
 		#endregion
@@ -463,7 +465,7 @@ namespace Girl.Windows.Forms
 	/// </summary>
 	public class DnDTreeNode : ExTreeNode
 	{
-		private bool m_bAllowDrag = true;
+		public bool AllowDrag = true;
 
 		public DnDTreeNode()
 		{
@@ -476,7 +478,7 @@ namespace Girl.Windows.Forms
 		public override object Clone()
 		{
 			DnDTreeNode ret = (DnDTreeNode)base.Clone();
-			ret.m_bAllowDrag = this.m_bAllowDrag;
+			ret.AllowDrag = this.AllowDrag;
 			return ret;
 		}
 
@@ -520,23 +522,6 @@ namespace Girl.Windows.Forms
 			}
 			if (exp) Expand();
 		} 
-
-		#endregion
-
-		#region Property
-
-		public bool AllowDrag
-		{
-			get
-			{
-				return m_bAllowDrag;
-			}
-
-			set
-			{
-				m_bAllowDrag = value;
-			}
-		}
 
 		#endregion
 	}

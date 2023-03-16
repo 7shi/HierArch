@@ -378,7 +378,7 @@ namespace Girl.HierarchyArchitect
 		/// アプリケーションのメイン エントリ ポイントです。
 		/// </summary>
 		[STAThread]
-		static void Main() 
+		static void Main(string[] args)
 		{
 			Application.AddMessageFilter(new MouseWheelMessageFilter());
 
@@ -386,8 +386,21 @@ namespace Girl.HierarchyArchitect
 			m_Data1 = WindowSizeData.Load(adm);
 			m_Data2 = ViewData.Load(adm);
 
-			Form1 f = CreateForm();
-			f.Show();
+			Form1 f;
+			if (args.GetLength(0) < 1)
+			{
+				f = CreateForm();
+				f.Show();
+			}
+			else
+			{
+				foreach (string fn in args)
+				{
+					f = CreateForm();
+					f.Show();
+					f.Open(fn);
+				}
+			}
 			Application.Run();
 
 			m_Data1.Save(adm);

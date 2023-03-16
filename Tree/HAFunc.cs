@@ -13,11 +13,6 @@ namespace Girl.HierarchyArchitect
 	public class HAFunc : HATree
 	{
 		private System.Windows.Forms.ContextMenu contextMenu1;
-		private System.Windows.Forms.MenuItem cm1Child;
-		private System.Windows.Forms.MenuItem cm1Append;
-		private System.Windows.Forms.MenuItem cm1Insert;
-		private System.Windows.Forms.MenuItem cm1Separator1;
-		private System.Windows.Forms.MenuItem cm1Delete;
 		public HAObject ObjectTreeView = null;
 		public System.Windows.Forms.TextBox CommentTextBox = null;
 		public System.Windows.Forms.TextBox SourceTextBox  = null;
@@ -26,53 +21,10 @@ namespace Girl.HierarchyArchitect
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(HAFunc));
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
-			this.cm1Child = new System.Windows.Forms.MenuItem();
-			this.cm1Append = new System.Windows.Forms.MenuItem();
-			this.cm1Insert = new System.Windows.Forms.MenuItem();
-			this.cm1Separator1 = new System.Windows.Forms.MenuItem();
-			this.cm1Delete = new System.Windows.Forms.MenuItem();
 			// 
 			// imageList1
 			// 
 			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-			// 
-			// contextMenu1
-			// 
-			this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						 this.cm1Child,
-																						 this.cm1Append,
-																						 this.cm1Insert,
-																						 this.cm1Separator1,
-																						 this.cm1Delete});
-			// 
-			// cm1Child
-			// 
-			this.cm1Child.Index = 0;
-			this.cm1Child.Text = "下に追加";
-			this.cm1Child.Click += new System.EventHandler(this.cmChild_Click);
-			// 
-			// cm1Append
-			// 
-			this.cm1Append.Index = 1;
-			this.cm1Append.Text = "後に追加";
-			this.cm1Append.Click += new System.EventHandler(this.cmAppend_Click);
-			// 
-			// cm1Insert
-			// 
-			this.cm1Insert.Index = 2;
-			this.cm1Insert.Text = "前に追加";
-			this.cm1Insert.Click += new System.EventHandler(this.cmInsert_Click);
-			// 
-			// cm1Separator1
-			// 
-			this.cm1Separator1.Index = 3;
-			this.cm1Separator1.Text = "-";
-			// 
-			// cm1Delete
-			// 
-			this.cm1Delete.Index = 4;
-			this.cm1Delete.Text = "削除";
-			this.cm1Delete.Click += new System.EventHandler(this.cmDelete_Click);
 			// 
 			// HAFunc
 			// 
@@ -86,6 +38,16 @@ namespace Girl.HierarchyArchitect
 		public HAFunc()
 		{
 			InitializeComponent();
+
+			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
+				{
+					this.mnuChild,
+					this.mnuAppend,
+					this.mnuInsert,
+					new MenuItem("-"),
+					this.mnuDelete
+				});
+
 			this.ImageList = this.imageList1;
 		}
 
@@ -98,13 +60,15 @@ namespace Girl.HierarchyArchitect
 
 		protected override void SetState()
 		{
-			cm1Delete.Enabled = (this.SelectedNode != null);
+			mnuDelete.Enabled = (this.TargetNode != null && this.TargetNode.AllowDrag);
 		}
 
-		private TreeNode MakeNewNode()
+		protected override HATreeNode NewNode
 		{
-			TreeNode ret = new HAFuncNode("新しい関数");
-			return ret;
+			get
+			{
+				return new HAFuncNode("新しい関数");
+			}
 		}
 
 		public HAFuncNode TargetNode = null;
@@ -148,6 +112,42 @@ namespace Girl.HierarchyArchitect
 			}
 		}
 
+		public void SetView(ArrayList list)
+		{
+			this.IgnoreChange = true;
+			this.SelectedNode = null;
+			this.TargetNode = null;
+			this.SetView();
+			this.Nodes.Clear();
+			if (list != null)
+			{
+				this.Enabled = true;
+				this.BackColor = System.Drawing.SystemColors.Window;
+				if (list.Count > 0)
+				{
+					this.BeginUpdate();
+					foreach (Object obj in list)
+					{
+						if (obj is HAFuncNode) this.Nodes.Add((HAFuncNode)((HAFuncNode)obj).Clone());
+					}
+					this.ApplyState();
+					this.EndUpdate();
+					if (this.SelectedNode != null)
+					{
+						this.SelectedNode.EnsureVisible();
+						this.TargetNode = (HAFuncNode)this.SelectedNode;
+						this.SetView();
+					}
+				}
+			}
+			else
+			{
+				this.Enabled = false;
+				this.BackColor = System.Drawing.SystemColors.ControlLight;
+			}
+			this.IgnoreChange = false;
+		}
+
 		protected override void OnAfterSelect(System.Windows.Forms.TreeViewEventArgs e)
 		{
 			base.OnAfterSelect(e);
@@ -185,68 +185,6 @@ namespace Girl.HierarchyArchitect
 		}
 
 		#endregion
-
-		private void cmChild_Click(object sender, System.EventArgs e)
-		{
-			TreeNode n = MakeNewNode();
-			TreeNode p = this.SelectedNode;
-			if (p == null)
-			{
-				this.Nodes.Add(n);
-			}
-			else
-			{
-				p.Nodes.Add(n);
-			}
-			n.EnsureVisible();
-			this.SelectedNode = n;
-			n.BeginEdit();
-		}
-
-		private void cmAppend_Click(object sender, System.EventArgs e)
-		{
-			TreeNode n = MakeNewNode();
-			TreeNode p = this.SelectedNode;
-			if (p == null)
-			{
-				this.Nodes.Add(n);
-			}
-			else
-			{
-				TreeNodeCollection ns = (p.Parent != null) ? p.Parent.Nodes : this.Nodes;
-				ns.Insert(p.Index + 1, n);
-			}
-			n.EnsureVisible();
-			this.SelectedNode = n;
-			n.BeginEdit();
-		}
-
-		private void cmInsert_Click(object sender, System.EventArgs e)
-		{
-			TreeNode n = MakeNewNode();
-			TreeNode p = this.SelectedNode;
-			if (p == null)
-			{
-				this.Nodes.Insert(0, n);
-			}
-			else
-			{
-				TreeNodeCollection ns = (p.Parent != null) ? p.Parent.Nodes : this.Nodes;
-				ns.Insert(p.Index, n);
-				p.EnsureVisible();
-			}
-			n.EnsureVisible();
-			this.SelectedNode = n;
-			n.BeginEdit();
-		}
-
-		private void cmDelete_Click(object sender, System.EventArgs e)
-		{
-			TreeNode n = this.SelectedNode;
-			if (n == null) return;
-			this.Nodes.Remove(n);
-			SetState();
-		}
 	}
 
 	/// <summary>
@@ -254,6 +192,8 @@ namespace Girl.HierarchyArchitect
 	/// </summary>
 	public class HAFuncNode : HATreeNode
 	{
+		public ArrayList Args    = new ArrayList();
+		public ArrayList Objects = new ArrayList();
 		public string Comment = "";
 		public string Source  = "";
 
@@ -284,6 +224,8 @@ namespace Girl.HierarchyArchitect
 		public override object Clone()
 		{
 			HAFuncNode ret = (HAFuncNode)base.Clone();
+			ret.Args    = (ArrayList)this.Args.Clone();
+			ret.Objects = (ArrayList)this.Objects.Clone();
 			ret.Comment = this.Comment;
 			ret.Source  = this.Source;
 			return ret;
@@ -294,6 +236,18 @@ namespace Girl.HierarchyArchitect
 		public override void WriteXml(XmlTextWriter xw)
 		{
 			base.WriteXml(xw);
+
+			xw.WriteStartElement("Arguments");
+			foreach (Object obj in this.Args)
+			{
+				if (obj is HAObjectNode) ((HAObjectNode)obj).ToXml(xw);
+			}
+			xw.WriteEndElement();
+
+			foreach (Object obj in this.Objects)
+			{
+				if (obj is HAObjectNode) ((HAObjectNode)obj).ToXml(xw);
+			}
 
 			xw.WriteStartElement("Comment");
 			xw.WriteString(this.Comment);
@@ -306,7 +260,29 @@ namespace Girl.HierarchyArchitect
 
 		public override void ReadXmlNode(XmlTextReader xr)
 		{
-			if (xr.Name == "Comment" && xr.NodeType == XmlNodeType.Element)
+			if (xr.Name == "Arguments" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
+			{
+				while (xr.Read())
+				{
+					if (xr.Name == "Arguments" && xr.NodeType == XmlNodeType.EndElement)
+					{
+						break;
+					}
+					else if (xr.Name == "HAObject" && xr.NodeType == XmlNodeType.Element)
+					{
+						HAObjectNode n = new HAObjectNode();
+						this.Args.Add(n);
+						n.FromXml(xr);
+					}
+				}
+			}
+			else if (xr.Name == "HAObject" && xr.NodeType == XmlNodeType.Element)
+			{
+				HAObjectNode n = new HAObjectNode();
+				this.Objects.Add(n);
+				n.FromXml(xr);
+			}
+			else if (xr.Name == "Comment" && xr.NodeType == XmlNodeType.Element)
 			{
 				if (!xr.IsEmptyElement && xr.Read()) this.Comment = xr.ReadString();
 			}

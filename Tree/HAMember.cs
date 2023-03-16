@@ -13,63 +13,15 @@ namespace Girl.HierarchyArchitect
 	public class HAMember : HATree
 	{
 		private System.Windows.Forms.ContextMenu contextMenu1;
-		private System.Windows.Forms.MenuItem cm1Child;
-		private System.Windows.Forms.MenuItem cm1Append;
-		private System.Windows.Forms.MenuItem cm1Insert;
-		private System.Windows.Forms.MenuItem cm1Separator1;
-		private System.Windows.Forms.MenuItem cm1Delete;
 
 		private void InitializeComponent()
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(HAMember));
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
-			this.cm1Child = new System.Windows.Forms.MenuItem();
-			this.cm1Append = new System.Windows.Forms.MenuItem();
-			this.cm1Insert = new System.Windows.Forms.MenuItem();
-			this.cm1Separator1 = new System.Windows.Forms.MenuItem();
-			this.cm1Delete = new System.Windows.Forms.MenuItem();
 			// 
 			// imageList1
 			// 
 			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-			// 
-			// contextMenu1
-			// 
-			this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						 this.cm1Child,
-																						 this.cm1Append,
-																						 this.cm1Insert,
-																						 this.cm1Separator1,
-																						 this.cm1Delete});
-			// 
-			// cm1Child
-			// 
-			this.cm1Child.Index = 0;
-			this.cm1Child.Text = "下に追加";
-			this.cm1Child.Click += new System.EventHandler(this.cmChild_Click);
-			// 
-			// cm1Append
-			// 
-			this.cm1Append.Index = 1;
-			this.cm1Append.Text = "後に追加";
-			this.cm1Append.Click += new System.EventHandler(this.cmAppend_Click);
-			// 
-			// cm1Insert
-			// 
-			this.cm1Insert.Index = 2;
-			this.cm1Insert.Text = "前に追加";
-			this.cm1Insert.Click += new System.EventHandler(this.cmInsert_Click);
-			// 
-			// cm1Separator1
-			// 
-			this.cm1Separator1.Index = 3;
-			this.cm1Separator1.Text = "-";
-			// 
-			// cm1Delete
-			// 
-			this.cm1Delete.Index = 4;
-			this.cm1Delete.Text = "削除";
-			this.cm1Delete.Click += new System.EventHandler(this.cmDelete_Click);
 			// 
 			// HAMember
 			// 
@@ -77,12 +29,32 @@ namespace Girl.HierarchyArchitect
 			this.ContextMenu = this.contextMenu1;
 			this.HideSelection = false;
 			this.LabelEdit = true;
+			this.ShowRootLines = false;
 
 		}
 	
+		private MenuItem mnuType;
+
 		public HAMember()
 		{
 			InitializeComponent();
+
+			this.contextMenu1.MenuItems.AddRange(new MenuItem[]
+				{
+					mnuType = new MenuItem("種類変更(&T)", new MenuItem[]
+						{
+							this.mnuAccess,
+							this.mnuFolder,
+							this.mnuEtc
+						}),
+					new MenuItem("-"),
+					this.mnuChild,
+					this.mnuAppend,
+					this.mnuInsert,
+					new MenuItem("-"),
+					this.mnuDelete
+				});
+
 			this.ImageList = this.imageList1;
 		}
 
@@ -95,13 +67,51 @@ namespace Girl.HierarchyArchitect
 
 		protected override void SetState()
 		{
-			cm1Delete.Enabled = (this.SelectedNode != null);
+			HAMemberNode n = (HAMemberNode)this.SelectedNode;
+			bool flag = (n != null && n.AllowDrag);
+			mnuType  .Enabled = flag;
+			mnuDelete.Enabled = flag;
 		}
 
-		private TreeNode MakeNewNode()
+		protected override HATreeNode NewNode
 		{
-			TreeNode ret = new HAMemberNode("新しいメンバ");
-			return ret;
+			get
+			{
+				return new HAMemberNode("新しいメンバ");
+			}
+		}
+
+		public void SetView(ArrayList list)
+		{
+			this.IgnoreChange = true;
+			this.SelectedNode = null;
+			if (list != null)
+			{
+				this.Enabled = true;
+				this.BackColor = System.Drawing.SystemColors.Window;
+				if (list.Count > 0 && this.Nodes.Count > 0)
+				{
+					TreeNodeCollection root = this.Nodes[0].Nodes;
+					this.BeginUpdate();
+					foreach (Object obj in list)
+					{
+						if (obj is HAMemberNode) root.Add((HAMemberNode)((HAMemberNode)obj).Clone());
+					}
+					this.ApplyState();
+					this.EndUpdate();
+					if (this.SelectedNode != null)
+					{
+						this.SelectedNode.EnsureVisible();
+					}
+					this.Nodes[0].Expand();
+				}
+			}
+			else
+			{
+				this.Enabled = false;
+				this.BackColor = System.Drawing.SystemColors.ControlLight;
+			}
+			this.IgnoreChange = false;
 		}
 
 		#region XML
@@ -129,96 +139,34 @@ namespace Girl.HierarchyArchitect
 		}
 
 		#endregion
+	}
 
-		private void cmChild_Click(object sender, System.EventArgs e)
+	/// <summary>
+	/// HAMemberNode の概要の説明です。
+	/// </summary>
+	public class HAMemberNode : HATreeNode
+	{
+		public HAMemberNode()
 		{
-			TreeNode n = MakeNewNode();
-			TreeNode p = this.SelectedNode;
-			if (p == null)
-			{
-				this.Nodes.Add(n);
-			}
-			else
-			{
-				p.Nodes.Add(n);
-			}
-			n.EnsureVisible();
-			this.SelectedNode = n;
-			n.BeginEdit();
 		}
 
-		private void cmAppend_Click(object sender, System.EventArgs e)
+		public HAMemberNode(string text) : base(text)
 		{
-			TreeNode n = MakeNewNode();
-			TreeNode p = this.SelectedNode;
-			if (p == null)
-			{
-				this.Nodes.Add(n);
-			}
-			else
-			{
-				TreeNodeCollection ns = (p.Parent != null) ? p.Parent.Nodes : this.Nodes;
-				ns.Insert(p.Index + 1, n);
-			}
-			n.EnsureVisible();
-			this.SelectedNode = n;
-			n.BeginEdit();
 		}
 
-		private void cmInsert_Click(object sender, System.EventArgs e)
+		public override string XmlName
 		{
-			TreeNode n = MakeNewNode();
-			TreeNode p = this.SelectedNode;
-			if (p == null)
+			get
 			{
-				this.Nodes.Insert(0, n);
+				return "HAObject";
 			}
-			else
-			{
-				TreeNodeCollection ns = (p.Parent != null) ? p.Parent.Nodes : this.Nodes;
-				ns.Insert(p.Index, n);
-				p.EnsureVisible();
-			}
-			n.EnsureVisible();
-			this.SelectedNode = n;
-			n.BeginEdit();
 		}
 
-		private void cmDelete_Click(object sender, System.EventArgs e)
+		public override HATreeNode NewNode
 		{
-			TreeNode n = this.SelectedNode;
-			if (n == null) return;
-			this.Nodes.Remove(n);
-			SetState();
-		}
-
-		/// <summary>
-		/// HAMemberNode の概要の説明です。
-		/// </summary>
-		public class HAMemberNode : HATreeNode
-		{
-			public HAMemberNode()
+			get
 			{
-			}
-
-			public HAMemberNode(string text) : base(text)
-			{
-			}
-
-			public override string XmlName
-			{
-				get
-				{
-					return "HAObject";
-				}
-			}
-
-			public override HATreeNode NewNode
-			{
-				get
-				{
-					return new HAMemberNode();
-				}
+				return new HAMemberNode();
 			}
 		}
 	}
