@@ -3,7 +3,7 @@
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:54">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="0" SelectionLength="0">using System;
 using System.Collections;
 using System.Drawing;
@@ -18,7 +18,7 @@ using System.Windows.Forms;
 フォント名を列挙する ComboBox です。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
@@ -30,7 +30,7 @@ using System.Windows.Forms;
       </HAFunc>
       <HAFunc Type="Public" Text="InitializeItems" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="260" SelectionLength="0">this.Items.Clear();
 FontFamily[] ffs = FontFamily.Families;
 ArrayList al = new ArrayList();
@@ -45,9 +45,9 @@ this.Items.AddRange(al.ToArray());
       </HAFunc>
       <HAFunc Type="Protected" Text="OnMeasureItem:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54">
         <Arguments>
-          <HAObject Type="Private" Text="e:MeasureItemEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:54" />>
+          <HAObject Type="Private" Text="e:MeasureItemEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:54" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="173" SelectionLength="0">base.OnMeasureItem(e);
 
 Font f = new Font(this.Items[e.Index].ToString(), this.Font.Size);
@@ -57,9 +57,9 @@ f.Dispose();
       </HAFunc>
       <HAFunc Type="Protected" Text="OnDrawItem:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54">
         <Arguments>
-          <HAObject Type="Private" Text="e:DrawItemEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:54" />>
+          <HAObject Type="Private" Text="e:DrawItemEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:54" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="281" SelectionLength="0">base.OnDrawItem(e);
 
 Font f = new Font(this.Items[e.Index].ToString(), this.Font.Size);
@@ -75,8 +75,8 @@ f.Dispose();
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:54">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
 </HAClass>

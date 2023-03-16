@@ -16,14 +16,14 @@
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Body>
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
   <HAClass Link="Coding/ParserBase.hacls" />

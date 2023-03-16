@@ -16,7 +16,7 @@
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Comment" Text="LocalHeader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 21:45:34">
         <Arguments />
         <Comment SelectionStart="72" SelectionLength="0">フォルダの関数欄に作成した "LocalHeader" 名の注釈は特別です。
@@ -31,17 +31,17 @@
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 21:45:06">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
   <HAClass Type="Public" Text="HADoc:Document" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 21:45:14">
-    <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-    <HAObject Type="Public" Text="ViewInfo:HAViewInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+    <HAObject Type="Public" Text="ClassTreeView:HAClass" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+    <HAObject Type="Public" Text="ViewInfo:HAViewInfo" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:45">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="229" SelectionLength="0">using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
@@ -62,7 +62,7 @@ using Girl.Windows.Forms;
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Source SelectionStart="0" SelectionLength="0" />
         <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
@@ -77,7 +77,7 @@ this.InitUserPlugin();
         </HAFunc>
         <HAFunc Type="Public" Text="get_ShortName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="105" SelectionLength="0">string ret = this.Name;
 int p = ret.LastIndexOf('.');
 if (p &lt; 0) return ret;
@@ -86,9 +86,9 @@ return ret.Substring(0, p);
         </HAFunc>
         <HAFunc Type="Public" Text="Open:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
-          <HAObject Type="Private" Text="xr:XmlTextReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-          <HAObject Type="Private" Text="n:HAClassNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <HAObject Type="Private" Text="xr:XmlTextReader" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+          <HAObject Type="Private" Text="n:HAClassNode" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="92" SelectionLength="0">try
 {
 	xr = new XmlTextReader(this.FullName);
@@ -142,7 +142,7 @@ return true;
         </HAFunc>
         <HAFunc Type="Public" Text="Save:override bool" IsExpanded="true" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="331" SelectionLength="0">this.ClassTreeView.StoreData();
 bool ret = false;
 string lfn = this.FullName.ToLower();
@@ -163,8 +163,8 @@ return ret;
 </Source>
           <HAFunc Type="Private" Text="SaveHAPrj:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
             <Arguments />
-            <HAObject Type="Private" Text="xw:XmlTextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <HAObject Type="Private" Text="xw:XmlTextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="0" SelectionLength="0">try
 {
 	xw = new XmlTextWriter(this.FullName, Encoding.UTF8);
@@ -196,8 +196,8 @@ return true;
           </HAFunc>
           <HAFunc Type="Private" Text="SaveHds:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
             <Arguments />
-            <HAObject Type="Private" Text="sw:StreamWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <HAObject Type="Private" Text="sw:StreamWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="835" SelectionLength="0">HAClassNode n = this.ClassTreeView.SelectedNode as HAClassNode;
 if (n == null)
 {
@@ -242,17 +242,17 @@ return true;
         </HAFunc>
         <HAFunc Type="Public" Text="get_BuildDateTime:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="25" SelectionLength="0">return "__DATETIME_NOW";
 </Source>
         </HAFunc>
         <HAFunc Type="Folder" Text="Plugin" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
-          <Source SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
+          <Source SelectionStart="0" SelectionLength="0" />
           <HAFunc Type="Public" Text="get_UserDir:static string" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
             <Arguments />
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="165" SelectionLength="0">string ret = Environment.GetFolderPath(
 	Environment.SpecialFolder.Personal) + @"\HierArch";
 if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
@@ -260,7 +260,7 @@ return ret;
 </Source>
             <HAFunc Type="Public" Text="get_UserPluginDir:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
               <Arguments />
-              <Comment SelectionStart="0" SelectionLength="0" />>
+              <Comment SelectionStart="0" SelectionLength="0" />
               <Source SelectionStart="115" SelectionLength="0">string ret = __CLASS.UserDir + @"\Plugin";
 if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
 return ret;
@@ -269,13 +269,13 @@ return ret;
           </HAFunc>
           <HAFunc Type="Public" Text="get_SysPluginDir:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
             <Arguments />
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="54" SelectionLength="0">return ApplicationDataManager.SearchFolder("Plugin");
 </Source>
           </HAFunc>
           <HAFunc Type="Private" Text="InitUserPlugin" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
             <Arguments />
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="100" SelectionLength="0">string dir1 = __CLASS.SysPluginDir;
 if (dir1 == null) return;
 
@@ -302,7 +302,7 @@ File.Copy(di2.FullName + @"\HierArchLib.dll", dll);
           </HAFunc>
           <HAFunc Type="Public" Text="Make" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
             <Arguments />
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="391" SelectionLength="0">this.InitUserPlugin();
 
 DirectoryInfo di = new DirectoryInfo(__CLASS.UserPluginDir);
@@ -322,10 +322,10 @@ foreach (FileInfo fi in di.GetFiles("*.cs"))
           </HAFunc>
           <HAFunc Type="Public" Text="Compile:CompilerResults" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
             <Arguments>
-              <HAObject Type="Private" Text="source:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-              <HAObject Type="Private" Text="dll:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+              <HAObject Type="Private" Text="source:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+              <HAObject Type="Private" Text="dll:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="342" SelectionLength="0">Microsoft.CSharp.CSharpCodeProvider codeProvider =
 	new Microsoft.CSharp.CSharpCodeProvider();
 ICodeCompiler icc = codeProvider.CreateCompiler();
@@ -347,39 +347,39 @@ return icc.CompileAssemblyFromFile(parameters, source);
     <Footer>
       <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:45">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
     </Footer>
   </HAClass>
   <HAClass Type="Public" Text="HAViewInfo" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 21:45:16">
-    <HAObject Type="Public" Text="X:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-    <HAObject Type="Public" Text="Y:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-    <HAObject Type="Public" Text="Width:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-    <HAObject Type="Public" Text="Height:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-    <HAObject Type="Public" Text="State:FormWindowState" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+    <HAObject Type="Public" Text="X:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+    <HAObject Type="Public" Text="Y:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+    <HAObject Type="Public" Text="Width:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+    <HAObject Type="Public" Text="Height:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+    <HAObject Type="Public" Text="State:FormWindowState" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <HAObject Type="Folder" Text="Show" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
-      <HAObject Type="Public" Text="ShowClass:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-      <HAObject Type="Public" Text="ShowFunc:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-      <HAObject Type="Public" Text="ShowComment:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-      <HAObject Type="Public" Text="ShowMember:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-      <HAObject Type="Public" Text="ShowArg:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-      <HAObject Type="Public" Text="ShowObject:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+      <HAObject Type="Public" Text="ShowClass:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+      <HAObject Type="Public" Text="ShowFunc:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+      <HAObject Type="Public" Text="ShowComment:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+      <HAObject Type="Public" Text="ShowMember:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+      <HAObject Type="Public" Text="ShowArg:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+      <HAObject Type="Public" Text="ShowObject:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     </HAObject>
     <HAObject Type="Folder" Text="Size" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
       <HAObject Type="Public" Text="LeftPanelWidth:int" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
-        <HAObject Type="Public" Text="ClassHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+        <HAObject Type="Public" Text="ClassHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
       </HAObject>
-      <HAObject Type="Public" Text="CommentHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+      <HAObject Type="Public" Text="CommentHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
       <HAObject Type="Public" Text="RightPanelWidth:int" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
-        <HAObject Type="Public" Text="MemberHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-        <HAObject Type="Public" Text="ObjectHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+        <HAObject Type="Public" Text="MemberHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+        <HAObject Type="Public" Text="ObjectHeight:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
       </HAObject>
     </HAObject>
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:45">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="64" SelectionLength="0">using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -393,7 +393,7 @@ using System.Windows.Forms;
 ウィンドウの状態を保持します。
 &lt;/summary&gt;
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Source SelectionStart="0" SelectionLength="0" />
         <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
@@ -405,7 +405,7 @@ using System.Windows.Forms;
         </HAFunc>
         <HAFunc Type="Public" Text="Init" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="329" SelectionLength="0">this.X = this.Y = this.Width = this.Height = 0;
 this.State = FormWindowState.Normal;
 
@@ -421,7 +421,7 @@ this.LeftPanelWidth = this.ClassHeight
         </HAFunc>
         <HAFunc Type="Public" Text="InitHds" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="110" SelectionLength="0">this.Init();
 
 this.ShowClass = this.ShowComment
@@ -431,9 +431,9 @@ this.ShowClass = this.ShowComment
         </HAFunc>
         <HAFunc Type="Public" Text="Apply" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments>
-            <HAObject Type="Private" Text="form1:Form1" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+            <HAObject Type="Private" Text="form1:Form1" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="357" SelectionLength="0">if (this.Width &gt; 0 &amp;&amp; this.Height &gt; 0)
 {
 	Rectangle r1 = new Rectangle(
@@ -469,9 +469,9 @@ if (this.ObjectHeight    &gt; 0) form1.view1.tabObject .Height = this.ObjectHeig
         </HAFunc>
         <HAFunc Type="Public" Text="Store" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments>
-            <HAObject Type="Private" Text="form1:Form1" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+            <HAObject Type="Private" Text="form1:Form1" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="172" SelectionLength="0">Rectangle rect = form1.sizeMonitor.Rect;
 this.X      = rect.X;
 this.Y      = rect.Y;
@@ -500,17 +500,17 @@ this.ObjectHeight    = form1.view1.tabObject .Height;
     <Footer>
       <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:45">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
     </Footer>
   </HAClass>
   <HAClass Type="Public" Text="HAAccountManager" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 21:45:17">
-    <HAObject Type="Private" Text="accounts:HAAccount[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+    <HAObject Type="Private" Text="accounts:HAAccount[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
     <Header>
       <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:45">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="152" SelectionLength="0">using System;
 using Girl.Windows.Forms;
 
@@ -531,7 +531,7 @@ namespace Girl.HierArch
 サーバのアカウントを管理します。
 &lt;/summary&gt;
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Source SelectionStart="0" SelectionLength="0" />
         <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments />
           <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
@@ -543,9 +543,9 @@ namespace Girl.HierArch
         </HAFunc>
         <HAFunc Type="Public" Text="Get:HAAccount" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments>
-            <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+            <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="114" SelectionLength="0">server = __CLASS.RemoveQuery(server);
 int num = this.Find(server);
 return (num &gt;= 0) ? this.accounts[num] : null;
@@ -553,11 +553,11 @@ return (num &gt;= 0) ? this.accounts[num] : null;
         </HAFunc>
         <HAFunc Type="Public" Text="Set" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments>
-            <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-            <HAObject Type="Private" Text="id:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
-            <HAObject Type="Private" Text="password:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+            <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+            <HAObject Type="Private" Text="id:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
+            <HAObject Type="Private" Text="password:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="401" SelectionLength="0">server = __CLASS.RemoveQuery(server);
 int num = this.Find(server);
 if (num &lt; 0)
@@ -579,9 +579,9 @@ this.accounts[num].Password = password;
         </HAFunc>
         <HAFunc Type="Public" Text="Find:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments>
-            <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+            <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="146" SelectionLength="0">server = __CLASS.RemoveQuery(server);
 int i = 0;
 foreach (HAAccount ac in this.accounts)
@@ -594,26 +594,26 @@ return -1;
         </HAFunc>
         <HAFunc Type="Public" Text="Load" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments>
-            <HAObject Type="Private" Text="adm:ApplicationDataManager" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+            <HAObject Type="Private" Text="adm:ApplicationDataManager" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="5" SelectionLength="0">HAAccount[] acs = adm.Load("Accounts.xml", typeof(HAAccount[])) as HAAccount[];
 this.accounts = (acs != null) ? acs : new HAAccount[0];
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="Save" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments>
-            <HAObject Type="Private" Text="adm:ApplicationDataManager" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+            <HAObject Type="Private" Text="adm:ApplicationDataManager" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="41" SelectionLength="0">adm.Save("Accounts.xml", this.accounts);
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="RemoveQuery:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
           <Arguments>
-            <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />>
+            <HAObject Type="Private" Text="server:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:45" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="80" SelectionLength="0">int p = server.IndexOf('?');
 return (p &gt;= 0) ? server.Substring(0, p) : server;
 </Source>
@@ -623,8 +623,8 @@ return (p &gt;= 0) ? server.Substring(0, p) : server;
     <Footer>
       <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:45">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
     </Footer>
   </HAClass>

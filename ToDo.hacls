@@ -16,10 +16,10 @@
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Text" Text="プログラミング" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 13:26:26">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="194" SelectionLength="0">検索
 パーサが変
 コンストラクタでのbaseサポート
@@ -42,7 +42,7 @@ XmlDocViewerとの統合とリフレクション
       </HAFunc>
       <HAFunc Type="Text" Text="ツリー" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 22:11:39">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="72" SelectionLength="0">一般ファイルへのリンクのサポート
 
 //  [Done]
@@ -57,8 +57,8 @@ XmlDocViewerとの統合とリフレクション
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:45">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
 </HAClass>

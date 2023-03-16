@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HAClass Type="Public" Text="CParserBase:ParserBase" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
-  <HAObject Type="Protected" Text="separator:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-  <HAObject Type="Private" Text="preText:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-  <HAObject Type="Private" Text="preChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-  <HAObject Type="Private" Text="curChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-  <HAObject Type="Private" Text="nextChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-  <HAObject Type="Private" Text="curLineNum:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-  <HAObject Type="Private" Text="prePos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-  <HAObject Type="Private" Text="curPos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Protected" Text="separator:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+  <HAObject Type="Private" Text="preText:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+  <HAObject Type="Private" Text="preChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+  <HAObject Type="Private" Text="curChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+  <HAObject Type="Private" Text="nextChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+  <HAObject Type="Private" Text="curLineNum:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+  <HAObject Type="Private" Text="prePos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+  <HAObject Type="Private" Text="curPos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="31" SelectionLength="0">using System;
 using System.IO;
 </Source>
@@ -42,11 +42,11 @@ using System.IO;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
       <HAFunc Type="Protected" Text="Init:override" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="234" SelectionLength="0">base.Init();
 
 this.separator = ";,.(){}[]*";
@@ -63,9 +63,9 @@ this.pos        =  0;
       </HAFunc>
       <HAFunc Type="Public" Text="Read:override bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <HAObject Type="Private" Text="ch:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-        <HAObject Type="Private" Text="st:State" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <HAObject Type="Private" Text="ch:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+        <HAObject Type="Private" Text="st:State" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="416" SelectionLength="0">this.preText = this.text;
 this.text = this.spacing = "";
 ch = -1;
@@ -212,7 +212,7 @@ return base.Read();
       </HAFunc>
       <HAFunc Type="Private" Text="ReadChar:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="376" SelectionLength="0">if (this.nextChar != -1) 
 {
 	this.curChar = this.nextChar;
@@ -238,23 +238,23 @@ return this.curChar;
       </HAFunc>
       <HAFunc Type="Folder" Text="Properties" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
         <HAFunc Type="Public" Text="get_IsComment:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="66" SelectionLength="0">return this.text.StartsWith("/*") || this.text.StartsWith("//");
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="get_IsString:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="65" SelectionLength="0">return this.text.StartsWith("\"") || this.text.StartsWith("'");
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="get_IsDirective:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="35" SelectionLength="0">return this.text.StartsWith("#");
 </Source>
         </HAFunc>
@@ -264,8 +264,8 @@ return this.curChar;
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
 </HAClass>

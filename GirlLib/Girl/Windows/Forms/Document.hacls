@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HAClass Type="Public" Text="Document" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
-  <HAObject Type="Public" Text="FullName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-  <HAObject Type="Public" Text="Changed:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Public" Text="FullName:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+  <HAObject Type="Public" Text="Changed:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="31" SelectionLength="0">using System;
 using System.IO;
 </Source>
@@ -18,7 +18,7 @@ using System.IO;
 文書を管理するクラスです。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
@@ -31,21 +31,21 @@ this.Changed  = false;
       </HAFunc>
       <HAFunc Type="Public" Text="get_Name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="80" SelectionLength="0">if(this.FullName == "") return "無題";
 return new FileInfo(this.FullName).Name;
 </Source>
       </HAFunc>
       <HAFunc Type="Public" Text="Open:virtual bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="37" SelectionLength="0">this.Changed = false;
 return true;
 </Source>
       </HAFunc>
       <HAFunc Type="Public" Text="Save:virtual bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="35" SelectionLength="0">this.Changed = false;
 return true;
 </Source>
@@ -55,8 +55,8 @@ return true;
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
 </HAClass>

@@ -3,7 +3,7 @@
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="42" SelectionLength="0">using System;
 using System.Windows.Forms;
 </Source>
@@ -16,21 +16,21 @@ using System.Windows.Forms;
 TextBoxBase を操作するクラスです。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Public" Text="GetEndLineWidth:static int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="38" SelectionLength="0">return (textBox is TextBox) ? 2 : 1;
 </Source>
       </HAFunc>
       <HAFunc Type="Public" Text="GetLinePosition:static int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-          <HAObject Type="Private" Text="line:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+          <HAObject Type="Private" Text="line:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="84" SelectionLength="0">if (line &gt; textBox.Lines.Length) return textBox.TextLength;
 
 int endLine = __CLASS.GetEndLineWidth(textBox);
@@ -44,10 +44,10 @@ return ret;
       </HAFunc>
       <HAFunc Type="Public" Text="GetLine:static int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-          <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+          <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="21" SelectionLength="0">int endLine = __CLASS.GetEndLineWidth(textBox);
 int ret = 0, lpos = 0, llen = 0;
 foreach (string line in textBox.Lines)
@@ -65,17 +65,17 @@ return ret;
       </HAFunc>
       <HAFunc Type="Public" Text="GetCurrentLine:static int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="58" SelectionLength="0">return __CLASS.GetLine(textBox, textBox.SelectionStart);
 </Source>
       </HAFunc>
       <HAFunc Type="Public" Text="GetCurrentColumn:static int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="295" SelectionLength="0">int endLine = __CLASS.GetEndLineWidth(textBox);
 int lpos = 0, llen = 0;
 int pos = textBox.SelectionStart;
@@ -93,10 +93,10 @@ return textBox.SelectionStart - lpos;
       </HAFunc>
       <HAFunc Type="Public" Text="GetLineText:static string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-          <HAObject Type="Private" Text="line:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="textBox:TextBoxBase" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+          <HAObject Type="Private" Text="line:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="74" SelectionLength="0">if (line &lt; textBox.Lines.Length) return textBox.Lines[line];
 return "";
 </Source>
@@ -106,8 +106,8 @@ return "";
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
 </HAClass>

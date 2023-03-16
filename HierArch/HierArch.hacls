@@ -16,7 +16,7 @@
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Comment" Text="LocalHeader" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:45">
         <Arguments />
         <Comment SelectionStart="72" SelectionLength="0">フォルダの関数欄に作成した "LocalHeader" 名の注釈は特別です。
@@ -28,7 +28,7 @@
       </HAFunc>
       <HAFunc Type="Text" Text="HierArch.exe.manifest" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 21:47:07">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="617" SelectionLength="0">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
 &lt;assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0"&gt;
 &lt;assemblyIdentity
@@ -58,12 +58,12 @@
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:45">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
-  <HAClass Link="Base/Base.hacls" />>
-  <HAClass Link="Tree/Tree.hacls" />>
-  <HAClass Link="Parser/Parser.hacls" />>
-  <HAClass Link="Uploader/Uploader.hacls" />>
+  <HAClass Link="Base/Base.hacls" />
+  <HAClass Link="Tree/Tree.hacls" />
+  <HAClass Link="Parser/Parser.hacls" />
+  <HAClass Link="Uploader/Uploader.hacls" />
 </HAClass>

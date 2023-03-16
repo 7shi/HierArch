@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HAClass Type="Public" Text="CodeEditor:ExRichTextBox" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 21:56:14">
-  <HAObject Type="Public" Text="Parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Public" Text="Parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="135" SelectionLength="0">using System;
 using System.Drawing;
 using System.IO;
@@ -22,7 +22,7 @@ using Girl.Rtf;
 ソースコードを編集するための RichTextBox です。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 21:56:14">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
@@ -41,9 +41,9 @@ this.Parser = null;
       </HAFunc>
       <HAFunc Type="Public" Text="JumpToError" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="p:Point" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="p:Point" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="397" SelectionLength="0">if (p.X &lt; 0 || p.Y &lt; 0) return;
 
 this.SelectionStart = this.GetLinePosition(p.Y) + p.X;
@@ -64,9 +64,9 @@ this.Focus();
       </HAFunc>
       <HAFunc Type="Public" Text="get_Code:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-        <HAObject Type="Private" Text="prev:char" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+        <HAObject Type="Private" Text="prev:char" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="236" SelectionLength="0">sb = new StringBuilder();
 prev = '\0';
 foreach (char ch in this.Text)
@@ -89,7 +89,7 @@ return sb.ToString();
       </HAFunc>
       <HAFunc Type="Public" Text="set_Code:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="250" SelectionLength="0">if (this.Parser == null || value == null)
 {
 	this.Text = value;
@@ -107,7 +107,7 @@ this.Rtf = this.Parser.Rtf;
       </HAFunc>
       <HAFunc Type="Public" Text="Reanalyze" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="332" SelectionLength="0">int pos = this.SelectionStart;
 int len = this.SelectionLength;
 
@@ -128,8 +128,8 @@ vbar.Pos = vpos;
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
 </HAClass>

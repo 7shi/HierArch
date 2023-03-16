@@ -3,7 +3,7 @@
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="64" SelectionLength="0">using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -17,25 +17,25 @@ using System.Windows.Forms;
 スタイル付き文字列の追加が簡単な RichTextBox です。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
       <HAFunc Type="Folder" Text="Text Manipulation" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
         <HAFunc Type="Public" Text="AppendText" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-            <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+            <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="32" SelectionLength="0">if (text.Length &lt; 1) return;
 
 Color c = this.SelectionColor;
@@ -45,10 +45,10 @@ this.SelectionColor = c;
 </Source>
           <HAFunc Type="Public" Text="AppendText" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments>
-              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="32" SelectionLength="0">if (text.Length &lt; 1) return;
 
 Font f1 = this.SelectionFont;
@@ -61,11 +61,11 @@ f2.Dispose();
           </HAFunc>
           <HAFunc Type="Public" Text="AppendText" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments>
-              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="32" SelectionLength="0">if (text.Length &lt; 1) return;
 
 Color c = this.SelectionColor;
@@ -77,45 +77,45 @@ this.SelectionColor = c;
         </HAFunc>
         <HAFunc Type="Public" Text="AppendLine" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="0" SelectionLength="0">this.AppendText("\r\n");
 </Source>
           <HAFunc Type="Public" Text="AppendLine" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments>
-              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="44" SelectionLength="0">this.AppendText(text);
 this.AppendLine();
 </Source>
           </HAFunc>
           <HAFunc Type="Public" Text="AppendLine" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments>
-              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="51" SelectionLength="0">this.AppendText(text, color);
 this.AppendLine();
 </Source>
           </HAFunc>
           <HAFunc Type="Public" Text="AppendLine" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments>
-              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="55" SelectionLength="0">this.AppendText(text, fontStyle);
 this.AppendLine();
 </Source>
           </HAFunc>
           <HAFunc Type="Public" Text="AppendLine" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments>
-              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="62" SelectionLength="0">this.AppendText(text, color, fontStyle);
 this.AppendLine();
 </Source>
@@ -123,10 +123,10 @@ this.AppendLine();
         </HAFunc>
         <HAFunc Type="Public" Text="InsertText" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-            <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+            <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="141" SelectionLength="0">if (text.Length &lt; 1) return;
 
 Color c = this.SelectionColor;
@@ -136,10 +136,10 @@ this.SelectionColor = c;
 </Source>
           <HAFunc Type="Public" Text="InsertText" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments>
-              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="32" SelectionLength="0">if (text.Length &lt; 1) return;
 
 Font f1 = this.SelectionFont;
@@ -152,11 +152,11 @@ f2.Dispose();
           </HAFunc>
           <HAFunc Type="Public" Text="InsertText" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
             <Arguments>
-              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
-              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+              <HAObject Type="Private" Text="text:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
+              <HAObject Type="Private" Text="fontStyle:FontStyle" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
             </Arguments>
-            <Comment SelectionStart="0" SelectionLength="0" />>
+            <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="32" SelectionLength="0">if (text.Length &lt; 1) return;
 
 Color c = this.SelectionColor;
@@ -169,7 +169,7 @@ this.SelectionColor = c;
       </HAFunc>
       <HAFunc Type="Public" Text="ShowLast" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 17:59:17">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="69" SelectionLength="0">this.SelectionStart = this.TextLength;
 this.Focus();
 this.Refresh();
@@ -177,41 +177,41 @@ this.Refresh();
       </HAFunc>
       <HAFunc Type="Folder" Text="Wrappers" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />
         <HAFunc Type="Public" Text="get_CurrentLine:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="42" SelectionLength="0">return TextBoxPlus.GetCurrentLine(this);
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="get_CurrentColumn:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments />
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="44" SelectionLength="0">return TextBoxPlus.GetCurrentColumn(this);
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="GetLinePosition:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="line:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="line:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="34" SelectionLength="0">return TextBoxPlus.GetLinePosition(this, line);
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="GetLine:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="40" SelectionLength="0">return TextBoxPlus.GetLine(this, pos);
 </Source>
         </HAFunc>
         <HAFunc Type="Public" Text="GetLineText:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="line:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="line:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />>
+          <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="45" SelectionLength="0">return TextBoxPlus.GetLineText(this, line);
 </Source>
         </HAFunc>
@@ -221,8 +221,8 @@ this.Refresh();
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
   <HAClass Link="CodeEditor.hacls" />

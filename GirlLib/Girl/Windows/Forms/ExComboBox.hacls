@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HAClass Type="Public" Text="ExComboBox:ComboBox" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54">
-  <HAObject Type="Public" Text="EnterKeyPress:event EventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54" />>
-  <HAObject Type="Public" Text="EscapeKeyPress:event EventHandler" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:54" />>
+  <HAObject Type="Public" Text="EnterKeyPress:event EventHandler" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54" />
+  <HAObject Type="Public" Text="EscapeKeyPress:event EventHandler" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:54" />
   <Header>
     <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:54">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
       <Source SelectionStart="0" SelectionLength="0">using System;
 using System.Windows.Forms;
 </Source>
@@ -18,20 +18,20 @@ using System.Windows.Forms;
 ComboBox 内での Enter キーと Escape キーの入力を監視します。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />
       <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0" />>
+        <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
       <HAFunc Type="Public" Text="PreProcessMessage:override bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:54">
         <Arguments>
-          <HAObject Type="Private" Text="m:ref Message" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:54" />>
+          <HAObject Type="Private" Text="m:ref Message" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:54" />
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="360" SelectionLength="0">const int WM_KEYDOWN = 256;
 if (m.Msg == WM_KEYDOWN &amp;&amp; !this.DroppedDown)
 {
@@ -54,8 +54,8 @@ return base.PreProcessMessage(ref m);
   <Footer>
     <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:54">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />>
-      <Source SelectionStart="0" SelectionLength="0" />>
+      <Comment SelectionStart="0" SelectionLength="0" />
+      <Source SelectionStart="0" SelectionLength="0" />
     </HAFunc>
   </Footer>
 </HAClass>
