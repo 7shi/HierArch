@@ -21,6 +21,7 @@ namespace Girl.HierArch
 	/// </summary>
 	public class HAFuncNode : HATreeNode
 	{
+		public const string ext = "hafnc";
 		public ArrayList Args;
 		public ArrayList Objects;
 		public string Comment;
@@ -30,6 +31,7 @@ namespace Girl.HierArch
 		public int SourceSelectionStart;
 		public int SourceSelectionLength;
 		public HAFuncNode PropertyPair;
+		public HAFuncProperty Property;
 
 		public override void Init()
 		{
@@ -44,6 +46,7 @@ namespace Girl.HierArch
 			this.SourceSelectionStart   = 0;
 			this.SourceSelectionLength  = 0;
 			this.PropertyPair = null;
+			this.Property     = new HAFuncProperty(this);
 		}
 
 		/// <summary>

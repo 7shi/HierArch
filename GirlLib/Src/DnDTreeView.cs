@@ -55,6 +55,21 @@ namespace Girl.Windows.Forms
 
 		#region XML
 
+		protected string dataFormat = DataFormats.UnicodeText;
+
+		public string DataFormat
+		{
+			get
+			{
+				return this.dataFormat;
+			}
+
+			set
+			{
+				this.dataFormat = value;
+			}
+		}
+
 		public virtual void FromXml(XmlTextReader xr, TreeNodeCollection nc, int index)
 		{
 			DnDTreeNode dn;
@@ -113,7 +128,8 @@ namespace Girl.Windows.Forms
 			xw.Close();
 			sw.Close();
 			Cursor.Current = curOrig;
-			DragDropEffects result = DoDragDrop(sw.ToString(), DragDropEffects.All);
+			DataObject dobj = new DataObject(this.dataFormat, sw.ToString());
+			DragDropEffects result = DoDragDrop(dobj, DragDropEffects.All);
 			if (result == DragDropEffects.Move)
 			{
 				DnDTreeNode p = m_ndDrag.Parent as DnDTreeNode;
@@ -168,9 +184,19 @@ namespace Girl.Windows.Forms
 
 		#region Drag
 
+		public virtual bool IsDragValid(IDataObject data)
+		{
+			return data.GetDataPresent(this.dataFormat);
+		}
+
 		protected override void OnDragOver(DragEventArgs e)
 		{
 			base.OnDragOver(e);
+			if (!this.IsDragValid(e.Data))
+			{
+				e.Effect = DragDropEffects.None;
+				return;
+			}
 
 			Point p = PointToClient(new Point(e.X, e.Y));
 			SetAutoScroll(p);
@@ -321,7 +347,7 @@ namespace Girl.Windows.Forms
 			TreeNodeCollection nc = (n != null) ? n.Nodes : Nodes;
 			if (index < 0 || index > nc.Count) index = nc.Count;
 
-			StringReader sr = new StringReader((string)e.Data.GetData(typeof(string)));
+			StringReader sr = new StringReader((string)e.Data.GetData(this.dataFormat));
 			XmlTextReader xr = new XmlTextReader(sr);
 			FromXml(xr, nc, index);
 			xr.Close();

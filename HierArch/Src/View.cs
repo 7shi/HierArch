@@ -41,6 +41,10 @@ namespace Girl.HierArch
 		private Girl.Windows.Forms.RichTextToolBar richTextToolBar1;
 		public Girl.Windows.Forms.ExRichTextBox txtComment;
 		public Girl.Windows.Forms.CodeEditor txtSource;
+		private System.Windows.Forms.TabPage tpClassProperty;
+		private System.Windows.Forms.TabPage tpFuncProperty;
+		private System.Windows.Forms.PropertyGrid prpFunc;
+		public System.Windows.Forms.PropertyGrid prpClass;
 
 		/// <summary>
 		/// 必要なデザイナ変数です。
@@ -80,6 +84,9 @@ namespace Girl.HierArch
 
 			this.richTextToolBar1.AddTarget(this.txtComment);
 			this.richTextToolBar1.AddTarget(this.txtSource );
+
+			this.tvClass.Property = this.prpClass;
+			this.tvFunc .Property = this.prpFunc;
 		}
 
 		/// <summary>
@@ -117,9 +124,13 @@ namespace Girl.HierArch
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tabFunc = new System.Windows.Forms.TabControl();
 			this.tpFunc = new System.Windows.Forms.TabPage();
+			this.tpFuncProperty = new System.Windows.Forms.TabPage();
+			this.prpFunc = new System.Windows.Forms.PropertyGrid();
 			this.opaqueSplitter3 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.tabClass = new System.Windows.Forms.TabControl();
 			this.tpClass = new System.Windows.Forms.TabPage();
+			this.tpClassProperty = new System.Windows.Forms.TabPage();
+			this.prpClass = new System.Windows.Forms.PropertyGrid();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.tabObject = new System.Windows.Forms.TabControl();
 			this.tpObject = new System.Windows.Forms.TabPage();
@@ -135,8 +146,10 @@ namespace Girl.HierArch
 			this.panel1.SuspendLayout();
 			this.tabFunc.SuspendLayout();
 			this.tpFunc.SuspendLayout();
+			this.tpFuncProperty.SuspendLayout();
 			this.tabClass.SuspendLayout();
 			this.tpClass.SuspendLayout();
+			this.tpClassProperty.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.tabObject.SuspendLayout();
 			this.tpObject.SuspendLayout();
@@ -149,6 +162,7 @@ namespace Girl.HierArch
 			// tvClass
 			// 
 			this.tvClass.AllowDrop = true;
+			this.tvClass.DataFormat = "HierArch Class Data";
 			this.tvClass.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tvClass.HideSelection = false;
 			this.tvClass.ItemHeight = 16;
@@ -160,6 +174,7 @@ namespace Girl.HierArch
 			// tvFunc
 			// 
 			this.tvFunc.AllowDrop = true;
+			this.tvFunc.DataFormat = "HierArch Function Data";
 			this.tvFunc.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tvFunc.HideSelection = false;
 			this.tvFunc.ItemHeight = 16;
@@ -171,6 +186,7 @@ namespace Girl.HierArch
 			// tvMember
 			// 
 			this.tvMember.AllowDrop = true;
+			this.tvMember.DataFormat = "HierArch Object Data";
 			this.tvMember.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tvMember.HideSelection = false;
 			this.tvMember.ItemHeight = 16;
@@ -182,6 +198,7 @@ namespace Girl.HierArch
 			// tvArg
 			// 
 			this.tvArg.AllowDrop = true;
+			this.tvArg.DataFormat = "HierArch Object Data";
 			this.tvArg.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tvArg.HideSelection = false;
 			this.tvArg.ItemHeight = 16;
@@ -193,6 +210,7 @@ namespace Girl.HierArch
 			// tvObject
 			// 
 			this.tvObject.AllowDrop = true;
+			this.tvObject.DataFormat = "HierArch Object Data";
 			this.tvObject.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tvObject.HideSelection = false;
 			this.tvObject.ItemHeight = 16;
@@ -278,7 +296,8 @@ namespace Girl.HierArch
 			// tabFunc
 			// 
 			this.tabFunc.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				  this.tpFunc});
+																				  this.tpFunc,
+																				  this.tpFuncProperty});
 			this.tabFunc.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabFunc.Location = new System.Drawing.Point(0, 187);
 			this.tabFunc.Name = "tabFunc";
@@ -296,6 +315,33 @@ namespace Girl.HierArch
 			this.tpFunc.TabIndex = 0;
 			this.tpFunc.Text = "関数";
 			// 
+			// tpFuncProperty
+			// 
+			this.tpFuncProperty.Controls.AddRange(new System.Windows.Forms.Control[] {
+																						 this.prpFunc});
+			this.tpFuncProperty.Location = new System.Drawing.Point(4, 21);
+			this.tpFuncProperty.Name = "tpFuncProperty";
+			this.tpFuncProperty.Size = new System.Drawing.Size(168, 276);
+			this.tpFuncProperty.TabIndex = 1;
+			this.tpFuncProperty.Text = "プロパティ";
+			// 
+			// prpFunc
+			// 
+			this.prpFunc.CommandsVisibleIfAvailable = true;
+			this.prpFunc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.prpFunc.HelpVisible = false;
+			this.prpFunc.LargeButtons = false;
+			this.prpFunc.LineColor = System.Drawing.SystemColors.ScrollBar;
+			this.prpFunc.Name = "prpFunc";
+			this.prpFunc.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+			this.prpFunc.Size = new System.Drawing.Size(168, 276);
+			this.prpFunc.TabIndex = 0;
+			this.prpFunc.Text = "PropertyGrid";
+			this.prpFunc.ToolbarVisible = false;
+			this.prpFunc.ViewBackColor = System.Drawing.SystemColors.Window;
+			this.prpFunc.ViewForeColor = System.Drawing.SystemColors.WindowText;
+			this.prpFunc.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
+			// 
 			// opaqueSplitter3
 			// 
 			this.opaqueSplitter3.Dock = System.Windows.Forms.DockStyle.Top;
@@ -309,7 +355,8 @@ namespace Girl.HierArch
 			// tabClass
 			// 
 			this.tabClass.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				   this.tpClass});
+																				   this.tpClass,
+																				   this.tpClassProperty});
 			this.tabClass.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tabClass.Name = "tabClass";
 			this.tabClass.SelectedIndex = 0;
@@ -325,6 +372,33 @@ namespace Girl.HierArch
 			this.tpClass.Size = new System.Drawing.Size(168, 159);
 			this.tpClass.TabIndex = 0;
 			this.tpClass.Text = "クラス";
+			// 
+			// tpClassProperty
+			// 
+			this.tpClassProperty.Controls.AddRange(new System.Windows.Forms.Control[] {
+																						  this.prpClass});
+			this.tpClassProperty.Location = new System.Drawing.Point(4, 21);
+			this.tpClassProperty.Name = "tpClassProperty";
+			this.tpClassProperty.Size = new System.Drawing.Size(168, 159);
+			this.tpClassProperty.TabIndex = 1;
+			this.tpClassProperty.Text = "プロパティ";
+			// 
+			// prpClass
+			// 
+			this.prpClass.CommandsVisibleIfAvailable = true;
+			this.prpClass.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.prpClass.HelpVisible = false;
+			this.prpClass.LargeButtons = false;
+			this.prpClass.LineColor = System.Drawing.SystemColors.ScrollBar;
+			this.prpClass.Name = "prpClass";
+			this.prpClass.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+			this.prpClass.Size = new System.Drawing.Size(168, 159);
+			this.prpClass.TabIndex = 0;
+			this.prpClass.Text = "PropertyGrid";
+			this.prpClass.ToolbarVisible = false;
+			this.prpClass.ViewBackColor = System.Drawing.SystemColors.Window;
+			this.prpClass.ViewForeColor = System.Drawing.SystemColors.WindowText;
+			this.prpClass.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
 			// 
 			// panel3
 			// 
@@ -455,8 +529,10 @@ namespace Girl.HierArch
 			this.panel1.ResumeLayout(false);
 			this.tabFunc.ResumeLayout(false);
 			this.tpFunc.ResumeLayout(false);
+			this.tpFuncProperty.ResumeLayout(false);
 			this.tabClass.ResumeLayout(false);
 			this.tpClass.ResumeLayout(false);
+			this.tpClassProperty.ResumeLayout(false);
 			this.panel3.ResumeLayout(false);
 			this.tabObject.ResumeLayout(false);
 			this.tpObject.ResumeLayout(false);
@@ -503,16 +579,33 @@ namespace Girl.HierArch
 
 		protected virtual void OnChanged(object sender, System.EventArgs e)
 		{
-			if (!this.IgnoreChanged && this.Changed != null) Changed(sender, e);
+			if (this.IgnoreChanged) return;
+
+			if (this.Changed != null) Changed(sender, e);
+			if (sender != this.tvClass)
+			{
+				this.IgnoreChanged = true;
+				this.tvClass.OnChanged(sender, e);
+				this.IgnoreChanged = false;
+			}
+			if (sender == this.txtComment
+				|| sender == this.txtSource
+				|| sender == this.tvArg
+				|| sender == this.tvObject)
+			{
+				this.IgnoreChanged = true;
+				this.tvFunc.OnChanged(sender, e);
+				this.IgnoreChanged = false;
+			}
 		}
 
 		public void SetDocument(Document doc)
 		{
-			IgnoreChanged = true;
+			this.IgnoreChanged = true;
 
 			// TODO: Document を View に反映するための処理を追加します。
 
-			IgnoreChanged = false;
+			this.IgnoreChanged = false;
 		}
 
 		private DnDTreeView m_tvTarget = null;
@@ -530,5 +623,13 @@ namespace Girl.HierArch
 		}
 
 		#endregion
+
+		private void propertyGrid_PropertyValueChanged(object s, System.Windows.Forms.PropertyValueChangedEventArgs e)
+		{
+			if (e.ChangedItem.Label == "Server")
+			{
+				(s as PropertyGrid).Refresh();
+			}
+		}
 	}
 }

@@ -19,21 +19,22 @@ namespace Girl.HierArch
 	/// </summary>
 	public class HAClassNode : HATreeNode
 	{
+		public const string ext = "hacls";
 		public ArrayList Members;
 		public HAFuncNode Header;
 		public HAFuncNode Body;
 		public HAFuncNode Footer;
-		public string Server;
+		public HAClassProperty Property;
 
 		public override void Init()
 		{
 			base.Init();
 			
-			this.Members = new ArrayList();
-			this.Header  = new HAFuncNode();
-			this.Body    = new HAFuncNode();
-			this.Footer  = new HAFuncNode();
-			this.Server  = "";
+			this.Members   = new ArrayList();
+			this.Header    = new HAFuncNode();
+			this.Body      = new HAFuncNode();
+			this.Footer    = new HAFuncNode();
+			this.Property  = new HAClassProperty(this);
 		}
 
 		/// <summary>
@@ -243,7 +244,10 @@ namespace Girl.HierArch
 			string classdecl = this.Type.ToString().ToLower() + " class " + op.Name;
 			if (op.Type != "") classdecl += " : " + op.Type;
 			cw.WriteStartBlock(classdecl);
-			if (this.Body.Source != "") cw.WriteCodes(this.Body.Source);
+			if (this.Body.Source != "")
+			{
+				cw.WriteCodes(cw.ReplaceKeywords(this.Body.Source));
+			}
 			foreach (Object obj in this.Members)
 			{
 				(obj as HAMemberNode).Generate(cw);

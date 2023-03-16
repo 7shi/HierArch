@@ -25,6 +25,7 @@ namespace Girl.Windows.Forms
 			this.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
 			this.WordWrap = false;
 			this.Font = new Font("ＭＳ ゴシック", 9);
+			//this.ShowSelectionMargin = true;
 			
 			this.Parser = null;
 		}

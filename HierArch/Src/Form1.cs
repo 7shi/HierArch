@@ -105,8 +105,7 @@ namespace Girl.HierArch
 		private Girl.Windows.Forms.LinkRichTextBox lrtOutput;
 		private System.Windows.Forms.MenuItem mnuViewOutput;
 		private System.Windows.Forms.MenuItem mnuProject;
-		private System.Windows.Forms.MenuItem mnuProjectUpload;
-		private System.Windows.Forms.MenuItem mnuProjectDownload;
+		private System.Windows.Forms.MenuItem mnuProjectSynchronize;
 		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
 		public Form1()
@@ -244,8 +243,7 @@ namespace Girl.HierArch
 			this.mnuViewComment = new System.Windows.Forms.MenuItem();
 			this.mnuViewOutput = new System.Windows.Forms.MenuItem();
 			this.mnuProject = new System.Windows.Forms.MenuItem();
-			this.mnuProjectDownload = new System.Windows.Forms.MenuItem();
-			this.mnuProjectUpload = new System.Windows.Forms.MenuItem();
+			this.mnuProjectSynchronize = new System.Windows.Forms.MenuItem();
 			this.mnuCode = new System.Windows.Forms.MenuItem();
 			this.mnuBuildGenerate = new System.Windows.Forms.MenuItem();
 			this.mnuBuildBuild = new System.Windows.Forms.MenuItem();
@@ -629,19 +627,14 @@ namespace Girl.HierArch
 			// 
 			this.mnuProject.Index = 3;
 			this.mnuProject.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					   this.mnuProjectDownload,
-																					   this.mnuProjectUpload});
+																					   this.mnuProjectSynchronize});
 			this.mnuProject.Text = "プロジェクト(&P)";
 			// 
-			// mnuProjectDownload
+			// mnuProjectSynchronize
 			// 
-			this.mnuProjectDownload.Index = 0;
-			this.mnuProjectDownload.Text = "ダウンロード(&D)";
-			// 
-			// mnuProjectUpload
-			// 
-			this.mnuProjectUpload.Index = 1;
-			this.mnuProjectUpload.Text = "アップロード(&U)";
+			this.mnuProjectSynchronize.Index = 0;
+			this.mnuProjectSynchronize.Text = "同期(&S)";
+			this.mnuProjectSynchronize.Click += new System.EventHandler(this.mnuProjectSynchronize_Click);
 			// 
 			// mnuCode
 			// 
@@ -825,6 +818,7 @@ namespace Girl.HierArch
 			this.lrtOutput.TabIndex = 0;
 			this.lrtOutput.Text = "";
 			this.lrtOutput.WordWrap = false;
+			this.lrtOutput.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.lrtOutput_LinkClicked);
 			// 
 			// opaqueSplitter1
 			// 
@@ -1044,6 +1038,11 @@ namespace Girl.HierArch
 
 		#endregion
 
+		private void mnuProjectSynchronize_Click(object sender, System.EventArgs e)
+		{
+			this.Synchronize();
+		}
+
 		private void mnuBuildGenerate_Click(object sender, System.EventArgs e)
 		{
 			string path;
@@ -1187,6 +1186,66 @@ namespace Girl.HierArch
 
 			this.document.Changed = true;
 			SetCaption();
+		}
+
+		#endregion
+
+		#region 同期
+
+		public void Synchronize()
+		{
+			if (this.document.Changed)
+			{
+				MessageBox.Show(this, "プロジェクトを保存してください。", "同期",
+					MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+			else if (this.view1.tvClass.Nodes.Count < 1)
+			{
+				MessageBox.Show(this, "クラスがありません。", "同期",
+					MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			this.ClearOutput();
+			this.ShowOutput();
+
+			HAUploaderManager manager = new HAUploaderManager();
+			this.lrtOutput.AppendLine("同期を開始します。");
+			this.lrtOutput.ShowLast();
+			Cursor cur = Cursor.Current;
+			Cursor.Current = Cursors.WaitCursor;
+
+			foreach (TreeNode n in this.view1.tvClass.Nodes)
+			{
+				if (!(n as HAClassNode).Synchronize(manager, this.lrtOutput)) break;
+			}
+
+			Cursor.Current = cur;
+			this.lrtOutput.AppendLine("同期を終了しました。");
+			this.lrtOutput.ShowLast();
+		}
+
+		#endregion
+
+		#region 出力
+
+		public void ClearOutput()
+		{
+			this.lrtOutput.Clear();
+		}
+
+		public void ShowOutput()
+		{
+			if (!this.tabControl1.Visible) mnuViewOutput_Click(this, EventArgs.Empty);
+		}
+
+		private void lrtOutput_LinkClicked(object sender, System.Windows.Forms.LinkClickedEventArgs e)
+		{
+			Cursor cur = Cursor.Current;
+			Cursor.Current = Cursors.WaitCursor;
+			Process.Start(e.LinkText);
+			Cursor.Current = cur;
 		}
 
 		#endregion

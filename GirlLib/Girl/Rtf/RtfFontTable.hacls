@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="RtfFontTable:RtfObject" IsExpanded="true" IsSelected="false" AllowDrag="true">
-  <HAObject Type="Public" Text="fonts:RtfFont[]" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+<HAClass Type="Public" Text="RtfFontTable:RtfObject" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+  <HAObject Type="Public" Text="fonts:RtfFont[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
       <Source SelectionStart="15" SelectionLength="20">using System;
 using System.Text;
 </Source>
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
       <Comment SelectionStart="47" SelectionLength="0">&lt;summary&gt;
 RTF の \fonttbl を管理します。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <Source SelectionStart="0" SelectionLength="0" />>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
@@ -27,20 +27,20 @@ RTF の \fonttbl を管理します。
         <Source SelectionStart="20" SelectionLength="0">this.fonts = null;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="SetObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="SetObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="76" SelectionLength="0">this.fonts = null;
 this.name = ro.Name;
 this.rtfObjects = ro.RtfObjects;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="get_Fonts:RtfFont[]" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="get_Fonts:RtfFont[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="244" SelectionLength="0">if (this.fonts != null) return this.fonts;
 
 this.fonts = new RtfFont[this.rtfObjects.Count];
@@ -55,33 +55,33 @@ foreach (RtfObject ro in this.rtfObjects)
 return this.fonts;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="get_TableText:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="get_TableText:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="67" SelectionLength="0">sb = new StringBuilder();
 this.Write(sb);
 return sb.ToString();
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="Write" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="Write" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="58" SelectionLength="0">foreach (RtfFont rf in this.Fonts)
 {
 	rf.Write(sb);
 }
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="GetIndex:int" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <HAFunc Type="Public" Text="GetIndex:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="rf:RtfFont" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="rf:RtfFont" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <HAObject Type="Private" Text="ret:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="ret:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="450" SelectionLength="0">ret = 0;
 foreach (RtfFont rf2 in this.Fonts)
 {
@@ -102,21 +102,21 @@ this.AddRtfObject(ro);
 return ret;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="Contains:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="Contains:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="rf:RtfFont" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="rf:RtfFont" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="33" SelectionLength="0">return this.GetIndex(rf) != -1;
 </Source>
       </HAFunc>
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />>
     </HAFunc>
   </Footer>
   <HAClass Link="RtfFont.hacls" />

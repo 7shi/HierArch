@@ -20,21 +20,23 @@ namespace Girl.HierArch
 	{
 		private ContextMenu contextMenu1;
 		private MenuItem mnuType;
-		private MenuItem mnuLink;
-		private MenuItem mnuProp;
 		public HAMember MemberTreeView;
 		public HAFunc FuncTreeView;
 		private HAClassNode TargetNode;
 		public Font LinkFont;
+		public PropertyGrid Property;
 
 		/// <summary>
 		/// コンストラクタです。
 		/// </summary>
 		public HAClass()
 		{
+			this.dataFormat = "HierArch Class Data";
+			
 			this.MemberTreeView = null;
 			this.FuncTreeView   = null;
 			this.TargetNode     = null;
+			this.Property       = null;
 			
 			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1 = new ContextMenu();
@@ -65,16 +67,18 @@ namespace Girl.HierArch
 					new MenuItem("-"),
 					this.mnuDelete,
 					this.mnuRename,
-					new MenuItem("-"),
-					mnuLink = new MenuItem("リンク(&L)"),
-					new MenuItem("-"),
-					mnuProp = new MenuItem("プロパティ(&R)")
 				});
 			
-			mnuLink.Click += new EventHandler(this.OnNodeLink);
-			mnuProp.Click += new EventHandler(this.OnNodeProp);
-			
 			this.LinkFont = new Font(this.Font, FontStyle.Italic);
+		}
+
+		public override void OnChanged(object sender, EventArgs e)
+		{
+			if (this.IgnoreChanged) return;
+			
+			base.OnChanged(sender, e);
+			if (this.TargetNode != null) this.TargetNode.LastModified = DateTime.Now;
+			if (this.Property   != null) this.Property.Refresh();
 		}
 
 		protected override void OnNodeTypeChanged(object sender, EventArgs e)
@@ -83,66 +87,12 @@ namespace Girl.HierArch
 			this.SetView();
 		}
 
-		protected void OnNodeLink(object sender, EventArgs e)
+		public override void OnRefreshNode(object sender, EventArgs e)
 		{
-			if (this.TargetNode == null) return;
+			base.OnRefreshNode(sender, e);
+			if (sender != this.TargetNode) return;
 			
-			if (this.TargetNode.Link == string.Empty)
-			{
-				SaveFileDialog sfd = new SaveFileDialog();
-				sfd.Filter = "HierArch クラス (*.hacls)|*.hacls|すべてのファイル (*.*)|*.*";
-				DialogResult dr = sfd.ShowDialog();
-				sfd.Dispose();
-				if (dr == DialogResult.Cancel) return;
-				
-				string link = new Uri(sfd.FileName).AbsoluteUri;
-				if (!this.TargetNode.IsValidLink(link))
-				{
-					MessageBox.Show(
-						"リンク先が重複しています。", "エラー",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Warning);
-					return;
-				}
-				
-				this.TargetNode.Link = link;
-			}
-			else
-			{
-				this.TargetNode.Link = string.Empty;
-			}
-			this.OnChanged(this, EventArgs.Empty);
-			this.SetState();
-		}
-
-		protected void OnNodeProp(object sender, EventArgs e)
-		{
-			if (this.TargetNode == null) return;
-			
-			string target = this.TargetNode.TargetFileName;
-			if (target == string.Empty)
-			{
-				target = "プロジェクト";
-			}
-			else if (target.StartsWith("file://"))
-			{
-				target = new Uri(target).LocalPath;
-			}
-			
-			string link = this.TargetNode.Link;
-			if (link == string.Empty)
-			{
-				link = "なし";
-			}
-			else if (link.StartsWith("file://"))
-			{
-				link = new Uri(link).LocalPath;
-				target = "リンク先";
-			}
-			
-			MessageBox.Show(
-				string.Format("保存先: {0}\r\nリンク先: {1}", target, link),
-				string.Format("{0} のプロパティ", this.TargetNode.Text));
+			this.SetView();
 		}
 
 		protected override void StartDrag()
@@ -162,9 +112,7 @@ namespace Girl.HierArch
 			
 			HAClassNode n = this.SelectedNode as HAClassNode;
 			mnuType.Enabled = mnuDelete.Enabled = mnuRename.Enabled
-				= mnuLink.Enabled = mnuProp.Enabled
 				= (n != null && n.AllowDrag);
-			mnuLink.Checked = (n != null && n.Link != string.Empty);
 		}
 
 		public void InitNode(HAClassNode n)
@@ -235,6 +183,8 @@ namespace Girl.HierArch
 		{
 			Cursor curOrig = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
+			bool flag = this.IgnoreChanged;
+			this.IgnoreChanged = true;
 			
 			if (this.TargetNode != null)
 			{
@@ -243,6 +193,10 @@ namespace Girl.HierArch
 				{
 					this.FuncTreeView.OwnerClass = this.TargetNode;
 					this.FuncTreeView.SetView(this.TargetNode);
+				}
+				if (this.Property != null)
+				{
+					this.Property.SelectedObject = this.TargetNode.Property;
 				}
 			}
 			else
@@ -253,9 +207,14 @@ namespace Girl.HierArch
 					this.FuncTreeView.OwnerClass = null;
 					this.FuncTreeView.SetView(null);
 				}
+				if (this.Property != null)
+				{
+					this.Property.SelectedObject = null;
+				}
 			}
 			this.SetState();
 			
+			this.IgnoreChanged = flag;
 			Cursor.Current = curOrig;
 		}
 

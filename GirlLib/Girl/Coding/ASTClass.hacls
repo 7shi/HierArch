@@ -1,36 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="ASTClass:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
-  <HAObject Type="Public" Text="Access:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+<HAClass Type="Public" Text="ASTClass:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+  <HAObject Type="Public" Text="Access:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
       <Source SelectionStart="40" SelectionLength="0">using System;
 using System.Collections;
 </Source>
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
       <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <Source SelectionStart="0" SelectionLength="0" />>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="26" SelectionLength="0">&lt;summary&gt;
 抽象構文木でのクラスを表します。
 &lt;/summary&gt;
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />>
       </HAFunc>
-      <HAFunc Type="Public" Text="ParseDeclaration" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="ParseDeclaration" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="34" SelectionLength="0">this.DeclarationPos = parser.Pos;
 string text;
 
@@ -47,11 +47,11 @@ while (parser.Read())
 }
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="Parse" IsExpanded="true" IsSelected="true" AllowDrag="true">
+      <HAFunc Type="Public" Text="Parse" IsExpanded="true" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="913" SelectionLength="0">int level = 0;
 bool ignore = false;
 string text = parser.Text, preText;
@@ -122,14 +122,14 @@ while (parser.Read())
 	}
 }
 </Source>
-        <HAFunc Type="Private" Text="ParseProperty" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Private" Text="ParseProperty" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="region:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="region:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="313" SelectionLength="0">string text = parser.Text, preText, access = parser.Access;
 
 while (parser.Read())
@@ -153,12 +153,12 @@ while (parser.Read())
 }
 </Source>
         </HAFunc>
-        <HAFunc Type="Private" Text="AddObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Private" Text="AddObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="region:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-            <HAObject Type="Private" Text="ao:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="region:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="ao:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="64" SelectionLength="0">if (region.Count &lt; 1)
 {
 	this.objects.Add(ao);
@@ -173,10 +173,10 @@ else
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />>
     </HAFunc>
   </Footer>
 </HAClass>

@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="ContextManager" IsExpanded="true" IsSelected="false" AllowDrag="true">
-  <HAObject Type="Protected" Text="flags:bool[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-  <HAObject Type="Protected" Text="cmdList:ArrayList[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-  <HAObject Type="Protected" Text="handlers:EventHandler[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-  <HAObject Type="Protected" Text="toolBars:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-  <HAObject Type="Protected" Text="toolBarButtonHandlers:Hashtable" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+<HAClass Type="Public" Text="ContextManager" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+  <HAObject Type="Protected" Text="flags:bool[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Protected" Text="cmdList:ArrayList[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Protected" Text="handlers:EventHandler[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Protected" Text="toolBars:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Protected" Text="toolBarButtonHandlers:Hashtable" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
       <Source SelectionStart="68" SelectionLength="0">using System;
 using System.Collections;
 using System.Windows.Forms;
@@ -16,17 +16,17 @@ using System.Windows.Forms;
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
       <Comment SelectionStart="67" SelectionLength="0">&lt;summary&gt;
 MenuItem, ToolBarButton, Button の状態を管理します。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <Source SelectionStart="0" SelectionLength="0" />>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <HAObject Type="Private" Text="len:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="len:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
@@ -51,19 +51,19 @@ this.toolBars = new ArrayList();
 this.toolBarButtonHandlers = new Hashtable();
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="get_MaxActions:virtual int" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="get_MaxActions:virtual int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="11" SelectionLength="0">return 0;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="SetCommand" IsExpanded="true" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="SetCommand" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <HAObject Type="Private" Text="targets:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="targets:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="169" SelectionLength="0">targets = cmdList[action];
 if (targets.Contains(target)) return;
 
@@ -72,12 +72,12 @@ this.SetProperty(target, flags[action]);
 
 this.SetHandler(action, target);
 </Source>
-        <HAFunc Type="Protected" Text="SetHandler:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Protected" Text="SetHandler:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="499" SelectionLength="0">if (target is MenuItem)
 {
 	(target as MenuItem).Click += this.handlers[action];
@@ -99,13 +99,13 @@ else if (target is Button)
 }
 </Source>
         </HAFunc>
-        <HAFunc Type="Protected" Text="toolBar_ButtonClick" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Protected" Text="toolBar_ButtonClick" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="e:ToolBarButtonClickEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="sender:object" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="e:ToolBarButtonClickEventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <HAObject Type="Private" Text="eh:EventHandler" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <HAObject Type="Private" Text="eh:EventHandler" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="160" SelectionLength="0">if (!this.toolBarButtonHandlers.Contains(e.Button)) return;
 
 eh = this.toolBarButtonHandlers[e.Button] as EventHandler;
@@ -113,25 +113,25 @@ eh.Invoke(sender, EventArgs.Empty);
 </Source>
         </HAFunc>
       </HAFunc>
-      <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="SetCommand" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <HAObject Type="Private" Text="targets:params object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="targets:params object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="71" SelectionLength="0">foreach (object obj in targets)
 {
 	this.SetCommand(action, obj);
 }
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="SetStatus" IsExpanded="true" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="SetStatus" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+          <HAObject Type="Private" Text="action:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <HAObject Type="Private" Text="targets:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="targets:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="167" SelectionLength="0">if (flags[action] == status) return;
 
 flags[action] = status;
@@ -142,12 +142,12 @@ foreach (object obj in targets)
 	this.SetProperty(obj, status);
 }
 </Source>
-        <HAFunc Type="Protected" Text="SetProperty:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Protected" Text="SetProperty:virtual" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="target:object" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="367" SelectionLength="0">if (target is MenuItem)
 {
 	MenuItem mi = target as MenuItem;
@@ -166,13 +166,13 @@ else if (target is Button)
 </Source>
         </HAFunc>
       </HAFunc>
-      <HAFunc Type="Public" Text="SetStatus" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="SetStatus" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="status:bool" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <HAObject Type="Private" Text="len:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="len:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="86" SelectionLength="0">len = this.MaxActions;
 for (i = 0; i &lt; len; i++)
 {
@@ -183,10 +183,10 @@ for (i = 0; i &lt; len; i++)
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />>
     </HAFunc>
   </Footer>
   <HAClass Link="EditManager.hacls" />

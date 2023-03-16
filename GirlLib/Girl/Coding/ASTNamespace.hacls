@@ -1,34 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="ASTNamespace:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+<HAClass Type="Public" Text="ASTNamespace:ASTObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="32" SelectionLength="0">using System;
-using System.Text;</Source>
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="33" SelectionLength="0">using System;
+using System.Text;
+</Source>
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
       <Comment SelectionStart="39" SelectionLength="0">&lt;summary&gt;
 抽象構文木での名前空間を表します。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <Source SelectionStart="0" SelectionLength="0" />>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
-        <Source SelectionStart="0" SelectionLength="0" />
+        <Source SelectionStart="0" SelectionLength="0" />>
       </HAFunc>
-      <HAFunc Type="Public" Text="ParseDeclaration" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="ParseDeclaration" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="34" SelectionLength="0">this.DeclarationPos = parser.Pos;
 string text;
 StringBuilder sb = new StringBuilder();
@@ -50,11 +51,11 @@ while (parser.Read())
 }
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="Parse" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="Parse" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="parser:ParserBase" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="48" SelectionLength="0">string text;
 int level = 0;
 bool first = true;
@@ -89,10 +90,10 @@ while (parser.Read())
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />>
     </HAFunc>
   </Footer>
 </HAClass>

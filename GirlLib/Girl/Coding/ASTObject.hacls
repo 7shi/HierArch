@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="ASTObject" IsExpanded="true" IsSelected="false" AllowDrag="true">
-  <HAObject Type="Public" Text="Name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-  <HAObject Type="Public" Text="Pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-  <HAObject Type="Public" Text="DeclarationPos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-  <HAObject Type="Protected" Text="objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+<HAClass Type="Public" Text="ASTObject" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+  <HAObject Type="Public" Text="Name:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Public" Text="Pos:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Public" Text="DeclarationPos:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Protected" Text="objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
       <Source SelectionStart="40" SelectionLength="0">using System;
 using System.Collections;
 </Source>
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
       <Comment SelectionStart="10" SelectionLength="0">&lt;summary&gt;
 抽象構文木の要素を表します。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <Source SelectionStart="0" SelectionLength="0" />>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="28" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
@@ -32,19 +32,19 @@ this.Pos = this.DeclarationPos = 0;
 this.objects = new ArrayList();
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="get_Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="get_Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="21" SelectionLength="0">return this.objects;
 </Source>
       </HAFunc>
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />>
     </HAFunc>
   </Footer>
   <HAClass Link="ASTNamespace.hacls" />

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="MimeDocument" IsExpanded="false" IsSelected="false" AllowDrag="true">
-  <HAObject Type="Private" Text="objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-  <HAObject Type="Public" Text="Boundary:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-  <HAObject Type="Folder" Text="Header" IsExpanded="true" IsSelected="false" AllowDrag="true">
-    <HAObject Type="Public" Text="From:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-    <HAObject Type="Public" Text="Subject:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+<HAClass Type="Public" Text="MimeDocument" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+  <HAObject Type="Private" Text="objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Public" Text="Boundary:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+  <HAObject Type="Folder" Text="Header" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+    <HAObject Type="Public" Text="From:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+    <HAObject Type="Public" Text="Subject:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
   </HAObject>
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
       <Source SelectionStart="57" SelectionLength="0">using System;
 using System.Collections;
 using System.IO;
@@ -17,14 +17,14 @@ using System.IO;
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
       <Comment SelectionStart="36" SelectionLength="0">&lt;summary&gt;
 MIME 文書を管理します。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <Source SelectionStart="0" SelectionLength="0" />>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
@@ -39,24 +39,24 @@ this.From = "&lt;MimeDocument&gt;";
 this.Subject = "MimeDocument Generated Page";
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="get_Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="get_Objects:ArrayList" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="21" SelectionLength="0">return this.objects;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="AddMimeObject" IsExpanded="true" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="AddMimeObject" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="mimeObject:MimeObject" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="mimeObject:MimeObject" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="22" SelectionLength="0">this.objects.Add(mimeObject);
 </Source>
-        <HAFunc Type="Public" Text="AddMimeObjects" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Public" Text="AddMimeObjects" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="objects:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="objects:ArrayList" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="76" SelectionLength="0">foreach (object obj in objects)
 {
 	this.AddMimeObject(obj as MimeObject);
@@ -64,15 +64,15 @@ this.Subject = "MimeDocument Generated Page";
 </Source>
         </HAFunc>
       </HAFunc>
-      <HAFunc Type="Folder" Text="Write" IsExpanded="true" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Folder" Text="Write" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <Comment SelectionStart="0" SelectionLength="0" />
-        <Source SelectionStart="0" SelectionLength="0" />
-        <HAFunc Type="Public" Text="Write" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <Comment SelectionStart="0" SelectionLength="0" />>
+        <Source SelectionStart="0" SelectionLength="0" />>
+        <HAFunc Type="Public" Text="Write" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="164" SelectionLength="0">this.WriteHeader(textWriter);
 
 foreach (object obj in this.objects)
@@ -83,11 +83,11 @@ foreach (object obj in this.objects)
 }
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="WriteHeader" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Public" Text="WriteHeader" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="290" SelectionLength="0">textWriter.WriteLine("From: " + this.From);
 textWriter.WriteLine("Subject: " + this.Subject);
 textWriter.WriteLine("MIME-Version: 1.0");
@@ -96,11 +96,11 @@ textWriter.WriteLine("\tboundary=\"" + this.Boundary + "\";");
 this.WriteBoundary(textWriter);
 </Source>
         </HAFunc>
-        <HAFunc Type="Public" Text="WriteBoundary" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Public" Text="WriteBoundary" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="textWriter:TextWriter" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="70" SelectionLength="0">textWriter.WriteLine();
 textWriter.WriteLine("--{0}", this.Boundary);
 </Source>
@@ -109,10 +109,10 @@ textWriter.WriteLine("--{0}", this.Boundary);
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />>
     </HAFunc>
   </Footer>
 </HAClass>

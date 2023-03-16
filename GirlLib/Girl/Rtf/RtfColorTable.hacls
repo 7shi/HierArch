@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="RtfColorTable:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
-  <HAObject Type="Public" Text="colors:Color[]" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+<HAClass Type="Public" Text="RtfColorTable:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+  <HAObject Type="Public" Text="colors:Color[]" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
       <Source SelectionStart="58" SelectionLength="0">using System;
 using System.Drawing;
 using System.Text;
@@ -12,14 +12,14 @@ using System.Text;
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
       <Comment SelectionStart="48" SelectionLength="0">&lt;summary&gt;
 RTF の \colortbl を管理します。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <Source SelectionStart="0" SelectionLength="0" />>
+      <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
@@ -28,24 +28,24 @@ RTF の \colortbl を管理します。
         <Source SelectionStart="21" SelectionLength="0">this.colors = null;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="SetObject" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="SetObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="19" SelectionLength="0">this.colors = null;
 this.name = ro.Name;
 this.rtfObjects = ro.RtfObjects;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="get_Colors:Color[]" IsExpanded="true" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="get_Colors:Color[]" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <HAObject Type="Private" Text="v:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <HAObject Type="Private" Text="r:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="g:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="b:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="v:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="r:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="g:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="b:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="i:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="446" SelectionLength="0">if (this.colors != null) return this.colors;
 
 this.colors = new Color[this.ColorCount];
@@ -74,10 +74,10 @@ foreach (RtfObject ro in this.rtfObjects)
 if (i == 0) this.colors[0] = Color.FromArgb(0);
 return this.colors;
 </Source>
-        <HAFunc Type="Public" Text="get_ColorCount:int" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Public" Text="get_ColorCount:int" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments />
-          <HAObject Type="Private" Text="ret:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <HAObject Type="Private" Text="ret:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="190" SelectionLength="0">if (this.colors != null) return this.colors.GetLength(0);
 
 ret = 0;
@@ -90,10 +90,10 @@ return ret;
 </Source>
         </HAFunc>
       </HAFunc>
-      <HAFunc Type="Public" Text="get_TableText:string" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="get_TableText:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments />
-        <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="154" SelectionLength="0">sb = new StringBuilder();
 foreach (Color c in this.Colors)
 {
@@ -102,12 +102,12 @@ foreach (Color c in this.Colors)
 return sb.ToString();
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="GetIndex:int" IsExpanded="false" IsSelected="true" AllowDrag="true">
+      <HAFunc Type="Public" Text="GetIndex:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="color:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <HAObject Type="Private" Text="ret:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="ret:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="460" SelectionLength="0">ret = 0;
 foreach (Color cc in this.Colors)
 {
@@ -133,21 +133,21 @@ this.AddRtfObject(string.Format("\\blue{0};", color.B));
 return ret;
 </Source>
       </HAFunc>
-      <HAFunc Type="Public" Text="Contains:bool" IsExpanded="false" IsSelected="false" AllowDrag="true">
+      <HAFunc Type="Public" Text="Contains:bool" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="c:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="c:Color" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="32" SelectionLength="0">return this.GetIndex(c) != -1;
 </Source>
       </HAFunc>
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />>
     </HAFunc>
   </Footer>
 </HAClass>

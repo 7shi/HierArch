@@ -31,18 +31,22 @@ namespace Girl.HierArch
 		public HAFuncNode TargetNode;
 		private Font textFont;
 		private ParserBase parser;
+		public PropertyGrid Property;
 
 		/// <summary>
 		/// コンストラクタです。
 		/// </summary>
 		public HAFunc()
 		{
+			this.dataFormat = "HierArch Function Data";
+			
 			this.ArgTreeView    = null;
 			this.ObjectTreeView = null;
 			this.CommentTextBox = null;
 			this.SourceTextBox  = null;
 			this.OwnerClass     = null;
 			this.TargetNode     = null;
+			this.Property       = null;
 			
 			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1 = new ContextMenu();
@@ -73,6 +77,23 @@ namespace Girl.HierArch
 					this.mnuDelete,
 					this.mnuRename
 				});
+		}
+
+		public override void OnChanged(object sender, EventArgs e)
+		{
+			if (this.IgnoreChanged) return;
+			
+			base.OnChanged(sender, e);
+			if (this.TargetNode != null) this.TargetNode.LastModified = DateTime.Now;
+			if (this.Property   != null) this.Property.Refresh();
+		}
+
+		public override void OnRefreshNode(object sender, EventArgs e)
+		{
+			base.OnRefreshNode(sender, e);
+			if (sender != this.TargetNode) return;
+			
+			this.SetView();
 		}
 
 		protected override void MenuNodeChild_Click(object sender, EventArgs e)
@@ -163,6 +184,9 @@ namespace Girl.HierArch
 
 		public void SetView()
 		{
+			bool flag = this.IgnoreChanged;
+			this.IgnoreChanged = true;
+			
 			if (this.TargetNode != null)
 			{
 				if (this.ArgTreeView    != null) this.ArgTreeView   .SetView(this.TargetNode.Args);
@@ -196,6 +220,10 @@ namespace Girl.HierArch
 					this.SourceTextBox.SelectionStart  = this.TargetNode.SourceSelectionStart;
 					this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
 				}
+				if (this.Property != null)
+				{
+					this.Property.SelectedObject = this.TargetNode.Property;
+				}
 			}
 			else
 			{
@@ -215,16 +243,24 @@ namespace Girl.HierArch
 					this.SourceTextBox.SelectionStart  = 0;
 					this.SourceTextBox.SelectionLength = 0;
 				}
+				if (this.Property != null)
+				{
+					this.Property.SelectedObject = null;
+				}
 			}
+			
+			this.IgnoreChanged = flag;
 		}
 
 		public void SetView(HAClassNode cls)
 		{
+			bool flag = this.IgnoreChanged;
 			this.IgnoreChanged = true;
 			this.SelectedNode = null;
 			this.TargetNode = null;
 			this.SetView();
 			this.Nodes.Clear();
+			
 			if (cls != null)
 			{
 				this.Enabled = true;
@@ -269,8 +305,9 @@ namespace Girl.HierArch
 				this.BackColor = System.Drawing.SystemColors.ControlLight;
 				this.Header = this.Body = this.Footer = null;
 			}
+			
 			this.SetState();
-			this.IgnoreChanged = false;
+			this.IgnoreChanged = flag;
 		}
 
 		protected override void OnAfterSelect(TreeViewEventArgs e)

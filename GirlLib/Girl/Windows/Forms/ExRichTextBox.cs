@@ -113,6 +113,13 @@ namespace Girl.Windows.Forms
 
 		#endregion
 
+		public void ShowLast()
+		{
+			this.SelectionStart = this.TextLength;
+			this.Focus();
+			this.Refresh();
+		}
+
 		#region Wrappers
 
 		public int CurrentLine

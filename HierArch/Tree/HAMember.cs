@@ -24,6 +24,8 @@ namespace Girl.HierArch
 		/// </summary>
 		public HAMember()
 		{
+			this.dataFormat = "HierArch Object Data";
+			
 			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1 = new ContextMenu();
 			this.HideSelection = false;

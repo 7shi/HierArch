@@ -1,8 +1,27 @@
-<?xml version="1.0"?>
-<HAProject version="0.1.1038.40564">
-  <HAClass Type="FolderRed" Text="Calc:HierArch.Test" IsExpanded="true" IsSelected="false" AllowDrag="true">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HAProject version="0.1.1142.21818">
+  <HAViewInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <X>66</X>
+    <Y>66</Y>
+    <Width>960</Width>
+    <Height>729</Height>
+    <State>Normal</State>
+    <ShowClass>true</ShowClass>
+    <ShowFunc>true</ShowFunc>
+    <ShowComment>true</ShowComment>
+    <ShowMember>true</ShowMember>
+    <ShowArg>true</ShowArg>
+    <ShowObject>true</ShowObject>
+    <LeftPanelWidth>176</LeftPanelWidth>
+    <ClassHeight>184</ClassHeight>
+    <CommentHeight>111</CommentHeight>
+    <RightPanelWidth>176</RightPanelWidth>
+    <MemberHeight>160</MemberHeight>
+    <ObjectHeight>361</ObjectHeight>
+  </HAViewInfo>
+  <HAClass Type="FolderRed" Text="Calc:HierArch.Test" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:01">
     <Header>
-      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false">
+      <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="true" AllowDrag="false" LastModified="2003/02/16 12:10:01">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
 </Comment>
@@ -11,14 +30,14 @@
       </HAFunc>
     </Header>
     <Body>
-      <HAFunc Type="Class" Text="本体" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <HAFunc Type="Class" Text="本体" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 12:10:01">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
         <Source SelectionStart="0" SelectionLength="0" />
-        <HAFunc Type="Text" Text="Make.bat" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <HAFunc Type="Text" Text="Make.bat" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:01">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="66" SelectionLength="0">%WINDIR%\Microsoft.NET\Framework\v1.0.3705\csc /t:winexe Calc.cs
@@ -27,21 +46,21 @@
       </HAFunc>
     </Body>
     <Footer>
-      <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+      <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 12:10:01">
         <Arguments />
         <Comment SelectionStart="0" SelectionLength="0" />
         <Source SelectionStart="0" SelectionLength="0" />
       </HAFunc>
     </Footer>
-    <HAClass Type="Public" Text="Calc:Form" IsExpanded="false" IsSelected="true" AllowDrag="true">
-      <HAObject Type="Private" Text="num1:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-      <HAObject Type="Private" Text="plus:Label" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-      <HAObject Type="Private" Text="num2:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-      <HAObject Type="Private" Text="equal:Label" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-      <HAObject Type="Private" Text="num3:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-      <HAObject Type="Private" Text="button:Button" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+    <HAClass Type="Public" Text="Calc:Form" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:01">
+      <HAObject Type="Private" Text="num1:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
+      <HAObject Type="Private" Text="plus:Label" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
+      <HAObject Type="Private" Text="num2:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
+      <HAObject Type="Private" Text="equal:Label" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
+      <HAObject Type="Private" Text="num3:TextBox" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
+      <HAObject Type="Private" Text="button:Button" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:02" />
       <Header>
-        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 12:10:02">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0">ここにソースコードの注釈を書きます。
 </Comment>
@@ -52,22 +71,22 @@ using System.Windows.Forms;
         </HAFunc>
       </Header>
       <Body>
-        <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+        <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 12:10:02">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0">&lt;summary&gt;
 ここにクラスの説明を書きます。
 &lt;/summary&gt;
 </Comment>
           <Source SelectionStart="0" SelectionLength="0" />
-          <HAFunc Type="Public" Text="Main:static void" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <HAFunc Type="Public" Text="Main:static void" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02">
             <Arguments />
             <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="33" SelectionLength="0">Application.Run(new __CLASS());
 </Source>
           </HAFunc>
-          <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true">
+          <HAFunc Type="Public" Text="__CLASS" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:02">
             <Arguments />
-            <Comment SelectionStart="35" SelectionLength="0">&lt;summary&gt;
+            <Comment SelectionStart="32" SelectionLength="0">&lt;summary&gt;
 コンストラクタです。
 &lt;/summary&gt;
 </Comment>
@@ -99,14 +118,14 @@ this.Controls.AddRange(new Control[] {
 button.Click += new EventHandler(this.button_Click);
 </Source>
           </HAFunc>
-          <HAFunc Type="Public" Text="button_Click" IsExpanded="false" IsSelected="false" AllowDrag="true">
+          <HAFunc Type="Public" Text="button_Click" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:02">
             <Arguments>
-              <HAObject Type="Private" Text="sender" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-              <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+              <HAObject Type="Private" Text="sender" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
+              <HAObject Type="Private" Text="e:EventArgs" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
             </Arguments>
-            <HAObject Type="Private" Text="a:double" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="b:double" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="c:double" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="a:double" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
+            <HAObject Type="Private" Text="b:double" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
+            <HAObject Type="Private" Text="c:double" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 12:10:01" />
             <Comment SelectionStart="0" SelectionLength="0" />
             <Source SelectionStart="107" SelectionLength="0">a = Convert.ToDouble(num1.Text);
 b = Convert.ToDouble(num2.Text);
@@ -117,7 +136,7 @@ num3.Text = c.ToString();
         </HAFunc>
       </Body>
       <Footer>
-        <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+        <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 12:10:02">
           <Arguments />
           <Comment SelectionStart="0" SelectionLength="0" />
           <Source SelectionStart="0" SelectionLength="0" />

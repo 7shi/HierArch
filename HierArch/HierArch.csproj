@@ -7,7 +7,7 @@
     >
         <Build>
             <Settings
-                ApplicationIcon = "App.ico"
+                ApplicationIcon = "Src\App.ico"
                 AssemblyKeyContainerName = ""
                 AssemblyName = "HierArch"
                 AssemblyOriginatorKeyFile = ""
@@ -92,75 +92,90 @@
                     Project = "{9084494D-A49E-4CA4-A433-8411E47A7176}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "System.Design"
+                    AssemblyName = "System.Design"
+                    HintPath = "..\..\..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Design.dll"
+                />
             </References>
         </Build>
         <Files>
             <Include>
                 <File
-                    RelPath = "About.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "About.resx"
-                    DependentUpon = "About.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "App.ico"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "AssemblyInfo.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Form1.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Form1.resx"
-                    DependentUpon = "Form1.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "HAAccountManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "HADoc.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "HAViewInfo.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "HierArch.exe.manifest"
                     BuildAction = "None"
                 />
                 <File
-                    RelPath = "View.cs"
-                    SubType = "UserControl"
+                    RelPath = "Base\HAAccountManager.cs"
+                    SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "View.resx"
-                    DependentUpon = "View.cs"
-                    BuildAction = "EmbeddedResource"
+                    RelPath = "Base\HADoc.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ViewManager.cs"
+                    RelPath = "Base\HAViewInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Parser\ObjectParser.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\About.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\About.resx"
+                    DependentUpon = "About.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Src\App.ico"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "Src\AssemblyInfo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\Form1.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\Form1.resx"
+                    DependentUpon = "Form1.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Src\HATree.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\HATree.resx"
+                    DependentUpon = "HATree.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Src\View.cs"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\View.resx"
+                    DependentUpon = "View.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Src\ViewManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -180,6 +195,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Tree\HAClassProperty.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Tree\HAFunc.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
@@ -191,6 +211,11 @@
                 />
                 <File
                     RelPath = "Tree\HAFuncNode.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Tree\HAFuncProperty.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -210,6 +235,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Tree\HANodeProperty.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Tree\HAObject.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
@@ -225,14 +255,24 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Tree\HATree.cs"
-                    SubType = "Component"
+                    RelPath = "Tree\HATreeNode.cs"
+                    SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Tree\HATree.resx"
-                    DependentUpon = "HATree.cs"
-                    BuildAction = "EmbeddedResource"
+                    RelPath = "Uploader\HAUploaderFileInfo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Uploader\HAUploaderInfo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Uploader\HAUploaderManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
                 />
             </Include>
         </Files>

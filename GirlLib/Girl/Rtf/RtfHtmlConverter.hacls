@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<HAClass Type="Public" Text="RtfHtmlConverter" IsExpanded="false" IsSelected="false" AllowDrag="true">
+<HAClass Type="Public" Text="RtfHtmlConverter" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
   <Header>
-    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="ヘッダ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
       <Source SelectionStart="76" SelectionLength="0">using System;
 using System.Collections;
 using System.Text;
@@ -12,26 +12,26 @@ using Girl.Text;
     </HAFunc>
   </Header>
   <Body>
-    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Class" Text="本体" IsExpanded="true" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
       <Comment SelectionStart="42" SelectionLength="0">&lt;summary&gt;
 RTF と HTML を相互変換します。
 &lt;/summary&gt;
 </Comment>
-      <Source SelectionStart="0" SelectionLength="0" />
-      <HAFunc Type="Public" Text="Convert:static string" IsExpanded="true" IsSelected="false" AllowDrag="true">
+      <Source SelectionStart="0" SelectionLength="0" />>
+      <HAFunc Type="Public" Text="Convert:static string" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
         <Arguments>
-          <HAObject Type="Private" Text="rd:RtfDocument" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+          <HAObject Type="Private" Text="rd:RtfDocument" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </Arguments>
-        <HAObject Type="Private" Text="ret:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="rc1:RtfContext" IsExpanded="true" IsSelected="false" AllowDrag="true">
-          <HAObject Type="Private" Text="rc2:RtfContext" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+        <HAObject Type="Private" Text="ret:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="rc1:RtfContext" IsExpanded="true" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
+          <HAObject Type="Private" Text="rc2:RtfContext" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
         </HAObject>
-        <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="rf:RtfFont" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="stack1:Stack" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-        <HAObject Type="Private" Text="stack2:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-        <Comment SelectionStart="0" SelectionLength="0" />
+        <HAObject Type="Private" Text="ro:RtfObject" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="rf:RtfFont" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="stack1:Stack" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <HAObject Type="Private" Text="stack2:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+        <Comment SelectionStart="0" SelectionLength="0" />>
         <Source SelectionStart="601" SelectionLength="0">ret = new StringBuilder();
 rc1 = new RtfContext();
 rc2 = new RtfContext();
@@ -59,13 +59,13 @@ foreach (object obj in rd.Document)
 __CLASS.WritePop(ret, stack2, null);  // スタックを解消
 return ret.ToString();
 </Source>
-        <HAFunc Type="Private" Text="CheckContext:static" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Private" Text="CheckContext:static" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="stack1:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-            <HAObject Type="Private" Text="rc1:RtfContext" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="rc2:RtfContext" IsExpanded="false" IsSelected="false" AllowDrag="true" />
+            <HAObject Type="Private" Text="stack1:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="rc1:RtfContext" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="rc2:RtfContext" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="121" SelectionLength="0">if (rc1.Bold != rc2.Bold)
 {
 	if (rc1.Bold)
@@ -90,16 +90,16 @@ if (rc1.Italic != rc2.Italic)
 }
 </Source>
         </HAFunc>
-        <HAFunc Type="Private" Text="WriteStack:static" IsExpanded="false" IsSelected="true" AllowDrag="true">
+        <HAFunc Type="Private" Text="WriteStack:static" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="stack1:Stack" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="stack2:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="stack1:Stack" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="stack2:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <HAObject Type="Private" Text="st1:object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Private" Text="st2:object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <HAObject Type="Private" Text="common:int" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <HAObject Type="Private" Text="st1:object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="st2:object[]" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="common:int" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="0" SelectionLength="0">// 配列が Push 順ではなく Pop された順番（逆向き）になるのに注意！
 st1 = stack1.ToArray();
 st2 = stack2.ToArray();
@@ -131,15 +131,15 @@ for (int i = common; i &lt; len1; i++)
 // stack2 は stack1 と同じ内容になる
 </Source>
         </HAFunc>
-        <HAFunc Type="Private" Text="WritePop:static" IsExpanded="false" IsSelected="false" AllowDrag="true">
+        <HAFunc Type="Private" Text="WritePop:static" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53">
           <Arguments>
-            <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="stack:Stack" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-            <HAObject Type="Private" Text="tag:string" IsExpanded="false" IsSelected="true" AllowDrag="true" />
+            <HAObject Type="Private" Text="sb:StringBuilder" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="stack:Stack" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+            <HAObject Type="Private" Text="tag:string" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
           </Arguments>
-          <HAObject Type="Private" Text="st:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" />
-          <HAObject Type="Private" Text="ss:string" IsExpanded="false" IsSelected="false" AllowDrag="true" />
-          <Comment SelectionStart="0" SelectionLength="0" />
+          <HAObject Type="Private" Text="st:Stack" IsExpanded="false" IsSelected="true" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <HAObject Type="Private" Text="ss:string" IsExpanded="false" IsSelected="false" AllowDrag="true" LastModified="2003/02/16 4:18:53" />>
+          <Comment SelectionStart="0" SelectionLength="0" />>
           <Source SelectionStart="332" SelectionLength="0">st = new Stack();
 while (stack.Count &gt; 0)
 {
@@ -164,10 +164,10 @@ while (st.Count &gt; 0)
     </HAFunc>
   </Body>
   <Footer>
-    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false">
+    <HAFunc Type="Text" Text="フッタ" IsExpanded="false" IsSelected="false" AllowDrag="false" LastModified="2003/02/16 4:18:53">
       <Arguments />
-      <Comment SelectionStart="0" SelectionLength="0" />
-      <Source SelectionStart="0" SelectionLength="0" />
+      <Comment SelectionStart="0" SelectionLength="0" />>
+      <Source SelectionStart="0" SelectionLength="0" />>
     </HAFunc>
   </Footer>
 </HAClass>

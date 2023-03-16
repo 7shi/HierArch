@@ -1,4 +1,4 @@
-// このファイルは ..\HierArch.haprj から自動生成されています。
+// このファイルは ..\..\HierArch.haprj から自動生成されています。
 // 編集は必ずそちらを通すようにして、直接書き換えないでください。
 
 using System;
@@ -31,12 +31,14 @@ namespace Girl.HierArch
 
 		public HAAccount Get(string server)
 		{
+			server = HAAccountManager.RemoveQuery(server);
 			int num = this.Find(server);
 			return (num >= 0) ? this.accounts[num] : null;
 		}
 
 		public void Set(string server, string id, string password)
 		{
+			server = HAAccountManager.RemoveQuery(server);
 			int num = this.Find(server);
 			if (num < 0)
 			{
@@ -57,6 +59,7 @@ namespace Girl.HierArch
 
 		public int Find(string server)
 		{
+			server = HAAccountManager.RemoveQuery(server);
 			int i = 0;
 			foreach (HAAccount ac in this.accounts)
 			{
@@ -75,6 +78,12 @@ namespace Girl.HierArch
 		public void Save(ApplicationDataManager adm)
 		{
 			adm.Save("Accounts.xml", this.accounts);
+		}
+
+		public static string RemoveQuery(string server)
+		{
+			int p = server.IndexOf('?');
+			return (p >= 0) ? server.Substring(0, p) : server;
 		}
 	}
 }

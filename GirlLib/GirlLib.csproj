@@ -92,61 +92,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Girl\CodeWriter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\DnDTreeView.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\DnDTreeView.resx"
-                    DependentUpon = "DnDTreeView.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Girl\ExTreeView.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\ExTreeView.resx"
-                    DependentUpon = "ExTreeView.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Girl\InternalScrollBar.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\MouseWheelMessageFilter.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\RichTextToolBar.cs"
-                    SubType = "UserControl"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\RichTextToolBar.resx"
-                    DependentUpon = "RichTextToolBar.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Girl\Win32API.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Girl\WindowSize.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "Girl\Coding\ASTClass.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -298,6 +243,61 @@
                 />
                 <File
                     RelPath = "Girl\Xml\XmlParser.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\CodeWriter.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\DnDTreeView.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\DnDTreeView.resx"
+                    DependentUpon = "DnDTreeView.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Src\ExTreeView.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\ExTreeView.resx"
+                    DependentUpon = "ExTreeView.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Src\InternalScrollBar.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\MouseWheelMessageFilter.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\RichTextToolBar.cs"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\RichTextToolBar.resx"
+                    DependentUpon = "RichTextToolBar.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Src\Win32API.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Src\WindowSize.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

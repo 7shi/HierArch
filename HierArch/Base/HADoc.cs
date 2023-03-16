@@ -1,4 +1,4 @@
-// このファイルは ..\HierArch.haprj から自動生成されています。
+// このファイルは ..\..\HierArch.haprj から自動生成されています。
 // 編集は必ずそちらを通すようにして、直接書き換えないでください。
 
 using System;
@@ -203,7 +203,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return "2003/02/06 17:47:50";
+				return "2003/02/16 22:17:45";
 			}
 		}
 
