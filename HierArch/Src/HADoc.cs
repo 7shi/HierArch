@@ -222,7 +222,7 @@ namespace Girl.HierArch
 
 			try
 			{
-				xw = new XmlTextWriter(this.FullName, Encoding.UTF8);
+				xw = new XmlTextWriter(this.FullName, new UTF8Encoding(false));
 			}
 			catch
 			{
