@@ -8,7 +8,6 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using Girl.Coding;
 using Girl.Windows.Forms;
 
 namespace Girl.HierArch
@@ -20,7 +19,6 @@ namespace Girl.HierArch
 	{
 		private ContextMenu contextMenu1;
 		private MenuItem mnuType;
-		public HAMember MemberTreeView;
 		public HAFunc FuncTreeView;
 		private HAClassNode TargetNode;
 		public Font LinkFont;
@@ -32,7 +30,6 @@ namespace Girl.HierArch
 		public HAClass()
 		{
 			this.dataFormat = "HierArch Class Data";
-			this.MemberTreeView = null;
 			this.FuncTreeView = null;
 			this.TargetNode = null;
 			this.Property = null;
@@ -125,12 +122,7 @@ namespace Girl.HierArch
 			if (this.TargetNode == null || this.FuncTreeView == null) return;
 			this.StoreState();
 			this.FuncTreeView.StoreData();
-			this.MemberTreeView.StoreState();
 			this.TargetNode.Members.Clear();
-			foreach (TreeNode n in this.MemberTreeView.Nodes)
-			{
-				if (n is HAMemberNode) this.TargetNode.Members.Add(n.Clone());
-			}
 			this.TargetNode.Header = this.FuncTreeView.Header.Clone() as HAFuncNode;
 			this.TargetNode.Body = this.FuncTreeView.Body.Clone() as HAFuncNode;
 			if (this.FuncTreeView.Body.TreeView == null)
@@ -151,7 +143,6 @@ namespace Girl.HierArch
 			this.IgnoreChanged = true;
 			if (this.TargetNode != null)
 			{
-				if (this.MemberTreeView != null) this.MemberTreeView.SetView(this.TargetNode.Members);
 				if (this.FuncTreeView != null)
 				{
 					this.FuncTreeView.OwnerClass = this.TargetNode;
@@ -160,7 +151,6 @@ namespace Girl.HierArch
 			}
 			else
 			{
-				if (this.MemberTreeView != null) this.MemberTreeView.SetView(null);
 				if (this.FuncTreeView != null)
 				{
 					this.FuncTreeView.OwnerClass = null;

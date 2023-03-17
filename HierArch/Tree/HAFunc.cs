@@ -2,13 +2,9 @@
 // 編集は必ずそちらを通すようにして、直接書き換えないでください。
 
 using System;
-using System.Collections;
 using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using Girl.Coding;
 using Girl.Windows.Forms;
 
 namespace Girl.HierArch
@@ -20,8 +16,6 @@ namespace Girl.HierArch
 	{
 		private ContextMenu contextMenu1;
 		private MenuItem mnuType;
-		public HAObject ArgTreeView;
-		public HAObject ObjectTreeView;
 		public CodeEditor SourceTextBox;
 		public HAClassNode OwnerClass;
 		public HAFuncNode Header;
@@ -29,8 +23,6 @@ namespace Girl.HierArch
 		public HAFuncNode Footer;
 		public HAFuncNode TargetNode;
 		private Font textFont;
-		private ParserBase parser;
-		public PropertyGrid Property;
 
 		/// <summary>
 		/// コンストラクタです。
@@ -38,19 +30,15 @@ namespace Girl.HierArch
 		public HAFunc()
 		{
 			this.dataFormat = "HierArch Function Data";
-			this.ArgTreeView = null;
-			this.ObjectTreeView = null;
 			this.SourceTextBox = null;
 			this.OwnerClass = null;
 			this.TargetNode = null;
-			this.Property = null;
 			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1 = new ContextMenu();
 			this.HideSelection = false;
 			this.LabelEdit = true;
 			this.ImageList = this.imageList1;
 			this.textFont = new Font("ＭＳ ゴシック", 9);
-			this.parser = new CSharpParser();
 			this.mnuAccess.Text = "関数(&U)";
 			this.mnuFolderGray.Text = "仮想フォルダ(&V)";
 			this.contextMenu1.MenuItems.AddRange(new MenuItem[] { mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { this.mnuAccess, this.mnuFolder, this.mnuText, this.mnuEtc }), new MenuItem("-"), this.mnuChild, this.mnuAppend, this.mnuInsert, new MenuItem("-"), this.mnuDelete, this.mnuRename });
@@ -61,7 +49,6 @@ namespace Girl.HierArch
 			if (this.IgnoreChanged) return;
 			base.OnChanged(sender, e);
 			if (this.TargetNode != null) this.TargetNode.LastModified = DateTime.Now;
-			if (this.Property != null) this.Property.Refresh();
 		}
 
 		public override void OnRefreshNode(object sender, EventArgs e)
@@ -125,18 +112,6 @@ namespace Girl.HierArch
 		{
 			if (this.TargetNode == null) return;
 			this.StoreState();
-			this.ArgTreeView.StoreState();
-			this.ObjectTreeView.StoreState();
-			this.TargetNode.Args.Clear();
-			this.TargetNode.Objects.Clear();
-			foreach (TreeNode n in this.ArgTreeView.Nodes)
-			{
-				if (n is HAObjectNode) this.TargetNode.Args.Add(n.Clone());
-			}
-			foreach (TreeNode n in this.ObjectTreeView.Nodes)
-			{
-				if (n is HAObjectNode) this.TargetNode.Objects.Add(n.Clone());
-			}
 			if (this.SourceTextBox != null)
 			{
 				this.TargetNode.Source = this.SourceTextBox.Code;
@@ -151,40 +126,23 @@ namespace Girl.HierArch
 			this.IgnoreChanged = true;
 			if (this.TargetNode != null)
 			{
-				if (this.ArgTreeView != null) this.ArgTreeView.SetView(this.TargetNode.Args);
-				if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(this.TargetNode.Objects);
 				if (this.SourceTextBox != null)
 				{
 					this.SourceTextBox.Enabled = true;
 					this.SourceTextBox.Clear();
-					if (this.TargetNode.IsObject || this.TargetNode.Type == HAType.Class || this.TargetNode == this.Header || this.TargetNode == this.Footer)
-					{
-						this.SourceTextBox.Parser = this.parser;
-						this.SourceTextBox.Code = this.TargetNode.Source;
-					}
-					else
-					{
-						this.SourceTextBox.Parser = null;
-						this.SourceTextBox.Code = this.TargetNode.Source;
-					}
+					this.SourceTextBox.Code = this.TargetNode.Source;
 					this.SourceTextBox.SelectionStart = this.TargetNode.SourceSelectionStart;
 					this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
 				}
 			}
 			else
 			{
-				if (this.ArgTreeView != null) this.ArgTreeView.SetView(null);
-				if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(null);
 				if (this.SourceTextBox != null)
 				{
 					this.SourceTextBox.Enabled = false;
 					this.SourceTextBox.Clear();
 					this.SourceTextBox.SelectionStart = 0;
 					this.SourceTextBox.SelectionLength = 0;
-				}
-				if (this.Property != null)
-				{
-					this.Property.SelectedObject = null;
 				}
 			}
 			this.IgnoreChanged = flag;

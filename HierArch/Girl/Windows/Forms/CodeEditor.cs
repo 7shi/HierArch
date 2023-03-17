@@ -3,7 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Girl.Coding;
 
 namespace Girl.Windows.Forms
 {
@@ -12,8 +11,6 @@ namespace Girl.Windows.Forms
 	/// </summary>
 	public class CodeEditor : TextBox
 	{
-		public ParserBase Parser;
-
 		/// <summary>
 		/// コンストラクタです。
 		/// </summary>
@@ -25,7 +22,6 @@ namespace Girl.Windows.Forms
 			this.Font = new Font("ＭＳ ゴシック", 9);
 			this.Multiline = true;
 			//this.ShowSelectionMargin = true;
-			this.Parser = null;
 		}
 
 		public void JumpToError(Point p)
@@ -33,17 +29,6 @@ namespace Girl.Windows.Forms
 			if (p.X < 0 || p.Y < 0) return;
 			this.SelectionStart = this.GetFirstCharIndexFromLine(p.Y) + p.X;
 			this.SelectionLength = 0;
-			if (this.Parser != null)
-			{
-				StringReader sr = new StringReader(this.Lines[p.Y].Substring(p.X));
-				this.Parser.Reader = sr;
-				if (this.Parser.Read() && this.Parser.Spacing == "")
-				{
-					this.SelectionLength = this.Parser.Text.Length;
-				}
-				this.Parser.Close();
-				sr.Close();
-			}
 			this.Focus();
 		}
 
@@ -76,16 +61,7 @@ namespace Girl.Windows.Forms
 
 			set
 			{
-				if (this.Parser == null || value == null)
-				{
-					this.Text = value;
-					return;
-				}
-				StringReader sr = new StringReader(value);
-				this.Parser.Reader = sr;
-				this.Parser.Color_Default = this.ForeColor;
-				this.Parser.Parse();
-				sr.Close();
+				this.Text = value;
 			}
 		}
 

@@ -19,7 +19,6 @@ namespace Girl.HierArch
 		private static ViewData viewData;
 		private static ArrayList forms = new ArrayList();
 		public static HAAccountManager AccountManager = new HAAccountManager();
-		public static HAMacroForm MacroForm = null;
 
 		private HADoc document = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
@@ -58,9 +57,6 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuViewSeparator1;
 		private System.Windows.Forms.MenuItem mnuViewClass;
 		private System.Windows.Forms.MenuItem mnuViewFunc;
-		private System.Windows.Forms.MenuItem mnuViewMember;
-		private System.Windows.Forms.MenuItem mnuViewArg;
-		private System.Windows.Forms.MenuItem mnuViewObject;
 		private System.Windows.Forms.ToolBarButton tbSeparator2;
 		private System.Windows.Forms.ToolBarButton tbBuildBuild;
 		private System.Windows.Forms.ToolBarButton tbEditUndo;
@@ -92,7 +88,6 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem cmEditSeparator2;
 		private System.Windows.Forms.MenuItem cmEditSelectAll;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
-		private System.Windows.Forms.MenuItem mnuViewMacro;
 		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
 		public Form1()
@@ -228,9 +223,6 @@ namespace Girl.HierArch
 			this.mnuViewSeparator1 = new System.Windows.Forms.MenuItem();
 			this.mnuViewClass = new System.Windows.Forms.MenuItem();
 			this.mnuViewFunc = new System.Windows.Forms.MenuItem();
-			this.mnuViewMember = new System.Windows.Forms.MenuItem();
-			this.mnuViewArg = new System.Windows.Forms.MenuItem();
-			this.mnuViewObject = new System.Windows.Forms.MenuItem();
 			this.menuItem1 = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartEnter = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartTab = new System.Windows.Forms.MenuItem();
@@ -249,7 +241,6 @@ namespace Girl.HierArch
 			this.cmEditSeparator2 = new System.Windows.Forms.MenuItem();
 			this.cmEditSelectAll = new System.Windows.Forms.MenuItem();
 			this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
-			this.mnuViewMacro = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// toolBar1
@@ -515,13 +506,9 @@ namespace Girl.HierArch
 			this.mnuView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					this.mnuViewToolBar,
 																					this.mnuViewStatusBar,
-																					this.mnuViewMacro,
 																					this.mnuViewSeparator1,
 																					this.mnuViewClass,
-																					this.mnuViewFunc,
-																					this.mnuViewMember,
-																					this.mnuViewArg,
-																					this.mnuViewObject});
+																					this.mnuViewFunc});
 			this.mnuView.Text = "表示(&V)";
 			// 
 			// mnuViewToolBar
@@ -538,7 +525,7 @@ namespace Girl.HierArch
 			// 
 			// mnuViewSeparator1
 			// 
-			this.mnuViewSeparator1.Index = 3;
+			this.mnuViewSeparator1.Index = 2;
 			this.mnuViewSeparator1.Text = "-";
 			// 
 			// mnuViewClass
@@ -551,30 +538,9 @@ namespace Girl.HierArch
 			// mnuViewFunc
 			// 
 			this.mnuViewFunc.Checked = true;
-			this.mnuViewFunc.Index = 5;
+			this.mnuViewFunc.Index = 4;
 			this.mnuViewFunc.Text = "関数(&F)";
 			this.mnuViewFunc.Click += new System.EventHandler(this.mnuViewFunc_Click);
-			// 
-			// mnuViewMember
-			// 
-			this.mnuViewMember.Checked = true;
-			this.mnuViewMember.Index = 6;
-			this.mnuViewMember.Text = "メンバ(&M)";
-			this.mnuViewMember.Click += new System.EventHandler(this.mnuViewMember_Click);
-			// 
-			// mnuViewArg
-			// 
-			this.mnuViewArg.Checked = true;
-			this.mnuViewArg.Index = 7;
-			this.mnuViewArg.Text = "引数(&A)";
-			this.mnuViewArg.Click += new System.EventHandler(this.mnuViewArg_Click);
-			// 
-			// mnuViewObject
-			// 
-			this.mnuViewObject.Checked = true;
-			this.mnuViewObject.Index = 8;
-			this.mnuViewObject.Text = "変数(&O)";
-			this.mnuViewObject.Click += new System.EventHandler(this.mnuViewObject_Click);
 			// 
 			// menuItem1
 			// 
@@ -687,12 +653,6 @@ namespace Girl.HierArch
 			this.opaqueSplitter1.TabIndex = 4;
 			this.opaqueSplitter1.TabStop = false;
 			// 
-			// mnuViewMacro
-			// 
-			this.mnuViewMacro.Index = 2;
-			this.mnuViewMacro.Text = "マクロ(&R)";
-			this.mnuViewMacro.Click += new System.EventHandler(this.mnuViewMacro_Click);
-			// 
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -743,13 +703,6 @@ namespace Girl.HierArch
 
 			Form1.viewData.Save(adm);
 			Form1.AccountManager.Save(adm);
-		}
-
-		private static void CreateMacroWindow()
-		{
-			if (Form1.MacroForm != null) return;
-
-			Form1.MacroForm = new HAMacroForm();
 		}
 
 		private static void Exit()
@@ -831,24 +784,6 @@ namespace Girl.HierArch
 			this.view1.SetPanel1(visible, this.view1.tabFunc.Visible);
 		}
 
-		private void mnuViewMacro_Click(object sender, System.EventArgs e)
-		{
-			Form1.CreateMacroWindow();
-
-			if (!Form1.MacroForm.Visible)
-			{
-				Form1.MacroForm.Show();
-			}
-			else
-			{
-				if (Form1.MacroForm.WindowState == FormWindowState.Minimized)
-				{
-					Form1.MacroForm.WindowState = Form1.MacroForm.LastState;
-				}
-				Form1.MacroForm.Focus();
-			}
-		}
-
 		private void mnuViewFunc_Click(object sender, System.EventArgs e)
 		{
 			this.SetFuncVisible(!this.view1.tabFunc.Visible);
@@ -860,45 +795,6 @@ namespace Girl.HierArch
 
 			this.mnuViewFunc.Checked = visible;
 			this.view1.SetPanel1(this.view1.tabClass.Visible, visible);
-		}
-
-		private void mnuViewMember_Click(object sender, System.EventArgs e)
-		{
-			this.SetMemberVisible(!this.view1.tabMember.Visible);
-		}
-
-		public void SetMemberVisible(bool visible)
-		{
-			if (visible == this.view1.tabMember.Visible) return;
-
-			this.mnuViewMember.Checked = visible;
-			this.view1.SetPanel3(visible, this.view1.tabArg.Visible, this.view1.tabObject.Visible);
-		}
-
-		private void mnuViewArg_Click(object sender, System.EventArgs e)
-		{
-			this.SetArgVisible(!this.view1.tabArg.Visible);
-		}
-
-		public void SetArgVisible(bool visible)
-		{
-			if (visible == this.view1.tabArg.Visible) return;
-
-			this.mnuViewArg.Checked = visible;
-			this.view1.SetPanel3(this.view1.tabMember.Visible, visible, this.view1.tabObject.Visible);
-		}
-
-		private void mnuViewObject_Click(object sender, System.EventArgs e)
-		{
-			this.SetObjectVisible(!this.view1.tabObject.Visible);
-		}
-
-		public void SetObjectVisible(bool visible)
-		{
-			if (visible == this.view1.tabObject.Visible) return;
-
-			this.mnuViewObject.Checked = visible;
-			this.view1.SetPanel3(this.view1.tabMember.Visible, this.view1.tabArg.Visible, visible);
 		}
 
 		#endregion

@@ -16,27 +16,15 @@ namespace Girl.HierArch
 		public System.Windows.Forms.Panel panel1;
 		public event EventHandler Changed;
 		private System.Windows.Forms.Panel panel2;
-		public System.Windows.Forms.Panel panel3;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter2;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter3;
-		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter5;
-		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter6;
 		public System.Windows.Forms.TabControl tabClass;
 		public System.Windows.Forms.TabControl tabFunc;
-		public System.Windows.Forms.TabControl tabMember;
-		public System.Windows.Forms.TabControl tabArg;
-		public System.Windows.Forms.TabControl tabObject;
 		private System.Windows.Forms.TabPage tpClass;
 		private System.Windows.Forms.TabPage tpFunc;
-		private System.Windows.Forms.TabPage tpMember;
-		private System.Windows.Forms.TabPage tpArg;
-		private System.Windows.Forms.TabPage tpObject;
 		public HAClass tvClass;
 		private HAFunc tvFunc;
-		private HAMember tvMember;
-		private HAObject tvArg;
-		private HAObject tvObject;
 		public Girl.Windows.Forms.CodeEditor txtSource;
 
 		/// <summary>
@@ -50,26 +38,13 @@ namespace Girl.HierArch
 			InitializeComponent();
 
 			// TODO: InitializeComponent を呼び出しの後に初期化処理を追加します。
-			this.tvClass.MemberTreeView = this.tvMember;
 			this.tvClass.FuncTreeView   = this.tvFunc;
-			this.tvFunc .ArgTreeView    = this.tvArg;
-			this.tvFunc .ObjectTreeView = this.tvObject;
 			this.tvFunc .SourceTextBox  = this.txtSource;
-
-			this.tvMember.MoveTarget.Add(this.tvArg);
-			this.tvMember.MoveTarget.Add(this.tvObject);
-			this.tvArg   .MoveTarget.Add(this.tvMember);
-			this.tvArg   .MoveTarget.Add(this.tvObject);
-			this.tvObject.MoveTarget.Add(this.tvMember);
-			this.tvObject.MoveTarget.Add(this.tvArg);
 
 			this.tvClass.SetView();
 
 			this.tvClass .Changed += new EventHandler(this.OnChanged);
 			this.tvFunc  .Changed += new EventHandler(this.OnChanged);
-			this.tvMember.Changed += new EventHandler(this.OnChanged);
-			this.tvArg   .Changed += new EventHandler(this.OnChanged);
-			this.tvObject.Changed += new EventHandler(this.OnChanged);
 
 			this.txtSource.TextChanged += new EventHandler(this.tvFunc.OnChanged);
 		}
@@ -98,9 +73,6 @@ namespace Girl.HierArch
 		{
 			this.tvClass = new Girl.HierArch.HAClass();
 			this.tvFunc = new Girl.HierArch.HAFunc();
-			this.tvMember = new Girl.HierArch.HAMember();
-			this.tvArg = new Girl.HierArch.HAObject();
-			this.tvObject = new Girl.HierArch.HAObject();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.txtSource = new Girl.Windows.Forms.CodeEditor();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -109,15 +81,6 @@ namespace Girl.HierArch
 			this.opaqueSplitter3 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.tabClass = new System.Windows.Forms.TabControl();
 			this.tpClass = new System.Windows.Forms.TabPage();
-			this.panel3 = new System.Windows.Forms.Panel();
-			this.tabObject = new System.Windows.Forms.TabControl();
-			this.tpObject = new System.Windows.Forms.TabPage();
-			this.opaqueSplitter6 = new Girl.Windows.Forms.OpaqueSplitter();
-			this.tabArg = new System.Windows.Forms.TabControl();
-			this.tpArg = new System.Windows.Forms.TabPage();
-			this.opaqueSplitter5 = new Girl.Windows.Forms.OpaqueSplitter();
-			this.tabMember = new System.Windows.Forms.TabControl();
-			this.tpMember = new System.Windows.Forms.TabPage();
 			this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.opaqueSplitter2 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.panel2.SuspendLayout();
@@ -126,13 +89,6 @@ namespace Girl.HierArch
 			this.tpFunc.SuspendLayout();
 			this.tabClass.SuspendLayout();
 			this.tpClass.SuspendLayout();
-			this.panel3.SuspendLayout();
-			this.tabObject.SuspendLayout();
-			this.tpObject.SuspendLayout();
-			this.tabArg.SuspendLayout();
-			this.tpArg.SuspendLayout();
-			this.tabMember.SuspendLayout();
-			this.tpMember.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tvClass
@@ -158,42 +114,6 @@ namespace Girl.HierArch
 			this.tvFunc.Name = "tvFunc";
 			this.tvFunc.Size = new System.Drawing.Size(168, 276);
 			this.tvFunc.TabIndex = 0;
-			// 
-			// tvMember
-			// 
-			this.tvMember.AllowDrop = true;
-			this.tvMember.DataFormat = "HierArch Object Data";
-			this.tvMember.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvMember.HideSelection = false;
-			this.tvMember.ItemHeight = 16;
-			this.tvMember.LabelEdit = true;
-			this.tvMember.Name = "tvMember";
-			this.tvMember.Size = new System.Drawing.Size(168, 135);
-			this.tvMember.TabIndex = 0;
-			// 
-			// tvArg
-			// 
-			this.tvArg.AllowDrop = true;
-			this.tvArg.DataFormat = "HierArch Object Data";
-			this.tvArg.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvArg.HideSelection = false;
-			this.tvArg.ItemHeight = 16;
-			this.tvArg.LabelEdit = true;
-			this.tvArg.Name = "tvArg";
-			this.tvArg.Size = new System.Drawing.Size(168, 84);
-			this.tvArg.TabIndex = 0;
-			// 
-			// tvObject
-			// 
-			this.tvObject.AllowDrop = true;
-			this.tvObject.DataFormat = "HierArch Object Data";
-			this.tvObject.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tvObject.HideSelection = false;
-			this.tvObject.ItemHeight = 16;
-			this.tvObject.LabelEdit = true;
-			this.tvObject.Name = "tvObject";
-			this.tvObject.Size = new System.Drawing.Size(168, 188);
-			this.tvObject.TabIndex = 0;
 			// 
 			// panel2
 			// 
@@ -282,102 +202,6 @@ namespace Girl.HierArch
 			this.tpClass.TabIndex = 0;
 			this.tpClass.Text = "クラス";
 			// 
-			// panel3
-			// 
-			this.panel3.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				 this.tabObject,
-																				 this.opaqueSplitter6,
-																				 this.tabArg,
-																				 this.opaqueSplitter5,
-																				 this.tabMember});
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panel3.Location = new System.Drawing.Point(584, 0);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(176, 488);
-			this.panel3.TabIndex = 2;
-			// 
-			// tabObject
-			// 
-			this.tabObject.Controls.AddRange(new System.Windows.Forms.Control[] {
-																					this.tpObject});
-			this.tabObject.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabObject.Location = new System.Drawing.Point(0, 275);
-			this.tabObject.Name = "tabObject";
-			this.tabObject.SelectedIndex = 0;
-			this.tabObject.Size = new System.Drawing.Size(176, 213);
-			this.tabObject.TabIndex = 4;
-			// 
-			// tpObject
-			// 
-			this.tpObject.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				   this.tvObject});
-			this.tpObject.Location = new System.Drawing.Point(4, 21);
-			this.tpObject.Name = "tpObject";
-			this.tpObject.Size = new System.Drawing.Size(168, 188);
-			this.tpObject.TabIndex = 0;
-			this.tpObject.Text = "変数";
-			// 
-			// opaqueSplitter6
-			// 
-			this.opaqueSplitter6.Dock = System.Windows.Forms.DockStyle.Top;
-			this.opaqueSplitter6.Location = new System.Drawing.Point(0, 272);
-			this.opaqueSplitter6.Name = "opaqueSplitter6";
-			this.opaqueSplitter6.Opaque = true;
-			this.opaqueSplitter6.Size = new System.Drawing.Size(176, 3);
-			this.opaqueSplitter6.TabIndex = 3;
-			this.opaqueSplitter6.TabStop = false;
-			// 
-			// tabArg
-			// 
-			this.tabArg.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				 this.tpArg});
-			this.tabArg.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tabArg.Location = new System.Drawing.Point(0, 163);
-			this.tabArg.Name = "tabArg";
-			this.tabArg.SelectedIndex = 0;
-			this.tabArg.Size = new System.Drawing.Size(176, 109);
-			this.tabArg.TabIndex = 2;
-			// 
-			// tpArg
-			// 
-			this.tpArg.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				this.tvArg});
-			this.tpArg.Location = new System.Drawing.Point(4, 21);
-			this.tpArg.Name = "tpArg";
-			this.tpArg.Size = new System.Drawing.Size(168, 84);
-			this.tpArg.TabIndex = 0;
-			this.tpArg.Text = "引数";
-			// 
-			// opaqueSplitter5
-			// 
-			this.opaqueSplitter5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.opaqueSplitter5.Location = new System.Drawing.Point(0, 160);
-			this.opaqueSplitter5.Name = "opaqueSplitter5";
-			this.opaqueSplitter5.Opaque = true;
-			this.opaqueSplitter5.Size = new System.Drawing.Size(176, 3);
-			this.opaqueSplitter5.TabIndex = 1;
-			this.opaqueSplitter5.TabStop = false;
-			// 
-			// tabMember
-			// 
-			this.tabMember.Controls.AddRange(new System.Windows.Forms.Control[] {
-																					this.tpMember});
-			this.tabMember.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tabMember.Name = "tabMember";
-			this.tabMember.SelectedIndex = 0;
-			this.tabMember.Size = new System.Drawing.Size(176, 160);
-			this.tabMember.TabIndex = 0;
-			// 
-			// tpMember
-			// 
-			this.tpMember.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				   this.tvMember});
-			this.tpMember.Location = new System.Drawing.Point(4, 21);
-			this.tpMember.Name = "tpMember";
-			this.tpMember.Size = new System.Drawing.Size(168, 135);
-			this.tpMember.TabIndex = 0;
-			this.tpMember.Text = "メンバ";
-			// 
 			// opaqueSplitter1
 			// 
 			this.opaqueSplitter1.Location = new System.Drawing.Point(176, 0);
@@ -403,8 +227,7 @@ namespace Girl.HierArch
 																		  this.panel2,
 																		  this.opaqueSplitter2,
 																		  this.opaqueSplitter1,
-																		  this.panel1,
-																		  this.panel3});
+																		  this.panel1});
 			this.Name = "View";
 			this.Size = new System.Drawing.Size(760, 488);
 			this.panel2.ResumeLayout(false);
@@ -413,13 +236,6 @@ namespace Girl.HierArch
 			this.tpFunc.ResumeLayout(false);
 			this.tabClass.ResumeLayout(false);
 			this.tpClass.ResumeLayout(false);
-			this.panel3.ResumeLayout(false);
-			this.tabObject.ResumeLayout(false);
-			this.tpObject.ResumeLayout(false);
-			this.tabArg.ResumeLayout(false);
-			this.tpArg.ResumeLayout(false);
-			this.tabMember.ResumeLayout(false);
-			this.tpMember.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -436,21 +252,6 @@ namespace Girl.HierArch
 			this.tabClass.Visible = vc;
 			this.opaqueSplitter3.Visible = (vc && vf);
 			this.tabFunc.Visible = vf;
-		}
-
-		public void SetPanel3(bool vm, bool va, bool vo)
-		{
-			this.panel3.Visible = this.opaqueSplitter2.Visible = (vm || va || vo);
-			if (!vm && !va && !vo) return;
-
-			this.tabMember.Dock = (vm && (va || vo)) ? DockStyle.Top : DockStyle.Fill;
-			this.tabArg   .Dock =        (va && vo)  ? DockStyle.Top : DockStyle.Fill;
-
-			this.tabMember.Visible = vm;
-			this.opaqueSplitter5.Visible = (vm && (va || vo));
-			this.tabArg.Visible = va;
-			this.opaqueSplitter6.Visible = (va && vo);
-			this.tabObject.Visible = vo;
 		}
 
 		#endregion

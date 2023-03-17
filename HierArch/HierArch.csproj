@@ -65,6 +65,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base" />
+    <Folder Include="Girl" />
+    <Folder Include="Girl\Src" />
+    <Folder Include="Girl\Windows" />
+    <Folder Include="Girl\Windows\Forms" />
+    <Folder Include="Girl\Xml" />
     <Folder Include="Parser" />
     <Folder Include="Src" />
     <Folder Include="Tree" />
@@ -73,8 +78,26 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Base\HAAccountManager.cs" />
     <Compile Include="Base\HADoc.cs" />
-    <Compile Include="Base\HAMacroForm.cs" />
     <Compile Include="Base\HAViewInfo.cs" />
+    <Compile Include="Girl\Src\DnDTreeView.cs" />
+    <Compile Include="Girl\Src\ExTreeView.cs" />
+    <Compile Include="Girl\Src\InternalScrollBar.cs" />
+    <Compile Include="Girl\Src\Win32API.cs" />
+    <Compile Include="Girl\Src\WindowSize.cs" />
+    <Compile Include="Girl\Windows\Forms\ApplicationDataManager.cs" />
+    <Compile Include="Girl\Windows\Forms\CenterPointDialog.cs" />
+    <Compile Include="Girl\Windows\Forms\CodeEditor.cs" />
+    <Compile Include="Girl\Windows\Forms\CodeEditorManager.cs" />
+    <Compile Include="Girl\Windows\Forms\ContextManager.cs" />
+    <Compile Include="Girl\Windows\Forms\ControlEx.cs" />
+    <Compile Include="Girl\Windows\Forms\Document.cs" />
+    <Compile Include="Girl\Windows\Forms\EditManager.cs" />
+    <Compile Include="Girl\Windows\Forms\MenuItemEx.cs" />
+    <Compile Include="Girl\Windows\Forms\OpaqueSplitter.cs" />
+    <Compile Include="Girl\Windows\Forms\TabControlEx.cs" />
+    <Compile Include="Girl\Windows\Forms\TextBoxPlus.cs" />
+    <Compile Include="Girl\Xml\XmlObjectSerializer.cs" />
+    <Compile Include="Girl\Xml\XmlParser.cs" />
     <Compile Include="Parser\ObjectParser.cs" />
     <Compile Include="Src\About.cs" />
     <Compile Include="Src\Form1.cs" />
@@ -85,10 +108,6 @@
     <Compile Include="Tree\HAClassNode.cs" />
     <Compile Include="Tree\HAFunc.cs" />
     <Compile Include="Tree\HAFuncNode.cs" />
-    <Compile Include="Tree\HAMember.cs" />
-    <Compile Include="Tree\HAMemberNode.cs" />
-    <Compile Include="Tree\HAObject.cs" />
-    <Compile Include="Tree\HAObjectNode.cs" />
     <Compile Include="Tree\HATreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -104,12 +123,6 @@
     <EmbeddedResource Include="Src\View.resx">
       <DependentUpon>View.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GirlLib\GirlLib.csproj">
-      <Project>{c639ac7f-4152-4c1d-bd61-3155dafca79e}</Project>
-      <Name>GirlLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

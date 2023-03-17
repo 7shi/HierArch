@@ -3,14 +3,7 @@
 
 using System;
 using System.Collections;
-using System.Drawing;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Windows.Forms;
 using System.Xml;
-using Girl.Coding;
-using Girl.Windows.Forms;
 
 namespace Girl.HierArch
 {
@@ -82,10 +75,6 @@ namespace Girl.HierArch
 		public override void WriteXml(XmlTextWriter xw)
 		{
 			base.WriteXml(xw);
-			foreach (Object obj in this.Members)
-			{
-				if (obj is HAMemberNode)((HAMemberNode) obj).ToXml(xw);
-			}
 			xw.WriteStartElement("Header");
 			this.Header.ToXml(xw);
 			xw.WriteEndElement();
@@ -99,13 +88,7 @@ namespace Girl.HierArch
 
 		public override void ReadXmlNode(XmlTextReader xr)
 		{
-			if (xr.Name == "HAObject" && xr.NodeType == XmlNodeType.Element)
-			{
-				HAMemberNode n = new HAMemberNode();
-				Members.Add(n);
-				n.FromXml(xr);
-			}
-			else if (xr.Name == "Header" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
+			if (xr.Name == "Header" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
 			{
 				while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace);
 				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Header.FromXml(xr);

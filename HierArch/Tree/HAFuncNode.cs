@@ -5,14 +5,8 @@
 
 using System;
 using System.Collections;
-using System.Drawing;
-using System.IO;
-using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using Girl.Coding;
-using Girl.Windows.Forms;
 
 namespace Girl.HierArch
 {
@@ -22,8 +16,6 @@ namespace Girl.HierArch
 	public class HAFuncNode : HATreeNode
 	{
 		public const string ext = "hafnc";
-		public ArrayList Args;
-		public ArrayList Objects;
 		public string Source;
 		public int SourceSelectionStart;
 		public int SourceSelectionLength;
@@ -32,8 +24,6 @@ namespace Girl.HierArch
 		public override void Init()
 		{
 			base.Init();
-			this.Args = new ArrayList();
-			this.Objects = new ArrayList();
 			this.Source = "";
 			this.SourceSelectionStart = 0;
 			this.SourceSelectionLength = 0;
@@ -87,8 +77,6 @@ namespace Girl.HierArch
 		public override object Clone()
 		{
 			HAFuncNode ret = base.Clone() as HAFuncNode;
-			ret.Args = this.Args.Clone() as ArrayList;
-			ret.Objects = this.Objects.Clone() as ArrayList;
 			ret.Source = this.Source;
 			ret.SourceSelectionStart = this.SourceSelectionStart;
 			ret.SourceSelectionLength = this.SourceSelectionLength;
@@ -176,30 +164,6 @@ namespace Girl.HierArch
 		public override void WriteXml(XmlTextWriter xw)
 		{
 			base.WriteXml(xw);
-			xw.WriteStartElement("Arguments");
-			// Macro: object配列(this.Args)を型(HAObjectNode)だけ反復子(objn)で評価
-			{
-				foreach (object __0_0 in this.Args)
-				{
-					HAObjectNode objn = __0_0 as HAObjectNode;
-					if (objn == null) continue;
-					// begin __YIELD
-					objn.ToXml(xw);
-					// end __YIELD
-				}
-			}
-			xw.WriteEndElement();
-			// Macro: object配列(this.Objects)を型(HAObjectNode)だけ反復子(objn)で評価
-			{
-				foreach (object __0_0 in this.Objects)
-				{
-					HAObjectNode objn = __0_0 as HAObjectNode;
-					if (objn == null) continue;
-					// begin __YIELD
-					objn.ToXml(xw);
-					// end __YIELD
-				}
-			}
 			xw.WriteStartElement("Source");
 			xw.WriteAttributeString("SelectionStart", XmlConvert.ToString(this.SourceSelectionStart));
 			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.SourceSelectionLength));
@@ -209,43 +173,13 @@ namespace Girl.HierArch
 
 		public override void ReadXmlNode(XmlTextReader xr)
 		{
-			if (xr.Name == "Arguments" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
+			if (xr.NodeType == XmlNodeType.Element)
 			{
-				while (xr.Read())
-				{
-					if (xr.Name == "Arguments" && xr.NodeType == XmlNodeType.EndElement)
-					{
-						break;
-					}
-					else if (xr.Name == "HAObject" && xr.NodeType == XmlNodeType.Element)
-					{
-						HAObjectNode n = new HAObjectNode();
-						this.Args.Add(n);
-						n.FromXml(xr);
-					}
-				}
-			}
-			else if (xr.NodeType == XmlNodeType.Element)
-			{
-				if (xr.Name == "HAObject")
-				{
-					HAObjectNode n = new HAObjectNode();
-					this.Objects.Add(n);
-					n.FromXml(xr);
-				}
-				else if (xr.Name == "Comment")
-				{
-					xr.ReadString(); // TODO: remove
-				}
-				else if (xr.Name == "Source")
+				if (xr.Name == "Source")
 				{
 					this.SourceSelectionStart = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
 					this.SourceSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
 					if (!xr.IsEmptyElement && xr.Read()) this.Source = xr.ReadString();
-				}
-				else if (xr.Name == "RichTextFormat")
-				{
-					xr.ReadString(); // TODO: remove
 				}
 			}
 		}
