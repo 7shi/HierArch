@@ -4,14 +4,13 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Girl.Coding;
-using Girl.Rtf;
 
 namespace Girl.Windows.Forms
 {
 	/// <summary>
-	/// ソースコードを編集するための RichTextBox です。
+	/// ソースコードを編集するための TextBox です。
 	/// </summary>
-	public class CodeEditor : ExRichTextBox
+	public class CodeEditor : TextBox
 	{
 		public ParserBase Parser;
 
@@ -21,10 +20,10 @@ namespace Girl.Windows.Forms
 		public CodeEditor()
 		{
 			this.AcceptsTab = true;
-			this.DetectUrls = false;
-			this.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
+			this.ScrollBars = ScrollBars.Both;
 			this.WordWrap = false;
 			this.Font = new Font("ＭＳ ゴシック", 9);
+			this.Multiline = true;
 			//this.ShowSelectionMargin = true;
 			this.Parser = null;
 		}
@@ -32,7 +31,7 @@ namespace Girl.Windows.Forms
 		public void JumpToError(Point p)
 		{
 			if (p.X < 0 || p.Y < 0) return;
-			this.SelectionStart = this.GetLinePosition(p.Y) + p.X;
+			this.SelectionStart = this.GetFirstCharIndexFromLine(p.Y) + p.X;
 			this.SelectionLength = 0;
 			if (this.Parser != null)
 			{
@@ -87,7 +86,6 @@ namespace Girl.Windows.Forms
 				this.Parser.Color_Default = this.ForeColor;
 				this.Parser.Parse();
 				sr.Close();
-				this.Rtf = this.Parser.Rtf;
 			}
 		}
 

@@ -70,13 +70,11 @@ namespace Girl.HierArch
 			}
 			form1.SetClassVisible(this.ShowClass);
 			form1.SetFuncVisible(this.ShowFunc);
-			form1.SetCommentVisible(this.ShowComment);
 			form1.SetMemberVisible(this.ShowMember);
 			form1.SetArgVisible(this.ShowArg);
 			form1.SetObjectVisible(this.ShowObject);
 			if (this.LeftPanelWidth > 0) form1.view1.panel1.Width = this.LeftPanelWidth;
 			if (this.ClassHeight > 0) form1.view1.tabClass.Height = this.ClassHeight;
-			if (this.CommentHeight > 0) form1.view1.txtComment.Height = this.CommentHeight;
 			if (this.RightPanelWidth > 0) form1.view1.panel3.Width = this.RightPanelWidth;
 			if (this.MemberHeight > 0) form1.view1.tabMember.Height = this.MemberHeight;
 			if (this.ObjectHeight > 0) form1.view1.tabObject.Height = this.ObjectHeight;
@@ -92,13 +90,11 @@ namespace Girl.HierArch
 			this.State = form1.WindowState;
 			this.ShowClass = form1.view1.tabClass.Visible;
 			this.ShowFunc = form1.view1.tabFunc.Visible;
-			this.ShowComment = form1.view1.txtComment.Visible;
 			this.ShowMember = form1.view1.tabMember.Visible;
 			this.ShowArg = form1.view1.tabArg.Visible;
 			this.ShowObject = form1.view1.tabObject.Visible;
 			this.LeftPanelWidth = form1.view1.panel1.Width;
 			this.ClassHeight = form1.view1.tabClass.Height;
-			this.CommentHeight = form1.view1.txtComment.Height;
 			this.RightPanelWidth = form1.view1.panel3.Width;
 			this.MemberHeight = form1.view1.tabMember.Height;
 			this.ObjectHeight = form1.view1.tabObject.Height;

@@ -96,18 +96,14 @@ namespace Girl.HierArch
 			n.Header.Type = HAType.Text;
 			n.Header.m_IsSelected = true;
 			n.Header.AllowDrag = false;
-			n.Header.Comment = "ここにソースコードの注釈を書きます。\r\n";
 			n.Header.Source = "using System;\r\n";
 			n.Body = new HAFuncNode("本体");
 			n.Body.Type = HAType.Class;
 			n.Body.m_IsExpanded = true;
 			n.Body.AllowDrag = false;
-			n.Body.Comment = "<summary>\r\nここにクラスの説明を書きます。\r\n</summary>\r\n";
 			HAFuncNode cst = new HAFuncNode("__" + "CLASS");
-			cst.Comment = "<summary>\r\nコンストラクタです。\r\n</summary>\r\n";
 			n.Body.Nodes.Add(cst);
 			HAFuncNode dst = new HAFuncNode("~__" + "CLASS");
-			dst.Comment = "<summary>\r\nデストラクタです。\r\n</summary>\r\n";
 			n.Body.Nodes.Add(dst);
 			n.Footer = new HAFuncNode("フッタ");
 			n.Footer.Type = HAType.Text;
@@ -161,10 +157,6 @@ namespace Girl.HierArch
 					this.FuncTreeView.OwnerClass = this.TargetNode;
 					this.FuncTreeView.SetView(this.TargetNode);
 				}
-				if (this.Property != null)
-				{
-					this.Property.SelectedObject = this.TargetNode.Property;
-				}
 			}
 			else
 			{
@@ -216,19 +208,6 @@ namespace Girl.HierArch
 						this.OnChanged(this, new EventArgs());
 					}
 				}
-			}
-		}
-
-		#endregion
-
-		#region Generation
-
-		public void Generate(string path)
-		{
-			this.StoreData();
-			foreach (TreeNode n in this.Nodes)
-			{
-				(n as HAClassNode).Generate(path);
 			}
 		}
 

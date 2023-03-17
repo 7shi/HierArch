@@ -25,7 +25,6 @@ namespace Girl.HierArch
 		/// </summary>
 		public HAMacroForm()
 		{
-			this.mnuBuildGenerate.Enabled = false;
 			this.tbBuildGenerate.Enabled = false;
 			this.Open(HADoc.MacroProject);
 			this.macros = null;

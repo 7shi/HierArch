@@ -6,8 +6,6 @@ VisualStudioVersion = 12.0.20827.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierArch", "HierArch\HierArch.csproj", "{C1F8A388-6FF5-47EF-9079-3ABFECD1DC1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierArchLib", "HierArchLib\HierArchLib.csproj", "{426C954D-0AC6-4310-A9B3-AF68A6A12CE2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GirlLib", "GirlLib\GirlLib.csproj", "{C639AC7F-4152-4C1D-BD61-3155DAFCA79E}"
 EndProject
 Global
@@ -20,10 +18,6 @@ Global
 		{C1F8A388-6FF5-47EF-9079-3ABFECD1DC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1F8A388-6FF5-47EF-9079-3ABFECD1DC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1F8A388-6FF5-47EF-9079-3ABFECD1DC1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{426C954D-0AC6-4310-A9B3-AF68A6A12CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{426C954D-0AC6-4310-A9B3-AF68A6A12CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{426C954D-0AC6-4310-A9B3-AF68A6A12CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{426C954D-0AC6-4310-A9B3-AF68A6A12CE2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C639AC7F-4152-4C1D-BD61-3155DAFCA79E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C639AC7F-4152-4C1D-BD61-3155DAFCA79E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C639AC7F-4152-4C1D-BD61-3155DAFCA79E}.Release|Any CPU.ActiveCfg = Release|Any CPU

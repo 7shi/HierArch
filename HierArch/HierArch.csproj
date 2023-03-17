@@ -68,7 +68,6 @@
     <Folder Include="Parser" />
     <Folder Include="Src" />
     <Folder Include="Tree" />
-    <Folder Include="Uploader" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -84,19 +83,13 @@
     <Compile Include="Src\ViewManager.cs" />
     <Compile Include="Tree\HAClass.cs" />
     <Compile Include="Tree\HAClassNode.cs" />
-    <Compile Include="Tree\HAClassProperty.cs" />
     <Compile Include="Tree\HAFunc.cs" />
     <Compile Include="Tree\HAFuncNode.cs" />
-    <Compile Include="Tree\HAFuncProperty.cs" />
     <Compile Include="Tree\HAMember.cs" />
     <Compile Include="Tree\HAMemberNode.cs" />
-    <Compile Include="Tree\HANodeProperty.cs" />
     <Compile Include="Tree\HAObject.cs" />
     <Compile Include="Tree\HAObjectNode.cs" />
     <Compile Include="Tree\HATreeNode.cs" />
-    <Compile Include="Uploader\HAUploaderFileInfo.cs" />
-    <Compile Include="Uploader\HAUploaderInfo.cs" />
-    <Compile Include="Uploader\HAUploaderManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Src\About.resx">
@@ -116,10 +109,6 @@
     <ProjectReference Include="..\GirlLib\GirlLib.csproj">
       <Project>{c639ac7f-4152-4c1d-bd61-3155dafca79e}</Project>
       <Name>GirlLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HierArchLib\HierArchLib.csproj">
-      <Project>{426c954d-0ac6-4310-a9b3-af68a6a12ce2}</Project>
-      <Name>HierArchLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

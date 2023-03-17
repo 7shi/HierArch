@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using Girl.Rtf;
 
 namespace Girl.Coding
 {
@@ -18,7 +17,6 @@ namespace Girl.Coding
 		protected string text;
 		protected string spacing;
 		protected string[] keyWords;
-		protected RtfDocument rtf;
 		protected string access;
 		public Color Color_Default;
 		public Color Color_KeyWord;
@@ -46,24 +44,16 @@ namespace Girl.Coding
 			this.lineNumber = 1;
 			this.text = "";
 			this.spacing = "";
-			this.rtf = new RtfDocument();
 		}
 
 		public virtual bool Read()
 		{
 			if (this.text.Length < 1) return false;
-			this.rtf.AppendText(this.spacing);
-			this.rtf.AppendText(this.text, this.TextColor);
 			return true;
 		}
 
 		public void Close()
 		{
-			if (this.spacing != "")
-			{
-				this.rtf.AppendText(this.spacing);
-				if (this.spacing.EndsWith("\n")) this.rtf.AppendLine();
-			}
 			this.reader = null;
 		}
 
@@ -189,14 +179,6 @@ namespace Girl.Coding
 			get
 			{
 				return this.keyWords;
-			}
-		}
-
-		public string Rtf
-		{
-			get
-			{
-				return this.rtf.ToRtf();
 			}
 		}
 

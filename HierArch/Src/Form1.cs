@@ -61,10 +61,6 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuViewMember;
 		private System.Windows.Forms.MenuItem mnuViewArg;
 		private System.Windows.Forms.MenuItem mnuViewObject;
-		private System.Windows.Forms.MenuItem mnuViewSeparator2;
-		private System.Windows.Forms.MenuItem mnuViewComment;
-		private System.Windows.Forms.MenuItem mnuCode;
-		private System.Windows.Forms.MenuItem mnuHelpHomePage;
 		private System.Windows.Forms.ToolBarButton tbSeparator2;
 		private System.Windows.Forms.ToolBarButton tbBuildBuild;
 		private System.Windows.Forms.ToolBarButton tbEditUndo;
@@ -84,9 +80,6 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuOptionSmartParenthesis;
 		private System.ComponentModel.IContainer components;
 		protected System.Windows.Forms.ToolBarButton tbBuildGenerate;
-		protected System.Windows.Forms.MenuItem mnuBuildGenerate;
-		private System.Windows.Forms.MenuItem mnuBuildBuild;
-		private System.Windows.Forms.MenuItem mnuBuildRun;
 		private EditManager editManager = new EditManager();
 		private System.Windows.Forms.ContextMenu cmEdit;
 		private System.Windows.Forms.MenuItem cmEditUndo;
@@ -98,15 +91,7 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem cmEditDelete;
 		private System.Windows.Forms.MenuItem cmEditSeparator2;
 		private System.Windows.Forms.MenuItem cmEditSelectAll;
-		private System.Windows.Forms.MenuItem mnuOptionSeparator1;
-		private System.Windows.Forms.MenuItem mnuOptionEditPlugin;
-		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage tabPage1;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
-		private Girl.Windows.Forms.LinkRichTextBox lrtOutput;
-		private System.Windows.Forms.MenuItem mnuViewOutput;
-		private System.Windows.Forms.MenuItem mnuProject;
-		private System.Windows.Forms.MenuItem mnuProjectSynchronize;
 		private System.Windows.Forms.MenuItem mnuViewMacro;
 		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
 
@@ -133,7 +118,6 @@ namespace Girl.HierArch
 			this.tbFileNew      .Tag = this.mnuFileNew;
 			this.tbFileOpen     .Tag = this.mnuFileOpen;
 			this.tbFileSave     .Tag = this.mnuFileSave;
-			this.tbBuildGenerate.Tag = this.mnuBuildGenerate;
 
 			// View メニューの項目とコントロールを対応させます。
 			// ここで定義した情報は mnuViewItem_Click() で使用されます。
@@ -141,7 +125,6 @@ namespace Girl.HierArch
 			this.m_tblView.Add(mnuViewStatusBar, statusBar1);
 
 			// テキストボックスの状態をメニューと連動させます。
-			this.editManager.AddControl(this.view1.txtComment);
 			this.editManager.AddControl(this.view1.txtSource );
 			this.editManager.SetCommand(EditAction.Undo     , this.mnuEditUndo     , this.cmEditUndo , this.tbEditUndo );
 			this.editManager.SetCommand(EditAction.Redo     , this.mnuEditRedo     , this.cmEditRedo , this.tbEditRedo );
@@ -152,7 +135,6 @@ namespace Girl.HierArch
 			this.editManager.SetCommand(EditAction.SelectAll, this.mnuEditSelectAll, this.cmEditSelectAll);
 
 			// エディタオプションを設定します。
-			Form1.codeEditorManager.SetTarget(this.view1.txtComment);
 			Form1.codeEditorManager.SetTarget(this.view1.txtSource );
 			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartEnter      , this.mnuOptionSmartEnter      );
 			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartTab        , this.mnuOptionSmartTab        );
@@ -160,11 +142,7 @@ namespace Girl.HierArch
 			Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartParenthesis, this.mnuOptionSmartParenthesis);
 
 			this.document.ClassTreeView = view1.tvClass;
-			this.view1.txtComment.ContextMenu = this.cmEdit;
 			this.view1.txtSource .ContextMenu = this.cmEdit;
-
-			// 出力タブを非表示にします。
-			this.mnuViewOutput_Click(this, EventArgs.Empty);
 
 			this.sizeMonitor = new WindowSizeMonitor(this);
 		}
@@ -253,24 +231,12 @@ namespace Girl.HierArch
 			this.mnuViewMember = new System.Windows.Forms.MenuItem();
 			this.mnuViewArg = new System.Windows.Forms.MenuItem();
 			this.mnuViewObject = new System.Windows.Forms.MenuItem();
-			this.mnuViewSeparator2 = new System.Windows.Forms.MenuItem();
-			this.mnuViewComment = new System.Windows.Forms.MenuItem();
-			this.mnuViewOutput = new System.Windows.Forms.MenuItem();
-			this.mnuProject = new System.Windows.Forms.MenuItem();
-			this.mnuProjectSynchronize = new System.Windows.Forms.MenuItem();
-			this.mnuCode = new System.Windows.Forms.MenuItem();
-			this.mnuBuildGenerate = new System.Windows.Forms.MenuItem();
-			this.mnuBuildBuild = new System.Windows.Forms.MenuItem();
-			this.mnuBuildRun = new System.Windows.Forms.MenuItem();
 			this.menuItem1 = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartEnter = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartTab = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartHome = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartParenthesis = new System.Windows.Forms.MenuItem();
-			this.mnuOptionSeparator1 = new System.Windows.Forms.MenuItem();
-			this.mnuOptionEditPlugin = new System.Windows.Forms.MenuItem();
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
-			this.mnuHelpHomePage = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
 			this.cmEdit = new System.Windows.Forms.ContextMenu();
 			this.cmEditUndo = new System.Windows.Forms.MenuItem();
@@ -282,13 +248,8 @@ namespace Girl.HierArch
 			this.cmEditDelete = new System.Windows.Forms.MenuItem();
 			this.cmEditSeparator2 = new System.Windows.Forms.MenuItem();
 			this.cmEditSelectAll = new System.Windows.Forms.MenuItem();
-			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.lrtOutput = new Girl.Windows.Forms.LinkRichTextBox();
 			this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
 			this.mnuViewMacro = new System.Windows.Forms.MenuItem();
-			this.tabControl1.SuspendLayout();
-			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolBar1
@@ -425,8 +386,6 @@ namespace Girl.HierArch
 																					  this.mnuFile,
 																					  this.mnuEdit,
 																					  this.mnuView,
-																					  this.mnuProject,
-																					  this.mnuCode,
 																					  this.menuItem1,
 																					  this.mnuHelp});
 			// 
@@ -562,10 +521,7 @@ namespace Girl.HierArch
 																					this.mnuViewFunc,
 																					this.mnuViewMember,
 																					this.mnuViewArg,
-																					this.mnuViewObject,
-																					this.mnuViewSeparator2,
-																					this.mnuViewComment,
-																					this.mnuViewOutput});
+																					this.mnuViewObject});
 			this.mnuView.Text = "表示(&V)";
 			// 
 			// mnuViewToolBar
@@ -588,7 +544,7 @@ namespace Girl.HierArch
 			// mnuViewClass
 			// 
 			this.mnuViewClass.Checked = true;
-			this.mnuViewClass.Index = 4;
+			this.mnuViewClass.Index = 3;
 			this.mnuViewClass.Text = "クラス(&C)";
 			this.mnuViewClass.Click += new System.EventHandler(this.mnuViewClass_Click);
 			// 
@@ -620,77 +576,14 @@ namespace Girl.HierArch
 			this.mnuViewObject.Text = "変数(&O)";
 			this.mnuViewObject.Click += new System.EventHandler(this.mnuViewObject_Click);
 			// 
-			// mnuViewSeparator2
-			// 
-			this.mnuViewSeparator2.Index = 9;
-			this.mnuViewSeparator2.Text = "-";
-			// 
-			// mnuViewComment
-			// 
-			this.mnuViewComment.Checked = true;
-			this.mnuViewComment.Index = 10;
-			this.mnuViewComment.Text = "注釈(&E)";
-			this.mnuViewComment.Click += new System.EventHandler(this.mnuViewComment_Click);
-			// 
-			// mnuViewOutput
-			// 
-			this.mnuViewOutput.Checked = true;
-			this.mnuViewOutput.Index = 11;
-			this.mnuViewOutput.Text = "出力(&U)";
-			this.mnuViewOutput.Click += new System.EventHandler(this.mnuViewOutput_Click);
-			// 
-			// mnuProject
-			// 
-			this.mnuProject.Index = 3;
-			this.mnuProject.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					   this.mnuProjectSynchronize});
-			this.mnuProject.Text = "プロジェクト(&P)";
-			// 
-			// mnuProjectSynchronize
-			// 
-			this.mnuProjectSynchronize.Index = 0;
-			this.mnuProjectSynchronize.Text = "同期(&S)";
-			this.mnuProjectSynchronize.Click += new System.EventHandler(this.mnuProjectSynchronize_Click);
-			// 
-			// mnuCode
-			// 
-			this.mnuCode.Index = 4;
-			this.mnuCode.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnuBuildGenerate,
-																					this.mnuBuildBuild,
-																					this.mnuBuildRun});
-			this.mnuCode.Text = "ビルド(&C)";
-			// 
-			// mnuBuildGenerate
-			// 
-			this.mnuBuildGenerate.Index = 0;
-			this.mnuBuildGenerate.Shortcut = System.Windows.Forms.Shortcut.F8;
-			this.mnuBuildGenerate.Text = "コード生成(&G)";
-			this.mnuBuildGenerate.Click += new System.EventHandler(this.mnuBuildGenerate_Click);
-			// 
-			// mnuBuildBuild
-			// 
-			this.mnuBuildBuild.Enabled = false;
-			this.mnuBuildBuild.Index = 1;
-			this.mnuBuildBuild.Text = "ビルド(&B)";
-			// 
-			// mnuBuildRun
-			// 
-			this.mnuBuildRun.Enabled = false;
-			this.mnuBuildRun.Index = 2;
-			this.mnuBuildRun.Shortcut = System.Windows.Forms.Shortcut.F5;
-			this.mnuBuildRun.Text = "実行(&R)";
-			// 
 			// menuItem1
 			// 
-			this.menuItem1.Index = 5;
+			this.menuItem1.Index = 3;
 			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.mnuOptionSmartEnter,
 																					  this.mnuOptionSmartTab,
 																					  this.mnuOptionSmartHome,
-																					  this.mnuOptionSmartParenthesis,
-																					  this.mnuOptionSeparator1,
-																					  this.mnuOptionEditPlugin});
+																					  this.mnuOptionSmartParenthesis});
 			this.menuItem1.Text = "オプション(&O)";
 			// 
 			// mnuOptionSmartEnter
@@ -713,34 +606,16 @@ namespace Girl.HierArch
 			this.mnuOptionSmartParenthesis.Index = 3;
 			this.mnuOptionSmartParenthesis.Text = "自動括弧挿入(&P)";
 			// 
-			// mnuOptionSeparator1
-			// 
-			this.mnuOptionSeparator1.Index = 4;
-			this.mnuOptionSeparator1.Text = "-";
-			// 
-			// mnuOptionEditPlugin
-			// 
-			this.mnuOptionEditPlugin.Index = 5;
-			this.mnuOptionEditPlugin.Text = "プラグイン編集(&D)";
-			this.mnuOptionEditPlugin.Click += new System.EventHandler(this.mnuOptionEditPlugin_Click);
-			// 
 			// mnuHelp
 			// 
-			this.mnuHelp.Index = 6;
+			this.mnuHelp.Index = 4;
 			this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnuHelpHomePage,
 																					this.mnuHelpAbout});
 			this.mnuHelp.Text = "ヘルプ(&H)";
 			// 
-			// mnuHelpHomePage
-			// 
-			this.mnuHelpHomePage.Index = 0;
-			this.mnuHelpHomePage.Text = "ホームページ(&H)";
-			this.mnuHelpHomePage.Click += new System.EventHandler(this.menuHelpHomePage_Click);
-			// 
 			// mnuHelpAbout
 			// 
-			this.mnuHelpAbout.Index = 1;
+			this.mnuHelpAbout.Index = 0;
 			this.mnuHelpAbout.Text = "バージョン情報(&A)";
 			this.mnuHelpAbout.Click += new System.EventHandler(this.mnuHelpAbout_Click);
 			// 
@@ -802,40 +677,6 @@ namespace Girl.HierArch
 			this.cmEditSelectAll.Index = 8;
 			this.cmEditSelectAll.Text = "すべて選択(&A)";
 			// 
-			// tabControl1
-			// 
-			this.tabControl1.Controls.AddRange(new System.Windows.Forms.Control[] {
-																					  this.tabPage1});
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tabControl1.Location = new System.Drawing.Point(0, 339);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(712, 128);
-			this.tabControl1.TabIndex = 3;
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.Controls.AddRange(new System.Windows.Forms.Control[] {
-																				   this.lrtOutput});
-			this.tabPage1.Location = new System.Drawing.Point(4, 21);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Size = new System.Drawing.Size(704, 103);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "出力";
-			// 
-			// lrtOutput
-			// 
-			this.lrtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lrtOutput.LinkColor = System.Drawing.Color.Blue;
-			this.lrtOutput.Name = "lrtOutput";
-			this.lrtOutput.ReadOnly = true;
-			this.lrtOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-			this.lrtOutput.Size = new System.Drawing.Size(704, 103);
-			this.lrtOutput.TabIndex = 0;
-			this.lrtOutput.Text = "";
-			this.lrtOutput.WordWrap = false;
-			this.lrtOutput.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.lrtOutput_LinkClicked);
-			// 
 			// opaqueSplitter1
 			// 
 			this.opaqueSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -859,7 +700,6 @@ namespace Girl.HierArch
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.view1,
 																		  this.opaqueSplitter1,
-																		  this.tabControl1,
 																		  this.toolBar1,
 																		  this.statusBar1});
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -868,8 +708,6 @@ namespace Girl.HierArch
 			this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
 			this.Text = "HierArch";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
-			this.tabControl1.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -881,8 +719,7 @@ namespace Girl.HierArch
 		[STAThread]
 		static void Main(string[] args)
 		{
-			Application.AddMessageFilter(new MouseWheelMessageFilter());
-
+			Application.EnableVisualStyles();
 			ApplicationDataManager adm = new ApplicationDataManager();
 			Form1.viewData = ViewData.Load(adm);
 			Form1.AccountManager.Load(adm);
@@ -1064,76 +901,7 @@ namespace Girl.HierArch
 			this.view1.SetPanel3(this.view1.tabMember.Visible, this.view1.tabArg.Visible, visible);
 		}
 
-		private void mnuViewComment_Click(object sender, System.EventArgs e)
-		{
-			this.SetCommentVisible(!this.view1.txtComment.Visible);
-		}
-
-		public void SetCommentVisible(bool visible)
-		{
-			if (visible == this.view1.txtComment.Visible) return;
-
-			this.view1.txtComment.Visible
-				= this.view1.opaqueSplitter4.Visible
-				= this.mnuViewComment.Checked
-				= visible;
-		}
-
-		private void mnuViewOutput_Click(object sender, System.EventArgs e)
-		{
-			this.tabControl1.Visible
-				= this.opaqueSplitter1.Visible
-				= this.mnuViewOutput.Checked
-				= !this.mnuViewOutput.Checked;
-		}
-
 		#endregion
-
-		private void mnuProjectSynchronize_Click(object sender, System.EventArgs e)
-		{
-			this.Synchronize();
-		}
-
-		private void mnuBuildGenerate_Click(object sender, System.EventArgs e)
-		{
-			string path;
-			try
-			{
-				path = Path.GetDirectoryName(this.document.FullName);
-			}
-			catch
-			{
-				MessageBox.Show(this, "プロジェクトを保存してください。", this.m_sCaption,
-					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return;
-			}
-
-			Cursor cur = Cursor.Current;
-			Cursor.Current = Cursors.WaitCursor;
-			Form1.CreateMacroWindow();
-			if (Form1.MacroForm.Visible) Form1.MacroForm.view1.tvClass.StoreData();
-			Form1.MacroForm.SetMacros();
-			this.document.Make();
-			this.view1.GenerateAll(path);
-			Cursor.Current = cur;
-		}
-
-		private void mnuOptionEditPlugin_Click(object sender, System.EventArgs e)
-		{
-			Cursor cur = Cursor.Current;
-			Cursor.Current = Cursors.WaitCursor;
-			this.document.Make();
-			Process.Start("explorer", HADoc.UserPluginDir);
-			Cursor.Current = cur;
-		}
-
-		private void menuHelpHomePage_Click(object sender, System.EventArgs e)
-		{
-			Cursor cur = Cursor.Current;
-			Cursor.Current = Cursors.WaitCursor;
-			Process.Start("http://www.egroups.co.jp/files/miscprj-dev/HierArch/");
-			Cursor.Current = cur;
-		}
 
 		private void mnuHelpAbout_Click(object sender, System.EventArgs e)
 		{
@@ -1249,66 +1017,6 @@ namespace Girl.HierArch
 
 			this.document.Changed = true;
 			SetCaption();
-		}
-
-		#endregion
-
-		#region 同期
-
-		public void Synchronize()
-		{
-			if (this.document.Changed)
-			{
-				MessageBox.Show(this, "プロジェクトを保存してください。", "同期",
-					MessageBoxButtons.OK, MessageBoxIcon.Information);
-				return;
-			}
-			else if (this.view1.tvClass.Nodes.Count < 1)
-			{
-				MessageBox.Show(this, "クラスがありません。", "同期",
-					MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
-			}
-
-			this.ClearOutput();
-			this.ShowOutput();
-
-			HAUploaderManager manager = new HAUploaderManager();
-			this.lrtOutput.AppendLine("同期を開始します。");
-			this.lrtOutput.ShowLast();
-			Cursor cur = Cursor.Current;
-			Cursor.Current = Cursors.WaitCursor;
-
-			foreach (TreeNode n in this.view1.tvClass.Nodes)
-			{
-				if (!(n as HAClassNode).Synchronize(manager, this.lrtOutput)) break;
-			}
-
-			Cursor.Current = cur;
-			this.lrtOutput.AppendLine("同期を終了しました。");
-			this.lrtOutput.ShowLast();
-		}
-
-		#endregion
-
-		#region 出力
-
-		public void ClearOutput()
-		{
-			this.lrtOutput.Clear();
-		}
-
-		public void ShowOutput()
-		{
-			if (!this.tabControl1.Visible) mnuViewOutput_Click(this, EventArgs.Empty);
-		}
-
-		private void lrtOutput_LinkClicked(object sender, System.Windows.Forms.LinkClickedEventArgs e)
-		{
-			Cursor cur = Cursor.Current;
-			Cursor.Current = Cursors.WaitCursor;
-			Process.Start(e.LinkText);
-			Cursor.Current = cur;
 		}
 
 		#endregion

@@ -24,32 +24,20 @@ namespace Girl.HierArch
 		public const string ext = "hafnc";
 		public ArrayList Args;
 		public ArrayList Objects;
-		public string Comment;
 		public string Source;
-		public string Rtf;
-		public bool EnableRtf;
-		public int CommentSelectionStart;
-		public int CommentSelectionLength;
 		public int SourceSelectionStart;
 		public int SourceSelectionLength;
 		public HAFuncNode PropertyPair;
-		public HAFuncProperty Property;
 
 		public override void Init()
 		{
 			base.Init();
 			this.Args = new ArrayList();
 			this.Objects = new ArrayList();
-			this.Comment = "";
 			this.Source = "";
-			this.Rtf = "";
-			this.EnableRtf = false;
-			this.CommentSelectionStart = 0;
-			this.CommentSelectionLength = 0;
 			this.SourceSelectionStart = 0;
 			this.SourceSelectionLength = 0;
 			this.PropertyPair = null;
-			this.Property = new HAFuncProperty(this);
 		}
 
 		/// <summary>
@@ -101,12 +89,7 @@ namespace Girl.HierArch
 			HAFuncNode ret = base.Clone() as HAFuncNode;
 			ret.Args = this.Args.Clone() as ArrayList;
 			ret.Objects = this.Objects.Clone() as ArrayList;
-			ret.Comment = this.Comment;
 			ret.Source = this.Source;
-			ret.Rtf = this.Rtf;
-			ret.EnableRtf = this.EnableRtf;
-			ret.CommentSelectionStart = this.CommentSelectionStart;
-			ret.CommentSelectionLength = this.CommentSelectionLength;
 			ret.SourceSelectionStart = this.SourceSelectionStart;
 			ret.SourceSelectionLength = this.SourceSelectionLength;
 			return ret;
@@ -217,22 +200,11 @@ namespace Girl.HierArch
 					// end __YIELD
 				}
 			}
-			xw.WriteStartElement("Comment");
-			xw.WriteAttributeString("SelectionStart", XmlConvert.ToString(this.CommentSelectionStart));
-			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.CommentSelectionLength));
-			xw.WriteString(this.Comment);
-			xw.WriteEndElement();
 			xw.WriteStartElement("Source");
 			xw.WriteAttributeString("SelectionStart", XmlConvert.ToString(this.SourceSelectionStart));
 			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.SourceSelectionLength));
 			xw.WriteString(this.Source);
 			xw.WriteEndElement();
-			if (this.EnableRtf)
-			{
-				xw.WriteStartElement("RichTextFormat");
-				xw.WriteString(this.Rtf);
-				xw.WriteEndElement();
-			}
 		}
 
 		public override void ReadXmlNode(XmlTextReader xr)
@@ -263,9 +235,7 @@ namespace Girl.HierArch
 				}
 				else if (xr.Name == "Comment")
 				{
-					this.CommentSelectionStart = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
-					this.CommentSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
-					if (!xr.IsEmptyElement && xr.Read()) this.Comment = xr.ReadString();
+					xr.ReadString(); // TODO: remove
 				}
 				else if (xr.Name == "Source")
 				{
@@ -275,8 +245,7 @@ namespace Girl.HierArch
 				}
 				else if (xr.Name == "RichTextFormat")
 				{
-					this.EnableRtf = true;
-					if (!xr.IsEmptyElement && xr.Read()) this.Rtf = xr.ReadString();
+					xr.ReadString(); // TODO: remove
 				}
 			}
 		}
@@ -353,161 +322,6 @@ namespace Girl.HierArch
 				this.m_Type =(HAType) Enum.Parse(typeof (HAType), "text" + icon, true);
 			}
 			this.SetIcon();
-		}
-
-		#endregion
-
-		#region Generation
-
-		public void GenerateClass(CodeWriter cw)
-		{
-			HAType t = this.Type;
-			if (t == HAType.Comment)
-			{
-				return;
-			}
-			else if (this.IsObject)
-			{
-				this.GenerateFunc(cw);
-			}
-			else if (t.ToString().StartsWith("Folder"))
-			{
-				cw.WriteBlankLine();
-				cw.WriteCode("#region " + this.Text);
-			}
-			foreach (TreeNode n in this.Nodes)
-			{
-				(n as HAFuncNode).GenerateClass(cw);
-			}
-			if (t.ToString().StartsWith("Folder"))
-			{
-				cw.WriteBlankLine();
-				cw.WriteCode("#endregion");
-			}
-		}
-
-		private void GenerateFunc(CodeWriter cw)
-		{
-			ObjectParser op = new ObjectParser(this.Text, this.Type);
-			if (op.IsProperty && this.PropertyPair == this) return;
-			cw.WriteBlankLine();
-			if (this.Comment != "") cw.WriteCodes("/// ", this.Comment);
-			if (op.IsProperty)
-			{
-				cw.WriteStartBlock(op.PropertyDeclaration);
-				this.GenerateProperty(cw);
-				cw.WriteEndBlock();
-			}
-			else
-			{
-				this.GenerateFunction(cw, op);
-			}
-		}
-
-		private void GenerateProperty(CodeWriter cw)
-		{
-			cw.WriteStartBlock(this.Text.Substring(0, 3));
-			this.GenerateFuncCode(cw);
-			cw.WriteEndBlock();
-			if (this.PropertyPair == null || this.PropertyPair == this) return;
-			cw.WriteBlankLine();
-			this.PropertyPair.GenerateProperty(cw);
-		}
-
-		private void GenerateFunction(CodeWriter cw, ObjectParser op)
-		{
-			string code = op.FunctionDeclaration + "(";
-			StringBuilder sb = new StringBuilder();
-			// Macro: object配列(this.Args)を型(HAObjectNode)だけ反復子(objn)で評価
-			{
-				foreach (object __0_0 in this.Args)
-				{
-					HAObjectNode objn = __0_0 as HAObjectNode;
-					if (objn == null) continue;
-					// begin __YIELD
-					objn.Generate(cw, sb);
-					// end __YIELD
-				}
-			}
-			code += sb.ToString() + ")";
-			cw.WriteStartBlock(cw.ReplaceKeywords(code));
-			this.GenerateFuncCode(cw);
-			cw.WriteEndBlock();
-		}
-
-		private void GenerateFuncCode(CodeWriter cw)
-		{
-			cw.SetStart();
-			// Macro: object配列(this.Objects)を型(HAObjectNode)だけ反復子(objn)で評価
-			{
-				foreach (object __0_0 in this.Objects)
-				{
-					HAObjectNode objn = __0_0 as HAObjectNode;
-					if (objn == null) continue;
-					// begin __YIELD
-					objn.Generate(cw);
-					// end __YIELD
-				}
-			}
-			// Macro: 文字列(this.Source)が有効なら
-			{
-				if (this.Source != null && this.Source.Length > 0)
-				{
-					// begin __YIELD
-					cw.WriteBlankLine();
-					Form1.MacroForm.WriteCode(cw, cw.ReplaceKeywords(this.Source), null, null, null);
-					// end __YIELD
-				}
-			}
-		}
-
-		public void GenerateFolder(string path)
-		{
-			if (this.Type == HAType.Comment)
-			{
-				return;
-			}
-			else if (this.IsText)
-			{
-				string target = path;
-				if (!target.EndsWith("\\")) target += "\\";
-				target += new ObjectParser(this.Text).Name;
-				this.GenerateFile(target);
-			}
-			foreach (TreeNode n in this.Nodes)
-			{
-				(n as HAFuncNode).GenerateFolder(path);
-			}
-		}
-
-		public void GenerateFile(string target)
-		{
-			FileStream fs;
-			StreamWriter sw;
-
-			try
-			{
-				fs = new FileStream(target, FileMode.Create);
-			}
-			catch
-			{
-				return;
-			}
-			sw = new StreamWriter(fs, Encoding.Default);
-			sw.Write(this.Source);
-			sw.Close();
-			fs.Close();
-		}
-
-		public void GenerateText(HierArchWriter haw, string chapter, bool concat)
-		{
-			haw.WriteNode(this.Type, chapter, this.Text, this.Comment, this.Source);
-			int i = 1;
-			foreach (TreeNode n in this.Nodes)
-			{
-				(n as HAFuncNode).GenerateText(haw, chapter + "." + i.ToString(), concat);
-				i++;
-			}
 		}
 
 		#endregion

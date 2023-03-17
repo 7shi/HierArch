@@ -22,7 +22,6 @@ namespace Girl.HierArch
 		private MenuItem mnuType;
 		public HAObject ArgTreeView;
 		public HAObject ObjectTreeView;
-		public ExRichTextBox CommentTextBox;
 		public CodeEditor SourceTextBox;
 		public HAClassNode OwnerClass;
 		public HAFuncNode Header;
@@ -41,7 +40,6 @@ namespace Girl.HierArch
 			this.dataFormat = "HierArch Function Data";
 			this.ArgTreeView = null;
 			this.ObjectTreeView = null;
-			this.CommentTextBox = null;
 			this.SourceTextBox = null;
 			this.OwnerClass = null;
 			this.TargetNode = null;
@@ -139,25 +137,11 @@ namespace Girl.HierArch
 			{
 				if (n is HAObjectNode) this.TargetNode.Objects.Add(n.Clone());
 			}
-			if (this.CommentTextBox != null)
-			{
-				this.TargetNode.Comment = this.CommentTextBox.Text;
-				this.TargetNode.CommentSelectionStart = this.CommentTextBox.SelectionStart;
-				this.TargetNode.CommentSelectionLength = this.CommentTextBox.SelectionLength;
-			}
 			if (this.SourceTextBox != null)
 			{
 				this.TargetNode.Source = this.SourceTextBox.Code;
 				this.TargetNode.SourceSelectionStart = this.SourceTextBox.SelectionStart;
 				this.TargetNode.SourceSelectionLength = this.SourceTextBox.SelectionLength;
-				if (this.TargetNode.EnableRtf)
-				{
-					this.TargetNode.Rtf = this.SourceTextBox.Rtf;
-				}
-				else
-				{
-					this.TargetNode.Rtf = "";
-				}
 			}
 		}
 
@@ -169,14 +153,6 @@ namespace Girl.HierArch
 			{
 				if (this.ArgTreeView != null) this.ArgTreeView.SetView(this.TargetNode.Args);
 				if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(this.TargetNode.Objects);
-				if (this.CommentTextBox != null)
-				{
-					this.CommentTextBox.Enabled = true;
-					this.CommentTextBox.Clear();
-					this.CommentTextBox.Text = this.TargetNode.Comment;
-					this.CommentTextBox.SelectionStart = this.TargetNode.CommentSelectionStart;
-					this.CommentTextBox.SelectionLength = this.TargetNode.CommentSelectionLength;
-				}
 				if (this.SourceTextBox != null)
 				{
 					this.SourceTextBox.Enabled = true;
@@ -184,41 +160,21 @@ namespace Girl.HierArch
 					if (this.TargetNode.IsObject || this.TargetNode.Type == HAType.Class || this.TargetNode == this.Header || this.TargetNode == this.Footer)
 					{
 						this.SourceTextBox.Parser = this.parser;
-						this.SourceTextBox.DetectUrls = false;
 						this.SourceTextBox.Code = this.TargetNode.Source;
 					}
 					else
 					{
 						this.SourceTextBox.Parser = null;
-						this.SourceTextBox.DetectUrls = true;
-						if (this.TargetNode.EnableRtf && this.TargetNode.Rtf != "")
-						{
-							this.SourceTextBox.Rtf = this.TargetNode.Rtf;
-						}
-						else
-						{
-							this.SourceTextBox.Code = this.TargetNode.Source;
-						}
+						this.SourceTextBox.Code = this.TargetNode.Source;
 					}
 					this.SourceTextBox.SelectionStart = this.TargetNode.SourceSelectionStart;
 					this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
-				}
-				if (this.Property != null)
-				{
-					this.Property.SelectedObject = this.TargetNode.Property;
 				}
 			}
 			else
 			{
 				if (this.ArgTreeView != null) this.ArgTreeView.SetView(null);
 				if (this.ObjectTreeView != null) this.ObjectTreeView.SetView(null);
-				if (this.CommentTextBox != null)
-				{
-					this.CommentTextBox.Enabled = false;
-					this.CommentTextBox.Clear();
-					this.CommentTextBox.SelectionStart = 0;
-					this.CommentTextBox.SelectionLength = 0;
-				}
 				if (this.SourceTextBox != null)
 				{
 					this.SourceTextBox.Enabled = false;
