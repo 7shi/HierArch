@@ -36,28 +36,7 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				StringBuilder sb;
-				char prev;
-
-				sb = new StringBuilder();
-				prev = '\0';
-				foreach (char ch in this.Text)
-				{
-					if (ch == '\r')
-					{
-						sb.Append("\r\n");
-					}
-					else if (ch == '\n')
-					{
-						if (prev != '\r') sb.Append("\r\n");
-					}
-					else
-					{
-						sb.Append(ch);
-					}
-					prev = ch;
-				}
-				return sb.ToString();
+				return this.Text;
 			}
 
 			set

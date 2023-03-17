@@ -174,18 +174,7 @@ namespace Girl.HierArch
 				}
 				else if (xr.Name == "para" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement && xr.Read())
 				{
-					string text = xr.ReadString();
-					if (text.IndexOf("\r\n") < 0)
-					{
-						if (text.IndexOf("\n") >= 0)
-						{
-							text = text.Replace("\n", "\r\n");
-						}
-						else
-						{
-							text = text.Replace("\r", "\r\n");
-						}
-					}
+					string text = xr.ReadString().Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
 					if (!text.StartsWith("\r\n"))
 					{
 						this.Source = text;
