@@ -309,14 +309,14 @@ namespace Girl.HierArch
 			// 
 			// openFileDialog1
 			// 
-			this.openFileDialog1.DefaultExt = "haprj";
-			this.openFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.haprj|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
+			this.openFileDialog1.DefaultExt = "hadoc";
+			this.openFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.hadoc|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
 			// 
 			// saveFileDialog1
 			// 
-			this.saveFileDialog1.DefaultExt = "haprj";
+			this.saveFileDialog1.DefaultExt = "hadoc";
 			this.saveFileDialog1.FileName = "doc1";
-			this.saveFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.haprj|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
+			this.saveFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.hadoc|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
 			// 
 			// view1
 			// 

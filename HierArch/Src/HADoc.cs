@@ -200,7 +200,7 @@ namespace Girl.HierArch
 			this.ClassTreeView.StoreData();
 			bool ret = false;
 			string lfn = this.FullName.ToLower();
-			if (lfn.EndsWith(".haprj") || lfn.EndsWith(".hamcr"))
+			if (lfn.EndsWith(".hadoc"))
 			{
 				ret = SaveHAPrj();
 			}
