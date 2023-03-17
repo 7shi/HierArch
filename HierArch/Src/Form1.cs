@@ -59,7 +59,7 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuEditDelete;
 		private System.Windows.Forms.MenuItem mnuEditSeparator2;
 		private System.Windows.Forms.MenuItem mnuEditSelectAll;
-		private System.Windows.Forms.MenuItem menuItem1;
+		private System.Windows.Forms.MenuItem mnuOption;
 		private System.Windows.Forms.MenuItem mnuOptionSmartEnter;
 		private System.Windows.Forms.MenuItem mnuOptionSmartTab;
 		private System.Windows.Forms.MenuItem mnuOptionSmartHome;
@@ -199,7 +199,7 @@ namespace Girl.HierArch
 			this.mnuEditDelete = new System.Windows.Forms.MenuItem();
 			this.mnuEditSeparator2 = new System.Windows.Forms.MenuItem();
 			this.mnuEditSelectAll = new System.Windows.Forms.MenuItem();
-			this.menuItem1 = new System.Windows.Forms.MenuItem();
+			this.mnuOption = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartEnter = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartTab = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartHome = new System.Windows.Forms.MenuItem();
@@ -329,7 +329,7 @@ namespace Girl.HierArch
 			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.mnuFile,
 																					  this.mnuEdit,
-																					  this.menuItem1,
+																					  this.mnuOption,
 																					  this.mnuHelp});
 			// 
 			// mnuFile
@@ -454,15 +454,15 @@ namespace Girl.HierArch
 			// 
 			// menuItem1
 			// 
-			this.menuItem1.Index = 2;
-			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.mnuOption.Index = 2;
+			this.mnuOption.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.mnuOptionSmartEnter,
 																					  this.mnuOptionSmartTab,
 																					  this.mnuOptionSmartHome,
 																					  this.mnuOptionSmartParenthesis,
 																					  this.mnuOptionFont,
 																					  this.mnuOptionSeparator1});
-			this.menuItem1.Text = "オプション(&O)";
+			this.mnuOption.Text = "オプション(&O)";
 			// 
 			// mnuOptionSmartEnter
 			// 
