@@ -65,6 +65,7 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuOptionSmartHome;
 		private System.Windows.Forms.MenuItem mnuOptionSmartParenthesis;
 		private System.Windows.Forms.MenuItem mnuOptionSeparator1;
+		public System.Windows.Forms.MenuItem mnuOptionWordWrap;
 		private System.Windows.Forms.MenuItem mnuOptionFont;
 		private System.ComponentModel.IContainer components;
 		private EditManager editManager = new EditManager();
@@ -205,6 +206,7 @@ namespace Girl.HierArch
 			this.mnuOptionSmartHome = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartParenthesis = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSeparator1 = new System.Windows.Forms.MenuItem();
+			this.mnuOptionWordWrap = new System.Windows.Forms.MenuItem();
 			this.mnuOptionFont = new System.Windows.Forms.MenuItem();
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
@@ -461,6 +463,7 @@ namespace Girl.HierArch
 																					  this.mnuOptionSmartHome,
 																					  this.mnuOptionSmartParenthesis,
 																					  this.mnuOptionFont,
+																					  this.mnuOptionWordWrap,
 																					  this.mnuOptionSeparator1});
 			this.mnuOption.Text = "オプション(&O)";
 			// 
@@ -489,9 +492,15 @@ namespace Girl.HierArch
 			this.mnuOptionSeparator1.Index = 4;
 			this.mnuOptionSeparator1.Text = "-";
 			// 
+			// mnuOptionWordWrap
+			// 
+			this.mnuOptionWordWrap.Index = 5;
+			this.mnuOptionWordWrap.Text = "折り返し(&W)";
+			this.mnuOptionWordWrap.Click += new System.EventHandler(this.mnuOptionWordWrap_Click);
+			// 
 			// mnuOptionFont
 			// 
-			this.mnuOptionFont.Index = 5;
+			this.mnuOptionFont.Index = 6;
 			this.mnuOptionFont.Text = "フォント(&F)";
 			this.mnuOptionFont.Click += new System.EventHandler(this.mnuOptionFont_Click);
 			// 
@@ -678,6 +687,13 @@ namespace Girl.HierArch
 		private void mnuFileExit_Click(object sender, System.EventArgs e)
 		{
 			Form1.Exit();
+		}
+
+		private void mnuOptionWordWrap_Click(object sender, System.EventArgs e)
+		{
+			this.view1.txtSource.WordWrap
+				= this.mnuOptionWordWrap.Checked
+				= !this.mnuOptionWordWrap.Checked;
 		}
 
 		private void mnuOptionFont_Click(object sender, System.EventArgs e)

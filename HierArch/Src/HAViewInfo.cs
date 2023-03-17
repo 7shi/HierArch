@@ -19,6 +19,7 @@ namespace Girl.HierArch
 		public FormWindowState State;
 		public int LeftPanelWidth;
 		public int ClassHeight;
+		public bool WordWrap;
 		public string FontName;
 		public int FontSize;
 
@@ -35,6 +36,7 @@ namespace Girl.HierArch
 			this.X = this.Y = this.Width = this.Height = 0;
 			this.State = FormWindowState.Normal;
 			this.LeftPanelWidth = this.ClassHeight = 0;
+			this.WordWrap = false;
 			var font = Control.DefaultFont;
 			this.FontName = font.Name;
 			this.FontSize = (int)Math.Round(font.Size);
@@ -63,9 +65,11 @@ namespace Girl.HierArch
 			}
 			if (this.LeftPanelWidth > 0) form1.view1.panel1.Width = this.LeftPanelWidth;
 			if (this.ClassHeight > 0) form1.view1.tvClass.Height = this.ClassHeight;
+			var src = form1.view1.txtSource;
+			src.WordWrap = form1.mnuOptionWordWrap.Checked = this.WordWrap;
 			if (!String.IsNullOrEmpty(this.FontName) && this.FontSize > 0)
 			{
-				form1.view1.txtSource.Font = new Font(this.FontName, this.FontSize);
+				src.Font = new Font(this.FontName, this.FontSize);
 			}
 		}
 
@@ -79,9 +83,10 @@ namespace Girl.HierArch
 			this.State = form1.WindowState;
 			this.LeftPanelWidth = form1.view1.panel1.Width;
 			this.ClassHeight = form1.view1.tvClass.Height;
-			var font = form1.view1.txtSource.Font;
-			this.FontName = font.Name;
-			this.FontSize = (int)Math.Round(font.Size);
+			var src = form1.view1.txtSource;
+			this.WordWrap = src.WordWrap;
+			this.FontName = src.Font.Name;
+			this.FontSize = (int)Math.Round(src.Font.Size);
 		}
 	}
 }
