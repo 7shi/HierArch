@@ -89,11 +89,6 @@ namespace Girl.HierArch
 
 		public void InitNode(HAClassNode n)
 		{
-			n.Header = new HAFuncNode("ヘッダ");
-			n.Header.Type = HAType.Text;
-			n.Header.m_IsSelected = true;
-			n.Header.AllowDrag = false;
-			n.Header.Source = "using System;\r\n";
 			n.Body = new HAFuncNode("本体");
 			n.Body.Type = HAType.Class;
 			n.Body.m_IsExpanded = true;
@@ -102,9 +97,6 @@ namespace Girl.HierArch
 			n.Body.Nodes.Add(cst);
 			HAFuncNode dst = new HAFuncNode("~__" + "CLASS");
 			n.Body.Nodes.Add(dst);
-			n.Footer = new HAFuncNode("フッタ");
-			n.Footer.Type = HAType.Text;
-			n.Footer.AllowDrag = false;
 		}
 
 		protected override HATreeNode NewNode
@@ -122,8 +114,6 @@ namespace Girl.HierArch
 			if (this.TargetNode == null || this.FuncTreeView == null) return;
 			this.StoreState();
 			this.FuncTreeView.StoreData();
-			this.TargetNode.Members.Clear();
-			this.TargetNode.Header = this.FuncTreeView.Header.Clone() as HAFuncNode;
 			this.TargetNode.Body = this.FuncTreeView.Body.Clone() as HAFuncNode;
 			if (this.FuncTreeView.Body.TreeView == null)
 			{
@@ -132,7 +122,6 @@ namespace Girl.HierArch
 					this.TargetNode.Body.Nodes.Add(n.Clone() as HAFuncNode);
 				}
 			}
-			this.TargetNode.Footer = this.FuncTreeView.Footer.Clone() as HAFuncNode;
 		}
 
 		public void SetView()

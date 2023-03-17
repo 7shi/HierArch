@@ -18,9 +18,7 @@ namespace Girl.HierArch
 		private MenuItem mnuType;
 		public CodeEditor SourceTextBox;
 		public HAClassNode OwnerClass;
-		public HAFuncNode Header;
 		public HAFuncNode Body;
-		public HAFuncNode Footer;
 		public HAFuncNode TargetNode;
 		private Font textFont;
 
@@ -62,11 +60,6 @@ namespace Girl.HierArch
 		{
 			HATreeNode p =(HATreeNode) this.SelectedNode;
 			HATreeNode n = this.NewNode;
-			if (p == this.Header || p == this.Footer)
-			{
-				n.Text = "新しい項目";
-				n.Type = HAType.Text;
-			}
 			if (p != null)
 			{
 				p.Nodes.Add(n);
@@ -160,15 +153,11 @@ namespace Girl.HierArch
 			{
 				this.Enabled = true;
 				this.BackColor = System.Drawing.SystemColors.Window;
-				this.Header = cls.Header.Clone() as HAFuncNode;
 				this.Body = cls.Body.Clone() as HAFuncNode;
-				this.Footer = cls.Footer.Clone() as HAFuncNode;
 				if (this.OwnerClass.IsObject)
 				{
 					this.BeginUpdate();
-					this.Nodes.Add(this.Header);
 					this.Nodes.Add(this.Body);
-					this.Nodes.Add(this.Footer);
 					this.ApplyState();
 					this.EndUpdate();
 				}
@@ -198,7 +187,6 @@ namespace Girl.HierArch
 			{
 				this.Enabled = false;
 				this.BackColor = System.Drawing.SystemColors.ControlLight;
-				this.Header = this.Body = this.Footer = null;
 			}
 			this.SetState();
 			this.IgnoreChanged = flag;

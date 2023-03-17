@@ -13,18 +13,12 @@ namespace Girl.HierArch
 	public class HAClassNode : HATreeNode
 	{
 		public const string ext = "hacls";
-		public ArrayList Members;
-		public HAFuncNode Header;
 		public HAFuncNode Body;
-		public HAFuncNode Footer;
 
 		public override void Init()
 		{
 			base.Init();
-			this.Members = new ArrayList();
-			this.Header = new HAFuncNode();
 			this.Body = new HAFuncNode();
-			this.Footer = new HAFuncNode();
 		}
 
 		/// <summary>
@@ -55,53 +49,26 @@ namespace Girl.HierArch
 			}
 		}
 
-		public string Namespace
-		{
-			get
-			{
-				ObjectParser op = new ObjectParser(this.Text);
-				string ns =(this.IsFolder) ? op.Type:
-				"";
-				if (ns.IndexOf('.') >= 0 || this.Parent == null) return ns;
-				string pns =(this.Parent as HAClassNode).Namespace;
-				if (pns != "") return (ns != "") ? pns + "." + ns:
-				pns;
-				return ns;
-			}
-		}
-
 		#region XML
 
 		public override void WriteXml(XmlTextWriter xw)
 		{
 			base.WriteXml(xw);
 			xw.WriteStartElement("Header");
-			this.Header.ToXml(xw);
 			xw.WriteEndElement();
 			xw.WriteStartElement("Body");
 			this.Body.ToXml(xw);
 			xw.WriteEndElement();
 			xw.WriteStartElement("Footer");
-			this.Footer.ToXml(xw);
 			xw.WriteEndElement();
 		}
 
 		public override void ReadXmlNode(XmlTextReader xr)
 		{
-			if (xr.Name == "Header" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
-			{
-				while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace);
-				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Header.FromXml(xr);
-			}
-			else if (xr.Name == "Body" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
+			if (xr.Name == "Body" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
 			{
 				while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace);
 				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Body.FromXml(xr);
-			}
-			else if (xr.Name == "Footer" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
-			{
-				while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace);
-				if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Footer.FromXml(xr);
 			}
 		}
 

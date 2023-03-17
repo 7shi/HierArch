@@ -55,6 +55,7 @@ namespace Girl.Windows.Forms
 					{
 						sb.Append(ch);
 					}
+					prev = ch;
 				}
 				return sb.ToString();
 			}

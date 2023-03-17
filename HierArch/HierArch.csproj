@@ -55,7 +55,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -64,21 +63,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Base" />
     <Folder Include="Girl" />
     <Folder Include="Girl\Src" />
     <Folder Include="Girl\Windows" />
     <Folder Include="Girl\Windows\Forms" />
     <Folder Include="Girl\Xml" />
-    <Folder Include="Parser" />
     <Folder Include="Src" />
     <Folder Include="Tree" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Base\HAAccountManager.cs" />
-    <Compile Include="Base\HADoc.cs" />
-    <Compile Include="Base\HAViewInfo.cs" />
     <Compile Include="Girl\Src\DnDTreeView.cs" />
     <Compile Include="Girl\Src\ExTreeView.cs" />
     <Compile Include="Girl\Src\InternalScrollBar.cs" />
@@ -98,10 +92,12 @@
     <Compile Include="Girl\Windows\Forms\TextBoxPlus.cs" />
     <Compile Include="Girl\Xml\XmlObjectSerializer.cs" />
     <Compile Include="Girl\Xml\XmlParser.cs" />
-    <Compile Include="Parser\ObjectParser.cs" />
     <Compile Include="Src\About.cs" />
     <Compile Include="Src\Form1.cs" />
+    <Compile Include="Src\HADoc.cs" />
     <Compile Include="Src\HATree.cs" />
+    <Compile Include="Src\HAType.cs" />
+    <Compile Include="Src\HAViewInfo.cs" />
     <Compile Include="Src\View.cs" />
     <Compile Include="Src\ViewManager.cs" />
     <Compile Include="Tree\HAClass.cs" />

@@ -104,7 +104,7 @@ namespace Girl.Windows.Forms
 				return;
 			}
 			if (e.Button != this.mouseButtons) return;
-			this.OnMouseClick(e);
+			SetMouseButtons(e);
 		}
 
 		protected virtual void OnEndEvent(EventArgs e)
@@ -114,8 +114,8 @@ namespace Girl.Windows.Forms
 			this.mouseButtons = MouseButtons.None;
 			if (this.EndEvent != null) this.EndEvent(this, e);
 		}
-
-		protected virtual void OnMouseClick(MouseEventArgs e)
+		
+		private void SetMouseButtons(MouseEventArgs e)
 		{
 			switch (e.Button)
 			{
@@ -127,6 +127,12 @@ namespace Girl.Windows.Forms
 				break;
 			}
 			this.mouseButtons = MouseButtons.None;
+		}
+
+		protected override void OnMouseClick(MouseEventArgs e)
+		{
+			SetMouseButtons(e);
+			base.OnMouseClick(e);
 		}
 
 		protected virtual void OnLeftClick(MouseEventArgs e)

@@ -19,8 +19,6 @@ namespace Girl.HierArch
 		public HAType m_Type;
 		public bool m_IsExpanded;
 		public bool m_IsSelected;
-		protected string link;
-		public string Server;
 		public DateTime LastModified;
 
 		public virtual void Init()
@@ -28,8 +26,6 @@ namespace Girl.HierArch
 			this.Type = HAType.Public;
 			this.m_IsExpanded = false;
 			this.m_IsSelected = false;
-			this.link = string.Empty;
-			this.Server = "";
 			this.LastModified = DateTime.Now;
 			while (this.Nodes.Count > 0) this.Nodes[0].Remove();
 		}
@@ -139,8 +135,6 @@ namespace Girl.HierArch
 			ret.Type = this.Type;
 			ret.m_IsExpanded = this.m_IsExpanded;
 			ret.m_IsSelected = this.m_IsSelected;
-			ret.link = this.link;
-			ret.Server = this.Server;
 			ret.LastModified = this.LastModified;
 			return ret;
 		}
@@ -159,14 +153,7 @@ namespace Girl.HierArch
 		{
 			if (this.m_IsExpanded) this.Expand();
 			if (this.m_IsSelected) this.TreeView.SelectedNode = this;
-			if (this.link == string.Empty)
-			{
-				this.NodeFont = null;
-			}
-			else if (this.TreeView != null)
-			{
-				this.NodeFont =(this.TreeView as HAClass).LinkFont;
-			}
+			this.NodeFont = null;
 			foreach (TreeNode n in this.Nodes)
 			{
 				if (n is HATreeNode)((HATreeNode) n).ApplyState();
@@ -177,43 +164,7 @@ namespace Girl.HierArch
 
 		public override void ToXml(XmlTextWriter xw)
 		{
-			XmlTextWriter xw2;
-			if (this.link == string.Empty)
-			{
-				xw2 = xw;
-			}
-			else if (xw.BaseStream is FileStream)
-			{
-				try
-				{
-					Uri uri1 = new Uri((xw.BaseStream as FileStream).Name);
-					Uri uri2 = new Uri(this.link);
-					xw2 = new XmlTextWriter(this.link, Encoding.UTF8);
-					xw2.Formatting = Formatting.Indented;
-					xw2.WriteStartDocument();
-					xw.WriteStartElement(this.XmlName);
-					xw.WriteAttributeString("Link", uri1.MakeRelative(uri2));
-					xw.WriteAttributeString("Server", this.Server);
-					xw.WriteEndElement();
-				}
-				catch
-				{
-					xw2 = xw;
-				}
-			}
-			else if (File.Exists(this.link))
-			{
-				// ドラッグ＆ドロップによるリンクの再現
-				xw2 = null;
-				xw.WriteStartElement(this.XmlName);
-				xw.WriteAttributeString("Link", this.link);
-				xw.WriteAttributeString("Server", this.Server);
-				xw.WriteEndElement();
-			}
-			else
-			{
-				xw2 = xw;
-			}
+			XmlTextWriter xw2 = xw;
 			if (xw2 != null)
 			{
 				xw2.WriteStartElement(this.XmlName);
@@ -246,37 +197,8 @@ namespace Girl.HierArch
 		public override void FromXml(XmlTextReader xr)
 		{
 			if (xr.Name != this.XmlName || xr.NodeType != XmlNodeType.Element) return;
-			XmlTextReader xr2;
 			string link = xr.GetAttribute("Link");
-			if (link == null || link.Length < 1)
-			{
-				xr2 = xr;
-			}
-			else
-			{
-				try
-				{
-					if (!this.IsValidLink(link)) throw new Exception();
-					string uri = xr.BaseURI;
-					if (uri != null && uri.Length > 0)
-					{
-						link = new Uri(new Uri(uri), link).LocalPath;
-						if (!this.IsValidLink(link)) throw new Exception();
-					}
-					this.link = link;
-					this.Server = xr.GetAttribute("Server");
-					if (this.Server == null || this.Server.Length < 1) this.Server = "";
-					this.ApplyState();
-					xr2 = new XmlTextReader(link);
-					while (xr2.Read() && xr2.Name != this.XmlName);
-				}
-				catch
-				{
-					this.Type = HAType.Comment;
-					this.Text = "リンク失敗";
-					return;
-				}
-			}
+			XmlTextReader xr2 = xr;
 			this.ReadXml(xr2);
 			if (xr2.IsEmptyElement) return;
 			HATreeNode n;
@@ -315,88 +237,6 @@ namespace Girl.HierArch
 
 		public virtual void ReadXmlNode(XmlTextReader xr)
 		{
-		}
-
-		#endregion
-
-		#region Link
-
-		public string Link
-		{
-			get
-			{
-				return this.link;
-			}
-
-			set
-			{
-				if (value == null)
-				{
-					this.link = string.Empty;
-				}
-				else if (!this.IsValidLink(value))
-				{
-					MessageBox.Show("リンク先が重複しています。:\r\n\r\n" + value, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				}
-				else if (value != this.link)
-				{
-					if (File.Exists(value))
-					{
-						string server = this.Server;
-						this.Init();
-						XmlTextReader xr = new XmlTextReader(value);
-						while (xr.Read() && xr.Name != this.XmlName);
-						this.FromXml(xr);
-						xr.Close();
-						this.Server = server;
-						this.OnRefreshNode(EventArgs.Empty);
-					}
-					this.link = value;
-					this.ApplyState();
-				}
-			}
-		}
-
-		public string TargetFileName
-		{
-			get
-			{
-				if (this.link != string.Empty) return this.link;
-				HATreeNode p = this.Parent as HATreeNode;
-				if (p != null) return p.TargetFileName;
-				return string.Empty;
-			}
-		}
-
-		public bool IsValidLink(string link)
-		{
-			HATreeNode p = this.Parent as HATreeNode;
-			if (p != null && !p.CheckParentLink(link)) return false;
-			// foreach (TreeNode n in this.Nodes)
-			// {
-			// 	HATreeNode nn = n as HATreeNode;
-			// 	if (!nn.CheckChildrenLink(link)) return false;
-			// }
-			return true;
-		}
-
-		private bool CheckParentLink(string link)
-		{
-			if (this.link == link) return false;
-			HATreeNode p = this.Parent as HATreeNode;
-			if (p != null) return p.CheckParentLink(link);
-			return true;
-		}
-
-		private bool CheckChildrenLink(string link)
-		{
-			if (this.link == link) return false;
-			foreach (TreeNode n in this.Nodes)
-			{
-				HATreeNode nn = n as HATreeNode;
-				if (!nn.CheckChildrenLink(link)) return false;
-			}
-			return true;
 		}
 
 		#endregion

@@ -19,7 +19,6 @@ namespace Girl.HierArch
 		public string Source;
 		public int SourceSelectionStart;
 		public int SourceSelectionLength;
-		public HAFuncNode PropertyPair;
 
 		public override void Init()
 		{
@@ -27,7 +26,6 @@ namespace Girl.HierArch
 			this.Source = "";
 			this.SourceSelectionStart = 0;
 			this.SourceSelectionLength = 0;
-			this.PropertyPair = null;
 		}
 
 		/// <summary>
@@ -107,54 +105,6 @@ namespace Girl.HierArch
 				if (ret != null) break;
 			}
 			return ret;
-		}
-
-		public HAFuncNode SearchProperty(string text)
-		{
-			if (this.Type == HAType.Comment) return null;
-			if (this.IsObject && this.PropertyPair == null)
-			{
-				ObjectParser op = new ObjectParser(this.Text);
-				if (op.Name == text) return this;
-			}
-			HAFuncNode ret = null;
-			foreach (TreeNode n in this.Nodes)
-			{
-				ret =(n as HAFuncNode).SearchProperty(text);
-				if (ret != null) break;
-			}
-			return ret;
-		}
-
-		#endregion
-
-		#region Property Pair
-
-		public void ResetPropertyPair()
-		{
-			this.PropertyPair = null;
-			foreach (TreeNode n in this.Nodes)
-			{
-				(n as HAFuncNode).ResetPropertyPair();
-			}
-		}
-
-		public void SearchPropertyPair(HAFuncNode body)
-		{
-			if (this.Type == HAType.Comment) return;
-			if (this.IsObject)
-			{
-				ObjectParser op = new ObjectParser(this.Text);
-				if (op.IsProperty)
-				{
-					HAFuncNode n = body.SearchProperty(op.PropertyPair);
-					if (n != null) this.PropertyPair = n.PropertyPair = n;
-				}
-			}
-			foreach (TreeNode n in this.Nodes)
-			{
-				(n as HAFuncNode).SearchPropertyPair(body);
-			}
 		}
 
 		#endregion

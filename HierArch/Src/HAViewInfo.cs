@@ -17,18 +17,10 @@ namespace Girl.HierArch
 		public int Width;
 		public int Height;
 		public FormWindowState State;
-		public bool ShowClass;
-		public bool ShowFunc;
-		public bool ShowComment;
-		public bool ShowMember;
-		public bool ShowArg;
-		public bool ShowObject;
 		public int LeftPanelWidth;
 		public int ClassHeight;
-		public int CommentHeight;
-		public int RightPanelWidth;
-		public int MemberHeight;
-		public int ObjectHeight;
+		public string FontName;
+		public int FontSize;
 
 		/// <summary>
 		/// コンストラクタです。
@@ -42,14 +34,15 @@ namespace Girl.HierArch
 		{
 			this.X = this.Y = this.Width = this.Height = 0;
 			this.State = FormWindowState.Normal;
-			this.ShowClass = this.ShowFunc = this.ShowComment = this.ShowMember = this.ShowArg = this.ShowObject = true;
-			this.LeftPanelWidth = this.ClassHeight = this.CommentHeight = this.RightPanelWidth = this.MemberHeight = this.ObjectHeight = 0;
+			this.LeftPanelWidth = this.ClassHeight = 0;
+			var font = Control.DefaultFont;
+			this.FontName = "";
+			this.FontSize = 0;
 		}
 
 		public void InitHds()
 		{
 			this.Init();
-			this.ShowClass = this.ShowComment = this.ShowMember = this.ShowArg = this.ShowObject = false;
 		}
 
 		public void Apply(Form1 form1)
@@ -68,10 +61,12 @@ namespace Girl.HierArch
 				}
 				form1.WindowState = this.State;
 			}
-			form1.SetClassVisible(this.ShowClass);
-			form1.SetFuncVisible(this.ShowFunc);
 			if (this.LeftPanelWidth > 0) form1.view1.panel1.Width = this.LeftPanelWidth;
-			if (this.ClassHeight > 0) form1.view1.tabClass.Height = this.ClassHeight;
+			if (this.ClassHeight > 0) form1.view1.tvClass.Height = this.ClassHeight;
+			if (!String.IsNullOrEmpty(this.FontName) && this.FontSize > 0)
+			{
+				form1.view1.txtSource.Font = new Font(this.FontName, this.FontSize);
+			}
 		}
 
 		public void Store(Form1 form1)
@@ -82,10 +77,11 @@ namespace Girl.HierArch
 			this.Width = rect.Width;
 			this.Height = rect.Height;
 			this.State = form1.WindowState;
-			this.ShowClass = form1.view1.tabClass.Visible;
-			this.ShowFunc = form1.view1.tabFunc.Visible;
 			this.LeftPanelWidth = form1.view1.panel1.Width;
-			this.ClassHeight = form1.view1.tabClass.Height;
+			this.ClassHeight = form1.view1.tvClass.Height;
+			var font = form1.view1.txtSource.Font;
+			this.FontName = font.Name;
+			this.FontSize = (int)font.Size;
 		}
 	}
 }

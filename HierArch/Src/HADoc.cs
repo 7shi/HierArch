@@ -2,9 +2,6 @@
 // 編集は必ずそちらを通すようにして、直接書き換えないでください。
 
 using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -29,26 +26,6 @@ namespace Girl.HierArch
 		{
 			this.ClassTreeView = null;
 			this.ViewInfo = new HAViewInfo();
-			this.InitMacro();
-			this.InitUserPlugin();
-		}
-
-		private void InitMacro()
-		{
-			string dir = ApplicationDataManager.SearchFolder("Data");
-			if (dir == null) return;
-			string macro1 = HADoc.UserDir + @"\Macro.hamcr";
-			if (!File.Exists(macro1))
-			{
-				string macro_orig = dir + @"\Macro.hamcr";
-				if (File.Exists(macro_orig)) File.Copy(macro_orig, macro1);
-			}
-			string macro2 = HADoc.UserDir + @"\Macro.hacls";
-			if (!File.Exists(macro2))
-			{
-				string macro_orig = dir + @"\Macro.hacls";
-				if (File.Exists(macro_orig)) File.Copy(macro_orig, macro2);
-			}
 		}
 
 		public string ShortName
@@ -61,6 +38,85 @@ namespace Girl.HierArch
 				return ret.Substring(0, p);
 			}
 		}
+		
+		/// <summary>
+		/// サロゲートペアを 3 バイト × 2 で符号化した UTF-8 の変種から変換 
+		/// </summary>
+		public static String FromCESU8(byte[] utf8mb4)
+		{
+			var s = new StringBuilder();
+			int len = utf8mb4.Length;
+			for (int i = 0; i < len; i++)
+			{
+				int b1 = (int)utf8mb4[i];
+				if (b1 < 0x80)
+				{
+					s.Append((char)b1);
+				}
+				else if (b1 < 0xc0)
+				{
+					s.Append('?');
+				}
+				else if (b1 < 0xe0)
+				{
+					int b2 = (int)utf8mb4[++i];
+					if (b2 < 0x80 || b2 >= 0xc0)
+					{
+						s.Append('?');
+						continue;
+					}
+					int ch = (b1 & 0x1f) << 6 | (b2 & 0x3f);
+					s.Append(ch < 0x80 ? '?' : (char)ch);
+				}
+				else if (b1 < 0xf0)
+				{
+					int b2 = (int)utf8mb4[++i];
+					if (b2 < 0x80 || b2 >= 0xc0)
+					{
+						s.Append('?');
+						continue;
+					}
+					int b3 = (int)utf8mb4[++i];
+					if (b3 < 0x80 || b3 >= 0xc0)
+					{
+						s.Append('?');
+						continue;
+					}
+					int ch = (b1 & 0xf) << 12 | (b2 & 0x3f) << 6 | (b3 & 0x3f);
+					s.Append(ch < 0x800 ? '?' : (char)ch);
+				}
+				else if (b1 < 0xf5)
+				{
+					int b2 = (int)utf8mb4[++i];
+					if (b2 < 0x80 || b2 >= 0xc0)
+					{
+						s.Append('?');
+						continue;
+					}
+					int b3 = (int)utf8mb4[++i];
+					if (b3 < 0x80 || b3 >= 0xc0)
+					{
+						s.Append('?');
+						continue;
+					}
+					int b4 = (int)utf8mb4[++i];
+					if (b3 < 0x80 || b3 >= 0xc0)
+					{
+						s.Append('?');
+						continue;
+					}
+					int ch = (b1 & 7) << 18 | (b2 & 0x3f) << 12 | (b3 & 0x3f) << 6 | (b4 & 0x3f);
+					if (ch < 0x10000 || ch >= 0x110000)
+					{
+						s.Append('?');
+						continue;
+					}
+					s.Append((char)(0xd800 + ((ch - 0x10000) >> 10)));
+					s.Append((char)(0xdc00 + (ch & 0x3fff)));
+				}
+			}
+			return s.ToString();
+		}
 
 		public override bool Open()
 		{
@@ -70,7 +126,9 @@ namespace Girl.HierArch
 			try
 			{
 				if (!File.Exists(this.FullName)) throw new Exception();
-				xr = new XmlTextReader(this.FullName);
+				var bytes = File.ReadAllBytes(this.FullName);
+				var sr = new StringReader(FromCESU8(bytes));
+				xr = new XmlTextReader(sr);
 			}
 			catch
 			{
@@ -205,106 +263,6 @@ namespace Girl.HierArch
 			xw.Flush();
 			xw.Close();
 			return true;
-		}
-
-		public static string BuildDateTime
-		{
-			get
-			{
-				return "2003/05/04 23:53:34";
-			}
-		}
-
-		#region Plugin
-
-		private void InitUserPlugin()
-		{
-			string dir1 = HADoc.SysPluginDir;
-			if (dir1 == null) return;
-			string dir2 = HADoc.UserPluginDir;
-			DirectoryInfo di = new DirectoryInfo(dir1);
-			foreach (FileInfo fi in di.GetFiles("*.cs"))
-			{
-				string source = dir2 + @"\" + fi.Name;
-				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
-			}
-			foreach (FileInfo fi in di.GetFiles("*.miopt"))
-			{
-				string source = dir2 + @"\" + fi.Name;
-				if (!File.Exists(source)) File.Copy(fi.FullName, source, true);
-			}
-			string dll = dir2 + @"\HierArchLib.dll";
-			if (File.Exists(dll)) return;
-			DirectoryInfo di2 = new FileInfo(Application.ExecutablePath).Directory;
-			File.Copy(di2.FullName + @"\HierArchLib.dll", dll);
-		}
-
-		public static string UserDir
-		{
-			get
-			{
-				string ret = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\HierArch";
-				if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
-				return ret;
-			}
-		}
-
-		public static string UserPluginDir
-		{
-			get
-			{
-				string ret = HADoc.UserDir + @"\Plugin";
-				if (!Directory.Exists(ret)) Directory.CreateDirectory(ret);
-				return ret;
-			}
-		}
-
-		public static string SysPluginDir
-		{
-			get
-			{
-				return ApplicationDataManager.SearchFolder("Plugin");
-			}
-		}
-
-		public void Make()
-		{
-			this.InitUserPlugin();
-			DirectoryInfo di = new DirectoryInfo(HADoc.UserPluginDir);
-			foreach (FileInfo fi in di.GetFiles("*.cs"))
-			{
-				string source = fi.FullName;
-				string dll = source.Substring(0, source.Length - 2) + "dll";
-				if (File.Exists(dll))
-				{
-					DateTime dt1 = fi.LastWriteTime;
-					DateTime dt2 = File.GetLastWriteTime(dll);
-					if (dt1 <= dt2) continue;
-				}
-				this.Compile(source, dll);
-			}
-		}
-
-		public CompilerResults Compile(string source, string dll)
-		{
-			Microsoft.CSharp.CSharpCodeProvider codeProvider = new Microsoft.CSharp.CSharpCodeProvider();
-			ICodeCompiler icc = codeProvider.CreateCompiler();
-			CompilerParameters parameters = new CompilerParameters();
-			parameters.GenerateExecutable = true;
-			parameters.ReferencedAssemblies.AddRange(new string [] { "System.dll", HADoc.UserPluginDir + @"\HierArchLib.dll" });
-			parameters.OutputAssembly = dll;
-			parameters.CompilerOptions = "/target:library";
-			return icc.CompileAssemblyFromFile(parameters, source);
-		}
-
-		#endregion
-
-		public static string MacroProject
-		{
-			get
-			{
-				return HADoc.UserDir + @"\Macro.hamcr";
-			}
 		}
 	}
 }

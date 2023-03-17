@@ -18,7 +18,6 @@ namespace Girl.HierArch
 		public WindowSizeMonitor sizeMonitor;
 		private static ViewData viewData;
 		private static ArrayList forms = new ArrayList();
-		public static HAAccountManager AccountManager = new HAAccountManager();
 
 		private HADoc document = new HADoc();
 		private Hashtable m_tblView = new Hashtable();
@@ -33,6 +32,9 @@ namespace Girl.HierArch
 		private System.Windows.Forms.ToolBarButton tbEditCut;
 		private System.Windows.Forms.ToolBarButton tbEditCopy;
 		private System.Windows.Forms.ToolBarButton tbEditPaste;
+		private System.Windows.Forms.ToolBarButton tbSeparator2;
+		private System.Windows.Forms.ToolBarButton tbEditUndo;
+		private System.Windows.Forms.ToolBarButton tbEditRedo;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		public Girl.HierArch.View view1;
@@ -49,20 +51,8 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuEditCut;
 		private System.Windows.Forms.MenuItem mnuEditCopy;
 		private System.Windows.Forms.MenuItem mnuEditPaste;
-		private System.Windows.Forms.MenuItem mnuView;
-		public System.Windows.Forms.MenuItem mnuViewToolBar;
-		public System.Windows.Forms.MenuItem mnuViewStatusBar;
 		private System.Windows.Forms.MenuItem mnuHelp;
 		private System.Windows.Forms.MenuItem mnuHelpAbout;
-		private System.Windows.Forms.MenuItem mnuViewSeparator1;
-		private System.Windows.Forms.MenuItem mnuViewClass;
-		private System.Windows.Forms.MenuItem mnuViewFunc;
-		private System.Windows.Forms.ToolBarButton tbSeparator2;
-		private System.Windows.Forms.ToolBarButton tbBuildBuild;
-		private System.Windows.Forms.ToolBarButton tbEditUndo;
-		private System.Windows.Forms.ToolBarButton tbEditRedo;
-		private System.Windows.Forms.ToolBarButton tbSeparator3;
-		private System.Windows.Forms.ToolBarButton tbBuildRun;
 		private System.Windows.Forms.MenuItem mnuEditUndo;
 		private System.Windows.Forms.MenuItem mnuEditRedo;
 		private System.Windows.Forms.MenuItem mnuEditSeparator1;
@@ -74,8 +64,9 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem mnuOptionSmartTab;
 		private System.Windows.Forms.MenuItem mnuOptionSmartHome;
 		private System.Windows.Forms.MenuItem mnuOptionSmartParenthesis;
+		private System.Windows.Forms.MenuItem mnuOptionSeparator1;
+		private System.Windows.Forms.MenuItem mnuOptionFont;
 		private System.ComponentModel.IContainer components;
-		protected System.Windows.Forms.ToolBarButton tbBuildGenerate;
 		private EditManager editManager = new EditManager();
 		private System.Windows.Forms.ContextMenu cmEdit;
 		private System.Windows.Forms.MenuItem cmEditUndo;
@@ -113,11 +104,6 @@ namespace Girl.HierArch
 			this.tbFileNew      .Tag = this.mnuFileNew;
 			this.tbFileOpen     .Tag = this.mnuFileOpen;
 			this.tbFileSave     .Tag = this.mnuFileSave;
-
-			// View メニューの項目とコントロールを対応させます。
-			// ここで定義した情報は mnuViewItem_Click() で使用されます。
-			this.m_tblView.Add(mnuViewToolBar  , toolBar1  );
-			this.m_tblView.Add(mnuViewStatusBar, statusBar1);
 
 			// テキストボックスの状態をメニューと連動させます。
 			this.editManager.AddControl(this.view1.txtSource );
@@ -189,10 +175,6 @@ namespace Girl.HierArch
 			this.tbSeparator2 = new System.Windows.Forms.ToolBarButton();
 			this.tbEditUndo = new System.Windows.Forms.ToolBarButton();
 			this.tbEditRedo = new System.Windows.Forms.ToolBarButton();
-			this.tbSeparator3 = new System.Windows.Forms.ToolBarButton();
-			this.tbBuildGenerate = new System.Windows.Forms.ToolBarButton();
-			this.tbBuildBuild = new System.Windows.Forms.ToolBarButton();
-			this.tbBuildRun = new System.Windows.Forms.ToolBarButton();
 			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
 			this.statusBar1 = new System.Windows.Forms.StatusBar();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -217,17 +199,13 @@ namespace Girl.HierArch
 			this.mnuEditDelete = new System.Windows.Forms.MenuItem();
 			this.mnuEditSeparator2 = new System.Windows.Forms.MenuItem();
 			this.mnuEditSelectAll = new System.Windows.Forms.MenuItem();
-			this.mnuView = new System.Windows.Forms.MenuItem();
-			this.mnuViewToolBar = new System.Windows.Forms.MenuItem();
-			this.mnuViewStatusBar = new System.Windows.Forms.MenuItem();
-			this.mnuViewSeparator1 = new System.Windows.Forms.MenuItem();
-			this.mnuViewClass = new System.Windows.Forms.MenuItem();
-			this.mnuViewFunc = new System.Windows.Forms.MenuItem();
 			this.menuItem1 = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartEnter = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartTab = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartHome = new System.Windows.Forms.MenuItem();
 			this.mnuOptionSmartParenthesis = new System.Windows.Forms.MenuItem();
+			this.mnuOptionSeparator1 = new System.Windows.Forms.MenuItem();
+			this.mnuOptionFont = new System.Windows.Forms.MenuItem();
 			this.mnuHelp = new System.Windows.Forms.MenuItem();
 			this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
 			this.cmEdit = new System.Windows.Forms.ContextMenu();
@@ -256,11 +234,7 @@ namespace Girl.HierArch
 																						this.tbEditPaste,
 																						this.tbSeparator2,
 																						this.tbEditUndo,
-																						this.tbEditRedo,
-																						this.tbSeparator3,
-																						this.tbBuildGenerate,
-																						this.tbBuildBuild,
-																						this.tbBuildRun});
+																						this.tbEditRedo});
 			this.toolBar1.DropDownArrows = true;
 			this.toolBar1.ImageList = this.imageList1;
 			this.toolBar1.Name = "toolBar1";
@@ -317,27 +291,6 @@ namespace Girl.HierArch
 			this.tbEditRedo.ImageIndex = 7;
 			this.tbEditRedo.ToolTipText = "やり直し (Ctrl+Y)";
 			// 
-			// tbSeparator3
-			// 
-			this.tbSeparator3.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-			// 
-			// tbBuildGenerate
-			// 
-			this.tbBuildGenerate.ImageIndex = 8;
-			this.tbBuildGenerate.ToolTipText = "コード生成 (F8)";
-			// 
-			// tbBuildBuild
-			// 
-			this.tbBuildBuild.Enabled = false;
-			this.tbBuildBuild.ImageIndex = 9;
-			this.tbBuildBuild.ToolTipText = "ビルド";
-			// 
-			// tbBuildRun
-			// 
-			this.tbBuildRun.Enabled = false;
-			this.tbBuildRun.ImageIndex = 10;
-			this.tbBuildRun.ToolTipText = "実行 (F5)";
-			// 
 			// imageList1
 			// 
 			this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -355,13 +308,13 @@ namespace Girl.HierArch
 			// openFileDialog1
 			// 
 			this.openFileDialog1.DefaultExt = "haprj";
-			this.openFileDialog1.Filter = "HierArch プロジェクト (*.haprj)|*.haprj|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
+			this.openFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.haprj|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
 			// 
 			// saveFileDialog1
 			// 
 			this.saveFileDialog1.DefaultExt = "haprj";
 			this.saveFileDialog1.FileName = "doc1";
-			this.saveFileDialog1.Filter = "HierArch プロジェクト (*.haprj)|*.haprj|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
+			this.saveFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.haprj|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
 			// 
 			// view1
 			// 
@@ -376,7 +329,6 @@ namespace Girl.HierArch
 			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.mnuFile,
 																					  this.mnuEdit,
-																					  this.mnuView,
 																					  this.menuItem1,
 																					  this.mnuHelp});
 			// 
@@ -500,56 +452,16 @@ namespace Girl.HierArch
 			this.mnuEditSelectAll.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
 			this.mnuEditSelectAll.Text = "すべて選択(&A)";
 			// 
-			// mnuView
-			// 
-			this.mnuView.Index = 2;
-			this.mnuView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnuViewToolBar,
-																					this.mnuViewStatusBar,
-																					this.mnuViewSeparator1,
-																					this.mnuViewClass,
-																					this.mnuViewFunc});
-			this.mnuView.Text = "表示(&V)";
-			// 
-			// mnuViewToolBar
-			// 
-			this.mnuViewToolBar.Index = 0;
-			this.mnuViewToolBar.Text = "ツールバー(&T)";
-			this.mnuViewToolBar.Click += new System.EventHandler(this.mnuViewItem_Click);
-			// 
-			// mnuViewStatusBar
-			// 
-			this.mnuViewStatusBar.Index = 1;
-			this.mnuViewStatusBar.Text = "ステータスバー(&S)";
-			this.mnuViewStatusBar.Click += new System.EventHandler(this.mnuViewItem_Click);
-			// 
-			// mnuViewSeparator1
-			// 
-			this.mnuViewSeparator1.Index = 2;
-			this.mnuViewSeparator1.Text = "-";
-			// 
-			// mnuViewClass
-			// 
-			this.mnuViewClass.Checked = true;
-			this.mnuViewClass.Index = 3;
-			this.mnuViewClass.Text = "クラス(&C)";
-			this.mnuViewClass.Click += new System.EventHandler(this.mnuViewClass_Click);
-			// 
-			// mnuViewFunc
-			// 
-			this.mnuViewFunc.Checked = true;
-			this.mnuViewFunc.Index = 4;
-			this.mnuViewFunc.Text = "関数(&F)";
-			this.mnuViewFunc.Click += new System.EventHandler(this.mnuViewFunc_Click);
-			// 
 			// menuItem1
 			// 
-			this.menuItem1.Index = 3;
+			this.menuItem1.Index = 2;
 			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.mnuOptionSmartEnter,
 																					  this.mnuOptionSmartTab,
 																					  this.mnuOptionSmartHome,
-																					  this.mnuOptionSmartParenthesis});
+																					  this.mnuOptionSmartParenthesis,
+																					  this.mnuOptionFont,
+																					  this.mnuOptionSeparator1});
 			this.menuItem1.Text = "オプション(&O)";
 			// 
 			// mnuOptionSmartEnter
@@ -572,9 +484,20 @@ namespace Girl.HierArch
 			this.mnuOptionSmartParenthesis.Index = 3;
 			this.mnuOptionSmartParenthesis.Text = "自動括弧挿入(&P)";
 			// 
+			// mnuOptionSeparator1
+			// 
+			this.mnuOptionSeparator1.Index = 4;
+			this.mnuOptionSeparator1.Text = "-";
+			// 
+			// mnuOptionFont
+			// 
+			this.mnuOptionFont.Index = 5;
+			this.mnuOptionFont.Text = "フォント(&F)";
+			this.mnuOptionFont.Click += new System.EventHandler(this.mnuOptionFont_Click);
+			// 
 			// mnuHelp
 			// 
-			this.mnuHelp.Index = 4;
+			this.mnuHelp.Index = 3;
 			this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					this.mnuHelpAbout});
 			this.mnuHelp.Text = "ヘルプ(&H)";
@@ -682,7 +605,6 @@ namespace Girl.HierArch
 			Application.EnableVisualStyles();
 			ApplicationDataManager adm = new ApplicationDataManager();
 			Form1.viewData = ViewData.Load(adm);
-			Form1.AccountManager.Load(adm);
 
 			Form1 f;
 			if (args.GetLength(0) < 1)
@@ -702,7 +624,6 @@ namespace Girl.HierArch
 			Application.Run();
 
 			Form1.viewData.Save(adm);
-			Form1.AccountManager.Save(adm);
 		}
 
 		private static void Exit()
@@ -759,51 +680,21 @@ namespace Girl.HierArch
 			Form1.Exit();
 		}
 
-		private void mnuViewItem_Click(object sender, System.EventArgs e)
+		private void mnuOptionFont_Click(object sender, System.EventArgs e)
 		{
-			object target = m_tblView[sender];
-			if(target == null) return;
-
-			bool st = !((Control)target).Visible;
-			((Control)target).Visible = st;
-			((MenuItem)sender).Checked = st;
+			using (var fd = new FontDialog())
+			{
+				fd.Font = this.view1.txtSource.Font;
+				if (fd.ShowDialog(this) == DialogResult.OK) {
+					this.view1.txtSource.Font = fd.Font;
+				}
+			}
 		}
-
-		#region Visibility
-
-		private void mnuViewClass_Click(object sender, System.EventArgs e)
-		{
-			this.SetClassVisible(!this.view1.tabClass.Visible);
-		}
-
-		public void SetClassVisible(bool visible)
-		{
-			if (visible == this.view1.tabClass.Visible) return;
-
-			this.mnuViewClass.Checked = visible;
-			this.view1.SetPanel1(visible, this.view1.tabFunc.Visible);
-		}
-
-		private void mnuViewFunc_Click(object sender, System.EventArgs e)
-		{
-			this.SetFuncVisible(!this.view1.tabFunc.Visible);
-		}
-
-		public void SetFuncVisible(bool visible)
-		{
-			if (visible == this.view1.tabFunc.Visible) return;
-
-			this.mnuViewFunc.Checked = visible;
-			this.view1.SetPanel1(this.view1.tabClass.Visible, visible);
-		}
-
-		#endregion
 
 		private void mnuHelpAbout_Click(object sender, System.EventArgs e)
 		{
 			About a = new About();
-			a.label1.Text = m_sCaption/*ProductName*/ + " Version " + ProductVersion
-				+ " (" + HADoc.BuildDateTime + ")";
+			a.label1.Text = m_sCaption/*ProductName*/ + " Version " + ProductVersion;
 			a.ShowDialog(this);
 			a.Dispose();
 		}

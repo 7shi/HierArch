@@ -39,8 +39,6 @@ namespace Girl.HierArch
 			m_Form.Closed += new EventHandler(Form_Closed);
 
 			m_Data = data;
-			m_Form.toolBar1  .Visible = m_Form.mnuViewToolBar  .Checked = m_Data.ToolBar_Visible;
-			m_Form.statusBar1.Visible = m_Form.mnuViewStatusBar.Checked = m_Data.StatusBar_Visible;
 		}
 
 		private void Form_Closed(object sender, System.EventArgs e)
