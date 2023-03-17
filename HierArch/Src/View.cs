@@ -121,7 +121,7 @@ namespace Girl.HierArch
 																				 this.tvClass});
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(176, 488);
+			this.panel1.Size = new System.Drawing.Size(200, 488);
 			this.panel1.TabIndex = 1;
 			// 
 			// opaqueSplitter3

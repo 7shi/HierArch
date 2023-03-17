@@ -42,77 +42,97 @@ namespace Girl.HierArch
 		/// <summary>
 		/// サロゲートペアを 3 バイト × 2 で符号化した UTF-8 の変種から変換 
 		/// </summary>
-		public static String FromCESU8(byte[] utf8mb4)
+		public static String FromCESU8(byte[] bytes)
 		{
 			var s = new StringBuilder();
-			int len = utf8mb4.Length;
+			int len = bytes.Length;
+			if (bytes[0] == 0xef && bytes[1] == 0xbb && bytes[2] == 0xbf) { // UTF-8 BOM
+				return Encoding.UTF8.GetString(bytes, 3, bytes.Length - 3);
+			}
 			for (int i = 0; i < len; i++)
 			{
-				int b1 = (int)utf8mb4[i];
+				int b1 = (int)bytes[i];
 				if (b1 < 0x80)
 				{
 					s.Append((char)b1);
 				}
 				else if (b1 < 0xc0)
 				{
-					s.Append('?');
+					s.Append("�");
 				}
 				else if (b1 < 0xe0)
 				{
-					int b2 = (int)utf8mb4[++i];
+					int b2 = (int)bytes[++i];
 					if (b2 < 0x80 || b2 >= 0xc0)
 					{
-						s.Append('?');
+						s.Append("��");
 						continue;
 					}
+					// C0-DF | 80-BF
 					int ch = (b1 & 0x1f) << 6 | (b2 & 0x3f);
-					s.Append(ch < 0x80 ? '?' : (char)ch);
+					if (ch < 0x80)
+					{
+						s.Append("��");
+						continue;
+					}
+					s.Append((char)ch);
 				}
 				else if (b1 < 0xf0)
 				{
-					int b2 = (int)utf8mb4[++i];
+					int b2 = (int)bytes[++i];
 					if (b2 < 0x80 || b2 >= 0xc0)
 					{
-						s.Append('?');
+						s.Append("��");
 						continue;
 					}
-					int b3 = (int)utf8mb4[++i];
+					int b3 = (int)bytes[++i];
 					if (b3 < 0x80 || b3 >= 0xc0)
 					{
-						s.Append('?');
+						s.Append("���");
 						continue;
 					}
+					// E0-EF | 80-BF | 80-BF
 					int ch = (b1 & 0xf) << 12 | (b2 & 0x3f) << 6 | (b3 & 0x3f);
-					s.Append(ch < 0x800 ? '?' : (char)ch);
+					if (ch < 0x800)
+					{
+						s.Append("���");
+						continue;
+					}
+					s.Append((char)ch);
 				}
 				else if (b1 < 0xf5)
 				{
-					int b2 = (int)utf8mb4[++i];
+					int b2 = (int)bytes[++i];
 					if (b2 < 0x80 || b2 >= 0xc0)
 					{
-						s.Append('?');
+						s.Append("��");
 						continue;
 					}
-					int b3 = (int)utf8mb4[++i];
+					int b3 = (int)bytes[++i];
 					if (b3 < 0x80 || b3 >= 0xc0)
 					{
-						s.Append('?');
+						s.Append("���");
 						continue;
 					}
-					int b4 = (int)utf8mb4[++i];
+					int b4 = (int)bytes[++i];
 					if (b3 < 0x80 || b3 >= 0xc0)
 					{
-						s.Append('?');
+						s.Append("����");
 						continue;
 					}
+					// F0-F4 | 80-BF | 80-BF | 80-BF
 					int ch = (b1 & 7) << 18 | (b2 & 0x3f) << 12 | (b3 & 0x3f) << 6 | (b4 & 0x3f);
 					if (ch < 0x10000 || ch >= 0x110000)
 					{
-						s.Append('?');
+						s.Append("����");
 						continue;
 					}
 					s.Append((char)(0xd800 + ((ch - 0x10000) >> 10)));
-					s.Append((char)(0xdc00 + (ch & 0x3fff)));
+					s.Append((char)(0xdc00 + (ch & 0x3ff)));
+				}
+				else
+				{
+					s.Append("�");
 				}
 			}
 			return s.ToString();

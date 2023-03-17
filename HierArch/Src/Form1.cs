@@ -760,7 +760,9 @@ namespace Girl.HierArch
 
 		public bool SaveAs()
 		{
-			saveFileDialog1.FileName = this.document.FullName;
+			var fn = this.document.FullName;
+			saveFileDialog1.InitialDirectory = Path.GetDirectoryName(fn);
+			saveFileDialog1.FileName = Path.GetFileName(fn);
 			DialogResult res = saveFileDialog1.ShowDialog(this);
 			view1.Focus();
 			if(res == DialogResult.Cancel) return false;

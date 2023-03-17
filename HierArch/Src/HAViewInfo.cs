@@ -36,8 +36,8 @@ namespace Girl.HierArch
 			this.State = FormWindowState.Normal;
 			this.LeftPanelWidth = this.ClassHeight = 0;
 			var font = Control.DefaultFont;
-			this.FontName = "";
-			this.FontSize = 0;
+			this.FontName = font.Name;
+			this.FontSize = (int)font.Size;
 		}
 
 		public void InitHds()
