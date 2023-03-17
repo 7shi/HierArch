@@ -37,7 +37,7 @@ namespace Girl.HierArch
 			this.LeftPanelWidth = this.ClassHeight = 0;
 			var font = Control.DefaultFont;
 			this.FontName = font.Name;
-			this.FontSize = (int)font.Size;
+			this.FontSize = (int)Math.Round(font.Size);
 		}
 
 		public void InitHds()
@@ -81,7 +81,7 @@ namespace Girl.HierArch
 			this.ClassHeight = form1.view1.tvClass.Height;
 			var font = form1.view1.txtSource.Font;
 			this.FontName = font.Name;
-			this.FontSize = (int)font.Size;
+			this.FontSize = (int)Math.Round(font.Size);
 		}
 	}
 }
