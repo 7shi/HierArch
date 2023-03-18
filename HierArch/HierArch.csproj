@@ -64,38 +64,36 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Girl" />
-    <Folder Include="Girl\Src" />
     <Folder Include="Girl\Windows" />
     <Folder Include="Girl\Windows\Forms" />
+    <Folder Include="Girl\Windows\API" />
     <Folder Include="Girl\Xml" />
     <Folder Include="Src" />
     <Folder Include="Tree" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Girl\Src\DnDTreeView.cs" />
-    <Compile Include="Girl\Src\ExTreeView.cs" />
-    <Compile Include="Girl\Src\InternalScrollBar.cs" />
-    <Compile Include="Girl\Src\Win32API.cs" />
-    <Compile Include="Girl\Src\WindowSize.cs" />
+    <Compile Include="Girl\Windows\API\Win32API.cs" />
     <Compile Include="Girl\Windows\Forms\ApplicationDataManager.cs" />
     <Compile Include="Girl\Windows\Forms\CenterPointDialog.cs" />
     <Compile Include="Girl\Windows\Forms\CodeEditor.cs" />
     <Compile Include="Girl\Windows\Forms\CodeEditorManager.cs" />
     <Compile Include="Girl\Windows\Forms\ContextManager.cs" />
     <Compile Include="Girl\Windows\Forms\ControlEx.cs" />
+    <Compile Include="Girl\Windows\Forms\DnDTreeView.cs" />
     <Compile Include="Girl\Windows\Forms\Document.cs" />
     <Compile Include="Girl\Windows\Forms\EditManager.cs" />
+    <Compile Include="Girl\Windows\Forms\ExTreeView.cs" />
+    <Compile Include="Girl\Windows\Forms\InternalScrollBar.cs" />
     <Compile Include="Girl\Windows\Forms\MenuItemEx.cs" />
     <Compile Include="Girl\Windows\Forms\OpaqueSplitter.cs" />
     <Compile Include="Girl\Windows\Forms\TabControlEx.cs" />
     <Compile Include="Girl\Windows\Forms\TextBoxPlus.cs" />
+    <Compile Include="Girl\Windows\Forms\WindowSize.cs" />
     <Compile Include="Girl\Xml\XmlObjectSerializer.cs" />
-    <Compile Include="Girl\Xml\XmlParser.cs" />
     <Compile Include="Src\About.cs" />
     <Compile Include="Src\Form1.cs" />
     <Compile Include="Src\HADoc.cs" />
-    <Compile Include="Src\HATree.cs" />
     <Compile Include="Src\HAType.cs" />
     <Compile Include="Src\HAViewInfo.cs" />
     <Compile Include="Src\View.cs" />
@@ -104,20 +102,15 @@
     <Compile Include="Tree\HAClassNode.cs" />
     <Compile Include="Tree\HAFunc.cs" />
     <Compile Include="Tree\HAFuncNode.cs" />
+    <Compile Include="Tree\HATree.cs" />
     <Compile Include="Tree\HATreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Src\About.resx">
-      <DependentUpon>About.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Src\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\HATree.resx">
+    <EmbeddedResource Include="Tree\HATree.resx">
       <DependentUpon>HATree.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Src\View.resx">
-      <DependentUpon>View.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

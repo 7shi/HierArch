@@ -1,7 +1,6 @@
 using System;
 using System.Drawing.Printing;
 using System.IO;
-using System.Xml;
 using Girl.Xml;
 
 namespace Girl.Windows.Forms

@@ -1,14 +1,7 @@
-// ここにソースコードの注釈を書きます。
-
 using System;
 using System.Collections;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Printing;
 using System.IO;
-using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace Girl.Xml
 {

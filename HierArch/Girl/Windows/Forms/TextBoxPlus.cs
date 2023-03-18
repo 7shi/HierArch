@@ -6,7 +6,7 @@ namespace Girl.Windows.Forms
 	/// <summary>
 	/// TextBoxBase を操作するクラスです。
 	/// </summary>
-	public class TextBoxPlus
+	public static class TextBoxPlus
 	{
 		public static int GetEndLineWidth(TextBoxBase textBox)
 		{

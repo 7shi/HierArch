@@ -1,10 +1,4 @@
-// このファイルは ..\..\HierArch.haprj から自動生成されています。
-// 編集は必ずそちらを通すようにして、直接書き換えないでください。
-
 using System;
-using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Girl.Windows.Forms;

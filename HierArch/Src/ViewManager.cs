@@ -1,6 +1,4 @@
 using System;
-using System.Drawing;
-using System.Windows.Forms;
 using Girl.Windows.Forms;
 
 namespace Girl.HierArch

@@ -6,7 +6,7 @@ namespace Girl.Windows.API
 	/// <summary>
 	/// Win32API を呼び出すためのラッパークラスです。
 	/// </summary>
-	public class Win32API
+	public static class Win32API
 	{
 		[StructLayout(LayoutKind.Sequential)]
 		public struct Point

@@ -1,6 +1,3 @@
-// このクラスは[STAThread]でのみ正常動作します。
-// [MTAThread]では使用しないでください。
-
 using System;
 using System.Collections;
 using System.Windows.Forms;
@@ -17,12 +14,11 @@ namespace Girl.Windows.Forms
 		Delete,
 		SelectAll
 	}
-}
 
-namespace Girl.Windows.Forms
-{
 	/// <summary>
 	/// テキストボックスの状態を管理します。
+	/// このクラスは[STAThread]でのみ正常動作します。
+	/// [MTAThread]では使用しないでください。
 	/// </summary>
 	public class EditManager : ContextManager
 	{

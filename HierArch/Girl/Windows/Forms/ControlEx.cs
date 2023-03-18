@@ -1,7 +1,4 @@
-// ここにソースコードの注釈を書きます。
-
 using System;
-using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 

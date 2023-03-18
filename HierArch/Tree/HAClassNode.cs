@@ -1,8 +1,4 @@
-// このファイルは ..\..\HierArch.haprj から自動生成されています。
-// 編集は必ずそちらを通すようにして、直接書き換えないでください。
-
 using System;
-using System.Collections;
 using System.Xml;
 
 namespace Girl.HierArch
