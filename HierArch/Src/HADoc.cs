@@ -173,76 +173,89 @@ namespace Girl.HierArch
 			if (ret) Changed = false;
 			return ret;
 		}
+		
+		private void replaceFile(string tmp)
+		{
+			var bak = this.FullName + ".bak";
+			var exists = File.Exists(this.FullName);
+			if (exists) File.Move(this.FullName, bak);
+			File.Move(tmp, this.FullName);
+			if (exists) File.Delete(bak);
+		}
 
 		private bool SaveHAPrj()
 		{
-			XmlTextWriter xw;
-
 			try
 			{
-				xw = new XmlTextWriter(this.FullName, new UTF8Encoding(false));
+				var tmp = Path.GetTempFileName();
+				using (var xw = new XmlTextWriter(tmp, new UTF8Encoding(false)))
+				{
+					xw.Formatting = Formatting.Indented;
+					xw.Indentation = 0;
+					xw.WriteStartDocument();
+					xw.WriteStartElement("HAProject");
+					xw.WriteAttributeString("version", Application.ProductVersion);
+					XmlSerializer xs = new XmlSerializer(typeof (HAViewInfo));
+					xs.Serialize(xw, this.ViewInfo);
+					foreach (TreeNode n in this.ClassTreeView.Nodes)
+					{
+						(n as HAClassNode).ToXml(xw);
+					}
+					xw.WriteEndElement();
+					xw.WriteEndDocument();
+				}
+				replaceFile(tmp);
+				return true;
 			}
-			catch
+			catch (Exception ex)
 			{
+				MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return false;
 			}
-			xw.Formatting = Formatting.Indented;
-			xw.Indentation = 0;
-			xw.WriteStartDocument();
-			xw.WriteStartElement("HAProject");
-			xw.WriteAttributeString("version", Application.ProductVersion);
-			XmlSerializer xs = new XmlSerializer(typeof (HAViewInfo));
-			xs.Serialize(xw, this.ViewInfo);
-			foreach (TreeNode n in this.ClassTreeView.Nodes)
-			{
-				(n as HAClassNode).ToXml(xw);
-			}
-			xw.WriteEndElement();
-			xw.WriteEndDocument();
-			xw.Flush();
-			xw.Close();
-			return true;
 		}
 
 		private bool SaveHds()
 		{
-			StreamWriter sw;
-
 			HAClassNode n = this.ClassTreeView.SelectedNode as HAClassNode;
 			if (n == null)
 			{
 				MessageBox.Show("クラスが選択されていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return false;
 			}
-			string msg = "HDS 形式では現在開かれているクラスだけが保存されます。\r\n" + "注釈, メンバ, 引数, 変数は保存されません。";
+			string msg = "HDS 形式では現在開かれている第一階層だけが保存されます。";
 			if (MessageBox.Show(msg, "確認", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
 			{
 				return false;
 			}
 			try
 			{
-				sw = new StreamWriter(this.FullName, false, Encoding.UTF8);
+				var tmp = Path.GetTempFileName();
+				using (var sw = new StreamWriter(tmp))
+				{
+					sw.NewLine = "\n";
+					XmlTextWriter xw = new XmlTextWriter(sw);
+					xw.Formatting = Formatting.Indented;
+					xw.Indentation = 0;
+					xw.WriteStartDocument();
+					xw.WriteStartElement("hds");
+					xw.WriteAttributeString("version", "0.3.5");
+					foreach (TreeNode nn in n.Body.Nodes)
+					{
+						(nn as HAFuncNode).ToHds(xw);
+					}
+					xw.WriteEndElement();
+					xw.WriteEndDocument();
+					xw.Flush();
+					xw.Close();
+				}
+				replaceFile(tmp);
+				return true;
 			}
-			catch
+			catch (Exception ex)
 			{
+				MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return false;
 			}
-			sw.NewLine = "\n";
-			XmlTextWriter xw = new XmlTextWriter(sw);
-			xw.Formatting = Formatting.Indented;
-			xw.Indentation = 0;
-			xw.WriteStartDocument();
-			xw.WriteStartElement("hds");
-			xw.WriteAttributeString("version", "0.3.5");
-			foreach (TreeNode nn in n.Body.Nodes)
-			{
-				(nn as HAFuncNode).ToHds(xw);
-			}
-			xw.WriteEndElement();
-			xw.WriteEndDocument();
-			xw.Flush();
-			xw.Close();
-			return true;
 		}
 	}
 }
