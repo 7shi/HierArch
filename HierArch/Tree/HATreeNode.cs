@@ -23,7 +23,7 @@ namespace Girl.HierArch
 
 		public virtual void Init()
 		{
-			this.Type = HAType.Public;
+			this.Type = HAType.Text;
 			this.m_IsExpanded = false;
 			this.m_IsSelected = false;
 			this.LastModified = DateTime.Now;
@@ -80,7 +80,7 @@ namespace Girl.HierArch
 		{
 			get
 			{
-				return (this.m_Type == HAType.Public || this.m_Type == HAType.Protected || this.m_Type == HAType.Private);
+				return false; //(this.m_Type == HAType.Public || this.m_Type == HAType.Protected || this.m_Type == HAType.Private);
 			}
 		}
 

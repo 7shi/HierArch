@@ -65,7 +65,7 @@ namespace Girl.HierArch
 
 		private void MakeMenu()
 		{
-			mnuChild  = new MenuItem("下に追加(&C)"  , new EventHandler(this.MenuNodeChild_Click));
+			mnuChild  = new MenuItem("子を追加(&C)"  , new EventHandler(this.MenuNodeChild_Click));
 			mnuAppend = new MenuItem("後に追加(&A)"  , new EventHandler(this.MenuNodeAppend_Click));
 			mnuInsert = new MenuItem("前に追加(&I)"  , new EventHandler(this.MenuNodeInsert_Click));
 			mnuDelete = new MenuItem("削除(&D)"      , new EventHandler(this.MenuNodeDelete_Click));

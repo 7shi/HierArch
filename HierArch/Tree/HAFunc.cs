@@ -37,9 +37,14 @@ namespace Girl.HierArch
 			this.LabelEdit = true;
 			this.ImageList = this.imageList1;
 			this.textFont = new Font("ＭＳ ゴシック", 9);
-			this.mnuAccess.Text = "関数(&U)";
-			this.mnuFolderGray.Text = "仮想フォルダ(&V)";
-			this.contextMenu1.MenuItems.AddRange(new MenuItem[] { mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { this.mnuAccess, this.mnuFolder, this.mnuText, this.mnuEtc }), new MenuItem("-"), this.mnuChild, this.mnuAppend, this.mnuInsert, new MenuItem("-"), this.mnuDelete, this.mnuRename });
+//			this.mnuAccess.Text = "関数(&U)";
+//			this.mnuFolderGray.Text = "仮想フォルダ(&V)";
+			this.contextMenu1.MenuItems.AddRange(
+				new MenuItem[] {
+					mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { this.mnuText, this.mnuFolder, this.mnuAccess, this.mnuEtc }),
+					new MenuItem("-"), this.mnuChild, this.mnuAppend, this.mnuInsert,
+					new MenuItem("-"), this.mnuDelete, this.mnuRename
+				});
 		}
 
 		public override void OnChanged(object sender, EventArgs e)

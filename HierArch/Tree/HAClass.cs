@@ -38,13 +38,18 @@ namespace Girl.HierArch
 			this.HideSelection = false;
 			this.LabelEdit = true;
 			this.ImageList = this.imageList1;
-			this.mnuAccess.Text = "クラス(&C)";
-			this.mnuFolderRed.Text = "GUI 実行ファイル(&W)";
-			this.mnuFolderBlue.Text = "CUI 実行ファイル(&E)";
-			this.mnuFolderGreen.Text = "ライブラリ(&L)";
-			this.mnuFolderBrown.Text = "モジュール(&M)";
-			this.mnuFolderGray.Text = "仮想フォルダ(&V)";
-			this.contextMenu1.MenuItems.AddRange(new MenuItem[] { mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { this.mnuAccess, this.mnuFolder, this.mnuText, this.mnuEtc }), new MenuItem("-"), this.mnuChild, this.mnuAppend, this.mnuInsert, new MenuItem("-"), this.mnuDelete, this.mnuRename, });
+//			this.mnuAccess.Text = "クラス(&C)";
+//			this.mnuFolderRed.Text = "GUI 実行ファイル(&W)";
+//			this.mnuFolderBlue.Text = "CUI 実行ファイル(&E)";
+//			this.mnuFolderGreen.Text = "ライブラリ(&L)";
+//			this.mnuFolderBrown.Text = "モジュール(&M)";
+//			this.mnuFolderGray.Text = "仮想フォルダ(&V)";
+			this.contextMenu1.MenuItems.AddRange(
+				new MenuItem[] {
+					mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { this.mnuText, this.mnuFolder, this.mnuAccess, this.mnuEtc }),
+					new MenuItem("-"), this.mnuChild, this.mnuAppend, this.mnuInsert,
+					new MenuItem("-"), this.mnuDelete, this.mnuRename
+				});
 			this.LinkFont = new Font(this.Font, FontStyle.Italic);
 		}
 
@@ -59,7 +64,7 @@ namespace Girl.HierArch
 		protected override void OnNodeTypeChanged(object sender, EventArgs e)
 		{
 			this.StoreData();
-			this.SetView();
+//			this.SetView();
 		}
 
 		public override void OnRefreshNode(object sender, EventArgs e)
@@ -89,21 +94,21 @@ namespace Girl.HierArch
 
 		public void InitNode(HAClassNode n)
 		{
-			n.Body = new HAFuncNode("本体");
+			n.Body = new HAFuncNode("Body");
 			n.Body.Type = HAType.Class;
 			n.Body.m_IsExpanded = true;
 			n.Body.AllowDrag = false;
-			HAFuncNode cst = new HAFuncNode("__" + "CLASS");
-			n.Body.Nodes.Add(cst);
-			HAFuncNode dst = new HAFuncNode("~__" + "CLASS");
-			n.Body.Nodes.Add(dst);
+//			HAFuncNode cst = new HAFuncNode("__" + "CLASS");
+//			n.Body.Nodes.Add(cst);
+//			HAFuncNode dst = new HAFuncNode("~__" + "CLASS");
+//			n.Body.Nodes.Add(dst);
 		}
 
 		protected override HATreeNode NewNode
 		{
 			get
 			{
-				HAClassNode ret = new HAClassNode("新しいクラス");
+				HAClassNode ret = new HAClassNode("新しい項目");
 				this.InitNode(ret);
 				return ret;
 			}
