@@ -117,8 +117,14 @@ namespace Girl.HierArch
 			xw.WriteStartElement("Source");
 			xw.WriteAttributeString("SelectionStart", XmlConvert.ToString(this.SourceSelectionStart));
 			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.SourceSelectionLength));
-			xw.WriteString(this.Source);
+			xw.WriteString("\r\n" + this.Source);
 			xw.WriteEndElement();
+		}
+		
+		public static string StripHeadLine(string text)
+		{
+			if (!text.StartsWith("\r\n")) return text;
+			return text.Substring(2, text.Length - 2);
 		}
 
 		public override void ReadXmlNode(XmlTextReader xr)
@@ -129,7 +135,7 @@ namespace Girl.HierArch
 				{
 					this.SourceSelectionStart = XmlConvert.ToInt32(xr.GetAttribute("SelectionStart"));
 					this.SourceSelectionLength = XmlConvert.ToInt32(xr.GetAttribute("SelectionLength"));
-					if (!xr.IsEmptyElement && xr.Read()) this.Source = xr.ReadString();
+					if (!xr.IsEmptyElement && xr.Read()) this.Source = StripHeadLine(xr.ReadString());
 				}
 			}
 		}
@@ -175,14 +181,7 @@ namespace Girl.HierArch
 				else if (xr.Name == "para" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement && xr.Read())
 				{
 					string text = xr.ReadString().Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
-					if (!text.StartsWith("\r\n"))
-					{
-						this.Source = text;
-					}
-					else
-					{
-						this.Source = text.Substring(2, text.Length - 2);
-					}
+					this.Source = StripHeadLine(text);
 				}
 			}
 			if (this.Nodes.Count > 0)

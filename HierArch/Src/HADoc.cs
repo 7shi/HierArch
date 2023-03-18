@@ -237,6 +237,7 @@ namespace Girl.HierArch
 				return false;
 			}
 			xw.Formatting = Formatting.Indented;
+			xw.Indentation = 0;
 			xw.WriteStartDocument();
 			xw.WriteStartElement("HAProject");
 			xw.WriteAttributeString("version", Application.ProductVersion);
@@ -279,6 +280,7 @@ namespace Girl.HierArch
 			sw.NewLine = "\n";
 			XmlTextWriter xw = new XmlTextWriter(sw);
 			xw.Formatting = Formatting.Indented;
+			xw.Indentation = 0;
 			xw.WriteStartDocument();
 			xw.WriteStartElement("hds");
 			xw.WriteAttributeString("version", "0.3.5");
