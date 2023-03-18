@@ -1,2 +1,3 @@
 # HierArch
-A code editor for C#, hierarchically organized in a tree
+
+A text editor hierarchically organized in a tree
