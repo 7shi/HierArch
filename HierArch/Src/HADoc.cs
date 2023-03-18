@@ -46,94 +46,47 @@ namespace Girl.HierArch
 		{
 			var s = new StringBuilder();
 			int len = bytes.Length;
-			if (bytes[0] == 0xef && bytes[1] == 0xbb && bytes[2] == 0xbf) { // UTF-8 BOM
+			if (len >= 3 && bytes[0] == 0xef && bytes[1] == 0xbb && bytes[2] == 0xbf) { // UTF-8 BOM
 				return Encoding.UTF8.GetString(bytes, 3, bytes.Length - 3);
 			}
 			for (int i = 0; i < len; i++)
 			{
-				int b1 = (int)bytes[i];
-				if (b1 < 0x80)
+				int b1 = bytes[i], b2, b3, b4;
+				if (b1 < 0x80) s.Append((char)b1);
+				else if ((b1 & 0xe0) == 0xc0 && i + 1 < len &&
+				         ((b2 = bytes[i + 1]) & 0xc0) == 0x80)
 				{
-					s.Append((char)b1);
-				}
-				else if (b1 < 0xc0)
-				{
-					s.Append("�");
-				}
-				else if (b1 < 0xe0)
-				{
-					int b2 = (int)bytes[++i];
-					if (b2 < 0x80 || b2 >= 0xc0)
-					{
-						s.Append("��");
-						continue;
-					}
 					// C0-DF | 80-BF
 					int ch = (b1 & 0x1f) << 6 | (b2 & 0x3f);
-					if (ch < 0x80)
-					{
-						s.Append("��");
-						continue;
-					}
-					s.Append((char)ch);
+					if (ch < 0x80) s.Append("��"); else s.Append((char)ch);
+					i++;
 				}
-				else if (b1 < 0xf0)
+				else if ((b1 & 0xf0) == 0xe0 && i + 2 < len &&
+				         ((b2 = bytes[i + 1]) & 0xc0) == 0x80 &&
+				         ((b3 = bytes[i + 2]) & 0xc0) == 0x80)
 				{
-					int b2 = (int)bytes[++i];
-					if (b2 < 0x80 || b2 >= 0xc0)
-					{
-						s.Append("��");
-						continue;
-					}
-					int b3 = (int)bytes[++i];
-					if (b3 < 0x80 || b3 >= 0xc0)
-					{
-						s.Append("���");
-						continue;
-					}
 					// E0-EF | 80-BF | 80-BF
 					int ch = (b1 & 0xf) << 12 | (b2 & 0x3f) << 6 | (b3 & 0x3f);
-					if (ch < 0x800)
-					{
-						s.Append("���");
-						continue;
-					}
-					s.Append((char)ch);
+					if (ch < 0x800) s.Append("���"); else s.Append((char)ch);
+					i += 2;
 				}
-				else if (b1 < 0xf5)
+				else if ((b1 & 0xf8) == 0xf0 && i + 3 < len &&
+				         ((b2 = bytes[i + 1]) & 0xc0) == 0x80 &&
+				         ((b3 = bytes[i + 2]) & 0xc0) == 0x80 &&
+				         ((b4 = bytes[i + 3]) & 0xc0) == 0x80)
 				{
-					int b2 = (int)bytes[++i];
-					if (b2 < 0x80 || b2 >= 0xc0)
-					{
-						s.Append("��");
-						continue;
-					}
-					int b3 = (int)bytes[++i];
-					if (b3 < 0x80 || b3 >= 0xc0)
-					{
-						s.Append("���");
-						continue;
-					}
-					int b4 = (int)bytes[++i];
-					if (b3 < 0x80 || b3 >= 0xc0)
-					{
-						s.Append("����");
-						continue;
-					}
 					// F0-F4 | 80-BF | 80-BF | 80-BF
 					int ch = (b1 & 7) << 18 | (b2 & 0x3f) << 12 | (b3 & 0x3f) << 6 | (b4 & 0x3f);
 					if (ch < 0x10000 || ch >= 0x110000)
-					{
 						s.Append("����");
-						continue;
+					else
+					{
+						s.Append((char)(0xd800 + ((ch - 0x10000) >> 10)));
+						s.Append((char)(0xdc00 + (ch & 0x3ff)));
 					}
-					s.Append((char)(0xd800 + ((ch - 0x10000) >> 10)));
-					s.Append((char)(0xdc00 + (ch & 0x3ff)));
+					i += 3;
 				}
-				else
-				{
-					s.Append("�");
-				}
+				else s.Append("�");
 			}
 			return s.ToString();
 		}
