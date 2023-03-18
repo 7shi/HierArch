@@ -326,5 +326,11 @@ namespace Girl.HierArch
 		public virtual void OnRefreshNode(object sender, EventArgs e)
 		{
 		}
+		
+		protected override void DragMove()
+		{
+			base.DragMove();
+			this.OnChanged(this, EventArgs.Empty);
+		}
 	}
 }

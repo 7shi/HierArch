@@ -130,19 +130,21 @@ namespace Girl.Windows.Forms
 			Cursor.Current = curOrig;
 			DataObject dobj = new DataObject(this.dataFormat, sw.ToString());
 			DragDropEffects result = DoDragDrop(dobj, DragDropEffects.All);
-			if (result == DragDropEffects.Move)
-			{
-				DnDTreeNode p = m_ndDrag.Parent as DnDTreeNode;
-				m_ndDrag.Remove();
-				if (p != null) p.SetIcon();
-				DnDTreeNode n = SelectedNode as DnDTreeNode;
-				if (n != null) n.EnsureVisible();
-			}
+			if (result == DragDropEffects.Move) DragMove();
 
 			m_bDrag = false;
 			m_ndDrag = null;
 			m_ndDragTarget = null;
 			m_bDragged = false;
+		}
+		
+		protected virtual void DragMove()
+		{
+			DnDTreeNode p = m_ndDrag.Parent as DnDTreeNode;
+			m_ndDrag.Remove();
+			if (p != null) p.SetIcon();
+			DnDTreeNode n = SelectedNode as DnDTreeNode;
+			if (n != null) n.EnsureVisible();
 		}
 
 		protected override void OnMouseMove(MouseEventArgs e)
