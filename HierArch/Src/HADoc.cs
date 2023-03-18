@@ -187,7 +187,7 @@ namespace Girl.HierArch
 		{
 			try
 			{
-				var tmp = Path.GetTempFileName();
+				var tmp = this.FullName + ".tmp";
 				using (var xw = new XmlTextWriter(tmp, new UTF8Encoding(false)))
 				{
 					xw.Formatting = Formatting.Indented;
@@ -229,11 +229,11 @@ namespace Girl.HierArch
 			}
 			try
 			{
-				var tmp = Path.GetTempFileName();
+				var tmp = this.FullName + ".tmp";
 				using (var sw = new StreamWriter(tmp))
+				using (var xw = new XmlTextWriter(sw))
 				{
 					sw.NewLine = "\n";
-					XmlTextWriter xw = new XmlTextWriter(sw);
 					xw.Formatting = Formatting.Indented;
 					xw.Indentation = 0;
 					xw.WriteStartDocument();
@@ -245,8 +245,6 @@ namespace Girl.HierArch
 					}
 					xw.WriteEndElement();
 					xw.WriteEndDocument();
-					xw.Flush();
-					xw.Close();
 				}
 				replaceFile(tmp);
 				return true;
