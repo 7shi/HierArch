@@ -54,12 +54,8 @@ namespace Girl.HierArch
 		public override void WriteXml(XmlTextWriter xw)
 		{
 			base.WriteXml(xw);
-			xw.WriteStartElement("Header");
-			xw.WriteEndElement();
 			xw.WriteStartElement("Body");
 			this.Body.ToXml(xw);
-			xw.WriteEndElement();
-			xw.WriteStartElement("Footer");
 			xw.WriteEndElement();
 		}
 
