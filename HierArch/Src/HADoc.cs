@@ -143,12 +143,20 @@ namespace Girl.HierArch
 			XmlTextReader xr;
 			HAClassNode n;
 
+			if (!File.Exists(this.FullName)) return false;
 			try
 			{
-				if (!File.Exists(this.FullName)) throw new Exception();
-				var bytes = File.ReadAllBytes(this.FullName);
-				var sr = new StringReader(FromCESU8(bytes));
-				xr = new XmlTextReader(sr);
+				var ext = Path.GetExtension(this.FullName).ToLower();
+				if (ext == ".hds")
+				{
+					var bytes = File.ReadAllBytes(this.FullName);
+					var sr = new StringReader(FromCESU8(bytes));
+					xr = new XmlTextReader(sr);
+				}
+				else
+				{
+					xr = new XmlTextReader(this.FullName);
+				}
 			}
 			catch
 			{
