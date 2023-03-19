@@ -626,6 +626,7 @@ namespace Girl.HierArch
 				foreach (string fn in args)
 				{
 					f = new Form1();
+					f.CreateHandle();
 					f.Open(fn);
 					f.Show();
 				}
@@ -740,6 +741,7 @@ namespace Girl.HierArch
 			if(this.document.Changed || this.document.FullName != "")
 			{
 				target = new Form1();
+				target.CreateHandle();
 			}
 			var ret = target.Open(openFileDialog1.FileName);
 			target.Show();

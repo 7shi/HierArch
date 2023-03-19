@@ -52,12 +52,10 @@ namespace Girl.HierArch
 				Rectangle r2 = Screen.GetWorkingArea(r1);
 				if (r1.IntersectsWith(r2))
 				{
-					form1.StartPosition = FormStartPosition.Manual;
 					form1.SetDesktopBounds(r1.X, r1.Y, r1.Width, r1.Height);
 				}
 				else
 				{
-					form1.StartPosition = FormStartPosition.WindowsDefaultLocation;
 					form1.Size = new Size(this.Width, this.Height);
 				}
 				form1.WindowState = this.State;
