@@ -80,7 +80,7 @@ namespace Girl.HierArch
 		private System.Windows.Forms.MenuItem cmEditSeparator2;
 		private System.Windows.Forms.MenuItem cmEditSelectAll;
 		private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
-		private static CodeEditorManager codeEditorManager = new CodeEditorManager();
+		private static CodeEditorManager codeEditorManager = new CodeEditorManager(2);
 
 		public Form1()
 		{
