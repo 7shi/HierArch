@@ -597,7 +597,7 @@ namespace Girl.HierArch
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Menu = this.mainMenu1;
 			this.Name = "Form1";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
 			this.Text = "HierArch";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.ResumeLayout(false);
@@ -626,8 +626,8 @@ namespace Girl.HierArch
 				foreach (string fn in args)
 				{
 					f = new Form1();
-					f.Show();
 					f.Open(fn);
+					f.Show();
 				}
 			}
 			Application.Run();
@@ -740,9 +740,10 @@ namespace Girl.HierArch
 			if(this.document.Changed || this.document.FullName != "")
 			{
 				target = new Form1();
-				target.Show();
 			}
-			return target.Open(openFileDialog1.FileName);
+			var ret = target.Open(openFileDialog1.FileName);
+			target.Show();
+			return ret;
 		}
 
 		public bool Open(string fn)
@@ -806,7 +807,7 @@ namespace Girl.HierArch
 
 		public void SetDocument()
 		{
-			if (this.Visible) this.document.ViewInfo.Apply(this);
+			this.document.ViewInfo.Apply(this);
 			this.view1.SetDocument(this.document);
 		}
 
