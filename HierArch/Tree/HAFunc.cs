@@ -95,11 +95,11 @@ namespace Girl.HierArch
 			mnuType.Enabled = mnuAppend.Enabled = mnuInsert.Enabled = mnuDelete.Enabled = mnuRename.Enabled =(n != null && n.AllowDrag);
 		}
 
-		protected override HATreeNode NewNode
+		public override HATreeNode NewNode
 		{
 			get
 			{
-				return new HAFuncNode("新しい関数");
+				return new HAFuncNode("新しい項目");
 			}
 		}
 

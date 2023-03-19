@@ -92,13 +92,10 @@ namespace Girl.HierArch
 			n.Body.Type = HAType.Class;
 			n.Body.m_IsExpanded = true;
 			n.Body.AllowDrag = false;
-//			HAFuncNode cst = new HAFuncNode("__" + "CLASS");
-//			n.Body.Nodes.Add(cst);
-//			HAFuncNode dst = new HAFuncNode("~__" + "CLASS");
-//			n.Body.Nodes.Add(dst);
+			n.Body.Nodes.Add(this.FuncTreeView.NewNode);
 		}
 
-		protected override HATreeNode NewNode
+		public override HATreeNode NewNode
 		{
 			get
 			{

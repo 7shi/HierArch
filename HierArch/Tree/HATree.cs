@@ -39,7 +39,7 @@ namespace Girl.HierArch
 			MakeMenu();
 		}
 
-		protected virtual HATreeNode NewNode
+		public virtual HATreeNode NewNode
 		{
 			get
 			{
