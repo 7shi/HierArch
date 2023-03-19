@@ -77,7 +77,7 @@ namespace Girl.HierArch
 			this.Y = rect.Y;
 			this.Width = rect.Width;
 			this.Height = rect.Height;
-			this.State = form1.WindowState;
+			this.State = form1.LastState;
 			this.LeftPanelWidth = form1.view1.panel1.Width;
 			this.ClassHeight = form1.view1.tvClass.Height;
 			var src = form1.view1.txtSource;
