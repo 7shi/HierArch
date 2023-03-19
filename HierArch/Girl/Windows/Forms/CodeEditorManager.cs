@@ -430,16 +430,24 @@ namespace Girl.Windows.Forms
 			{
 				if (this.ProcessTab(textBox, e.Shift)) e.Handled = true;
 			}
-			else if (e.KeyCode == Keys.Back && this.SmartTab && textBox.SelectionLength == 0 && this.indentString.Length > 1)
+			else if (e.KeyCode == Keys.Back && this.SmartTab && textBox.SelectionLength == 0 && this.indentSpace > 1)
 			{
 				int line = TextBoxPlus.GetCurrentLine(textBox);
 				int clm = TextBoxPlus.GetCurrentColumn(textBox);
 				var ind = CodeEditorManager.GetIndent(TextBoxPlus.GetLineText(textBox, line));
-				if (clm == ind.Length && ind.EndsWith(this.indentString))
+				if (clm > 0 && clm <= ind.Length)
 				{
-					int len = this.indentString.Length;
-					textBox.SelectionStart -= len;
-					textBox.SelectionLength = len;
+					var w = clm % this.indentSpace;
+					if (w != 1)
+					{
+						if (w == 0) w = this.indentSpace;
+						var spc = new String(' ', w);
+						if (ind.EndsWith(spc))
+						{
+							textBox.SelectionStart -= w;
+							textBox.SelectionLength = w;
+						}
+					}
 				}
 			}
 		}
