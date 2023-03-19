@@ -21,15 +21,22 @@ namespace Girl.Windows.Forms
 	/// </summary>
 	public class CodeEditorManager : ContextManager
 	{
-		public string IndentString;
+		private string indentString;
+		private int indentSpace = 0;
 		public Hashtable menuOptions;
 
-		/// <summary>
-		/// コンストラクタです。
-		/// </summary>
-		public CodeEditorManager()
+		public CodeEditorManager() : this("\t")
 		{
-			this.IndentString = "\t";
+		}
+
+		public CodeEditorManager(int indentSpace) : this(new String(' ', indentSpace))
+		{
+			this.indentSpace = indentSpace;
+		}
+
+		public CodeEditorManager(string indentString)
+		{
+			this.indentString = indentString;
 			this.menuOptions = new Hashtable();
 			this.handlers = new EventHandler[]
 			{
@@ -183,7 +190,7 @@ namespace Girl.Windows.Forms
 				pos = textBox.SelectionStart;
 				if (crtext.EndsWith("}"))
 				{
-					this.InsertText(textBox, this.IndentString);
+					this.InsertText(textBox, this.indentString);
 					pos++;
 				}
 				this.InsertText(textBox, "\r\n" + crind);
@@ -193,7 +200,7 @@ namespace Girl.Windows.Forms
 				pos =(textBox.SelectionStart += crind.Length - cl);
 				if (crtext.EndsWith("}"))
 				{
-					this.InsertText(textBox, this.IndentString);
+					this.InsertText(textBox, this.indentString);
 					pos++;
 				}
 				this.InsertText(textBox, "\r\n" + crind);
@@ -202,7 +209,7 @@ namespace Girl.Windows.Forms
 			{
 				string nxtext = TextBoxPlus.GetLineText(textBox, ln + 1);
 				string nxind = CodeEditorManager.GetIndent(nxtext);
-				this.InsertText(textBox, "\r\n" + crind + this.IndentString);
+				this.InsertText(textBox, "\r\n" + crind + this.indentString);
 				bool needsClose = !(nxtext.EndsWith("}") && crind == nxind) && crind.Length >= nxind.Length;
 				if (cl < crtext.Length)
 				{
@@ -234,7 +241,7 @@ namespace Girl.Windows.Forms
 			}
 			else if (crtext.EndsWith(":"))
 			{
-				this.InsertText(textBox, "\r\n" + crind + this.IndentString);
+				this.InsertText(textBox, "\r\n" + crind + this.indentString);
 			}
 			else
 			{
@@ -318,10 +325,22 @@ namespace Girl.Windows.Forms
 			return false;
 		}
 
-		private void ProcessTab(TextBoxBase textBox, bool shift)
+		private bool ProcessTab(TextBoxBase textBox, bool shift)
 		{
-			int pos = textBox.SelectionStart;
 			int len = textBox.SelectionLength;
+			if (len == 0)
+			{
+				if (this.indentString == "\t") return false;
+				if (this.indentSpace == 0)
+				{
+					this.InsertText(textBox, this.indentString);
+					return true;
+				}
+				int clm = TextBoxPlus.GetCurrentColumn(textBox);
+				this.InsertText(textBox, new String(' ', this.indentSpace - clm % this.indentSpace));
+				return true;
+			}
+			int pos = textBox.SelectionStart;
 			int sl = TextBoxPlus.GetLine(textBox, pos);
 			int el = TextBoxPlus.GetLine(textBox, pos + len);
 			if (textBox.SelectedText.EndsWith("\n")) el--;
@@ -331,7 +350,7 @@ namespace Girl.Windows.Forms
 			textBox.SelectionLength = ep - sp;
 			StringReader sr = new StringReader(textBox.SelectedText);
 			StringWriter sw = new StringWriter();
-			string ind = this.IndentString, line;
+			string ind = this.indentString, line;
 			while ((line = sr.ReadLine()) != null)
 			{
 				if (!shift)
@@ -362,6 +381,7 @@ namespace Girl.Windows.Forms
 			int nlen = textBox.SelectionStart - sp;
 			textBox.SelectionStart = sp;
 			textBox.SelectionLength = nlen;
+			return true;
 		}
 
 		private void InsertText(TextBoxBase textBox, string text)
@@ -391,6 +411,7 @@ namespace Girl.Windows.Forms
 				}
 				else if (e.Modifiers == Keys.Shift)
 				{
+					// 次の行の行頭に移動
 					int line = TextBoxPlus.GetCurrentLine(textBox);
 					if (line < textBox.Lines.Length)
 					{
@@ -405,10 +426,9 @@ namespace Girl.Windows.Forms
 			{
 				if (this.ProcessHome(textBox)) e.Handled = true;
 			}
-			else if (e.KeyCode == Keys.Tab && this.SmartTab &&(e.Shift || textBox.SelectionLength > 0))
+			else if (e.KeyCode == Keys.Tab && this.SmartTab)
 			{
-				this.ProcessTab(textBox, e.Shift);
-				e.Handled = true;
+				if (this.ProcessTab(textBox, e.Shift)) e.Handled = true;
 			}
 		}
 
@@ -420,7 +440,7 @@ namespace Girl.Windows.Forms
 			{
 				e.Handled = true;
 			}
-			else if (e.KeyChar == '\t' && textBox.SelectionLength > 0 && this.SmartTab)
+			else if (e.KeyChar == '\t' && this.SmartTab && this.indentString != "\t")
 			{
 				e.Handled = true;
 			}
