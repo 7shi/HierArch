@@ -23,6 +23,7 @@ namespace Girl.Windows.Forms
 		private bool m_bDragged = false;
 		private bool m_bScrolling = false;
 		private bool m_bDisturbSelection = false;
+		protected bool enableSibling = true;
 		public ArrayList MoveTarget = new ArrayList();
 
 		enum DragStatus { None, Previous, Child, Next };
@@ -202,6 +203,11 @@ namespace Girl.Windows.Forms
 			SetDragTarget(p);
 
 			m_bDragged = true;
+			OnDragEffects(e);
+		}
+
+		protected virtual void OnDragEffects(DragEventArgs e)
+		{
 			if (IsMoveTarget)
 			{
 				if ((e.KeyState & 8) != 0)  // Control
@@ -261,7 +267,7 @@ namespace Girl.Windows.Forms
 
 			DragStatus st = DragStatus.Child;
 			DnDTreeNode dn = (DnDTreeNode)n;
-			if (n != null)
+			if (n != null && enableSibling)
 			{
 				int px = p.X + VirtualLeft;
 				int py = p.Y + VirtualTop;
@@ -327,6 +333,12 @@ namespace Girl.Windows.Forms
 
 			Cursor curOrig = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
+			OnDragAccept(e);
+			Cursor.Current = curOrig;
+		}
+
+		protected virtual void OnDragAccept(DragEventArgs e)
+		{
 			DnDTreeNode n = null;
 			int index = -1;
 			switch (m_DragStatus)
@@ -346,14 +358,13 @@ namespace Girl.Windows.Forms
 			TreeNodeCollection nc = (n != null) ? n.Nodes : Nodes;
 			if (index < 0 || index > nc.Count) index = nc.Count;
 
-			StringReader sr = new StringReader((string)e.Data.GetData(this.dataFormat));
-			XmlTextReader xr = new XmlTextReader(sr);
-			FromXml(xr, nc, index);
-			xr.Close();
-			sr.Close();
+			using (var sr = new StringReader((string)e.Data.GetData(this.dataFormat)))
+			using (var xr = new XmlTextReader(sr))
+			{
+				FromXml(xr, nc, index);
+			}
 			m_DragStatus = DragStatus.None;
 			if (n != null) n.SetIcon();
-			Cursor.Current = curOrig;
 		}
 
 		#endregion
