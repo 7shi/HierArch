@@ -328,7 +328,7 @@ namespace Girl.Windows.Forms
 		private bool ProcessTab(TextBoxBase textBox, bool shift)
 		{
 			int len = textBox.SelectionLength;
-			if (len == 0)
+			if (len == 0 && !shift)
 			{
 				if (this.indentString == "\t") return false;
 				if (this.indentSpace == 0)
