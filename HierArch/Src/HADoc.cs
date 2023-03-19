@@ -108,8 +108,9 @@ namespace Girl.HierArch
 					xr = new XmlTextReader(this.FullName);
 				}
 			}
-			catch
+			catch (Exception ex)
 			{
+				MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return false;
 			}
 			while (xr.Read())
