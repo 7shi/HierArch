@@ -328,6 +328,7 @@ namespace Girl.HierArch
 		protected override void DragMove()
 		{
 			base.DragMove();
+			this.SetState();
 			this.OnChanged(this, EventArgs.Empty);
 		}
 	}
