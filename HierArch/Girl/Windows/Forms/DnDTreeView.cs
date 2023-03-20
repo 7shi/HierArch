@@ -42,7 +42,7 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				// 自分自身か登録した DnDTreeView がソースなら移動と判断
+				// 自分自身または登録した DnDTreeView がソースなら移動と判断
 				if (m_ndDrag != null) return true;
 				foreach (var tv in MoveTarget)
 				{
