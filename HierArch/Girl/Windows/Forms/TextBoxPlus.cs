@@ -8,61 +8,89 @@ namespace Girl.Windows.Forms
 	/// </summary>
 	public static class TextBoxPlus
 	{
-		public static int GetEndLineWidth(TextBoxBase textBox)
+		/// <summary>
+		/// WordWrap に依存しない GetFirstCharIndexFromLine 相当
+		/// </summary>
+		public static int GetFirstCharIndexFromLine(TextBoxBase textBox, int line)
 		{
-			return (textBox is TextBox) ? 2:
-			1;
-		}
-
-		public static int GetLinePosition(TextBoxBase textBox, int line)
-		{
-			if (line > textBox.Lines.Length) return textBox.TextLength;
-			int endLine = TextBoxPlus.GetEndLineWidth(textBox);
-			int ret = 0;
-			for (int i = 0; i < line; i++)
-			{
-				ret += textBox.Lines[i].Length + endLine;
-			}
-			return ret;
-		}
-
-		public static int GetLine(TextBoxBase textBox, int pos)
-		{
-			int endLine = TextBoxPlus.GetEndLineWidth(textBox);
-			int ret = 0, lpos = 0, llen = 0;
-			foreach (string line in textBox.Lines)
-			{
-				llen = line.Length;
-				if (pos < lpos + llen + endLine)
+			int ln = 0;
+			var t = textBox.Text;
+			for (int i = 0; i < t.Length; i++) {
+				char ch = t[i];
+				if (ch == '\r')
+			    {
+					if (i + 1 < t.Length && t[i + 1] == '\n') i++;
+					ln++;
+					if (line == ln) return i + 1;
+			    }
+				else if (ch == '\n')
 				{
-					break;
+					ln++;
+					if (line == ln) return i + 1;
 				}
-				ret++;
-				lpos += llen + endLine;
 			}
-			return ret;
+			return t.Length;
+		}
+
+		/// <summary>
+		/// WordWrap に依存しない GetLineFromCharIndex 相当
+		/// </summary>
+		public static int GetLineFromCharIndex(TextBoxBase textBox, int index)
+		{
+			int ln = 0;
+			var t = textBox.Text;
+			for (int i = 0; i < index; i++) {
+				char ch = t[i];
+				if (ch == '\r')
+			    {
+					if (i + 1 < t.Length && t[i + 1] == '\n') i++;
+					ln++;
+			    }
+				else if (ch == '\n')
+				{
+					ln++;
+				}
+			}
+			return ln;
+		}
+
+		/// <summary>
+		/// WordWrap に依存しない GetFirstCharIndexOfCurrentLine 相当
+		/// </summary>
+		public static int GetFirstCharIndexOfCurrentLine(TextBoxBase textBox)
+		{
+			return GetFirstCharIndexOfLineFromCharIndex(textBox, textBox.SelectionStart);
+		}
+
+		public static int GetFirstCharIndexOfLineFromCharIndex(TextBoxBase textBox, int index)
+		{
+			int ln = 0, fi = 0;
+			var t = textBox.Text;
+			for (int i = 0; i < index; i++) {
+				char ch = t[i];
+				if (ch == '\r')
+			    {
+					if (i + 1 < t.Length && t[i + 1] == '\n') i++;
+					ln++;
+					fi = i + 1;
+			    }
+				else if (ch == '\n')
+				{
+					ln++;
+					fi = i + 1;
+				}
+			}
+			return fi;
 		}
 
 		public static int GetCurrentLine(TextBoxBase textBox)
 		{
-			return TextBoxPlus.GetLine(textBox, textBox.SelectionStart);
+			return GetLineFromCharIndex(textBox, textBox.SelectionStart);
 		}
 
 		public static int GetCurrentColumn(TextBoxBase textBox)
 		{
-			int endLine = TextBoxPlus.GetEndLineWidth(textBox);
-			int lpos = 0, llen = 0;
-			int pos = textBox.SelectionStart;
-			foreach (string line in textBox.Lines)
-			{
-				llen = line.Length;
-				if (pos < lpos + llen + endLine)
-				{
-					break;
-				}
-				lpos += llen + endLine;
-			}
-			return textBox.SelectionStart - lpos;
+			return textBox.SelectionStart - GetFirstCharIndexOfCurrentLine(textBox);
 		}
 
 		public static string GetLineText(TextBoxBase textBox, int line)

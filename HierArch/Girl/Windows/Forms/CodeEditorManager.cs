@@ -341,11 +341,11 @@ namespace Girl.Windows.Forms
 				return true;
 			}
 			int pos = textBox.SelectionStart;
-			int sl = TextBoxPlus.GetLine(textBox, pos);
-			int el = TextBoxPlus.GetLine(textBox, pos + len);
+			int sl = TextBoxPlus.GetLineFromCharIndex(textBox, pos);
+			int el = TextBoxPlus.GetLineFromCharIndex(textBox, pos + len);
 			if (textBox.SelectedText.EndsWith("\n")) el--;
-			int sp = TextBoxPlus.GetLinePosition(textBox, sl);
-			int ep = TextBoxPlus.GetLinePosition(textBox, el + 1);
+			int sp = TextBoxPlus.GetFirstCharIndexFromLine(textBox, sl);
+			int ep = TextBoxPlus.GetFirstCharIndexFromLine(textBox, el + 1);
 			textBox.SelectionStart = sp;
 			textBox.SelectionLength = ep - sp;
 			StringReader sr = new StringReader(textBox.SelectedText);
@@ -412,12 +412,11 @@ namespace Girl.Windows.Forms
 				else if (e.Modifiers == Keys.Shift)
 				{
 					// 次の行の行頭に移動
-					int line = TextBoxPlus.GetCurrentLine(textBox);
+					int line = TextBoxPlus.GetCurrentLine(textBox) + 1;
 					if (line < textBox.Lines.Length)
 					{
-						int clm = TextBoxPlus.GetCurrentColumn(textBox);
-						int ind = CodeEditorManager.GetIndent(TextBoxPlus.GetLineText(textBox, line + 1)).Length;
-						textBox.SelectionStart +=(TextBoxPlus.GetLineText(textBox, line).Length - clm) + TextBoxPlus.GetEndLineWidth(textBox) + ind;
+						var ind = CodeEditorManager.GetIndent(TextBoxPlus.GetLineText(textBox, line));
+						textBox.SelectionStart = TextBoxPlus.GetFirstCharIndexFromLine(textBox, line) + ind.Length;
 					}
 				}
 				e.Handled = true;
