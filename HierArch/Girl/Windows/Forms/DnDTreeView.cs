@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Timers;
@@ -24,7 +24,7 @@ namespace Girl.Windows.Forms
 		private bool m_bScrolling = false;
 		private bool m_bDisturbSelection = false;
 		protected bool enableSibling = true;
-		public ArrayList MoveTarget = new ArrayList();
+		public readonly List<DnDTreeView> MoveTarget = new List<DnDTreeView>();
 
 		enum DragStatus { None, Previous, Child, Next };
 		private DragStatus m_DragStatus = DragStatus.None;
@@ -42,10 +42,11 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
+				// 自分自身か登録した DnDTreeView がソースなら移動と判断
 				if (m_ndDrag != null) return true;
-				foreach (Object o in MoveTarget)
+				foreach (var tv in MoveTarget)
 				{
-					if (o is DnDTreeView && ((DnDTreeView)o).m_ndDrag != null) return true;
+					if (tv != null && tv.m_ndDrag != null) return true;
 				}
 				return false;
 			}
