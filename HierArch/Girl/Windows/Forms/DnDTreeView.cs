@@ -127,7 +127,7 @@ namespace Girl.Windows.Forms
 			sw.Close();
 			Cursor.Current = curOrig;
 			DataObject dobj = new DataObject(this.dataFormat, sw.ToString());
-			DragDropEffects result = DoDragDrop(dobj, DragDropEffects.All);
+			DragDropEffects result = DoDragDrop(dobj, DragDropEffects.Copy | DragDropEffects.Move);
 			if (result == DragDropEffects.Move) DragMove();
 
 			m_bDrag = false;
