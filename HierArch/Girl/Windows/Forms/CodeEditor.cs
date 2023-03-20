@@ -34,7 +34,7 @@ namespace Girl.Windows.Forms
 		{
 			get
 			{
-				return this.Text;
+				return this.Text.Replace("\r\n", "\r").Replace("\n", "").Replace("\r", "\r\n");
 			}
 
 			set
