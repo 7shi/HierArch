@@ -28,6 +28,7 @@ namespace Girl.HierArch
 			InitializeComponent();
 
 			// TODO: InitializeComponent を呼び出しの後に初期化処理を追加します。
+			this.tvClass.MoveTarget.Add(this.tvFunc);
 			this.tvClass.FuncTreeView   = this.tvFunc;
 			this.tvFunc .SourceTextBox  = this.txtSource;
 

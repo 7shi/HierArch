@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using Girl.Windows.Forms;
@@ -139,6 +140,51 @@ namespace Girl.HierArch
 			this.TargetNode =(HAClassNode) e.Node;
 			this.SetView();
 		}
+
+		#region Drag
+
+		public override bool IsDragValid(IDataObject data)
+		{
+			var ftv = this.Nodes.Count > 0 && data.GetDataPresent(this.FuncTreeView.DataFormat);
+			this.enableSibling = !ftv;
+			return ftv || base.IsDragValid(data);
+		}
+
+		#endregion
+
+		#region Drop
+
+		protected override void OnDragAccept(DragEventArgs e, DnDTreeNode n, TreeNodeCollection nc, int index)
+		{
+			if (e.Data.GetDataPresent(this.FuncTreeView.DataFormat))
+			{
+				// GetData を呼ぶと DoDragDrop の戻り値に反映する
+				using (var sr = new StringReader((string)e.Data.GetData(this.FuncTreeView.DataFormat)))
+				using (var xr = new XmlTextReader(sr))
+				{
+					var target = (n as HAClassNode).Body;
+					bool first = true;
+					while (xr.Read())
+					{
+						if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element)
+						{
+							var dn = new HAFuncNode();
+							target.Nodes.Add(dn);
+							dn.FromXml(xr);
+							if (first)
+							{
+								first = false;
+								this.OnChanged(this, EventArgs.Empty);
+							}
+						}
+					}
+				}
+				return;
+			}
+			base.OnDragAccept(e, n, nc, index);
+		}
+
+		#endregion
 
 		#region XML
 
