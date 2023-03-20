@@ -103,6 +103,11 @@ namespace Girl.HierArch
 
 		#endregion
 
+		public string GetText()
+		{
+			return this.Source.Replace("\r\n", "\n").Replace("\r", "\n");
+		}
+
 		#region XML
 
 		public override void WriteXml(XmlTextWriter xw)
@@ -111,7 +116,7 @@ namespace Girl.HierArch
 			xw.WriteStartElement("Source");
 			xw.WriteAttributeString("SelectionStart", XmlConvert.ToString(this.SourceSelectionStart));
 			xw.WriteAttributeString("SelectionLength", XmlConvert.ToString(this.SourceSelectionLength));
-			xw.WriteString("\r\n" + this.Source);
+			xw.WriteString("\r\n" + this.GetText().Replace("\n", "\r\n"));
 			xw.WriteEndElement();
 		}
 		
@@ -142,7 +147,7 @@ namespace Girl.HierArch
 			string c = this.Color;
 			if (c != "") xw.WriteAttributeString("icon", c);
 			xw.WriteStartElement("para");
-			xw.WriteString("\n" + this.Source.Replace("\r\n", "\n"));
+			xw.WriteString("\n" + this.GetText());
 			xw.WriteEndElement();
 			foreach (TreeNode n in this.Nodes)
 			{
