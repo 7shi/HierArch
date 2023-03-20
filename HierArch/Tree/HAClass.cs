@@ -16,7 +16,6 @@ namespace Girl.HierArch
 		public HAFunc FuncTreeView;
 		private HAClassNode TargetNode;
 		public Font LinkFont;
-		public PropertyGrid Property;
 
 		/// <summary>
 		/// コンストラクタです。
@@ -26,7 +25,6 @@ namespace Girl.HierArch
 			this.dataFormat = "HierArch Class Data";
 			this.FuncTreeView = null;
 			this.TargetNode = null;
-			this.Property = null;
 			this.AllowDrop = true;
 			this.ContextMenu = this.contextMenu1 = new ContextMenu();
 			this.HideSelection = false;
@@ -52,7 +50,6 @@ namespace Girl.HierArch
 			if (this.IgnoreChanged) return;
 			base.OnChanged(sender, e);
 			if (this.TargetNode != null) this.TargetNode.LastModified = DateTime.Now;
-			if (this.Property != null) this.Property.Refresh();
 		}
 
 		protected override void OnNodeTypeChanged(object sender, EventArgs e)
@@ -126,26 +123,8 @@ namespace Girl.HierArch
 			Cursor.Current = Cursors.WaitCursor;
 			bool flag = this.IgnoreChanged;
 			this.IgnoreChanged = true;
-			if (this.TargetNode != null)
-			{
-				if (this.FuncTreeView != null)
-				{
-					this.FuncTreeView.OwnerClass = this.TargetNode;
-					this.FuncTreeView.SetView(this.TargetNode);
-				}
-			}
-			else
-			{
-				if (this.FuncTreeView != null)
-				{
-					this.FuncTreeView.OwnerClass = null;
-					this.FuncTreeView.SetView(null);
-				}
-				if (this.Property != null)
-				{
-					this.Property.SelectedObject = null;
-				}
-			}
+			this.FuncTreeView.OwnerClass = this.TargetNode;
+			this.FuncTreeView.SetView(this.TargetNode);
 			this.SetState();
 			this.IgnoreChanged = flag;
 			Cursor.Current = curOrig;

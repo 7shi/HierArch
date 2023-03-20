@@ -183,23 +183,5 @@ namespace Girl.HierArch
 		{
 			m_tvTarget = (DnDTreeView)sender;
 		}
-
-		private void propertyGrid_PropertyValueChanged(object s, System.Windows.Forms.PropertyValueChangedEventArgs e)
-		{
-			if (e.ChangedItem.Label == "Server")
-			{
-				(s as PropertyGrid).Refresh();
-			}
-		}
-
-		private void txtComment_LinkClicked(object sender, System.Windows.Forms.LinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start(e.LinkText);
-		}
-
-		private void txtSource_LinkClicked(object sender, System.Windows.Forms.LinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start(e.LinkText);
-		}
 	}
 }
