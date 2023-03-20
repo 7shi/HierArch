@@ -128,7 +128,7 @@ namespace Girl.Windows.Forms
 			sw.Close();
 			Cursor.Current = curOrig;
 			DataObject dobj = new DataObject(this.dataFormat, sw.ToString());
-			DragDropEffects result = DoDragDrop(dobj, DragDropEffects.Copy | DragDropEffects.Move);
+			DragDropEffects result = DoDragDrop(dobj, DragDropEffects.Copy | DragDropEffects.Move | DragDropEffects.Scroll);
 			if (result == DragDropEffects.Move) DragMove();
 
 			m_bDrag = false;
@@ -200,7 +200,7 @@ namespace Girl.Windows.Forms
 			}
 
 			Point p = PointToClient(new Point(e.X, e.Y));
-			SetAutoScroll(p);
+			if ((e.AllowedEffect & DragDropEffects.Scroll) != 0) SetAutoScroll(p);
 			SetDragTarget(p);
 
 			m_bDragged = true;
@@ -334,12 +334,6 @@ namespace Girl.Windows.Forms
 
 			Cursor curOrig = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
-			OnDragAccept(e);
-			Cursor.Current = curOrig;
-		}
-
-		protected virtual void OnDragAccept(DragEventArgs e)
-		{
 			DnDTreeNode n = null;
 			int index = -1;
 			switch (m_DragStatus)
@@ -358,14 +352,19 @@ namespace Girl.Windows.Forms
 			}
 			TreeNodeCollection nc = (n != null) ? n.Nodes : Nodes;
 			if (index < 0 || index > nc.Count) index = nc.Count;
+			OnDragAccept(e, n, nc, index);
+			m_DragStatus = DragStatus.None;
+			if (n != null) n.SetIcon();
+			Cursor.Current = curOrig;
+		}
 
+		protected virtual void OnDragAccept(DragEventArgs e, DnDTreeNode n, TreeNodeCollection nc, int index)
+		{
 			using (var sr = new StringReader((string)e.Data.GetData(this.dataFormat)))
 			using (var xr = new XmlTextReader(sr))
 			{
 				FromXml(xr, nc, index);
 			}
-			m_DragStatus = DragStatus.None;
-			if (n != null) n.SetIcon();
 		}
 
 		#endregion
