@@ -162,19 +162,27 @@ namespace Girl.HierArch
 				using (var sr = new StringReader((string)e.Data.GetData(this.FuncTreeView.DataFormat)))
 				using (var xr = new XmlTextReader(sr))
 				{
-					var target = (n as HAClassNode).Body;
-					bool first = true;
-					while (xr.Read())
+					if (n.IsSelected)
 					{
-						if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element)
+						var nc2 = this.FuncTreeView.Nodes;
+						this.FuncTreeView.FromXml(xr, nc2, nc2.Count);
+					}
+					else
+					{
+						var target = (n as HAClassNode).Body;
+						bool first = true;
+						while (xr.Read())
 						{
-							var dn = new HAFuncNode();
-							target.Nodes.Add(dn);
-							dn.FromXml(xr);
-							if (first)
+							if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element)
 							{
-								first = false;
-								this.OnChanged(this, EventArgs.Empty);
+								var dn = new HAFuncNode();
+								target.Nodes.Add(dn);
+								dn.FromXml(xr);
+								if (first)
+								{
+									first = false;
+									this.OnChanged(this, EventArgs.Empty);
+								}
 							}
 						}
 					}
