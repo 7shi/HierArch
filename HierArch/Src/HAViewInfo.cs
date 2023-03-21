@@ -25,30 +25,30 @@ namespace Girl.HierArch
         /// </summary>
         public HAViewInfo()
         {
-            this.Init();
+            Init();
         }
 
         public void Init()
         {
-            this.X = this.Y = this.Width = this.Height = 0;
-            this.State = FormWindowState.Normal;
-            this.LeftPanelWidth = this.ClassHeight = 0;
-            this.WordWrap = false;
-            var font = Control.DefaultFont;
-            this.FontName = font.Name;
-            this.FontSize = (int)Math.Round(font.Size);
+            X = Y = Width = Height = 0;
+            State = FormWindowState.Normal;
+            LeftPanelWidth = ClassHeight = 0;
+            WordWrap = false;
+            Font font = Control.DefaultFont;
+            FontName = font.Name;
+            FontSize = (int)Math.Round(font.Size);
         }
 
         public void InitHds()
         {
-            this.Init();
+            Init();
         }
 
         public void Apply(Form1 form1)
         {
-            if (this.Width > 0 && this.Height > 0)
+            if (Width > 0 && Height > 0)
             {
-                Rectangle r1 = new Rectangle(this.X, this.Y, this.Width, this.Height);
+                Rectangle r1 = new Rectangle(X, Y, Width, Height);
                 Rectangle r2 = Screen.GetWorkingArea(r1);
                 if (r1.IntersectsWith(r2))
                 {
@@ -56,34 +56,42 @@ namespace Girl.HierArch
                 }
                 else
                 {
-                    form1.Size = new Size(this.Width, this.Height);
+                    form1.Size = new Size(Width, Height);
                 }
-                form1.WindowState = this.State;
+                form1.WindowState = State;
             }
-            if (this.LeftPanelWidth > 0) form1.view1.panel1.Width = this.LeftPanelWidth;
-            if (this.ClassHeight > 0) form1.view1.tvClass.Height = this.ClassHeight;
-            var src = form1.view1.txtSource;
-            src.WordWrap = form1.mnuOptionWordWrap.Checked = this.WordWrap;
-            if (!String.IsNullOrEmpty(this.FontName) && this.FontSize > 0)
+            if (LeftPanelWidth > 0)
             {
-                src.Font = new Font(this.FontName, this.FontSize);
+                form1.view1.panel1.Width = LeftPanelWidth;
+            }
+
+            if (ClassHeight > 0)
+            {
+                form1.view1.tvClass.Height = ClassHeight;
+            }
+
+            Windows.Forms.CodeEditor src = form1.view1.txtSource;
+            src.WordWrap = form1.mnuOptionWordWrap.Checked = WordWrap;
+            if (!string.IsNullOrEmpty(FontName) && FontSize > 0)
+            {
+                src.Font = new Font(FontName, FontSize);
             }
         }
 
         public void Store(Form1 form1)
         {
             Rectangle rect = form1.sizeMonitor.Rect;
-            this.X = rect.X;
-            this.Y = rect.Y;
-            this.Width = rect.Width;
-            this.Height = rect.Height;
-            this.State = form1.LastState;
-            this.LeftPanelWidth = form1.view1.panel1.Width;
-            this.ClassHeight = form1.view1.tvClass.Height;
-            var src = form1.view1.txtSource;
-            this.WordWrap = src.WordWrap;
-            this.FontName = src.Font.Name;
-            this.FontSize = (int)Math.Round(src.Font.Size);
+            X = rect.X;
+            Y = rect.Y;
+            Width = rect.Width;
+            Height = rect.Height;
+            State = form1.LastState;
+            LeftPanelWidth = form1.view1.panel1.Width;
+            ClassHeight = form1.view1.tvClass.Height;
+            Windows.Forms.CodeEditor src = form1.view1.txtSource;
+            WordWrap = src.WordWrap;
+            FontName = src.Font.Name;
+            FontSize = (int)Math.Round(src.Font.Size);
         }
     }
 }

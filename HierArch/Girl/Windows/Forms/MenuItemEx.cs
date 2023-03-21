@@ -78,18 +78,15 @@ namespace Girl.Windows.Forms
                 MenuItem mni = menu as MenuItem;
                 if (!(mni.Parent is MainMenu))  // && Environment.OSVersion.Platform != PlatformID.Win32NT
                 {
-                    if (mne) mni.Text = RemoveMnemonic(mni.Text);
+                    if (mne)
+                    {
+                        mni.Text = RemoveMnemonic(mni.Text);
+                    }
+
                     if (images != null && images.Contains(menu))
                     {
                         object obj = images[menu];
-                        if (obj is Image)
-                        {
-                            map[mni] = new MenuItemEx(mni, obj as Image);
-                        }
-                        else
-                        {
-                            map[mni] = new MenuItemEx(mni, obj as string);
-                        }
+                        map[mni] = obj is Image ? new MenuItemEx(mni, obj as Image) : (object)new MenuItemEx(mni, obj as string);
                     }
                     else
                     {
@@ -105,14 +102,14 @@ namespace Girl.Windows.Forms
 
         protected virtual void Init()
         {
-            this.Name = null;
-            this.Tag = null;
-            this.menuItem = null;
-            this.image = null;
-            this.light = null;
-            this.shadow = null;
-            this.font = Control.DefaultFont;
-            this.backImage = null;
+            Name = null;
+            Tag = null;
+            menuItem = null;
+            image = null;
+            light = null;
+            shadow = null;
+            font = Control.DefaultFont;
+            backImage = null;
         }
 
         /// <summary>
@@ -120,75 +117,63 @@ namespace Girl.Windows.Forms
         /// </summary>
         public MenuItemEx()
         {
-            this.Init();
+            Init();
         }
 
         public MenuItemEx(MenuItem menuItem)
         {
-            this.Init();
-            this.MenuItem = menuItem;
+            Init();
+            MenuItem = menuItem;
         }
 
         public MenuItemEx(MenuItem menuItem, Image image)
         {
-            this.Init();
-            this.MenuItem = menuItem;
-            this.Image = image;
+            Init();
+            MenuItem = menuItem;
+            Image = image;
         }
 
         public MenuItemEx(MenuItem menuItem, string fileName)
         {
-            this.Init();
-            this.MenuItem = menuItem;
-            this.Image = GetImage(fileName);
-            this.Name = fileName;
+            Init();
+            MenuItem = menuItem;
+            Image = GetImage(fileName);
+            Name = fileName;
         }
 
         #region Properties
 
         public Font Font
         {
-            get
-            {
-                return this.font;
-            }
+            get => font;
 
-            set
-            {
-                this.font = value;
-            }
+            set => font = value;
         }
 
         public Image Image
         {
-            get
-            {
-                return this.image;
-            }
+            get => image;
 
             set
             {
-                if (this.light != null) light.Dispose();
-                if (this.shadow != null) shadow.Dispose();
-                this.image = value;
-                this.light = MakeLight(value);
-                this.shadow = MakeShadow(value);
+                light?.Dispose();
+                shadow?.Dispose();
+                image = value;
+                light = MakeLight(value);
+                shadow = MakeShadow(value);
             }
         }
 
         public MenuItem MenuItem
         {
-            get
-            {
-                return this.menuItem;
-            }
+            get => menuItem;
 
             set
             {
-                this.menuItem = value;
+                menuItem = value;
                 value.OwnerDraw = true;
-                value.MeasureItem += new MeasureItemEventHandler(this.menuItem_MeasureItem);
-                value.DrawItem += new DrawItemEventHandler(this.menuItem_DrawItem);
+                value.MeasureItem += new MeasureItemEventHandler(menuItem_MeasureItem);
+                value.DrawItem += new DrawItemEventHandler(menuItem_DrawItem);
             }
         }
 
@@ -198,16 +183,18 @@ namespace Girl.Windows.Forms
 
         private void menuItem_MeasureItem(object sender, MeasureItemEventArgs e)
         {
-            StringFormat sf = new StringFormat();
-            sf.HotkeyPrefix = HotkeyPrefix.Show;
-            Size sz = Size.Truncate(e.Graphics.MeasureString(this.menuItem.Text, this.font, PointF.Empty, sf));
+            StringFormat sf = new StringFormat
+            {
+                HotkeyPrefix = HotkeyPrefix.Show
+            };
+            Size sz = Size.Truncate(e.Graphics.MeasureString(menuItem.Text, font, PointF.Empty, sf));
             int w, h;
-            if (this.menuItem.Parent is MainMenu)
+            if (menuItem.Parent is MainMenu)
             {
                 w = sz.Width + 2;
                 h = sz.Height;
             }
-            else if (this.menuItem.Text == "-")
+            else if (menuItem.Text == "-")
             {
                 w = 31;
                 h = 3;
@@ -216,11 +203,15 @@ namespace Girl.Windows.Forms
             {
                 w = sz.Width + 31;
                 h = sz.Height + 2;
-                if (h < 22) h = 22;
-                if (this.menuItem.Shortcut != Shortcut.None && this.menuItem.ShowShortcut)
+                if (h < 22)
                 {
-                    string st = GetShortcutText(this.menuItem.Shortcut);
-                    Size sz2 = Size.Truncate(e.Graphics.MeasureString(st, this.font));
+                    h = 22;
+                }
+
+                if (menuItem.Shortcut != Shortcut.None && menuItem.ShowShortcut)
+                {
+                    string st = GetShortcutText(menuItem.Shortcut);
+                    Size sz2 = Size.Truncate(e.Graphics.MeasureString(st, font));
                     w += sz2.Width + 16;
                 }
             }
@@ -230,30 +221,36 @@ namespace Girl.Windows.Forms
 
         private void menuItem_DrawItem(object sender, DrawItemEventArgs e)
         {
-            StringFormat sf = new StringFormat();
-            sf.HotkeyPrefix = HotkeyPrefix.Show;
-            Size sz = Size.Truncate(e.Graphics.MeasureString(this.menuItem.Text, this.font, PointF.Empty, sf));
-            Rectangle r = e.Bounds;
-            int x = r.X + (r.Width - sz.Width) / 2;
-            int y = r.Y + (r.Height - sz.Height) / 2;
-            Brush brush = SystemBrushes.WindowText;
-            if (!this.menuItem.Enabled || (e.State & DrawItemState.Inactive) != 0) brush = SystemBrushes.ControlDark;
-            bool sel = (e.State & DrawItemState.Selected) != 0 && this.menuItem.Enabled;
-            if (this.menuItem.Parent is MainMenu)
+            StringFormat sf = new StringFormat
             {
-                if (this.backImage == null)
+                HotkeyPrefix = HotkeyPrefix.Show
+            };
+            Size sz = Size.Truncate(e.Graphics.MeasureString(menuItem.Text, font, PointF.Empty, sf));
+            Rectangle r = e.Bounds;
+            int x = r.X + ((r.Width - sz.Width) / 2);
+            int y = r.Y + ((r.Height - sz.Height) / 2);
+            Brush brush = SystemBrushes.WindowText;
+            if (!menuItem.Enabled || (e.State & DrawItemState.Inactive) != 0)
+            {
+                brush = SystemBrushes.ControlDark;
+            }
+
+            bool sel = (e.State & DrawItemState.Selected) != 0 && menuItem.Enabled;
+            if (menuItem.Parent is MainMenu)
+            {
+                if (backImage == null)
                 {
                     IntPtr hdc1 = e.Graphics.GetHdc();
-                    this.backImage = new Bitmap(r.Width, r.Height);
-                    Graphics g = Graphics.FromImage(this.backImage);
+                    backImage = new Bitmap(r.Width, r.Height);
+                    Graphics g = Graphics.FromImage(backImage);
                     IntPtr hdc2 = g.GetHdc();
-                    bool ok = BitBlt(hdc2, 0, 0, r.Width, r.Height, hdc1, r.X, r.Y, SRCCOPY);
+                    _ = BitBlt(hdc2, 0, 0, r.Width, r.Height, hdc1, r.X, r.Y, SRCCOPY);
                     g.ReleaseHdc(hdc2);
                     g.Dispose();
                     e.Graphics.ReleaseHdc(hdc1);
                 }
                 Point pt = Cursor.Position;
-                Form f = (this.MenuItem.Parent as MainMenu).GetForm();
+                Form f = (MenuItem.Parent as MainMenu).GetForm();
                 pt.Offset(-f.Left, -f.Top);
                 if ((e.State & DrawItemState.HotLight) != 0 || (sel && !e.Bounds.Contains(pt)))
                 {
@@ -268,9 +265,9 @@ namespace Girl.Windows.Forms
                 }
                 else
                 {
-                    e.Graphics.DrawImage(this.backImage, r);
+                    e.Graphics.DrawImage(backImage, r);
                 }
-                e.Graphics.DrawString(this.menuItem.Text, this.font, brush, x, y, sf);
+                e.Graphics.DrawString(menuItem.Text, font, brush, x, y, sf);
                 return;
             }
             if (!sel)
@@ -279,46 +276,50 @@ namespace Girl.Windows.Forms
                 Rectangle r2 = new Rectangle(r.X + 22, r.Y, r.Width - 22, r.Height);
                 e.Graphics.FillRectangle(SystemBrushes.Control, r1);
                 e.Graphics.FillRectangle(SystemBrushes.Window, r2);
-                if (!this.menuItem.Checked && this.image != null)
+                if (!menuItem.Checked && image != null)
                 {
-                    Image img = this.light;
-                    if (!this.menuItem.Enabled) img = this.shadow;
+                    Image img = light;
+                    if (!menuItem.Enabled)
+                    {
+                        img = shadow;
+                    }
+
                     e.Graphics.DrawImage(img, r.X + 3, r.Y + 3);
                 }
             }
             else
             {
                 DrawSelection(e.Graphics, r, false);
-                if (!this.menuItem.Checked && this.image != null)
+                if (!menuItem.Checked && image != null)
                 {
-                    e.Graphics.DrawImage(this.shadow, r.X + 4, r.Y + 4);
-                    e.Graphics.DrawImage(this.image, r.X + 2, r.Y + 2);
+                    e.Graphics.DrawImage(shadow, r.X + 4, r.Y + 4);
+                    e.Graphics.DrawImage(image, r.X + 2, r.Y + 2);
                 }
             }
             int str_x = r.X + 28;
-            if (this.menuItem.Text == "-")
+            if (menuItem.Text == "-")
             {
                 e.Graphics.DrawLine(SystemPens.ControlDark, str_x, r.Y + 1, r.Right, r.Y + 1);
                 return;
             }
-            if (this.menuItem.Checked)
+            if (menuItem.Checked)
             {
-                string chk = (this.menuItem.RadioCheck) ? "h" :
+                string chk = menuItem.RadioCheck ? "h" :
                 "a";
-                Font f = new Font("Marlett", this.font.Size);
+                Font f = new Font("Marlett", font.Size);
                 Size sz_c = Size.Truncate(e.Graphics.MeasureString(chk, f));
-                int sz_x = r.Left + (22 - sz_c.Width) / 2;
-                int sz_y = r.Top + (r.Height - sz.Height) / 2;
+                int sz_x = r.Left + ((22 - sz_c.Width) / 2);
+                int sz_y = r.Top + ((r.Height - sz.Height) / 2);
                 DrawSelection(e.Graphics, new Rectangle(r.Left, r.Top, 21, r.Height - 1), sel);
                 e.Graphics.DrawString(chk, f, SystemBrushes.WindowText, sz_x, sz_y);
                 f.Dispose();
             }
-            e.Graphics.DrawString(this.menuItem.Text, this.font, brush, str_x, y, sf);
-            if (this.menuItem.Shortcut != Shortcut.None && this.menuItem.ShowShortcut)
+            e.Graphics.DrawString(menuItem.Text, font, brush, str_x, y, sf);
+            if (menuItem.Shortcut != Shortcut.None && menuItem.ShowShortcut)
             {
-                string st = GetShortcutText(this.menuItem.Shortcut);
-                Size sz2 = Size.Truncate(e.Graphics.MeasureString(st, this.font));
-                e.Graphics.DrawString(st, this.font, brush, r.Right - sz2.Width - 16, y);
+                string st = GetShortcutText(menuItem.Shortcut);
+                Size sz2 = Size.Truncate(e.Graphics.MeasureString(st, font));
+                e.Graphics.DrawString(st, font, brush, r.Right - sz2.Width - 16, y);
             }
         }
 
@@ -333,15 +334,7 @@ namespace Girl.Windows.Forms
 
         public static string GetFileName(string name)
         {
-            string ret;
-            if (MenuItemEx.IconPath != null)
-            {
-                ret = Path.Combine(MenuItemEx.IconPath, name);
-            }
-            else
-            {
-                ret = name;
-            }
+            string ret = MenuItemEx.IconPath != null ? Path.Combine(MenuItemEx.IconPath, name) : name;
             if (MenuItemEx.Extension != null)
             {
                 ret += MenuItemEx.Extension;
@@ -352,7 +345,11 @@ namespace Girl.Windows.Forms
         public static Bitmap GetImage(string fileName)
         {
             string fn = MenuItemEx.GetFileName(fileName);
-            if (!File.Exists(fn)) return null;
+            if (!File.Exists(fn))
+            {
+                return null;
+            }
+
             Bitmap icon = new Bitmap(fn);
             Bitmap ret = new Bitmap(icon, 16, 16);
             icon.Dispose();
@@ -374,13 +371,16 @@ namespace Girl.Windows.Forms
 
         public static Color GetSelectionColor(bool dark)
         {
-            if (dark) return Mix(SystemColors.Highlight, SystemColors.Window);
-            return Mix(SystemColors.Highlight, 2, SystemColors.Window, 5);
+            return dark ? Mix(SystemColors.Highlight, SystemColors.Window) : Mix(SystemColors.Highlight, 2, SystemColors.Window, 5);
         }
 
         public static Bitmap MakeLight(Image img)
         {
-            if (img == null) return null;
+            if (img == null)
+            {
+                return null;
+            }
+
             Bitmap ret = new Bitmap(img);
             Size sz = ret.Size;
             for (int y = 0; y < sz.Height; y++)
@@ -388,7 +388,11 @@ namespace Girl.Windows.Forms
                 for (int x = 0; x < sz.Width; x++)
                 {
                     Color c = ret.GetPixel(x, y);
-                    if (c.A < 1) continue;
+                    if (c.A < 1)
+                    {
+                        continue;
+                    }
+
                     ret.SetPixel(x, y, MakeLight(c));
                 }
             }
@@ -397,12 +401,16 @@ namespace Girl.Windows.Forms
 
         public static Color MakeLight(Color c)
         {
-            return Color.FromArgb(c.A, (int)((double)c.R * ((256.0 - 74.0) / 256.0) + 74.0), (int)((double)c.G * ((256.0 - 77.0) / 256.0) + 77.0), (int)((double)c.B * ((256.0 - 74.0) / 256.0) + 74.0));
+            return Color.FromArgb(c.A, (int)((c.R * ((256.0 - 74.0) / 256.0)) + 74.0), (int)((c.G * ((256.0 - 77.0) / 256.0)) + 77.0), (int)((c.B * ((256.0 - 74.0) / 256.0)) + 74.0));
         }
 
         public static Bitmap MakeShadow(Image img)
         {
-            if (img == null) return null;
+            if (img == null)
+            {
+                return null;
+            }
+
             Bitmap ret = new Bitmap(img);
             Size sz = ret.Size;
             for (int y = 0; y < sz.Height; y++)
@@ -410,7 +418,11 @@ namespace Girl.Windows.Forms
                 for (int x = 0; x < sz.Width; x++)
                 {
                     Color c = ret.GetPixel(x, y);
-                    if (c.A < 1) continue;
+                    if (c.A < 1)
+                    {
+                        continue;
+                    }
+
                     ret.SetPixel(x, y, MakeShadow(c));
                 }
             }
@@ -419,18 +431,13 @@ namespace Girl.Windows.Forms
 
         public static Color MakeShadow(Color c)
         {
-            if (c.R + c.G + c.B < 500) return SystemColors.ControlDark;
-            return Color.Transparent;
+            return c.R + c.G + c.B < 500 ? SystemColors.ControlDark : Color.Transparent;
         }
 
         public static string RemoveMnemonic(string text)
         {
             int len = text.Length;
-            if (len > 4 && text.EndsWith(")") && text.Substring(len - 4, 2) == "(&")
-            {
-                return text.Substring(0, len - 4);
-            }
-            return text;
+            return len > 4 && text.EndsWith(")") && text.Substring(len - 4, 2) == "(&" ? text.Substring(0, len - 4) : text;
         }
 
         #region From Girl.Drawing.ImageManipulator
@@ -442,7 +449,7 @@ namespace Girl.Windows.Forms
 
         protected static Color Mix(Color c1, int r1, Color c2, int r2)
         {
-            return Color.FromArgb((c1.A * r1 + c2.A * r2) / (r1 + r2), (c1.R * r1 + c2.R * r2) / (r1 + r2), (c1.G * r1 + c2.G * r2) / (r1 + r2), (c1.B * r1 + c2.B * r2) / (r1 + r2));
+            return Color.FromArgb(((c1.A * r1) + (c2.A * r2)) / (r1 + r2), ((c1.R * r1) + (c2.R * r2)) / (r1 + r2), ((c1.G * r1) + (c2.G * r2)) / (r1 + r2), ((c1.B * r1) + (c2.B * r2)) / (r1 + r2));
         }
 
         #endregion

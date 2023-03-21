@@ -20,7 +20,7 @@ namespace Girl.HierArch
         /// <summary>
         /// 必要なデザイナ変数です。
         /// </summary>
-        private System.ComponentModel.Container components = null;
+        private readonly System.ComponentModel.Container components = null;
 
         public View()
         {
@@ -28,16 +28,16 @@ namespace Girl.HierArch
             InitializeComponent();
 
             // TODO: InitializeComponent を呼び出しの後に初期化処理を追加します。
-            this.tvClass.MoveTarget.Add(this.tvFunc);
-            this.tvClass.FuncTreeView = this.tvFunc;
-            this.tvFunc.SourceTextBox = this.txtSource;
+            tvClass.MoveTarget.Add(tvFunc);
+            tvClass.FuncTreeView = tvFunc;
+            tvFunc.SourceTextBox = txtSource;
 
-            this.tvClass.SetView();
+            tvClass.SetView();
 
-            this.tvClass.Changed += new EventHandler(this.OnChanged);
-            this.tvFunc.Changed += new EventHandler(this.OnChanged);
+            tvClass.Changed += new EventHandler(OnChanged);
+            tvFunc.Changed += new EventHandler(OnChanged);
 
-            this.txtSource.TextChanged += new EventHandler(this.tvFunc.OnChanged);
+            txtSource.TextChanged += new EventHandler(tvFunc.OnChanged);
         }
 
         /// <summary>
@@ -47,10 +47,7 @@ namespace Girl.HierArch
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -62,94 +59,94 @@ namespace Girl.HierArch
         /// </summary>
         private void InitializeComponent()
         {
-            this.tvClass = new Girl.HierArch.HAClass();
-            this.tvFunc = new Girl.HierArch.HAFunc();
-            this.txtSource = new Girl.Windows.Forms.CodeEditor();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.opaqueSplitter3 = new Girl.Windows.Forms.OpaqueSplitter();
-            this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
-            this.panel1.SuspendLayout();
-            this.SuspendLayout();
+            tvClass = new Girl.HierArch.HAClass();
+            tvFunc = new Girl.HierArch.HAFunc();
+            txtSource = new Girl.Windows.Forms.CodeEditor();
+            panel1 = new System.Windows.Forms.Panel();
+            opaqueSplitter3 = new Girl.Windows.Forms.OpaqueSplitter();
+            opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
+            panel1.SuspendLayout();
+            SuspendLayout();
             // 
             // tvClass
             // 
-            this.tvClass.AllowDrop = true;
-            this.tvClass.DataFormat = "HierArch Class Data";
-            this.tvClass.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tvClass.HideSelection = false;
-            this.tvClass.ItemHeight = 16;
-            this.tvClass.LabelEdit = true;
-            this.tvClass.Name = "tvClass";
-            this.tvClass.Size = new System.Drawing.Size(176, 184);
-            this.tvClass.TabIndex = 0;
+            tvClass.AllowDrop = true;
+            tvClass.DataFormat = "HierArch Class Data";
+            tvClass.Dock = System.Windows.Forms.DockStyle.Top;
+            tvClass.HideSelection = false;
+            tvClass.ItemHeight = 16;
+            tvClass.LabelEdit = true;
+            tvClass.Name = "tvClass";
+            tvClass.Size = new System.Drawing.Size(176, 184);
+            tvClass.TabIndex = 0;
             // 
             // tvFunc
             // 
-            this.tvFunc.AllowDrop = true;
-            this.tvFunc.DataFormat = "HierArch Function Data";
-            this.tvFunc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvFunc.HideSelection = false;
-            this.tvFunc.ItemHeight = 16;
-            this.tvFunc.LabelEdit = true;
-            this.tvFunc.Name = "tvFunc";
-            this.tvFunc.Size = new System.Drawing.Size(176, 301);
-            this.tvFunc.TabIndex = 0;
+            tvFunc.AllowDrop = true;
+            tvFunc.DataFormat = "HierArch Function Data";
+            tvFunc.Dock = System.Windows.Forms.DockStyle.Fill;
+            tvFunc.HideSelection = false;
+            tvFunc.ItemHeight = 16;
+            tvFunc.LabelEdit = true;
+            tvFunc.Name = "tvFunc";
+            tvFunc.Size = new System.Drawing.Size(176, 301);
+            tvFunc.TabIndex = 0;
             // 
             // txtSource
             // 
-            this.txtSource.AcceptsTab = true;
-            this.txtSource.Code = "";
-            this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSource.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F);
-            this.txtSource.HideSelection = false;
-            this.txtSource.Location = new System.Drawing.Point(179, 0);
-            this.txtSource.Name = "txtSource";
-            this.txtSource.ScrollBars = ScrollBars.Both;
-            this.txtSource.Size = new System.Drawing.Size(402, 488);
-            this.txtSource.TabIndex = 6;
-            this.txtSource.Text = "";
-            this.txtSource.WordWrap = false;
+            txtSource.AcceptsTab = true;
+            txtSource.Code = "";
+            txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
+            txtSource.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F);
+            txtSource.HideSelection = false;
+            txtSource.Location = new System.Drawing.Point(179, 0);
+            txtSource.Name = "txtSource";
+            txtSource.ScrollBars = ScrollBars.Both;
+            txtSource.Size = new System.Drawing.Size(402, 488);
+            txtSource.TabIndex = 6;
+            txtSource.Text = "";
+            txtSource.WordWrap = false;
             // 
             // panel1
             // 
-            this.panel1.Controls.AddRange(new System.Windows.Forms.Control[] {
-                                                                                 this.tvFunc,
-                                                                                 this.opaqueSplitter3,
-                                                                                 this.tvClass});
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 488);
-            this.panel1.TabIndex = 1;
+            panel1.Controls.AddRange(new System.Windows.Forms.Control[] {
+                                                                                 tvFunc,
+                                                                                 opaqueSplitter3,
+                                                                                 tvClass});
+            panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(200, 488);
+            panel1.TabIndex = 1;
             // 
             // opaqueSplitter3
             // 
-            this.opaqueSplitter3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.opaqueSplitter3.Location = new System.Drawing.Point(0, 184);
-            this.opaqueSplitter3.Name = "opaqueSplitter3";
-            this.opaqueSplitter3.Opaque = true;
-            this.opaqueSplitter3.Size = new System.Drawing.Size(176, 3);
-            this.opaqueSplitter3.TabIndex = 1;
-            this.opaqueSplitter3.TabStop = false;
+            opaqueSplitter3.Dock = System.Windows.Forms.DockStyle.Top;
+            opaqueSplitter3.Location = new System.Drawing.Point(0, 184);
+            opaqueSplitter3.Name = "opaqueSplitter3";
+            opaqueSplitter3.Opaque = true;
+            opaqueSplitter3.Size = new System.Drawing.Size(176, 3);
+            opaqueSplitter3.TabIndex = 1;
+            opaqueSplitter3.TabStop = false;
             // 
             // opaqueSplitter1
             // 
-            this.opaqueSplitter1.Location = new System.Drawing.Point(176, 0);
-            this.opaqueSplitter1.Name = "opaqueSplitter1";
-            this.opaqueSplitter1.Opaque = true;
-            this.opaqueSplitter1.Size = new System.Drawing.Size(3, 488);
-            this.opaqueSplitter1.TabIndex = 3;
-            this.opaqueSplitter1.TabStop = false;
+            opaqueSplitter1.Location = new System.Drawing.Point(176, 0);
+            opaqueSplitter1.Name = "opaqueSplitter1";
+            opaqueSplitter1.Opaque = true;
+            opaqueSplitter1.Size = new System.Drawing.Size(3, 488);
+            opaqueSplitter1.TabIndex = 3;
+            opaqueSplitter1.TabStop = false;
             // 
             // View
             // 
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {
-                                                                          this.txtSource,
-                                                                          this.opaqueSplitter1,
-                                                                          this.panel1});
-            this.Name = "View";
-            this.Size = new System.Drawing.Size(760, 488);
-            this.panel1.ResumeLayout(false);
-            this.ResumeLayout(false);
+            Controls.AddRange(new System.Windows.Forms.Control[] {
+                                                                          txtSource,
+                                                                          opaqueSplitter1,
+                                                                          panel1});
+            Name = "View";
+            Size = new System.Drawing.Size(760, 488);
+            panel1.ResumeLayout(false);
+            ResumeLayout(false);
 
         }
         #endregion
@@ -158,24 +155,27 @@ namespace Girl.HierArch
 
         protected virtual void OnChanged(object sender, System.EventArgs e)
         {
-            if (this.IgnoreChanged) return;
-
-            if (this.Changed != null) Changed(sender, e);
-            if (sender != this.tvClass)
+            if (IgnoreChanged)
             {
-                this.IgnoreChanged = true;
-                this.tvClass.OnChanged(sender, e);
-                this.IgnoreChanged = false;
+                return;
+            }
+
+            Changed?.Invoke(sender, e);
+            if (sender != tvClass)
+            {
+                IgnoreChanged = true;
+                tvClass.OnChanged(sender, e);
+                IgnoreChanged = false;
             }
         }
 
         public void SetDocument(Document doc)
         {
-            this.IgnoreChanged = true;
+            IgnoreChanged = true;
 
             // TODO: Document を View に反映するための処理を追加します。
 
-            this.IgnoreChanged = false;
+            IgnoreChanged = false;
         }
 
         private DnDTreeView m_tvTarget = null;

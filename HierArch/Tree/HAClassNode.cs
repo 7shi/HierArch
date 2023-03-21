@@ -13,7 +13,7 @@ namespace Girl.HierArch
         public override void Init()
         {
             base.Init();
-            this.Body = new HAFuncNode();
+            Body = new HAFuncNode();
         }
 
         /// <summary>
@@ -25,24 +25,12 @@ namespace Girl.HierArch
 
         public HAClassNode(string text)
         {
-            this.Text = text;
+            Text = text;
         }
 
-        public override string XmlName
-        {
-            get
-            {
-                return "HAClass";
-            }
-        }
+        public override string XmlName => "HAClass";
 
-        public override HATreeNode NewNode
-        {
-            get
-            {
-                return new HAClassNode();
-            }
-        }
+        public override HATreeNode NewNode => new HAClassNode();
 
         #region XML
 
@@ -50,7 +38,7 @@ namespace Girl.HierArch
         {
             base.WriteXml(xw);
             xw.WriteStartElement("Body");
-            this.Body.ToXml(xw);
+            Body.ToXml(xw);
             xw.WriteEndElement();
         }
 
@@ -58,22 +46,33 @@ namespace Girl.HierArch
         {
             if (xr.Name == "Body" && xr.NodeType == XmlNodeType.Element && !xr.IsEmptyElement)
             {
-                while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace) ;
-                if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element) this.Body.FromXml(xr);
+                while (xr.Read() && xr.NodeType == XmlNodeType.Whitespace)
+                {
+                    ;
+                }
+
+                if (xr.Name == "HAFunc" && xr.NodeType == XmlNodeType.Element)
+                {
+                    Body.FromXml(xr);
+                }
             }
         }
 
         public void FromHds(XmlTextReader xr)
         {
-            this.Type = HAType.Text;
-            if (xr.Name != "hds" || xr.NodeType != XmlNodeType.Element || xr.IsEmptyElement) return;
+            Type = HAType.Text;
+            if (xr.Name != "hds" || xr.NodeType != XmlNodeType.Element || xr.IsEmptyElement)
+            {
+                return;
+            }
+
             HAFuncNode n;
             while (xr.Read())
             {
                 if (xr.Name == "node" && xr.NodeType == XmlNodeType.Element)
                 {
                     n = new HAFuncNode();
-                    this.Body.Nodes.Add(n);
+                    _ = Body.Nodes.Add(n);
                     n.FromHds(xr);
                 }
                 else if (xr.Name == "hds" && xr.NodeType == XmlNodeType.EndElement)

@@ -15,7 +15,11 @@ namespace Girl.Windows.Forms
         public static WindowSizeData Load(ApplicationDataManager adm)
         {
             WindowSizeData ret = (WindowSizeData)adm.Load("WindowSize.xml", typeof(WindowSizeData));
-            if (ret == null) ret = new WindowSizeData();
+            if (ret == null)
+            {
+                ret = new WindowSizeData();
+            }
+
             return ret;
         }
 
@@ -30,8 +34,8 @@ namespace Girl.Windows.Forms
     /// </summary>
     public class WindowSizeManager
     {
-        private Form form;
-        private WindowSizeData data;
+        private readonly Form form;
+        private readonly WindowSizeData data;
         private FormWindowState state;
         private Size size;
 
@@ -42,35 +46,42 @@ namespace Girl.Windows.Forms
             this.form.Closed += new EventHandler(Form_Closed);
 
             this.data = data;
-            this.state = data.WindowState;
-            this.size = data.WindowSize;
+            state = data.WindowState;
+            size = data.WindowSize;
 
-            this.form.WindowState = this.state;
-            if (!this.size.IsEmpty)
+            this.form.WindowState = state;
+            if (!size.IsEmpty)
             {
                 if (hasMenu)
                 {
-                    Object obj = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop\WindowMetrics").GetValue("MenuHeight", "-270");
-                    if (data.WindowState == FormWindowState.Normal) this.size.Height -= (Convert.ToInt32((String)obj) / -15 + 1);
+                    object obj = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop\WindowMetrics").GetValue("MenuHeight", "-270");
+                    if (data.WindowState == FormWindowState.Normal)
+                    {
+                        size.Height -= (Convert.ToInt32((string)obj) / -15) + 1;
+                    }
                 }
-                this.form.Size = this.size;
+                this.form.Size = size;
             }
             else
             {
-                this.size = this.form.Size;
+                size = this.form.Size;
             }
         }
 
         private void Form_Resize(object sender, EventArgs e)
         {
-            if (this.form.WindowState == FormWindowState.Normal) this.size = this.form.Size;
-            this.state = this.form.WindowState;
+            if (form.WindowState == FormWindowState.Normal)
+            {
+                size = form.Size;
+            }
+
+            state = form.WindowState;
         }
 
         private void Form_Closed(object sender, System.EventArgs e)
         {
-            this.data.WindowState = this.state;
-            this.data.WindowSize = this.size;
+            data.WindowState = state;
+            data.WindowSize = size;
         }
     }
 
@@ -79,13 +90,13 @@ namespace Girl.Windows.Forms
     /// </summary>
     public class WindowSizeMonitor
     {
-        private Form form;
+        private readonly Form form;
         private Rectangle rect;
 
         public WindowSizeMonitor(Form form)
         {
             this.form = form;
-            this.rect = form.DesktopBounds;
+            rect = form.DesktopBounds;
 
             form.Move += new EventHandler(Form_Move);
             form.Resize += new EventHandler(Form_Resize);
@@ -93,26 +104,26 @@ namespace Girl.Windows.Forms
 
         private void Form_Move(object sender, EventArgs e)
         {
-            if (this.form.WindowState != FormWindowState.Normal) return;
+            if (form.WindowState != FormWindowState.Normal)
+            {
+                return;
+            }
 
-            this.rect.X = this.form.DesktopLocation.X;
-            this.rect.Y = this.form.DesktopLocation.Y;
+            rect.X = form.DesktopLocation.X;
+            rect.Y = form.DesktopLocation.Y;
         }
 
         private void Form_Resize(object sender, EventArgs e)
         {
-            if (this.form.WindowState != FormWindowState.Normal) return;
-
-            this.rect.Width = this.form.Width;
-            this.rect.Height = this.form.Height;
-        }
-
-        public Rectangle Rect
-        {
-            get
+            if (form.WindowState != FormWindowState.Normal)
             {
-                return this.rect;
+                return;
             }
+
+            rect.Width = form.Width;
+            rect.Height = form.Height;
         }
+
+        public Rectangle Rect => rect;
     }
 }

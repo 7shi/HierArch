@@ -14,7 +14,7 @@ namespace Girl.HierArch
         public static ViewData Load(ApplicationDataManager adm)
         {
             ViewData ret = adm.Load("View.xml", typeof(ViewData)) as ViewData;
-            return (ret != null) ? ret : new ViewData();
+            return ret ?? new ViewData();
         }
 
         public void Save(ApplicationDataManager adm)
@@ -28,8 +28,8 @@ namespace Girl.HierArch
     /// </summary>
     public class ViewManager
     {
-        private Form1 m_Form;
-        private ViewData m_Data;
+        private readonly Form1 m_Form;
+        private readonly ViewData m_Data;
 
         public ViewManager(Form1 form, ViewData data)
         {

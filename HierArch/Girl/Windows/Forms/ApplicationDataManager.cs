@@ -18,14 +18,18 @@ namespace Girl.Windows.Forms
         /// </summary>
         public ApplicationDataManager()
         {
-            this.dataPath = null;
+            dataPath = null;
         }
 
         public string DataPath
         {
             get
             {
-                if (this.dataPath != null) return this.dataPath;
+                if (dataPath != null)
+                {
+                    return dataPath;
+                }
+
                 string path = Application.LocalUserAppDataPath;
                 string ret = Directory.GetParent(path).FullName;
                 try
@@ -35,22 +39,23 @@ namespace Girl.Windows.Forms
                 catch
                 {
                 }
-                this.dataPath = ret;
+                dataPath = ret;
                 return ret;
             }
 
-            set
-            {
-                this.dataPath = value;
-            }
+            set => dataPath = value;
         }
 
         public object Load(string fileName, Type dataType)
         {
             object ret = null;
             XmlSerializer xs = new XmlSerializer(dataType);
-            string path = this.DataPath;
-            if (!path.EndsWith(@"\")) path += @"\";
+            string path = DataPath;
+            if (!path.EndsWith(@"\"))
+            {
+                path += @"\";
+            }
+
             FileStream fs;
             try
             {
@@ -73,8 +78,12 @@ namespace Girl.Windows.Forms
 
         public string LoadString(string fileName)
         {
-            string path = this.DataPath;
-            if (!path.EndsWith(@"\")) path += @"\";
+            string path = DataPath;
+            if (!path.EndsWith(@"\"))
+            {
+                path += @"\";
+            }
+
             FileStream fs;
             try
             {
@@ -93,8 +102,12 @@ namespace Girl.Windows.Forms
 
         public void Save(string fileName, object data)
         {
-            string path = this.DataPath;
-            if (!path.EndsWith(@"\")) path += @"\";
+            string path = DataPath;
+            if (!path.EndsWith(@"\"))
+            {
+                path += @"\";
+            }
+
             XmlSerializer xs = new XmlSerializer(data.GetType());
             StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
             xs.Serialize(sw, data);
@@ -103,8 +116,12 @@ namespace Girl.Windows.Forms
 
         public void SaveString(string fileName, string text)
         {
-            string path = this.DataPath;
-            if (!path.EndsWith(@"\")) path += @"\";
+            string path = DataPath;
+            if (!path.EndsWith(@"\"))
+            {
+                path += @"\";
+            }
+
             StreamWriter sw = new StreamWriter(path + fileName, false, Encoding.UTF8);
             sw.Write(text);
             sw.Close();
@@ -116,9 +133,16 @@ namespace Girl.Windows.Forms
             for (; di != null && di.Exists; di = di.Parent)
             {
                 string path = di.FullName;
-                if (!path.EndsWith(@"\")) path += @"\";
+                if (!path.EndsWith(@"\"))
+                {
+                    path += @"\";
+                }
+
                 path += folder;
-                if (Directory.Exists(path)) return path;
+                if (Directory.Exists(path))
+                {
+                    return path;
+                }
             }
             return null;
         }

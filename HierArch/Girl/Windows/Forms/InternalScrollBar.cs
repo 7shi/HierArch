@@ -9,22 +9,28 @@ namespace Girl.Windows.Forms
     /// </summary>
     public class InternalScrollBar
     {
-        private Control control;
+        private readonly Control control;
         protected Win32API.SB fnBar;
         protected Win32API.WS style;
         protected Win32API.WM message;
 
         public InternalScrollBar(Control ctrl)
         {
-            this.control = ctrl;
+            control = ctrl;
         }
 
         public Win32API.ScrollInfo GetScrollInfo(Win32API.SIF fMask)
         {
-            Win32API.ScrollInfo ret = new Win32API.ScrollInfo();
-            ret.cbSize = 28;
-            ret.fMask = (uint)fMask;
-            if (Visible) Win32API.GetScrollInfo(this.control.Handle, (int)this.fnBar, ref ret);
+            Win32API.ScrollInfo ret = new Win32API.ScrollInfo
+            {
+                cbSize = 28,
+                fMask = (uint)fMask
+            };
+            if (Visible)
+            {
+                _ = Win32API.GetScrollInfo(control.Handle, (int)fnBar, ref ret);
+            }
+
             return ret;
         }
 
@@ -32,52 +38,46 @@ namespace Girl.Windows.Forms
         {
             get
             {
-                int style = Win32API.GetWindowLong(this.control.Handle, (int)Win32API.GWL.Style);
+                int style = Win32API.GetWindowLong(control.Handle, (int)Win32API.GWL.Style);
                 return (style & (int)this.style) != 0;
             }
         }
 
         public int Pos
         {
-            get
-            {
-                return GetScrollInfo(Win32API.SIF.Pos).nPos;
-            }
+            get => GetScrollInfo(Win32API.SIF.Pos).nPos;
 
             set
             {
-                if (!Visible) return;
+                if (!Visible)
+                {
+                    return;
+                }
 
                 Win32API.ScrollInfo si1 = GetScrollInfo(Win32API.SIF.All);
-                Win32API.ScrollInfo si2 = new Win32API.ScrollInfo();
-                si2.cbSize = 28;
-                si2.fMask = (uint)Win32API.SIF.Pos;
-                si2.nPos = Math.Min(Math.Max(value, si1.nMin), si1.nMax - Math.Max((int)si1.nPage - 1, 0));
-                if (si1.nPos == si2.nPos) return;
-                Win32API.SetScrollInfo(this.control.Handle, (int)this.fnBar, ref si2, true);
-                Win32API.SendMessage(this.control.Handle, (int)this.message, (IntPtr)(((int)Win32API.SB.ThumbPosition) + ((si2.nPos & 0xffff) << 16)), IntPtr.Zero);
+                Win32API.ScrollInfo si2 = new Win32API.ScrollInfo
+                {
+                    cbSize = 28,
+                    fMask = (uint)Win32API.SIF.Pos,
+                    nPos = Math.Min(Math.Max(value, si1.nMin), si1.nMax - Math.Max((int)si1.nPage - 1, 0))
+                };
+                if (si1.nPos == si2.nPos)
+                {
+                    return;
+                }
+
+                _ = Win32API.SetScrollInfo(control.Handle, (int)fnBar, ref si2, true);
+                _ = Win32API.SendMessage(control.Handle, (int)message, (IntPtr)(((int)Win32API.SB.ThumbPosition) + ((si2.nPos & 0xffff) << 16)), IntPtr.Zero);
             }
         }
 
-        public int Min
-        {
-            get
-            {
-                return GetScrollInfo(Win32API.SIF.Range).nMin;
-            }
-        }
+        public int Min => GetScrollInfo(Win32API.SIF.Range).nMin;
 
-        public int Max
-        {
-            get
-            {
-                return GetScrollInfo(Win32API.SIF.Range).nMax;
-            }
-        }
+        public int Max => GetScrollInfo(Win32API.SIF.Range).nMax;
 
         public void Scroll(int d)
         {
-            Pos = Pos + d;
+            Pos += d;
         }
 
         public void Increase(int num)
@@ -86,7 +86,7 @@ namespace Girl.Windows.Forms
             {
                 if (CanIncrease)
                 {
-                    Win32API.SendMessage(this.control.Handle, (int)this.message, (IntPtr)Win32API.SB.LineDown, IntPtr.Zero);
+                    _ = Win32API.SendMessage(control.Handle, (int)message, (IntPtr)Win32API.SB.LineDown, IntPtr.Zero);
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace Girl.Windows.Forms
             {
                 if (CanDecrease)
                 {
-                    Win32API.SendMessage(this.control.Handle, (int)this.message, (IntPtr)Win32API.SB.LineUp, IntPtr.Zero);
+                    _ = Win32API.SendMessage(control.Handle, (int)message, (IntPtr)Win32API.SB.LineUp, IntPtr.Zero);
                 }
             }
         }
@@ -106,7 +106,10 @@ namespace Girl.Windows.Forms
         {
             get
             {
-                if (!Visible) return false;
+                if (!Visible)
+                {
+                    return false;
+                }
 
                 Win32API.ScrollInfo si = GetScrollInfo(Win32API.SIF.All);
                 return si.nPos < si.nMax - Math.Max(si.nPage - 1, 0);
@@ -117,7 +120,10 @@ namespace Girl.Windows.Forms
         {
             get
             {
-                if (!Visible) return false;
+                if (!Visible)
+                {
+                    return false;
+                }
 
                 Win32API.ScrollInfo si = GetScrollInfo(Win32API.SIF.All);
                 return si.nPos > si.nMin;
@@ -132,9 +138,9 @@ namespace Girl.Windows.Forms
     {
         public InternalHScrollBar(Control ctrl) : base(ctrl)
         {
-            this.fnBar = Win32API.SB.Horz;
-            this.style = Win32API.WS.HScroll;
-            this.message = Win32API.WM.HScroll;
+            fnBar = Win32API.SB.Horz;
+            style = Win32API.WS.HScroll;
+            message = Win32API.WM.HScroll;
         }
     }
 
@@ -145,9 +151,9 @@ namespace Girl.Windows.Forms
     {
         public InternalVScrollBar(Control ctrl) : base(ctrl)
         {
-            this.fnBar = Win32API.SB.Vert;
-            this.style = Win32API.WS.VScroll;
-            this.message = Win32API.WM.VScroll;
+            fnBar = Win32API.SB.Vert;
+            style = Win32API.WS.VScroll;
+            message = Win32API.WM.VScroll;
         }
     }
 }

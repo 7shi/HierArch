@@ -10,32 +10,17 @@ namespace Girl.Windows.Forms
     /// </summary>
     public class ExTreeView : TreeView
     {
-        private InternalHScrollBar m_HScrollBar;
-        private InternalVScrollBar m_VScrollBar;
-
         public ExTreeView()
         {
-            m_HScrollBar = new InternalHScrollBar(this);
-            m_VScrollBar = new InternalVScrollBar(this);
+            HScrollBar = new InternalHScrollBar(this);
+            VScrollBar = new InternalVScrollBar(this);
         }
 
         #region Scroll Bar
 
-        public InternalHScrollBar HScrollBar
-        {
-            get
-            {
-                return m_HScrollBar;
-            }
-        }
+        public InternalHScrollBar HScrollBar { get; }
 
-        public InternalVScrollBar VScrollBar
-        {
-            get
-            {
-                return m_VScrollBar;
-            }
-        }
+        public InternalVScrollBar VScrollBar { get; }
 
         #endregion
 
@@ -51,32 +36,22 @@ namespace Girl.Windows.Forms
             }
         }
 
-        public Point VirtualLocation
-        {
-            get
-            {
-                return new Point(VirtualLeft, VirtualTop);
-            }
-        }
+        public Point VirtualLocation => new Point(VirtualLeft, VirtualTop);
 
-        public int VirtualLeft
-        {
-            get
-            {
-                if (!m_HScrollBar.Visible) return 0;
-                return m_HScrollBar.Pos;
-            }
-        }
+        public int VirtualLeft => !HScrollBar.Visible ? 0 : HScrollBar.Pos;
 
         public int VirtualTop
         {
             get
             {
                 ExTreeNode n = FirstVisibleNode;
-                if (!m_VScrollBar.Visible || n == null) return 0;
+                if (!VScrollBar.Visible || n == null)
+                {
+                    return 0;
+                }
 
                 int ret = 0;
-                int pos = m_VScrollBar.Pos;
+                int pos = VScrollBar.Pos;
                 for (int i = 0; i < pos && n != null; i++, n = (ExTreeNode)n.NextVisibleNode)
                 {
                     ret += n.Height;
@@ -85,20 +60,18 @@ namespace Girl.Windows.Forms
             }
         }
 
-        public Size VirtualSize
-        {
-            get
-            {
-                return new Size(VirtualWidth, VirtualHeight);
-            }
-        }
+        public Size VirtualSize => new Size(VirtualWidth, VirtualHeight);
 
         public int VirtualWidth
         {
             get
             {
                 int ret = ClientSize.Width;
-                if (m_HScrollBar.Visible) ret = m_HScrollBar.Max + 1;
+                if (HScrollBar.Visible)
+                {
+                    ret = HScrollBar.Max + 1;
+                }
+
                 return ret;
             }
         }
@@ -109,10 +82,14 @@ namespace Girl.Windows.Forms
             {
                 int ret = ClientSize.Height;
                 ExTreeNode n = FirstVisibleNode;
-                if (m_VScrollBar.Visible && n != null)
+                if (VScrollBar.Visible && n != null)
                 {
                     int h = 0;
-                    for (; n != null; n = (ExTreeNode)n.NextVisibleNode) h += n.Height;
+                    for (; n != null; n = (ExTreeNode)n.NextVisibleNode)
+                    {
+                        h += n.Height;
+                    }
+
                     ret = h;
                 }
                 return ret;
@@ -123,21 +100,18 @@ namespace Girl.Windows.Forms
 
         #region Node
 
-        public ExTreeNode FirstVisibleNode
-        {
-            get
-            {
-                if (Nodes.Count < 1) return null;
-                return (ExTreeNode)Nodes[0];
-            }
-        }
+        public ExTreeNode FirstVisibleNode => Nodes.Count < 1 ? null : (ExTreeNode)Nodes[0];
 
         public ExTreeNode LastVisibleNode
         {
             get
             {
                 TreeNode ret = null;
-                for (TreeNode n = FirstVisibleNode; n != null; n = n.NextVisibleNode) ret = n;
+                for (TreeNode n = FirstVisibleNode; n != null; n = n.NextVisibleNode)
+                {
+                    ret = n;
+                }
+
                 return (ExTreeNode)ret;
             }
         }
@@ -156,7 +130,10 @@ namespace Girl.Windows.Forms
         public string _DebugSelectedNodeTextWidth()
         {
             ExTreeNode n = (ExTreeNode)SelectedNode;
-            if (n == null) return "";
+            if (n == null)
+            {
+                return "";
+            }
 
             Rectangle r = n.DisplayRectangle;
             return string.Format(
@@ -185,8 +162,7 @@ namespace Girl.Windows.Forms
         public Font GetNodeFont()
         {
             Font ret = NodeFont;
-            if (ret == null) return TreeView.Font;
-            return ret;
+            return ret ?? TreeView.Font;
         }
 
         #region Location
@@ -199,8 +175,8 @@ namespace Girl.Windows.Forms
                 IntPtr hdc = g.GetHdc();
                 IntPtr f = Win32API.SelectObject(hdc, GetNodeFont().ToHfont());
                 Win32API.Size sz = new Win32API.Size();
-                Win32API.GetTextExtentPoint32(hdc, Text, Text.Length, ref sz);
-                Win32API.SelectObject(hdc, f);
+                _ = Win32API.GetTextExtentPoint32(hdc, Text, Text.Length, ref sz);
+                _ = Win32API.SelectObject(hdc, f);
                 g.ReleaseHdc(hdc);
                 g.Dispose();
 
@@ -213,7 +189,11 @@ namespace Girl.Windows.Forms
             get
             {
                 int ret = -1;
-                for (TreeNode n = this; n != null; n = n.Parent) ret++;
+                for (TreeNode n = this; n != null; n = n.Parent)
+                {
+                    ret++;
+                }
+
                 return ret;
             }
         }
@@ -223,33 +203,29 @@ namespace Girl.Windows.Forms
             get
             {
                 int ret = -1;
-                for (TreeNode n = this; n != null; n = n.PrevVisibleNode) ret++;
+                for (TreeNode n = this; n != null; n = n.PrevVisibleNode)
+                {
+                    ret++;
+                }
+
                 return ret;
             }
         }
 
-        public Rectangle DisplayRectangle
-        {
-            get
-            {
-                return new Rectangle(Left, Top, Width, Height);
-            }
-        }
+        public Rectangle DisplayRectangle => new Rectangle(Left, Top, Width, Height);
 
-        public Point Location
-        {
-            get
-            {
-                return new Point(Left, Top);
-            }
-        }
+        public Point Location => new Point(Left, Top);
 
         public int Left
         {
             get
             {
                 int d = Depth;
-                if (TreeView.ShowRootLines) d++;
+                if (TreeView.ShowRootLines)
+                {
+                    d++;
+                }
+
                 return d * TreeView.Indent;
             }
         }
@@ -260,7 +236,11 @@ namespace Girl.Windows.Forms
             {
                 int ret = 0;
                 ExTreeNode n = (ExTreeNode)PrevVisibleNode;
-                for (; n != null; n = (ExTreeNode)n.PrevVisibleNode) ret += n.Height;
+                for (; n != null; n = (ExTreeNode)n.PrevVisibleNode)
+                {
+                    ret += n.Height;
+                }
+
                 return ret;
             }
         }
@@ -270,28 +250,32 @@ namespace Girl.Windows.Forms
             get
             {
                 int ret = TextWidth + 4;
-                if (TreeView.ImageList != null) ret += TreeView.ImageList.ImageSize.Width + 3;
+                if (TreeView.ImageList != null)
+                {
+                    ret += TreeView.ImageList.ImageSize.Width + 3;
+                }
+
                 return ret;
             }
         }
 
-        public int Height
-        {
-            get
-            {
-                return this.TreeView.ItemHeight;
-            }
-        }
+        public int Height => TreeView.ItemHeight;
 
         #endregion
 
         public bool IsAncestorOf(TreeNode n)
         {
-            if (n == null) return false;
+            if (n == null)
+            {
+                return false;
+            }
 
             for (; n != null; n = n.Parent)
             {
-                if (n == this) return true;
+                if (n == this)
+                {
+                    return true;
+                }
             }
             return false;
         }

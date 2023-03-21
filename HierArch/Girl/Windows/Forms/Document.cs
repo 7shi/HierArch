@@ -16,9 +16,9 @@ namespace Girl.Windows.Forms
 
         protected virtual void Init()
         {
-            this.Changed = false;
-            this.PrintDocument = new PrintDocument();
-            this.Serializer = this.NewSerializer;
+            Changed = false;
+            PrintDocument = new PrintDocument();
+            Serializer = NewSerializer;
         }
 
         /// <summary>
@@ -26,36 +26,23 @@ namespace Girl.Windows.Forms
         /// </summary>
         public Document()
         {
-            this.FullName = "";
-            this.Init();
+            FullName = "";
+            Init();
         }
 
-        public string Name
-        {
-            get
-            {
-                if (this.FullName == "") return "無題";
-                return Path.GetFileNameWithoutExtension(this.FullName);
-            }
-        }
+        public string Name => FullName == "" ? "無題" : Path.GetFileNameWithoutExtension(FullName);
 
-        protected virtual XmlObjectSerializer NewSerializer
-        {
-            get
-            {
-                return new XmlObjectSerializer();
-            }
-        }
+        protected virtual XmlObjectSerializer NewSerializer => new XmlObjectSerializer();
 
         public virtual bool Open()
         {
-            this.Changed = false;
+            Changed = false;
             return true;
         }
 
         public virtual bool Save()
         {
-            this.Changed = false;
+            Changed = false;
             return true;
         }
     }

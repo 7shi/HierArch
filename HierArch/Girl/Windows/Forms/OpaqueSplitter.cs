@@ -14,48 +14,45 @@ namespace Girl.Windows.Forms
         /// </summary>
         public OpaqueSplitter()
         {
-            this.opaque = true;
+            opaque = true;
         }
 
         public bool Opaque
         {
-            get
-            {
-                return this.opaque;
-            }
+            get => opaque;
 
-            set
-            {
-                this.opaque = true;
-            }
+            set => opaque = true;
         }
 
         protected override void OnSplitterMoving(SplitterEventArgs e)
         {
-            if (this.opaque)
+            if (opaque)
             {
                 int a;
-                int pos = this.SplitPosition;
+                int pos = SplitPosition;
                 switch (Dock)
                 {
                     case DockStyle.Left:
-                        a = this.Left - pos;
+                        a = Left - pos;
                         pos = e.SplitX - a;
                         break;
                     case DockStyle.Right:
-                        a = this.Left + pos;
+                        a = Left + pos;
                         pos = a - e.SplitX;
                         break;
                     case DockStyle.Top:
-                        a = this.Top - pos;
+                        a = Top - pos;
                         pos = e.SplitY - a;
                         break;
                     case DockStyle.Bottom:
-                        a = this.Top + pos;
+                        a = Top + pos;
                         pos = a - e.SplitY;
                         break;
                 }
-                if (this.SplitPosition != pos) this.SplitPosition = pos;
+                if (SplitPosition != pos)
+                {
+                    SplitPosition = pos;
+                }
             }
             base.OnSplitterMoving(e);
         }

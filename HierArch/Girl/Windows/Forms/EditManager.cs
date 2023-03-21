@@ -22,45 +22,37 @@ namespace Girl.Windows.Forms
     /// </summary>
     public class EditManager : ContextManager
     {
-        private ArrayList controls;
-        private Control target;
-        private ArrayList forms;
+        private readonly ArrayList forms;
 
         /// <summary>
         /// コンストラクタです。
         /// </summary>
         public EditManager()
         {
-            this.controls = new ArrayList();
-            this.target = null;
-            this.handlers = new EventHandler[]
+            Controls = new ArrayList();
+            Target = null;
+            handlers = new EventHandler[]
             {
-                new EventHandler(this.cmd_Undo), new EventHandler(this.cmd_Redo), new EventHandler(this.cmd_Cut), new EventHandler(this.cmd_Copy), new EventHandler(this.cmd_Paste), new EventHandler(this.cmd_Delete), new EventHandler(this.cmd_SelectAll)
+                new EventHandler(cmd_Undo), new EventHandler(cmd_Redo), new EventHandler(cmd_Cut), new EventHandler(cmd_Copy), new EventHandler(cmd_Paste), new EventHandler(cmd_Delete), new EventHandler(cmd_SelectAll)
             }
             ;
-            this.forms = new ArrayList();
+            forms = new ArrayList();
         }
 
-        public override int MaxActions
-        {
-            get
-            {
-                return (int)Enum.GetNames(typeof(EditAction)).Length;
-            }
-        }
+        public override int MaxActions => Enum.GetNames(typeof(EditAction)).Length;
 
         #region Command
 
         public void SetCommand(EditAction action, object target)
         {
-            this.SetCommand((int)action, target);
+            SetCommand((int)action, target);
         }
 
         public void SetCommand(EditAction action, params object[] targets)
         {
             foreach (object obj in targets)
             {
-                this.SetCommand((int)action, obj);
+                SetCommand((int)action, obj);
             }
         }
 
@@ -68,41 +60,33 @@ namespace Girl.Windows.Forms
 
         #region Control Management
 
-        public ArrayList Controls
-        {
-            get
-            {
-                return this.controls;
-            }
-        }
+        public ArrayList Controls { get; }
 
-        public Control Target
-        {
-            get
-            {
-                return this.target;
-            }
-        }
+        public Control Target { get; private set; }
 
         public void AddControl(Control control)
         {
             Form f;
 
-            if (control == null || this.controls.Contains(control)) return;
-            control.Disposed += new EventHandler(this.control_Disposed);
-            control.Enter += new EventHandler(this.control_Enter);
-            EventHandler eh = new EventHandler(this.target_Event);
+            if (control == null || Controls.Contains(control))
+            {
+                return;
+            }
+
+            control.Disposed += new EventHandler(control_Disposed);
+            control.Enter += new EventHandler(control_Enter);
+            EventHandler eh = new EventHandler(target_Event);
             control.VisibleChanged += eh;
             control.EnabledChanged += eh;
             if (control is TextBox)
             {
                 TextBox tb = control as TextBox;
                 tb.TextChanged += eh;
-                MouseEventHandler meh = new MouseEventHandler(this.textBox_MouseMove);
+                MouseEventHandler meh = new MouseEventHandler(textBox_MouseMove);
                 tb.MouseDown += meh;
                 tb.MouseUp += meh;
                 tb.MouseMove += meh;
-                KeyEventHandler keh = new KeyEventHandler(this.textBox_KeyUpDown);
+                KeyEventHandler keh = new KeyEventHandler(textBox_KeyUpDown);
                 tb.KeyDown += keh;
                 tb.KeyUp += keh;
             }
@@ -112,15 +96,23 @@ namespace Girl.Windows.Forms
                 rtb.SelectionChanged += eh;
             }
             f = control.TopLevelControl as Form;
-            if (f == null || this.forms.Contains(f)) return;
-            this.forms.Add(f);
-            f.Activated += new EventHandler(this.form_Activated);
+            if (f == null || forms.Contains(f))
+            {
+                return;
+            }
+
+            _ = forms.Add(f);
+            f.Activated += new EventHandler(form_Activated);
         }
 
         public void RemoveControl(Control control)
         {
-            if (!this.controls.Contains(control)) return;
-            this.controls.Remove(control);
+            if (!Controls.Contains(control))
+            {
+                return;
+            }
+
+            Controls.Remove(control);
         }
 
         #endregion
@@ -129,34 +121,34 @@ namespace Girl.Windows.Forms
 
         public virtual void Undo()
         {
-            if (this.target is TextBoxBase)
+            if (Target is TextBoxBase)
             {
-                (this.target as TextBoxBase).Undo();
+                (Target as TextBoxBase).Undo();
             }
-            this.CheckStatus();
+            CheckStatus();
         }
 
         public virtual void Redo()
         {
-            if (this.target is RichTextBox)
+            if (Target is RichTextBox)
             {
-                (this.target as RichTextBox).Redo();
+                (Target as RichTextBox).Redo();
             }
         }
 
         public virtual void Cut()
         {
-            if (this.target is TextBoxBase)
+            if (Target is TextBoxBase)
             {
-                (this.target as TextBoxBase).Cut();
+                (Target as TextBoxBase).Cut();
             }
         }
 
         public virtual void Copy()
         {
-            if (this.target is RichTextBox)
+            if (Target is RichTextBox)
             {
-                RichTextBox rtb = this.target as RichTextBox;
+                RichTextBox rtb = Target as RichTextBox;
                 if (rtb.SelectionLength > 0)
                 {
                     DataObject obj = new DataObject();
@@ -165,33 +157,33 @@ namespace Girl.Windows.Forms
                     Clipboard.SetDataObject(obj);
                 }
             }
-            else if (this.target is TextBoxBase)
+            else if (Target is TextBoxBase)
             {
-                (this.target as TextBoxBase).Copy();
+                (Target as TextBoxBase).Copy();
             }
         }
 
         public virtual void Paste()
         {
-            if (this.target is TextBoxBase)
+            if (Target is TextBoxBase)
             {
-                (this.target as TextBoxBase).Paste();
+                (Target as TextBoxBase).Paste();
             }
         }
 
         public virtual void Delete()
         {
-            if (this.target is TextBoxBase)
+            if (Target is TextBoxBase)
             {
-                (this.target as TextBoxBase).SelectedText = "";
+                (Target as TextBoxBase).SelectedText = "";
             }
         }
 
         public virtual void SelectAll()
         {
-            if (this.target is TextBoxBase)
+            if (Target is TextBoxBase)
             {
-                (this.target as TextBoxBase).SelectAll();
+                (Target as TextBoxBase).SelectAll();
             }
         }
 
@@ -199,37 +191,37 @@ namespace Girl.Windows.Forms
 
         private void cmd_Undo(object sender, EventArgs e)
         {
-            this.Undo();
+            Undo();
         }
 
         private void cmd_Redo(object sender, EventArgs e)
         {
-            this.Redo();
+            Redo();
         }
 
         private void cmd_Cut(object sender, EventArgs e)
         {
-            this.Cut();
+            Cut();
         }
 
         private void cmd_Copy(object sender, EventArgs e)
         {
-            this.Copy();
+            Copy();
         }
 
         private void cmd_Paste(object sender, EventArgs e)
         {
-            this.Paste();
+            Paste();
         }
 
         private void cmd_Delete(object sender, EventArgs e)
         {
-            this.Delete();
+            Delete();
         }
 
         private void cmd_SelectAll(object sender, EventArgs e)
         {
-            this.SelectAll();
+            SelectAll();
         }
 
         #endregion
@@ -240,13 +232,13 @@ namespace Girl.Windows.Forms
 
         public void CheckStatus()
         {
-            if (!this.target.Visible || !this.target.Enabled)
+            if (!Target.Visible || !Target.Enabled)
             {
-                this.SetStatus(false);
+                SetStatus(false);
             }
-            else if (this.target is TextBoxBase)
+            else if (Target is TextBoxBase)
             {
-                this.CheckTextBoxBase();
+                CheckTextBoxBase();
             }
         }
 
@@ -255,30 +247,29 @@ namespace Girl.Windows.Forms
             TextBoxBase tbb;
             bool status;
 
-            tbb = this.target as TextBoxBase;
-            this.SetStatus((int)EditAction.Undo, tbb.CanUndo);
+            tbb = Target as TextBoxBase;
+            SetStatus((int)EditAction.Undo, tbb.CanUndo);
             status = tbb.SelectionLength > 0;
-            this.SetStatus((int)EditAction.Cut, status);
-            this.SetStatus((int)EditAction.Copy, status);
-            this.SetStatus((int)EditAction.Delete, status);
-            this.SetStatus((int)EditAction.SelectAll, true);
+            SetStatus((int)EditAction.Cut, status);
+            SetStatus((int)EditAction.Copy, status);
+            SetStatus((int)EditAction.Delete, status);
+            SetStatus((int)EditAction.SelectAll, true);
             if (tbb is TextBox)
             {
-                this.CheckTextBox();
+                CheckTextBox();
             }
             else if (tbb is RichTextBox)
             {
-                this.CheckRichTextBox();
+                CheckRichTextBox();
             }
         }
 
         private void CheckTextBox()
         {
-            TextBox tb;
             bool status;
 
-            tb = this.target as TextBox;
-            this.SetStatus((int)EditAction.Redo, false);
+            _ = Target as TextBox;
+            SetStatus((int)EditAction.Redo, false);
             status = false;
             IDataObject data = Clipboard.GetDataObject();
             if (data != null)
@@ -293,7 +284,7 @@ namespace Girl.Windows.Forms
                     }
                 }
             }
-            this.SetStatus((int)EditAction.Paste, status);
+            SetStatus((int)EditAction.Paste, status);
         }
 
         private void CheckRichTextBox()
@@ -301,8 +292,8 @@ namespace Girl.Windows.Forms
             RichTextBox rtb;
             bool status;
 
-            rtb = this.target as RichTextBox;
-            this.SetStatus((int)EditAction.Redo, rtb.CanRedo);
+            rtb = Target as RichTextBox;
+            SetStatus((int)EditAction.Redo, rtb.CanRedo);
             status = false;
             IDataObject data = Clipboard.GetDataObject();
             if (data != null)
@@ -317,43 +308,55 @@ namespace Girl.Windows.Forms
                     }
                 }
             }
-            this.SetStatus((int)EditAction.Paste, status);
+            SetStatus((int)EditAction.Paste, status);
         }
 
         #region Handlers
 
         private void control_Disposed(object sender, EventArgs e)
         {
-            if (this.target == sender) this.SetStatus(false);
-            this.RemoveControl(sender as Control);
+            if (Target == sender)
+            {
+                SetStatus(false);
+            }
+
+            RemoveControl(sender as Control);
         }
 
         private void control_Enter(object sender, EventArgs e)
         {
-            this.target = sender as Control;
-            this.CheckStatus();
+            Target = sender as Control;
+            CheckStatus();
         }
 
         private void form_Activated(object sender, EventArgs e)
         {
-            if (this.target == null) return;
-            this.CheckStatus();
+            if (Target == null)
+            {
+                return;
+            }
+
+            CheckStatus();
         }
 
         private void target_Event(object sender, EventArgs e)
         {
-            if (sender != target) return;
-            this.CheckStatus();
+            if (sender != Target)
+            {
+                return;
+            }
+
+            CheckStatus();
         }
 
         private void textBox_MouseMove(object sender, MouseEventArgs e)
         {
-            this.target_Event(sender, EventArgs.Empty);
+            target_Event(sender, EventArgs.Empty);
         }
 
         private void textBox_KeyUpDown(object sender, KeyEventArgs e)
         {
-            this.target_Event(sender, EventArgs.Empty);
+            target_Event(sender, EventArgs.Empty);
         }
 
         #endregion

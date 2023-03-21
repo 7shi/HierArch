@@ -23,61 +23,59 @@ namespace Girl.Windows.Forms
             int len;
             int i;
 
-            len = this.MaxActions;
-            this.flags = new bool[len];
+            len = MaxActions;
+            flags = new bool[len];
             for (i = 0; i < len; i++)
             {
-                this.flags[i] = false;
+                flags[i] = false;
             }
-            this.cmdList = new ArrayList[len];
+            cmdList = new ArrayList[len];
             for (i = 0; i < len; i++)
             {
-                this.cmdList[i] = new ArrayList();
+                cmdList[i] = new ArrayList();
             }
-            this.handlers = null;
-            this.toolBars = new ArrayList();
-            this.toolBarButtonHandlers = new Hashtable();
+            handlers = null;
+            toolBars = new ArrayList();
+            toolBarButtonHandlers = new Hashtable();
         }
 
-        public virtual int MaxActions
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public virtual int MaxActions => 0;
 
         public void SetCommand(int action, object target)
         {
             ArrayList targets;
 
             targets = cmdList[action];
-            if (targets.Contains(target)) return;
-            targets.Add(target);
-            this.SetProperty(target, flags[action]);
-            this.SetHandler(action, target);
+            if (targets.Contains(target))
+            {
+                return;
+            }
+
+            _ = targets.Add(target);
+            SetProperty(target, flags[action]);
+            SetHandler(action, target);
         }
 
         protected virtual void SetHandler(int action, object target)
         {
             if (target is MenuItem)
             {
-                (target as MenuItem).Click += this.handlers[action];
+                (target as MenuItem).Click += handlers[action];
             }
             else if (target is ToolBarButton)
             {
                 ToolBarButton tbb = target as ToolBarButton;
                 ToolBar tb = tbb.Parent;
-                if (!this.toolBars.Contains(tb))
+                if (!toolBars.Contains(tb))
                 {
-                    this.toolBars.Add(tb);
-                    tb.ButtonClick += new ToolBarButtonClickEventHandler(this.toolBar_ButtonClick);
+                    _ = toolBars.Add(tb);
+                    tb.ButtonClick += new ToolBarButtonClickEventHandler(toolBar_ButtonClick);
                 }
-                this.toolBarButtonHandlers[tbb] = this.handlers[action];
+                toolBarButtonHandlers[tbb] = handlers[action];
             }
             else if (target is Button)
             {
-                (target as Button).Click += this.handlers[action];
+                (target as Button).Click += handlers[action];
             }
         }
 
@@ -85,8 +83,12 @@ namespace Girl.Windows.Forms
         {
             EventHandler eh;
 
-            if (!this.toolBarButtonHandlers.Contains(e.Button)) return;
-            eh = this.toolBarButtonHandlers[e.Button] as EventHandler;
+            if (!toolBarButtonHandlers.Contains(e.Button))
+            {
+                return;
+            }
+
+            eh = toolBarButtonHandlers[e.Button] as EventHandler;
             eh.Invoke(sender, EventArgs.Empty);
         }
 
@@ -94,7 +96,7 @@ namespace Girl.Windows.Forms
         {
             foreach (object obj in targets)
             {
-                this.SetCommand(action, obj);
+                SetCommand(action, obj);
             }
         }
 
@@ -102,12 +104,16 @@ namespace Girl.Windows.Forms
         {
             ArrayList targets;
 
-            if (flags[action] == status) return;
+            if (flags[action] == status)
+            {
+                return;
+            }
+
             flags[action] = status;
             targets = cmdList[action];
             foreach (object obj in targets)
             {
-                this.SetProperty(obj, status);
+                SetProperty(obj, status);
             }
         }
 
@@ -116,17 +122,26 @@ namespace Girl.Windows.Forms
             if (target is MenuItem)
             {
                 MenuItem mi = target as MenuItem;
-                if (mi.Enabled != status) mi.Enabled = status;
+                if (mi.Enabled != status)
+                {
+                    mi.Enabled = status;
+                }
             }
             else if (target is ToolBarButton)
             {
                 ToolBarButton tbb = target as ToolBarButton;
-                if (tbb.Enabled != status) tbb.Enabled = status;
+                if (tbb.Enabled != status)
+                {
+                    tbb.Enabled = status;
+                }
             }
             else if (target is Button)
             {
                 Button b = target as Button;
-                if (b.Enabled != status) b.Enabled = status;
+                if (b.Enabled != status)
+                {
+                    b.Enabled = status;
+                }
             }
         }
 
@@ -135,10 +150,10 @@ namespace Girl.Windows.Forms
             int len;
             int i;
 
-            len = this.MaxActions;
+            len = MaxActions;
             for (i = 0; i < len; i++)
             {
-                this.SetStatus(i, status);
+                SetStatus(i, status);
             }
         }
     }

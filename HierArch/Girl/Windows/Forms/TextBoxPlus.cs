@@ -13,20 +13,30 @@ namespace Girl.Windows.Forms
         public static int GetFirstCharIndexFromLine(TextBoxBase textBox, int line)
         {
             int ln = 0;
-            var t = textBox.Text;
+            string t = textBox.Text;
             for (int i = 0; i < t.Length; i++)
             {
                 char ch = t[i];
                 if (ch == '\r')
                 {
-                    if (i + 1 < t.Length && t[i + 1] == '\n') i++;
+                    if (i + 1 < t.Length && t[i + 1] == '\n')
+                    {
+                        i++;
+                    }
+
                     ln++;
-                    if (line == ln) return i + 1;
+                    if (line == ln)
+                    {
+                        return i + 1;
+                    }
                 }
                 else if (ch == '\n')
                 {
                     ln++;
-                    if (line == ln) return i + 1;
+                    if (line == ln)
+                    {
+                        return i + 1;
+                    }
                 }
             }
             return t.Length;
@@ -38,13 +48,17 @@ namespace Girl.Windows.Forms
         public static int GetLineFromCharIndex(TextBoxBase textBox, int index)
         {
             int ln = 0;
-            var t = textBox.Text;
+            string t = textBox.Text;
             for (int i = 0; i < index; i++)
             {
                 char ch = t[i];
                 if (ch == '\r')
                 {
-                    if (i + 1 < t.Length && t[i + 1] == '\n') i++;
+                    if (i + 1 < t.Length && t[i + 1] == '\n')
+                    {
+                        i++;
+                    }
+
                     ln++;
                 }
                 else if (ch == '\n')
@@ -66,13 +80,17 @@ namespace Girl.Windows.Forms
         public static int GetFirstCharIndexOfLineFromCharIndex(TextBoxBase textBox, int index)
         {
             int ln = 0, fi = 0;
-            var t = textBox.Text;
+            string t = textBox.Text;
             for (int i = 0; i < index; i++)
             {
                 char ch = t[i];
                 if (ch == '\r')
                 {
-                    if (i + 1 < t.Length && t[i + 1] == '\n') i++;
+                    if (i + 1 < t.Length && t[i + 1] == '\n')
+                    {
+                        i++;
+                    }
+
                     ln++;
                     fi = i + 1;
                 }
@@ -97,8 +115,7 @@ namespace Girl.Windows.Forms
 
         public static string GetLineText(TextBoxBase textBox, int line)
         {
-            if (line < textBox.Lines.Length) return textBox.Lines[line];
-            return "";
+            return line < textBox.Lines.Length ? textBox.Lines[line] : "";
         }
     }
 }

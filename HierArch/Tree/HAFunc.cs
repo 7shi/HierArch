@@ -11,199 +11,215 @@ namespace Girl.HierArch
     /// </summary>
     public class HAFunc : HATree
     {
-        private ContextMenu contextMenu1;
-        private MenuItem mnuType;
+        private readonly ContextMenu contextMenu1;
+        private readonly MenuItem mnuType;
         public CodeEditor SourceTextBox;
         public HAClassNode OwnerClass;
         public HAFuncNode Body;
         public HAFuncNode TargetNode;
-        private Font textFont;
+        private readonly Font textFont;
 
         /// <summary>
         /// コンストラクタです。
         /// </summary>
         public HAFunc()
         {
-            this.dataFormat = "HierArch Function Data";
-            this.SourceTextBox = null;
-            this.OwnerClass = null;
-            this.TargetNode = null;
-            this.AllowDrop = true;
-            this.ContextMenu = this.contextMenu1 = new ContextMenu();
-            this.HideSelection = false;
-            this.LabelEdit = true;
-            this.ImageList = this.imageList1;
-            this.textFont = new Font("ＭＳ ゴシック", 9);
+            dataFormat = "HierArch Function Data";
+            SourceTextBox = null;
+            OwnerClass = null;
+            TargetNode = null;
+            AllowDrop = true;
+            ContextMenu = contextMenu1 = new ContextMenu();
+            HideSelection = false;
+            LabelEdit = true;
+            ImageList = imageList1;
+            textFont = new Font("ＭＳ ゴシック", 9);
             //			this.mnuAccess.Text = "関数(&U)";
             //			this.mnuFolderGray.Text = "仮想フォルダ(&V)";
-            this.contextMenu1.MenuItems.AddRange(
+            contextMenu1.MenuItems.AddRange(
                 new MenuItem[] {
-                    mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { this.mnuText, this.mnuFolder, this.mnuAccess, this.mnuEtc }),
-                    new MenuItem("-"), this.mnuChild, this.mnuAppend, this.mnuInsert,
-                    new MenuItem("-"), this.mnuDelete, this.mnuRename
+                    mnuType = new MenuItem("種類変更(&T)", new MenuItem[] { mnuText, mnuFolder, mnuAccess, mnuEtc }),
+                    new MenuItem("-"), mnuChild, mnuAppend, mnuInsert,
+                    new MenuItem("-"), mnuDelete, mnuRename
                 });
         }
 
         public override void OnChanged(object sender, EventArgs e)
         {
-            if (this.IgnoreChanged) return;
+            if (IgnoreChanged)
+            {
+                return;
+            }
+
             base.OnChanged(sender, e);
-            if (this.TargetNode != null) this.TargetNode.LastModified = DateTime.Now;
+            if (TargetNode != null)
+            {
+                TargetNode.LastModified = DateTime.Now;
+            }
         }
 
         public override void OnRefreshNode(object sender, EventArgs e)
         {
             base.OnRefreshNode(sender, e);
-            if (sender != this.TargetNode) return;
-            this.SetView();
+            if (sender != TargetNode)
+            {
+                return;
+            }
+
+            SetView();
         }
 
         protected override void MenuNodeChild_Click(object sender, EventArgs e)
         {
-            HATreeNode p = (HATreeNode)this.SelectedNode;
-            HATreeNode n = this.NewNode;
+            HATreeNode p = (HATreeNode)SelectedNode;
+            HATreeNode n = NewNode;
             if (p != null)
             {
-                p.Nodes.Add(n);
+                _ = p.Nodes.Add(n);
                 p.SetIcon();
             }
             else
             {
-                this.Nodes.Add(n);
+                _ = Nodes.Add(n);
             }
             n.EnsureVisible();
-            this.SelectedNode = n;
+            SelectedNode = n;
             n.BeginEdit();
-            this.OnChanged(this, EventArgs.Empty);
+            OnChanged(this, EventArgs.Empty);
         }
 
         protected override void StartDrag()
         {
-            this.Focus();
-            this.StoreData();
+            _ = Focus();
+            StoreData();
             base.StartDrag();
         }
 
         protected override void SetState()
         {
-            if (this.Nodes.Count < 1 && this.TargetNode != null)
+            if (Nodes.Count < 1 && TargetNode != null)
             {
-                this.TargetNode = null;
-                this.SetView();
+                TargetNode = null;
+                SetView();
             }
-            HAFuncNode n = this.SelectedNode as HAFuncNode;
-            mnuType.Enabled = mnuAppend.Enabled = mnuInsert.Enabled = mnuDelete.Enabled = mnuRename.Enabled = (n != null && n.AllowDrag);
+            mnuType.Enabled = mnuAppend.Enabled = mnuInsert.Enabled = mnuDelete.Enabled = mnuRename.Enabled = SelectedNode is HAFuncNode n && n.AllowDrag;
         }
 
-        public override HATreeNode NewNode
-        {
-            get
-            {
-                return new HAFuncNode("新しい項目");
-            }
-        }
+        public override HATreeNode NewNode => new HAFuncNode("新しい項目");
 
         public void StoreData()
         {
-            if (this.TargetNode == null) return;
-            this.StoreState();
-            if (this.SourceTextBox != null)
+            if (TargetNode == null)
             {
-                this.TargetNode.Source = this.SourceTextBox.Code;
-                this.TargetNode.SourceSelectionStart = this.SourceTextBox.SelectionStart;
-                this.TargetNode.SourceSelectionLength = this.SourceTextBox.SelectionLength;
+                return;
+            }
+
+            StoreState();
+            if (SourceTextBox != null)
+            {
+                TargetNode.Source = SourceTextBox.Code;
+                TargetNode.SourceSelectionStart = SourceTextBox.SelectionStart;
+                TargetNode.SourceSelectionLength = SourceTextBox.SelectionLength;
             }
         }
 
         public void SetView()
         {
-            bool flag = this.IgnoreChanged;
-            this.IgnoreChanged = true;
-            if (this.TargetNode != null)
+            bool flag = IgnoreChanged;
+            IgnoreChanged = true;
+            if (TargetNode != null)
             {
-                if (this.SourceTextBox != null)
+                if (SourceTextBox != null)
                 {
-                    this.SourceTextBox.Enabled = true;
-                    this.SourceTextBox.Clear();
-                    this.SourceTextBox.Code = this.TargetNode.Source;
-                    this.SourceTextBox.SelectionStart = this.TargetNode.SourceSelectionStart;
-                    this.SourceTextBox.SelectionLength = this.TargetNode.SourceSelectionLength;
+                    SourceTextBox.Enabled = true;
+                    SourceTextBox.Clear();
+                    SourceTextBox.Code = TargetNode.Source;
+                    SourceTextBox.SelectionStart = TargetNode.SourceSelectionStart;
+                    SourceTextBox.SelectionLength = TargetNode.SourceSelectionLength;
                 }
             }
             else
             {
-                if (this.SourceTextBox != null)
+                if (SourceTextBox != null)
                 {
-                    this.SourceTextBox.Enabled = false;
-                    this.SourceTextBox.Clear();
-                    this.SourceTextBox.SelectionStart = 0;
-                    this.SourceTextBox.SelectionLength = 0;
+                    SourceTextBox.Enabled = false;
+                    SourceTextBox.Clear();
+                    SourceTextBox.SelectionStart = 0;
+                    SourceTextBox.SelectionLength = 0;
                 }
             }
-            this.IgnoreChanged = flag;
+            IgnoreChanged = flag;
         }
 
         public void SetView(HAClassNode cls)
         {
-            bool flag = this.IgnoreChanged;
-            this.IgnoreChanged = true;
-            this.SelectedNode = null;
-            this.TargetNode = null;
-            this.SetView();
-            this.Nodes.Clear();
+            bool flag = IgnoreChanged;
+            IgnoreChanged = true;
+            SelectedNode = null;
+            TargetNode = null;
+            SetView();
+            Nodes.Clear();
             if (cls != null)
             {
-                this.Enabled = true;
-                this.BackColor = System.Drawing.SystemColors.Window;
-                this.Body = cls.Body.Clone() as HAFuncNode;
-                if (this.OwnerClass.IsObject)
+                Enabled = true;
+                BackColor = System.Drawing.SystemColors.Window;
+                Body = cls.Body.Clone() as HAFuncNode;
+                if (OwnerClass.IsObject)
                 {
-                    this.BeginUpdate();
-                    this.Nodes.Add(this.Body);
-                    this.ApplyState();
-                    this.EndUpdate();
+                    BeginUpdate();
+                    _ = Nodes.Add(Body);
+                    ApplyState();
+                    EndUpdate();
                 }
-                else if (this.Body.Nodes.Count > 0)
+                else if (Body.Nodes.Count > 0)
                 {
-                    this.BeginUpdate();
-                    foreach (TreeNode n in this.Body.Nodes)
+                    BeginUpdate();
+                    foreach (TreeNode n in Body.Nodes)
                     {
-                        this.Nodes.Add(n.Clone() as HAFuncNode);
+                        _ = Nodes.Add(n.Clone() as HAFuncNode);
                     }
-                    this.Body.Nodes.Clear();
-                    this.ApplyState();
-                    this.EndUpdate();
+                    Body.Nodes.Clear();
+                    ApplyState();
+                    EndUpdate();
                 }
-                if (this.SelectedNode == null && this.Nodes.Count > 0)
+                if (SelectedNode == null && Nodes.Count > 0)
                 {
-                    this.SelectedNode = this.Nodes[0];
+                    SelectedNode = Nodes[0];
                 }
-                if (this.SelectedNode != null)
+                if (SelectedNode != null)
                 {
-                    this.SelectedNode.EnsureVisible();
-                    this.TargetNode = this.SelectedNode as HAFuncNode;
-                    this.SetView();
+                    SelectedNode.EnsureVisible();
+                    TargetNode = SelectedNode as HAFuncNode;
+                    SetView();
                 }
             }
             else
             {
-                this.Enabled = false;
-                this.BackColor = System.Drawing.SystemColors.ControlLight;
+                Enabled = false;
+                BackColor = System.Drawing.SystemColors.ControlLight;
             }
-            this.SetState();
-            this.IgnoreChanged = flag;
+            SetState();
+            IgnoreChanged = flag;
         }
 
         protected override void OnAfterSelect(TreeViewEventArgs e)
         {
             base.OnAfterSelect(e);
-            if (this.IgnoreChanged) return;
-            this.StoreData();
-            if (this.TargetNode == e.Node) return;
-            this.TargetNode = (HAFuncNode)e.Node;
-            this.IgnoreChanged = true;
-            this.SetView();
-            this.IgnoreChanged = false;
+            if (IgnoreChanged)
+            {
+                return;
+            }
+
+            StoreData();
+            if (TargetNode == e.Node)
+            {
+                return;
+            }
+
+            TargetNode = (HAFuncNode)e.Node;
+            IgnoreChanged = true;
+            SetView();
+            IgnoreChanged = false;
         }
 
         #region XML
@@ -226,7 +242,7 @@ namespace Girl.HierArch
                         dn.EnsureVisible();
                         SelectedNode = dn;
                         first = false;
-                        this.OnChanged(this, new EventArgs());
+                        OnChanged(this, new EventArgs());
                     }
                 }
             }

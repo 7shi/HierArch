@@ -13,11 +13,11 @@ namespace Girl.HierArch
     {
         public WindowSizeMonitor sizeMonitor;
         private static ViewData viewData;
-        private static ArrayList forms = new ArrayList();
+        private static readonly ArrayList forms = new ArrayList();
 
-        private HADoc document = new HADoc();
-        private Hashtable m_tblView = new Hashtable();
-        private string m_sCaption;
+        private readonly HADoc document = new HADoc();
+        private readonly Hashtable m_tblView = new Hashtable();
+        private readonly string m_sCaption;
         public System.Windows.Forms.ToolBar toolBar1;
         public System.Windows.Forms.StatusBar statusBar1;
         private System.Windows.Forms.ImageList imageList1;
@@ -64,7 +64,7 @@ namespace Girl.HierArch
         public System.Windows.Forms.MenuItem mnuOptionWordWrap;
         private System.Windows.Forms.MenuItem mnuOptionFont;
         private System.ComponentModel.IContainer components;
-        private EditManager editManager = new EditManager();
+        private readonly EditManager editManager = new EditManager();
         private System.Windows.Forms.ContextMenu cmEdit;
         private System.Windows.Forms.MenuItem cmEditUndo;
         private System.Windows.Forms.MenuItem cmEditRedo;
@@ -76,7 +76,7 @@ namespace Girl.HierArch
         private System.Windows.Forms.MenuItem cmEditSeparator2;
         private System.Windows.Forms.MenuItem cmEditSelectAll;
         private Girl.Windows.Forms.OpaqueSplitter opaqueSplitter1;
-        private static CodeEditorManager codeEditorManager = new CodeEditorManager(2);
+        private static readonly CodeEditorManager codeEditorManager = new CodeEditorManager(2);
 
         public Form1()
         {
@@ -88,41 +88,41 @@ namespace Girl.HierArch
             //
             // TODO: InitializeComponent 呼び出しの後に、コンストラクタ コードを追加してください。
             //
-            Form1.forms.Add(this);
-            new ViewManager(this, Form1.viewData);
+            _ = Form1.forms.Add(this);
+            _ = new ViewManager(this, Form1.viewData);
 
-            this.m_sCaption = Text;
-            this.SetCaption();
-            this.SetDocument();
-            this.view1.Changed += new System.EventHandler(view1_Changed);
+            m_sCaption = Text;
+            SetCaption();
+            SetDocument();
+            view1.Changed += new System.EventHandler(view1_Changed);
 
             // ツールバーのボタンをメニューの項目に対応させます。
             // ここで定義した情報は toolBar1_ButtonClick() で使用されます。
-            this.tbFileNew.Tag = this.mnuFileNew;
-            this.tbFileOpen.Tag = this.mnuFileOpen;
-            this.tbFileSave.Tag = this.mnuFileSave;
+            tbFileNew.Tag = mnuFileNew;
+            tbFileOpen.Tag = mnuFileOpen;
+            tbFileSave.Tag = mnuFileSave;
 
             // テキストボックスの状態をメニューと連動させます。
-            this.editManager.AddControl(this.view1.txtSource);
-            this.editManager.SetCommand(EditAction.Undo, this.mnuEditUndo, this.cmEditUndo, this.tbEditUndo);
-            this.editManager.SetCommand(EditAction.Redo, this.mnuEditRedo, this.cmEditRedo, this.tbEditRedo);
-            this.editManager.SetCommand(EditAction.Cut, this.mnuEditCut, this.cmEditCut, this.tbEditCut);
-            this.editManager.SetCommand(EditAction.Copy, this.mnuEditCopy, this.cmEditCopy, this.tbEditCopy);
-            this.editManager.SetCommand(EditAction.Paste, this.mnuEditPaste, this.cmEditPaste, this.tbEditPaste);
-            this.editManager.SetCommand(EditAction.Delete, this.mnuEditDelete, this.cmEditDelete);
-            this.editManager.SetCommand(EditAction.SelectAll, this.mnuEditSelectAll, this.cmEditSelectAll);
+            editManager.AddControl(view1.txtSource);
+            editManager.SetCommand(EditAction.Undo, mnuEditUndo, cmEditUndo, tbEditUndo);
+            editManager.SetCommand(EditAction.Redo, mnuEditRedo, cmEditRedo, tbEditRedo);
+            editManager.SetCommand(EditAction.Cut, mnuEditCut, cmEditCut, tbEditCut);
+            editManager.SetCommand(EditAction.Copy, mnuEditCopy, cmEditCopy, tbEditCopy);
+            editManager.SetCommand(EditAction.Paste, mnuEditPaste, cmEditPaste, tbEditPaste);
+            editManager.SetCommand(EditAction.Delete, mnuEditDelete, cmEditDelete);
+            editManager.SetCommand(EditAction.SelectAll, mnuEditSelectAll, cmEditSelectAll);
 
             // エディタオプションを設定します。
-            Form1.codeEditorManager.SetTarget(this.view1.txtSource);
-            Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartEnter, this.mnuOptionSmartEnter);
-            Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartTab, this.mnuOptionSmartTab);
-            Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartHome, this.mnuOptionSmartHome);
-            Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartParenthesis, this.mnuOptionSmartParenthesis);
+            Form1.codeEditorManager.SetTarget(view1.txtSource);
+            Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartEnter, mnuOptionSmartEnter);
+            Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartTab, mnuOptionSmartTab);
+            Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartHome, mnuOptionSmartHome);
+            Form1.codeEditorManager.SetCommand(CodeEditorOption.SmartParenthesis, mnuOptionSmartParenthesis);
 
-            this.document.ClassTreeView = view1.tvClass;
-            this.view1.txtSource.ContextMenu = this.cmEdit;
+            document.ClassTreeView = view1.tvClass;
+            view1.txtSource.ContextMenu = cmEdit;
 
-            this.sizeMonitor = new WindowSizeMonitor(this);
+            sizeMonitor = new WindowSizeMonitor(this);
         }
 
         /// <summary>
@@ -132,10 +132,7 @@ namespace Girl.HierArch
         {
             if (disposing)
             {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
+                components?.Dispose();
             }
             base.Dispose(disposing);
 
@@ -149,7 +146,10 @@ namespace Girl.HierArch
                     break;
                 }
             }
-            if (ok) Application.Exit();
+            if (ok)
+            {
+                Application.Exit();
+            }
         }
 
         #region Windows Form Designer generated code
@@ -159,444 +159,444 @@ namespace Girl.HierArch
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Form1));
-            this.toolBar1 = new System.Windows.Forms.ToolBar();
-            this.tbFileNew = new System.Windows.Forms.ToolBarButton();
-            this.tbFileOpen = new System.Windows.Forms.ToolBarButton();
-            this.tbFileSave = new System.Windows.Forms.ToolBarButton();
-            this.tbSeparator1 = new System.Windows.Forms.ToolBarButton();
-            this.tbEditCut = new System.Windows.Forms.ToolBarButton();
-            this.tbEditCopy = new System.Windows.Forms.ToolBarButton();
-            this.tbEditPaste = new System.Windows.Forms.ToolBarButton();
-            this.tbSeparator2 = new System.Windows.Forms.ToolBarButton();
-            this.tbEditUndo = new System.Windows.Forms.ToolBarButton();
-            this.tbEditRedo = new System.Windows.Forms.ToolBarButton();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.statusBar1 = new System.Windows.Forms.StatusBar();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.view1 = new Girl.HierArch.View();
-            this.mainMenu1 = new System.Windows.Forms.MainMenu();
-            this.mnuFile = new System.Windows.Forms.MenuItem();
-            this.mnuFileNew = new System.Windows.Forms.MenuItem();
-            this.mnuFileOpen = new System.Windows.Forms.MenuItem();
-            this.mnuFileSave = new System.Windows.Forms.MenuItem();
-            this.mnuFileSaveAs = new System.Windows.Forms.MenuItem();
-            this.mnuFileSeparator1 = new System.Windows.Forms.MenuItem();
-            this.mnuFileClose = new System.Windows.Forms.MenuItem();
-            this.mnuFileExit = new System.Windows.Forms.MenuItem();
-            this.mnuEdit = new System.Windows.Forms.MenuItem();
-            this.mnuEditUndo = new System.Windows.Forms.MenuItem();
-            this.mnuEditRedo = new System.Windows.Forms.MenuItem();
-            this.mnuEditSeparator1 = new System.Windows.Forms.MenuItem();
-            this.mnuEditCut = new System.Windows.Forms.MenuItem();
-            this.mnuEditCopy = new System.Windows.Forms.MenuItem();
-            this.mnuEditPaste = new System.Windows.Forms.MenuItem();
-            this.mnuEditDelete = new System.Windows.Forms.MenuItem();
-            this.mnuEditSeparator2 = new System.Windows.Forms.MenuItem();
-            this.mnuEditSelectAll = new System.Windows.Forms.MenuItem();
-            this.mnuOption = new System.Windows.Forms.MenuItem();
-            this.mnuOptionSmartEnter = new System.Windows.Forms.MenuItem();
-            this.mnuOptionSmartTab = new System.Windows.Forms.MenuItem();
-            this.mnuOptionSmartHome = new System.Windows.Forms.MenuItem();
-            this.mnuOptionSmartParenthesis = new System.Windows.Forms.MenuItem();
-            this.mnuOptionSeparator1 = new System.Windows.Forms.MenuItem();
-            this.mnuOptionWordWrap = new System.Windows.Forms.MenuItem();
-            this.mnuOptionFont = new System.Windows.Forms.MenuItem();
-            this.mnuHelp = new System.Windows.Forms.MenuItem();
-            this.mnuHelpAbout = new System.Windows.Forms.MenuItem();
-            this.cmEdit = new System.Windows.Forms.ContextMenu();
-            this.cmEditUndo = new System.Windows.Forms.MenuItem();
-            this.cmEditRedo = new System.Windows.Forms.MenuItem();
-            this.cmEditSeparator1 = new System.Windows.Forms.MenuItem();
-            this.cmEditCut = new System.Windows.Forms.MenuItem();
-            this.cmEditCopy = new System.Windows.Forms.MenuItem();
-            this.cmEditPaste = new System.Windows.Forms.MenuItem();
-            this.cmEditDelete = new System.Windows.Forms.MenuItem();
-            this.cmEditSeparator2 = new System.Windows.Forms.MenuItem();
-            this.cmEditSelectAll = new System.Windows.Forms.MenuItem();
-            this.opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
-            this.SuspendLayout();
+            toolBar1 = new System.Windows.Forms.ToolBar();
+            tbFileNew = new System.Windows.Forms.ToolBarButton();
+            tbFileOpen = new System.Windows.Forms.ToolBarButton();
+            tbFileSave = new System.Windows.Forms.ToolBarButton();
+            tbSeparator1 = new System.Windows.Forms.ToolBarButton();
+            tbEditCut = new System.Windows.Forms.ToolBarButton();
+            tbEditCopy = new System.Windows.Forms.ToolBarButton();
+            tbEditPaste = new System.Windows.Forms.ToolBarButton();
+            tbSeparator2 = new System.Windows.Forms.ToolBarButton();
+            tbEditUndo = new System.Windows.Forms.ToolBarButton();
+            tbEditRedo = new System.Windows.Forms.ToolBarButton();
+            imageList1 = new System.Windows.Forms.ImageList(components);
+            statusBar1 = new System.Windows.Forms.StatusBar();
+            openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            view1 = new Girl.HierArch.View();
+            mainMenu1 = new System.Windows.Forms.MainMenu();
+            mnuFile = new System.Windows.Forms.MenuItem();
+            mnuFileNew = new System.Windows.Forms.MenuItem();
+            mnuFileOpen = new System.Windows.Forms.MenuItem();
+            mnuFileSave = new System.Windows.Forms.MenuItem();
+            mnuFileSaveAs = new System.Windows.Forms.MenuItem();
+            mnuFileSeparator1 = new System.Windows.Forms.MenuItem();
+            mnuFileClose = new System.Windows.Forms.MenuItem();
+            mnuFileExit = new System.Windows.Forms.MenuItem();
+            mnuEdit = new System.Windows.Forms.MenuItem();
+            mnuEditUndo = new System.Windows.Forms.MenuItem();
+            mnuEditRedo = new System.Windows.Forms.MenuItem();
+            mnuEditSeparator1 = new System.Windows.Forms.MenuItem();
+            mnuEditCut = new System.Windows.Forms.MenuItem();
+            mnuEditCopy = new System.Windows.Forms.MenuItem();
+            mnuEditPaste = new System.Windows.Forms.MenuItem();
+            mnuEditDelete = new System.Windows.Forms.MenuItem();
+            mnuEditSeparator2 = new System.Windows.Forms.MenuItem();
+            mnuEditSelectAll = new System.Windows.Forms.MenuItem();
+            mnuOption = new System.Windows.Forms.MenuItem();
+            mnuOptionSmartEnter = new System.Windows.Forms.MenuItem();
+            mnuOptionSmartTab = new System.Windows.Forms.MenuItem();
+            mnuOptionSmartHome = new System.Windows.Forms.MenuItem();
+            mnuOptionSmartParenthesis = new System.Windows.Forms.MenuItem();
+            mnuOptionSeparator1 = new System.Windows.Forms.MenuItem();
+            mnuOptionWordWrap = new System.Windows.Forms.MenuItem();
+            mnuOptionFont = new System.Windows.Forms.MenuItem();
+            mnuHelp = new System.Windows.Forms.MenuItem();
+            mnuHelpAbout = new System.Windows.Forms.MenuItem();
+            cmEdit = new System.Windows.Forms.ContextMenu();
+            cmEditUndo = new System.Windows.Forms.MenuItem();
+            cmEditRedo = new System.Windows.Forms.MenuItem();
+            cmEditSeparator1 = new System.Windows.Forms.MenuItem();
+            cmEditCut = new System.Windows.Forms.MenuItem();
+            cmEditCopy = new System.Windows.Forms.MenuItem();
+            cmEditPaste = new System.Windows.Forms.MenuItem();
+            cmEditDelete = new System.Windows.Forms.MenuItem();
+            cmEditSeparator2 = new System.Windows.Forms.MenuItem();
+            cmEditSelectAll = new System.Windows.Forms.MenuItem();
+            opaqueSplitter1 = new Girl.Windows.Forms.OpaqueSplitter();
+            SuspendLayout();
             // 
             // toolBar1
             // 
-            this.toolBar1.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
-            this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-                                                                                        this.tbFileNew,
-                                                                                        this.tbFileOpen,
-                                                                                        this.tbFileSave,
-                                                                                        this.tbSeparator1,
-                                                                                        this.tbEditCut,
-                                                                                        this.tbEditCopy,
-                                                                                        this.tbEditPaste,
-                                                                                        this.tbSeparator2,
-                                                                                        this.tbEditUndo,
-                                                                                        this.tbEditRedo});
-            this.toolBar1.DropDownArrows = true;
-            this.toolBar1.ImageList = this.imageList1;
-            this.toolBar1.Name = "toolBar1";
-            this.toolBar1.ShowToolTips = true;
-            this.toolBar1.Size = new System.Drawing.Size(712, 25);
-            this.toolBar1.TabIndex = 0;
-            this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
+            toolBar1.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
+            toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+                                                                                        tbFileNew,
+                                                                                        tbFileOpen,
+                                                                                        tbFileSave,
+                                                                                        tbSeparator1,
+                                                                                        tbEditCut,
+                                                                                        tbEditCopy,
+                                                                                        tbEditPaste,
+                                                                                        tbSeparator2,
+                                                                                        tbEditUndo,
+                                                                                        tbEditRedo});
+            toolBar1.DropDownArrows = true;
+            toolBar1.ImageList = imageList1;
+            toolBar1.Name = "toolBar1";
+            toolBar1.ShowToolTips = true;
+            toolBar1.Size = new System.Drawing.Size(712, 25);
+            toolBar1.TabIndex = 0;
+            toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(toolBar1_ButtonClick);
             // 
             // tbFileNew
             // 
-            this.tbFileNew.ImageIndex = 0;
-            this.tbFileNew.ToolTipText = "新規作成 (Ctrl+N)";
+            tbFileNew.ImageIndex = 0;
+            tbFileNew.ToolTipText = "新規作成 (Ctrl+N)";
             // 
             // tbFileOpen
             // 
-            this.tbFileOpen.ImageIndex = 1;
-            this.tbFileOpen.ToolTipText = "開く (Ctrl+O)";
+            tbFileOpen.ImageIndex = 1;
+            tbFileOpen.ToolTipText = "開く (Ctrl+O)";
             // 
             // tbFileSave
             // 
-            this.tbFileSave.ImageIndex = 2;
-            this.tbFileSave.ToolTipText = "上書き保存 (Ctrl+S)";
+            tbFileSave.ImageIndex = 2;
+            tbFileSave.ToolTipText = "上書き保存 (Ctrl+S)";
             // 
             // tbSeparator1
             // 
-            this.tbSeparator1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            tbSeparator1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // tbEditCut
             // 
-            this.tbEditCut.ImageIndex = 3;
-            this.tbEditCut.ToolTipText = "切り取り (Ctrl+X)";
+            tbEditCut.ImageIndex = 3;
+            tbEditCut.ToolTipText = "切り取り (Ctrl+X)";
             // 
             // tbEditCopy
             // 
-            this.tbEditCopy.ImageIndex = 4;
-            this.tbEditCopy.ToolTipText = "コピー (Ctrl+C)";
+            tbEditCopy.ImageIndex = 4;
+            tbEditCopy.ToolTipText = "コピー (Ctrl+C)";
             // 
             // tbEditPaste
             // 
-            this.tbEditPaste.ImageIndex = 5;
-            this.tbEditPaste.ToolTipText = "貼り付け (Ctrl+V)";
+            tbEditPaste.ImageIndex = 5;
+            tbEditPaste.ToolTipText = "貼り付け (Ctrl+V)";
             // 
             // tbSeparator2
             // 
-            this.tbSeparator2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            tbSeparator2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // tbEditUndo
             // 
-            this.tbEditUndo.ImageIndex = 6;
-            this.tbEditUndo.ToolTipText = "元に戻す (Ctrl+Z)";
+            tbEditUndo.ImageIndex = 6;
+            tbEditUndo.ToolTipText = "元に戻す (Ctrl+Z)";
             // 
             // tbEditRedo
             // 
-            this.tbEditRedo.ImageIndex = 7;
-            this.tbEditRedo.ToolTipText = "やり直し (Ctrl+Y)";
+            tbEditRedo.ImageIndex = 7;
+            tbEditRedo.ToolTipText = "やり直し (Ctrl+Y)";
             // 
             // imageList1
             // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            imageList1.ImageStream = (System.Windows.Forms.ImageListStreamer)resources.GetObject("imageList1.ImageStream");
+            imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // statusBar1
             // 
-            this.statusBar1.Location = new System.Drawing.Point(0, 467);
-            this.statusBar1.Name = "statusBar1";
-            this.statusBar1.Size = new System.Drawing.Size(712, 22);
-            this.statusBar1.TabIndex = 1;
+            statusBar1.Location = new System.Drawing.Point(0, 467);
+            statusBar1.Name = "statusBar1";
+            statusBar1.Size = new System.Drawing.Size(712, 22);
+            statusBar1.TabIndex = 1;
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.DefaultExt = "hadoc";
-            this.openFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.hadoc|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
+            openFileDialog1.DefaultExt = "hadoc";
+            openFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.hadoc|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.DefaultExt = "hadoc";
-            this.saveFileDialog1.FileName = "doc1";
-            this.saveFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.hadoc|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
+            saveFileDialog1.DefaultExt = "hadoc";
+            saveFileDialog1.FileName = "doc1";
+            saveFileDialog1.Filter = "HierArch 文書 (*.hadoc)|*.hadoc|HDS 文書 (*.hds)|*.hds|すべてのファイル (*.*)|*.*";
             // 
             // view1
             // 
-            this.view1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.view1.Location = new System.Drawing.Point(0, 25);
-            this.view1.Name = "view1";
-            this.view1.Size = new System.Drawing.Size(712, 311);
-            this.view1.TabIndex = 2;
+            view1.Dock = System.Windows.Forms.DockStyle.Fill;
+            view1.Location = new System.Drawing.Point(0, 25);
+            view1.Name = "view1";
+            view1.Size = new System.Drawing.Size(712, 311);
+            view1.TabIndex = 2;
             // 
             // mainMenu1
             // 
-            this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-                                                                                      this.mnuFile,
-                                                                                      this.mnuEdit,
-                                                                                      this.mnuOption,
-                                                                                      this.mnuHelp});
+            mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+                                                                                      mnuFile,
+                                                                                      mnuEdit,
+                                                                                      mnuOption,
+                                                                                      mnuHelp});
             // 
             // mnuFile
             // 
-            this.mnuFile.Index = 0;
-            this.mnuFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-                                                                                    this.mnuFileNew,
-                                                                                    this.mnuFileOpen,
-                                                                                    this.mnuFileSave,
-                                                                                    this.mnuFileSaveAs,
-                                                                                    this.mnuFileSeparator1,
-                                                                                    this.mnuFileClose,
-                                                                                    this.mnuFileExit});
-            this.mnuFile.Text = "ファイル(&F)";
+            mnuFile.Index = 0;
+            mnuFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+                                                                                    mnuFileNew,
+                                                                                    mnuFileOpen,
+                                                                                    mnuFileSave,
+                                                                                    mnuFileSaveAs,
+                                                                                    mnuFileSeparator1,
+                                                                                    mnuFileClose,
+                                                                                    mnuFileExit});
+            mnuFile.Text = "ファイル(&F)";
             // 
             // mnuFileNew
             // 
-            this.mnuFileNew.Index = 0;
-            this.mnuFileNew.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
-            this.mnuFileNew.Text = "新規作成(&N)";
-            this.mnuFileNew.Click += new System.EventHandler(this.mnuFileNew_Click);
+            mnuFileNew.Index = 0;
+            mnuFileNew.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
+            mnuFileNew.Text = "新規作成(&N)";
+            mnuFileNew.Click += new System.EventHandler(mnuFileNew_Click);
             // 
             // mnuFileOpen
             // 
-            this.mnuFileOpen.Index = 1;
-            this.mnuFileOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
-            this.mnuFileOpen.Text = "開く(&O)";
-            this.mnuFileOpen.Click += new System.EventHandler(this.mnuFileOpen_Click);
+            mnuFileOpen.Index = 1;
+            mnuFileOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
+            mnuFileOpen.Text = "開く(&O)";
+            mnuFileOpen.Click += new System.EventHandler(mnuFileOpen_Click);
             // 
             // mnuFileSave
             // 
-            this.mnuFileSave.Index = 2;
-            this.mnuFileSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
-            this.mnuFileSave.Text = "上書き保存(&S)";
-            this.mnuFileSave.Click += new System.EventHandler(this.mnuFileSave_Click);
+            mnuFileSave.Index = 2;
+            mnuFileSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
+            mnuFileSave.Text = "上書き保存(&S)";
+            mnuFileSave.Click += new System.EventHandler(mnuFileSave_Click);
             // 
             // mnuFileSaveAs
             // 
-            this.mnuFileSaveAs.Index = 3;
-            this.mnuFileSaveAs.Text = "名前を付けて保存(&A)";
-            this.mnuFileSaveAs.Click += new System.EventHandler(this.mnuFileSaveAs_Click);
+            mnuFileSaveAs.Index = 3;
+            mnuFileSaveAs.Text = "名前を付けて保存(&A)";
+            mnuFileSaveAs.Click += new System.EventHandler(mnuFileSaveAs_Click);
             // 
             // mnuFileSeparator1
             // 
-            this.mnuFileSeparator1.Index = 4;
-            this.mnuFileSeparator1.Text = "-";
+            mnuFileSeparator1.Index = 4;
+            mnuFileSeparator1.Text = "-";
             // 
             // mnuFileClose
             // 
-            this.mnuFileClose.Index = 5;
-            this.mnuFileClose.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
-            this.mnuFileClose.Text = "閉じる(&C)";
-            this.mnuFileClose.Click += new System.EventHandler(this.mnuFileClose_Click);
+            mnuFileClose.Index = 5;
+            mnuFileClose.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
+            mnuFileClose.Text = "閉じる(&C)";
+            mnuFileClose.Click += new System.EventHandler(mnuFileClose_Click);
             // 
             // mnuFileExit
             // 
-            this.mnuFileExit.Index = 6;
-            this.mnuFileExit.Text = "終了(&X)";
-            this.mnuFileExit.Click += new System.EventHandler(this.mnuFileExit_Click);
+            mnuFileExit.Index = 6;
+            mnuFileExit.Text = "終了(&X)";
+            mnuFileExit.Click += new System.EventHandler(mnuFileExit_Click);
             // 
             // mnuEdit
             // 
-            this.mnuEdit.Index = 1;
-            this.mnuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-                                                                                    this.mnuEditUndo,
-                                                                                    this.mnuEditRedo,
-                                                                                    this.mnuEditSeparator1,
-                                                                                    this.mnuEditCut,
-                                                                                    this.mnuEditCopy,
-                                                                                    this.mnuEditPaste,
-                                                                                    this.mnuEditDelete,
-                                                                                    this.mnuEditSeparator2,
-                                                                                    this.mnuEditSelectAll});
-            this.mnuEdit.Text = "編集(&E)";
+            mnuEdit.Index = 1;
+            mnuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+                                                                                    mnuEditUndo,
+                                                                                    mnuEditRedo,
+                                                                                    mnuEditSeparator1,
+                                                                                    mnuEditCut,
+                                                                                    mnuEditCopy,
+                                                                                    mnuEditPaste,
+                                                                                    mnuEditDelete,
+                                                                                    mnuEditSeparator2,
+                                                                                    mnuEditSelectAll});
+            mnuEdit.Text = "編集(&E)";
             // 
             // mnuEditUndo
             // 
-            this.mnuEditUndo.Index = 0;
-            this.mnuEditUndo.Text = "元に戻す(&U)";
+            mnuEditUndo.Index = 0;
+            mnuEditUndo.Text = "元に戻す(&U)";
             // 
             // mnuEditRedo
             // 
-            this.mnuEditRedo.Index = 1;
-            this.mnuEditRedo.Text = "やり直し(&R)";
+            mnuEditRedo.Index = 1;
+            mnuEditRedo.Text = "やり直し(&R)";
             // 
             // mnuEditSeparator1
             // 
-            this.mnuEditSeparator1.Index = 2;
-            this.mnuEditSeparator1.Text = "-";
+            mnuEditSeparator1.Index = 2;
+            mnuEditSeparator1.Text = "-";
             // 
             // mnuEditCut
             // 
-            this.mnuEditCut.Index = 3;
-            this.mnuEditCut.Text = "切り取り(&T)";
+            mnuEditCut.Index = 3;
+            mnuEditCut.Text = "切り取り(&T)";
             // 
             // mnuEditCopy
             // 
-            this.mnuEditCopy.Index = 4;
-            this.mnuEditCopy.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
-            this.mnuEditCopy.Text = "コピー(&C)";
+            mnuEditCopy.Index = 4;
+            mnuEditCopy.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
+            mnuEditCopy.Text = "コピー(&C)";
             // 
             // mnuEditPaste
             // 
-            this.mnuEditPaste.Index = 5;
-            this.mnuEditPaste.Text = "貼り付け(&P)";
+            mnuEditPaste.Index = 5;
+            mnuEditPaste.Text = "貼り付け(&P)";
             // 
             // mnuEditDelete
             // 
-            this.mnuEditDelete.Index = 6;
-            this.mnuEditDelete.Text = "削除(&D)";
+            mnuEditDelete.Index = 6;
+            mnuEditDelete.Text = "削除(&D)";
             // 
             // mnuEditSeparator2
             // 
-            this.mnuEditSeparator2.Index = 7;
-            this.mnuEditSeparator2.Text = "-";
+            mnuEditSeparator2.Index = 7;
+            mnuEditSeparator2.Text = "-";
             // 
             // mnuEditSelectAll
             // 
-            this.mnuEditSelectAll.Index = 8;
-            this.mnuEditSelectAll.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
-            this.mnuEditSelectAll.Text = "すべて選択(&A)";
+            mnuEditSelectAll.Index = 8;
+            mnuEditSelectAll.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
+            mnuEditSelectAll.Text = "すべて選択(&A)";
             // 
             // menuItem1
             // 
-            this.mnuOption.Index = 2;
-            this.mnuOption.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-                                                                                      this.mnuOptionSmartEnter,
-                                                                                      this.mnuOptionSmartTab,
-                                                                                      this.mnuOptionSmartHome,
-                                                                                      this.mnuOptionSmartParenthesis,
-                                                                                      this.mnuOptionFont,
-                                                                                      this.mnuOptionWordWrap,
-                                                                                      this.mnuOptionSeparator1});
-            this.mnuOption.Text = "オプション(&O)";
+            mnuOption.Index = 2;
+            mnuOption.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+                                                                                      mnuOptionSmartEnter,
+                                                                                      mnuOptionSmartTab,
+                                                                                      mnuOptionSmartHome,
+                                                                                      mnuOptionSmartParenthesis,
+                                                                                      mnuOptionFont,
+                                                                                      mnuOptionWordWrap,
+                                                                                      mnuOptionSeparator1});
+            mnuOption.Text = "オプション(&O)";
             // 
             // mnuOptionSmartEnter
             // 
-            this.mnuOptionSmartEnter.Index = 0;
-            this.mnuOptionSmartEnter.Text = "スマート &Enter";
+            mnuOptionSmartEnter.Index = 0;
+            mnuOptionSmartEnter.Text = "スマート &Enter";
             // 
             // mnuOptionSmartTab
             // 
-            this.mnuOptionSmartTab.Index = 1;
-            this.mnuOptionSmartTab.Text = "スマート &Tab";
+            mnuOptionSmartTab.Index = 1;
+            mnuOptionSmartTab.Text = "スマート &Tab";
             // 
             // mnuOptionSmartHome
             // 
-            this.mnuOptionSmartHome.Index = 2;
-            this.mnuOptionSmartHome.Text = "スマート &Home";
+            mnuOptionSmartHome.Index = 2;
+            mnuOptionSmartHome.Text = "スマート &Home";
             // 
             // mnuOptionSmartParenthesis
             // 
-            this.mnuOptionSmartParenthesis.Index = 3;
-            this.mnuOptionSmartParenthesis.Text = "自動括弧挿入(&P)";
+            mnuOptionSmartParenthesis.Index = 3;
+            mnuOptionSmartParenthesis.Text = "自動括弧挿入(&P)";
             // 
             // mnuOptionSeparator1
             // 
-            this.mnuOptionSeparator1.Index = 4;
-            this.mnuOptionSeparator1.Text = "-";
+            mnuOptionSeparator1.Index = 4;
+            mnuOptionSeparator1.Text = "-";
             // 
             // mnuOptionWordWrap
             // 
-            this.mnuOptionWordWrap.Index = 5;
-            this.mnuOptionWordWrap.Text = "折り返し(&W)";
-            this.mnuOptionWordWrap.Click += new System.EventHandler(this.mnuOptionWordWrap_Click);
+            mnuOptionWordWrap.Index = 5;
+            mnuOptionWordWrap.Text = "折り返し(&W)";
+            mnuOptionWordWrap.Click += new System.EventHandler(mnuOptionWordWrap_Click);
             // 
             // mnuOptionFont
             // 
-            this.mnuOptionFont.Index = 6;
-            this.mnuOptionFont.Text = "フォント(&F)";
-            this.mnuOptionFont.Click += new System.EventHandler(this.mnuOptionFont_Click);
+            mnuOptionFont.Index = 6;
+            mnuOptionFont.Text = "フォント(&F)";
+            mnuOptionFont.Click += new System.EventHandler(mnuOptionFont_Click);
             // 
             // mnuHelp
             // 
-            this.mnuHelp.Index = 3;
-            this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-                                                                                    this.mnuHelpAbout});
-            this.mnuHelp.Text = "ヘルプ(&H)";
+            mnuHelp.Index = 3;
+            mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+                                                                                    mnuHelpAbout});
+            mnuHelp.Text = "ヘルプ(&H)";
             // 
             // mnuHelpAbout
             // 
-            this.mnuHelpAbout.Index = 0;
-            this.mnuHelpAbout.Text = "バージョン情報(&A)";
-            this.mnuHelpAbout.Click += new System.EventHandler(this.mnuHelpAbout_Click);
+            mnuHelpAbout.Index = 0;
+            mnuHelpAbout.Text = "バージョン情報(&A)";
+            mnuHelpAbout.Click += new System.EventHandler(mnuHelpAbout_Click);
             // 
             // cmEdit
             // 
-            this.cmEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-                                                                                   this.cmEditUndo,
-                                                                                   this.cmEditRedo,
-                                                                                   this.cmEditSeparator1,
-                                                                                   this.cmEditCut,
-                                                                                   this.cmEditCopy,
-                                                                                   this.cmEditPaste,
-                                                                                   this.cmEditDelete,
-                                                                                   this.cmEditSeparator2,
-                                                                                   this.cmEditSelectAll});
+            cmEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+                                                                                   cmEditUndo,
+                                                                                   cmEditRedo,
+                                                                                   cmEditSeparator1,
+                                                                                   cmEditCut,
+                                                                                   cmEditCopy,
+                                                                                   cmEditPaste,
+                                                                                   cmEditDelete,
+                                                                                   cmEditSeparator2,
+                                                                                   cmEditSelectAll});
             // 
             // cmEditUndo
             // 
-            this.cmEditUndo.Index = 0;
-            this.cmEditUndo.Text = "元に戻す(&U)";
+            cmEditUndo.Index = 0;
+            cmEditUndo.Text = "元に戻す(&U)";
             // 
             // cmEditRedo
             // 
-            this.cmEditRedo.Index = 1;
-            this.cmEditRedo.Text = "やり直し(&R)";
+            cmEditRedo.Index = 1;
+            cmEditRedo.Text = "やり直し(&R)";
             // 
             // cmEditSeparator1
             // 
-            this.cmEditSeparator1.Index = 2;
-            this.cmEditSeparator1.Text = "-";
+            cmEditSeparator1.Index = 2;
+            cmEditSeparator1.Text = "-";
             // 
             // cmEditCut
             // 
-            this.cmEditCut.Index = 3;
-            this.cmEditCut.Text = "切り取り(&T)";
+            cmEditCut.Index = 3;
+            cmEditCut.Text = "切り取り(&T)";
             // 
             // cmEditCopy
             // 
-            this.cmEditCopy.Index = 4;
-            this.cmEditCopy.Text = "コピー(&C)";
+            cmEditCopy.Index = 4;
+            cmEditCopy.Text = "コピー(&C)";
             // 
             // cmEditPaste
             // 
-            this.cmEditPaste.Index = 5;
-            this.cmEditPaste.Text = "貼り付け(&P)";
+            cmEditPaste.Index = 5;
+            cmEditPaste.Text = "貼り付け(&P)";
             // 
             // cmEditDelete
             // 
-            this.cmEditDelete.Index = 6;
-            this.cmEditDelete.Text = "削除(&D)";
+            cmEditDelete.Index = 6;
+            cmEditDelete.Text = "削除(&D)";
             // 
             // cmEditSeparator2
             // 
-            this.cmEditSeparator2.Index = 7;
-            this.cmEditSeparator2.Text = "-";
+            cmEditSeparator2.Index = 7;
+            cmEditSeparator2.Text = "-";
             // 
             // cmEditSelectAll
             // 
-            this.cmEditSelectAll.Index = 8;
-            this.cmEditSelectAll.Text = "すべて選択(&A)";
+            cmEditSelectAll.Index = 8;
+            cmEditSelectAll.Text = "すべて選択(&A)";
             // 
             // opaqueSplitter1
             // 
-            this.opaqueSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.opaqueSplitter1.Location = new System.Drawing.Point(0, 336);
-            this.opaqueSplitter1.Name = "opaqueSplitter1";
-            this.opaqueSplitter1.Opaque = true;
-            this.opaqueSplitter1.Size = new System.Drawing.Size(712, 3);
-            this.opaqueSplitter1.TabIndex = 4;
-            this.opaqueSplitter1.TabStop = false;
+            opaqueSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            opaqueSplitter1.Location = new System.Drawing.Point(0, 336);
+            opaqueSplitter1.Name = "opaqueSplitter1";
+            opaqueSplitter1.Opaque = true;
+            opaqueSplitter1.Size = new System.Drawing.Size(712, 3);
+            opaqueSplitter1.TabIndex = 4;
+            opaqueSplitter1.TabStop = false;
             // 
             // Form1
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-            this.ClientSize = new System.Drawing.Size(712, 489);
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {
-                                                                          this.view1,
-                                                                          this.opaqueSplitter1,
-                                                                          this.toolBar1,
-                                                                          this.statusBar1});
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Menu = this.mainMenu1;
-            this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
-            this.Text = "HierArch";
-            this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
-            this.ResumeLayout(false);
+            AutoScaleBaseSize = new System.Drawing.Size(5, 12);
+            ClientSize = new System.Drawing.Size(712, 489);
+            Controls.AddRange(new System.Windows.Forms.Control[] {
+                                                                          view1,
+                                                                          opaqueSplitter1,
+                                                                          toolBar1,
+                                                                          statusBar1});
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Menu = mainMenu1;
+            Name = "Form1";
+            StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
+            Text = "HierArch";
+            Closing += new System.ComponentModel.CancelEventHandler(Form1_Closing);
+            ResumeLayout(false);
 
         }
         #endregion
@@ -605,7 +605,7 @@ namespace Girl.HierArch
         /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             ApplicationDataManager adm = new ApplicationDataManager();
@@ -623,7 +623,7 @@ namespace Girl.HierArch
                 {
                     f = new Form1();
                     f.CreateHandle();
-                    f.Open(fn);
+                    _ = f.Open(fn);
                     f.Show();
                 }
             }
@@ -638,7 +638,10 @@ namespace Girl.HierArch
             foreach (Form1 f in list)
             {
                 f.Close();
-                if (f.Visible) break;
+                if (f.Visible)
+                {
+                    break;
+                }
             }
         }
 
@@ -646,9 +649,9 @@ namespace Girl.HierArch
 
         protected override void OnResize(EventArgs e)
         {
-            if (this.WindowState != FormWindowState.Minimized)
+            if (WindowState != FormWindowState.Minimized)
             {
-                this.LastState = this.WindowState;
+                LastState = WindowState;
             }
 
             base.OnResize(e);
@@ -663,22 +666,22 @@ namespace Girl.HierArch
 
         private void mnuFileOpen_Click(object sender, System.EventArgs e)
         {
-            this.Open();
+            _ = Open();
         }
 
         private void mnuFileSave_Click(object sender, System.EventArgs e)
         {
-            this.Save();
+            _ = Save();
         }
 
         private void mnuFileSaveAs_Click(object sender, System.EventArgs e)
         {
-            this.SaveAs();
+            _ = SaveAs();
         }
 
         private void mnuFileClose_Click(object sender, System.EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void mnuFileExit_Click(object sender, System.EventArgs e)
@@ -688,19 +691,19 @@ namespace Girl.HierArch
 
         private void mnuOptionWordWrap_Click(object sender, System.EventArgs e)
         {
-            this.view1.txtSource.WordWrap
-                = this.mnuOptionWordWrap.Checked
-                = !this.mnuOptionWordWrap.Checked;
+            view1.txtSource.WordWrap
+                = mnuOptionWordWrap.Checked
+                = !mnuOptionWordWrap.Checked;
         }
 
         private void mnuOptionFont_Click(object sender, System.EventArgs e)
         {
-            using (var fd = new FontDialog())
+            using (FontDialog fd = new FontDialog())
             {
-                fd.Font = this.view1.txtSource.Font;
+                fd.Font = view1.txtSource.Font;
                 if (fd.ShowDialog(this) == DialogResult.OK)
                 {
-                    this.view1.txtSource.Font = fd.Font;
+                    view1.txtSource.Font = fd.Font;
                 }
             }
         }
@@ -709,16 +712,17 @@ namespace Girl.HierArch
         {
             About a = new About();
             a.label1.Text = m_sCaption/*ProductName*/ + " Version " + ProductVersion;
-            a.ShowDialog(this);
+            _ = a.ShowDialog(this);
             a.Dispose();
         }
 
         private void toolBar1_ButtonClick(object sender, System.Windows.Forms.ToolBarButtonClickEventArgs e)
         {
             object target = e.Button.Tag;
-            if (target == null || !(target is MenuItem)) return;
-
-            (target as MenuItem).PerformClick();
+            if (target == null || !(target is MenuItem))
+            {
+                return;
+            } (target as MenuItem).PerformClick();
         }
 
         #endregion
@@ -727,34 +731,34 @@ namespace Girl.HierArch
 
         public bool Open()
         {
-            openFileDialog1.FileName = this.document.FullName;
+            openFileDialog1.FileName = document.FullName;
             if (openFileDialog1.ShowDialog(this) == DialogResult.Cancel)
             {
-                view1.Focus();
+                _ = view1.Focus();
                 return false;
             }
 
             Form1 target = this;
-            if (this.document.Changed || this.document.FullName != "")
+            if (document.Changed || document.FullName != "")
             {
                 target = new Form1();
                 target.CreateHandle();
             }
-            var ret = target.Open(openFileDialog1.FileName);
+            bool ret = target.Open(openFileDialog1.FileName);
             target.Show();
             return ret;
         }
 
         public bool Open(string fn)
         {
-            this.document.FullName = fn;
+            document.FullName = fn;
 
             Cursor cur = Cursor.Current;
             Cursor.Current = Cursors.WaitCursor;
-            bool ret = this.document.Open();
+            bool ret = document.Open();
             SetCaption();
             SetDocument();
-            view1.Focus();
+            _ = view1.Focus();
             Cursor.Current = cur;
 
             return ret;
@@ -762,12 +766,15 @@ namespace Girl.HierArch
 
         public bool Save()
         {
-            if (this.document.FullName == "") return SaveAs();
+            if (document.FullName == "")
+            {
+                return SaveAs();
+            }
 
             Cursor cur = Cursor.Current;
             Cursor.Current = Cursors.WaitCursor;
-            this.document.ViewInfo.Store(this);
-            bool ret = this.document.Save();
+            document.ViewInfo.Store(this);
+            bool ret = document.Save();
             SetCaption();
             Cursor.Current = cur;
 
@@ -776,26 +783,32 @@ namespace Girl.HierArch
 
         public bool SaveAs()
         {
-            var fn = this.document.FullName;
+            string fn = document.FullName;
             saveFileDialog1.InitialDirectory = Path.GetDirectoryName(fn);
             saveFileDialog1.FileName = Path.GetFileName(fn);
             DialogResult res = saveFileDialog1.ShowDialog(this);
-            view1.Focus();
-            if (res == DialogResult.Cancel) return false;
+            _ = view1.Focus();
+            if (res == DialogResult.Cancel)
+            {
+                return false;
+            }
 
-            this.document.FullName = saveFileDialog1.FileName;
-            return this.Save();
+            document.FullName = saveFileDialog1.FileName;
+            return Save();
         }
 
         private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.document.Changed)
+            if (document.Changed)
             {
-                string msg = string.Format("ファイル {0} の内容は変更されています。\r\n\r\n変更を保存しますか?", this.document.Name);
+                string msg = string.Format("ファイル {0} の内容は変更されています。\r\n\r\n変更を保存しますか?", document.Name);
                 DialogResult res = MessageBox.Show(this, msg, m_sCaption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
                 if (res == DialogResult.Yes)
                 {
-                    if (!Save()) e.Cancel = true;
+                    if (!Save())
+                    {
+                        e.Cancel = true;
+                    }
                 }
                 else if (res == DialogResult.Cancel)
                 {
@@ -806,21 +819,24 @@ namespace Girl.HierArch
 
         public void SetDocument()
         {
-            this.document.ViewInfo.Apply(this);
-            this.view1.SetDocument(this.document);
+            document.ViewInfo.Apply(this);
+            view1.SetDocument(document);
         }
 
         public void SetCaption()
         {
-            statusBar1.Text = this.document.FullName;
-            Text = this.document.Name + " - " + m_sCaption + (this.document.Changed ? "*" : "");
+            statusBar1.Text = document.FullName;
+            Text = document.Name + " - " + m_sCaption + (document.Changed ? "*" : "");
         }
 
         private void view1_Changed(object sender, System.EventArgs e)
         {
-            if (this.document.Changed) return;
+            if (document.Changed)
+            {
+                return;
+            }
 
-            this.document.Changed = true;
+            document.Changed = true;
             SetCaption();
         }
 

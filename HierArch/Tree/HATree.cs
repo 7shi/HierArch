@@ -16,20 +16,22 @@ namespace Girl.HierArch
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(HATree));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            imageList1 = new System.Windows.Forms.ImageList(components)
+            {
+                // 
+                // imageList1
+                // 
+                ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit,
+                ImageSize = new System.Drawing.Size(16, 16),
+                ImageStream = (System.Windows.Forms.ImageListStreamer)resources.GetObject("imageList1.ImageStream"),
+                TransparentColor = System.Drawing.Color.Transparent
+            };
             // 
             // HATree
             // 
-            this.ItemHeight = 14;
+            ItemHeight = 14;
 
         }
 
@@ -39,13 +41,7 @@ namespace Girl.HierArch
             MakeMenu();
         }
 
-        public virtual HATreeNode NewNode
-        {
-            get
-            {
-                return new HATreeNode("新しいノード");
-            }
-        }
+        public virtual HATreeNode NewNode => new HATreeNode("新しいノード");
 
         #region Menu
 
@@ -63,75 +59,75 @@ namespace Girl.HierArch
 
         private void MakeMenu()
         {
-            mnuChild = new MenuItem("子を追加(&C)", new EventHandler(this.MenuNodeChild_Click));
-            mnuAppend = new MenuItem("後に追加(&A)", new EventHandler(this.MenuNodeAppend_Click));
-            mnuInsert = new MenuItem("前に追加(&I)", new EventHandler(this.MenuNodeInsert_Click));
-            mnuDelete = new MenuItem("削除(&D)", new EventHandler(this.MenuNodeDelete_Click));
-            mnuRename = new MenuItem("名前を変更(&M)", new EventHandler(this.MenuNodeRename_Click));
+            mnuChild = new MenuItem("子を追加(&C)", new EventHandler(MenuNodeChild_Click));
+            mnuAppend = new MenuItem("後に追加(&A)", new EventHandler(MenuNodeAppend_Click));
+            mnuInsert = new MenuItem("前に追加(&I)", new EventHandler(MenuNodeInsert_Click));
+            mnuDelete = new MenuItem("削除(&D)", new EventHandler(MenuNodeDelete_Click));
+            mnuRename = new MenuItem("名前を変更(&M)", new EventHandler(MenuNodeRename_Click));
 
-            MenuNodeTypeHandler = new EventHandler(this.MenuNodeType_Click);
+            MenuNodeTypeHandler = new EventHandler(MenuNodeType_Click);
 
-            this.mnuAccess = new MenuItem("アクセス制御(&A)", new MenuItem[]
+            mnuAccess = new MenuItem("アクセス制御(&A)", new MenuItem[]
                 {
-                    this.mnuAccessPublic    = new MenuItem("&Public", MenuNodeTypeHandler),
-                    this.mnuAccessProtected = new MenuItem("P&rotected", MenuNodeTypeHandler),
-                    this.mnuAccessPrivate   = new MenuItem("Pr&ivate", MenuNodeTypeHandler)
+                    mnuAccessPublic    = new MenuItem("&Public", MenuNodeTypeHandler),
+                    mnuAccessProtected = new MenuItem("P&rotected", MenuNodeTypeHandler),
+                    mnuAccessPrivate   = new MenuItem("Pr&ivate", MenuNodeTypeHandler)
                 });
 
-            this.mnuFolder = new MenuItem("フォルダ(&F)", new MenuItem[]
+            mnuFolder = new MenuItem("フォルダ(&F)", new MenuItem[]
                 {
-                    this.mnuFolderNormal = new MenuItem("標準(&N)", MenuNodeTypeHandler),
-                    this.mnuFolderRed    = new MenuItem("赤色(&R)", MenuNodeTypeHandler),
-                    this.mnuFolderBlue   = new MenuItem("青色(&B)", MenuNodeTypeHandler),
-                    this.mnuFolderGreen  = new MenuItem("緑色(&G)", MenuNodeTypeHandler),
-                    this.mnuFolderBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler),
-                    this.mnuFolderGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler)
+                    mnuFolderNormal = new MenuItem("標準(&N)", MenuNodeTypeHandler),
+                    mnuFolderRed    = new MenuItem("赤色(&R)", MenuNodeTypeHandler),
+                    mnuFolderBlue   = new MenuItem("青色(&B)", MenuNodeTypeHandler),
+                    mnuFolderGreen  = new MenuItem("緑色(&G)", MenuNodeTypeHandler),
+                    mnuFolderBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler),
+                    mnuFolderGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler)
                 });
 
-            this.mnuText = new MenuItem("テキスト(&T)", new MenuItem[]
+            mnuText = new MenuItem("テキスト(&T)", new MenuItem[]
                 {
-                    this.mnuTextNormal = new MenuItem("標準(&N)", MenuNodeTypeHandler),
-                    this.mnuTextRed    = new MenuItem("赤色(&R)", MenuNodeTypeHandler),
-                    this.mnuTextBlue   = new MenuItem("青色(&B)", MenuNodeTypeHandler),
-                    this.mnuTextGreen  = new MenuItem("緑色(&G)", MenuNodeTypeHandler),
-                    this.mnuTextBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler),
-                    this.mnuTextGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler)
+                    mnuTextNormal = new MenuItem("標準(&N)", MenuNodeTypeHandler),
+                    mnuTextRed    = new MenuItem("赤色(&R)", MenuNodeTypeHandler),
+                    mnuTextBlue   = new MenuItem("青色(&B)", MenuNodeTypeHandler),
+                    mnuTextGreen  = new MenuItem("緑色(&G)", MenuNodeTypeHandler),
+                    mnuTextBrown  = new MenuItem("茶色(&W)", MenuNodeTypeHandler),
+                    mnuTextGray   = new MenuItem("灰色(&Y)", MenuNodeTypeHandler)
                 });
 
-            this.mnuEtc = new MenuItem("その他(&E)", new MenuItem[]
+            mnuEtc = new MenuItem("その他(&E)", new MenuItem[]
                 {
-                    this.mnuEtcComment = new MenuItem("注釈(&C)", MenuNodeTypeHandler),
-                    this.mnuEtcSmile   = new MenuItem("人物(&H)", MenuNodeTypeHandler)
+                    mnuEtcComment = new MenuItem("注釈(&C)", MenuNodeTypeHandler),
+                    mnuEtcSmile   = new MenuItem("人物(&H)", MenuNodeTypeHandler)
                 });
 
-            menuType.Add(this.mnuAccessPublic, HAType.Public);
-            menuType.Add(this.mnuAccessProtected, HAType.Protected);
-            menuType.Add(this.mnuAccessPrivate, HAType.Private);
-            menuType.Add(this.mnuFolderNormal, HAType.Folder);
-            menuType.Add(this.mnuFolderRed, HAType.FolderRed);
-            menuType.Add(this.mnuFolderBlue, HAType.FolderBlue);
-            menuType.Add(this.mnuFolderGreen, HAType.FolderGreen);
-            menuType.Add(this.mnuFolderGray, HAType.FolderGray);
-            menuType.Add(this.mnuFolderBrown, HAType.FolderBrown);
-            menuType.Add(this.mnuTextNormal, HAType.Text);
-            menuType.Add(this.mnuTextRed, HAType.TextRed);
-            menuType.Add(this.mnuTextBlue, HAType.TextBlue);
-            menuType.Add(this.mnuTextGreen, HAType.TextGreen);
-            menuType.Add(this.mnuTextGray, HAType.TextGray);
-            menuType.Add(this.mnuTextBrown, HAType.TextBrown);
-            menuType.Add(this.mnuEtcComment, HAType.Comment);
-            menuType.Add(this.mnuEtcSmile, HAType.Smile);
+            menuType.Add(mnuAccessPublic, HAType.Public);
+            menuType.Add(mnuAccessProtected, HAType.Protected);
+            menuType.Add(mnuAccessPrivate, HAType.Private);
+            menuType.Add(mnuFolderNormal, HAType.Folder);
+            menuType.Add(mnuFolderRed, HAType.FolderRed);
+            menuType.Add(mnuFolderBlue, HAType.FolderBlue);
+            menuType.Add(mnuFolderGreen, HAType.FolderGreen);
+            menuType.Add(mnuFolderGray, HAType.FolderGray);
+            menuType.Add(mnuFolderBrown, HAType.FolderBrown);
+            menuType.Add(mnuTextNormal, HAType.Text);
+            menuType.Add(mnuTextRed, HAType.TextRed);
+            menuType.Add(mnuTextBlue, HAType.TextBlue);
+            menuType.Add(mnuTextGreen, HAType.TextGreen);
+            menuType.Add(mnuTextGray, HAType.TextGray);
+            menuType.Add(mnuTextBrown, HAType.TextBrown);
+            menuType.Add(mnuEtcComment, HAType.Comment);
+            menuType.Add(mnuEtcSmile, HAType.Smile);
         }
 
         protected virtual void MenuNodeType_Click(object sender, System.EventArgs e)
         {
-            HATreeNode n = (HATreeNode)this.SelectedNode;
+            HATreeNode n = (HATreeNode)SelectedNode;
             HAType type = (HAType)menuType[sender];
             if (n != null && n.AllowDrag && n.Type != type)
             {
                 n.Type = type;
-                this.OnChanged(this, EventArgs.Empty);
-                this.OnNodeTypeChanged(this, EventArgs.Empty);
+                OnChanged(this, EventArgs.Empty);
+                OnNodeTypeChanged(this, EventArgs.Empty);
             }
         }
 
@@ -141,79 +137,89 @@ namespace Girl.HierArch
 
         protected virtual void MenuNodeChild_Click(object sender, System.EventArgs e)
         {
-            HATreeNode n = this.NewNode;
-            HATreeNode p = (HATreeNode)this.SelectedNode;
+            HATreeNode n = NewNode;
+            HATreeNode p = (HATreeNode)SelectedNode;
             if (p == null)
             {
-                this.Nodes.Add(n);
+                _ = Nodes.Add(n);
             }
             else
             {
-                p.Nodes.Add(n);
+                _ = p.Nodes.Add(n);
                 p.SetIcon();
             }
             n.EnsureVisible();
-            this.SelectedNode = n;
+            SelectedNode = n;
             n.BeginEdit();
-            this.OnChanged(this, EventArgs.Empty);
+            OnChanged(this, EventArgs.Empty);
         }
 
         protected virtual void MenuNodeAppend_Click(object sender, System.EventArgs e)
         {
-            HATreeNode n = this.NewNode;
-            HATreeNode p = (HATreeNode)this.SelectedNode;
+            HATreeNode n = NewNode;
+            HATreeNode p = (HATreeNode)SelectedNode;
             if (p == null)
             {
-                this.Nodes.Add(n);
+                _ = Nodes.Add(n);
             }
             else
             {
-                TreeNodeCollection ns = (p.Parent != null) ? p.Parent.Nodes : this.Nodes;
+                TreeNodeCollection ns = (p.Parent != null) ? p.Parent.Nodes : Nodes;
                 ns.Insert(p.Index + 1, n);
             }
             n.EnsureVisible();
-            this.SelectedNode = n;
+            SelectedNode = n;
             n.BeginEdit();
-            this.OnChanged(this, EventArgs.Empty);
+            OnChanged(this, EventArgs.Empty);
         }
 
         protected virtual void MenuNodeInsert_Click(object sender, System.EventArgs e)
         {
-            HATreeNode n = this.NewNode;
-            HATreeNode p = (HATreeNode)this.SelectedNode;
+            HATreeNode n = NewNode;
+            HATreeNode p = (HATreeNode)SelectedNode;
             if (p == null)
             {
-                this.Nodes.Insert(0, n);
+                Nodes.Insert(0, n);
             }
             else
             {
-                TreeNodeCollection ns = (p.Parent != null) ? p.Parent.Nodes : this.Nodes;
+                TreeNodeCollection ns = (p.Parent != null) ? p.Parent.Nodes : Nodes;
                 ns.Insert(p.Index, n);
                 p.EnsureVisible();
             }
             n.EnsureVisible();
-            this.SelectedNode = n;
+            SelectedNode = n;
             n.BeginEdit();
-            this.OnChanged(this, EventArgs.Empty);
+            OnChanged(this, EventArgs.Empty);
         }
 
         protected virtual void MenuNodeDelete_Click(object sender, System.EventArgs e)
         {
-            HATreeNode n = (HATreeNode)this.SelectedNode;
-            if (n == null) return;
+            HATreeNode n = (HATreeNode)SelectedNode;
+            if (n == null)
+            {
+                return;
+            }
 
             HATreeNode p = (HATreeNode)n.Parent;
-            TreeNodeCollection tc = (p != null) ? p.Nodes : this.Nodes;
+            TreeNodeCollection tc = (p != null) ? p.Nodes : Nodes;
             tc.Remove(n);
-            if (p != null && tc.Count < 1) p.SetIcon();
-            this.SetState();
-            this.OnChanged(this, EventArgs.Empty);
+            if (p != null && tc.Count < 1)
+            {
+                p.SetIcon();
+            }
+
+            SetState();
+            OnChanged(this, EventArgs.Empty);
         }
 
         protected virtual void MenuNodeRename_Click(object sender, System.EventArgs e)
         {
-            HATreeNode n = (HATreeNode)this.SelectedNode;
-            if (n == null) return;
+            HATreeNode n = (HATreeNode)SelectedNode;
+            if (n == null)
+            {
+                return;
+            }
 
             n.BeginEdit();
         }
@@ -224,22 +230,25 @@ namespace Girl.HierArch
         {
             bool flag = true;
             char k = e.KeyChar;
-            if ('A' <= k && k <= 'Z') k += (char)32;
-            if (e.KeyChar == 'c' && this.mnuChild.Enabled)
+            if ('A' <= k && k <= 'Z')
             {
-                this.MenuNodeChild_Click(this, EventArgs.Empty);
             }
-            else if (e.KeyChar == 'a' && this.mnuAppend.Enabled)
+
+            if (e.KeyChar == 'c' && mnuChild.Enabled)
             {
-                this.MenuNodeAppend_Click(this, EventArgs.Empty);
+                MenuNodeChild_Click(this, EventArgs.Empty);
             }
-            else if (e.KeyChar == 'i' && this.mnuInsert.Enabled)
+            else if (e.KeyChar == 'a' && mnuAppend.Enabled)
             {
-                this.MenuNodeInsert_Click(this, EventArgs.Empty);
+                MenuNodeAppend_Click(this, EventArgs.Empty);
+            }
+            else if (e.KeyChar == 'i' && mnuInsert.Enabled)
+            {
+                MenuNodeInsert_Click(this, EventArgs.Empty);
             }
             else if (e.KeyChar == 'e')
             {
-                HATreeNode n = this.SelectedNode as HATreeNode;
+                HATreeNode n = SelectedNode as HATreeNode;
                 n.BeginEdit();
             }
             else
@@ -253,29 +262,35 @@ namespace Girl.HierArch
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            if (this.ImageList != null)
+            if (ImageList != null)
             {
-                int h = this.ImageList.ImageSize.Height;
-                if (this.ItemHeight < h) this.ItemHeight = h;
+                int h = ImageList.ImageSize.Height;
+                if (ItemHeight < h)
+                {
+                    ItemHeight = h;
+                }
             }
         }
 
         protected override void OnAfterSelect(System.Windows.Forms.TreeViewEventArgs e)
         {
             base.OnAfterSelect(e);
-            this.SetState();
+            SetState();
         }
 
         protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            if (e.Button != MouseButtons.Right) return;
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
 
-            TreeNode n = this.GetNodeAt(e.X, e.Y);
+            TreeNode n = GetNodeAt(e.X, e.Y);
             if (n != null)
             {
-                this.SelectedNode = n;
-                this.SetState();
+                SelectedNode = n;
+                SetState();
             }
         }
 
@@ -297,27 +312,33 @@ namespace Girl.HierArch
 
         public void StoreState()
         {
-            foreach (TreeNode n in this.Nodes)
+            foreach (TreeNode n in Nodes)
             {
-                if (n is HATreeNode) ((HATreeNode)n).StoreState();
+                if (n is HATreeNode)
+                {
+                    ((HATreeNode)n).StoreState();
+                }
             }
         }
 
         public void ApplyState()
         {
-            foreach (TreeNode n in this.Nodes)
+            foreach (TreeNode n in Nodes)
             {
-                if (n is HATreeNode) ((HATreeNode)n).ApplyState();
+                if (n is HATreeNode)
+                {
+                    ((HATreeNode)n).ApplyState();
+                }
             }
         }
 
         public virtual void OnChanged(object sender, EventArgs e)
         {
-            if (!this.IgnoreChanged && this.Changed != null)
+            if (!IgnoreChanged && Changed != null)
             {
-                this.IgnoreChanged = true;
-                this.Changed(sender, e);
-                this.IgnoreChanged = false;
+                IgnoreChanged = true;
+                Changed(sender, e);
+                IgnoreChanged = false;
             }
         }
 
@@ -328,8 +349,8 @@ namespace Girl.HierArch
         protected override void DragMove()
         {
             base.DragMove();
-            this.SetState();
-            this.OnChanged(this, EventArgs.Empty);
+            SetState();
+            OnChanged(this, EventArgs.Empty);
         }
     }
 }

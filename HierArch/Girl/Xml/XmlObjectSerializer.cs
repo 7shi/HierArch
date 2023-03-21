@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.IO;
 using System.Xml;
@@ -10,22 +9,30 @@ namespace Girl.Xml
     /// </summary>
     public class XmlObjectSerializer
     {
-        private static Hashtable resources = new Hashtable();
+        private static readonly Hashtable resources = new Hashtable();
 
         public virtual void Write(XmlWriter xw, string name, object obj)
         {
-            if (obj == null) return;
+            if (obj == null)
+            {
+                return;
+            }
+
             string objname = obj.GetType().Name;
-            if (name == null) name = objname;
+            if (name == null)
+            {
+                name = objname;
+            }
+
             switch (objname)
             {
                 case "Boolean":
-                    this.WriteBoolean(xw, name, (Boolean)obj);
+                    WriteBoolean(xw, name, (bool)obj);
                     break;
             }
         }
 
-        public void WriteBoolean(XmlWriter xw, string name, Boolean b)
+        public void WriteBoolean(XmlWriter xw, string name, bool b)
         {
             xw.WriteStartElement(name);
             xw.WriteAttributeString("Value", XmlConvert.ToString(b));
@@ -34,16 +41,20 @@ namespace Girl.Xml
 
         public virtual object Read(XmlReader xr)
         {
-            if (xr.NodeType != XmlNodeType.Element) return null;
+            if (xr.NodeType != XmlNodeType.Element)
+            {
+                return null;
+            }
+
             switch (xr.Name)
             {
                 case "Boolean":
-                    return this.ReadBoolean(xr);
+                    return ReadBoolean(xr);
             }
             return null;
         }
 
-        public Boolean ReadBoolean(XmlReader xr)
+        public bool ReadBoolean(XmlReader xr)
         {
             return XmlConvert.ToBoolean(xr.GetAttribute("Value"));
         }
@@ -52,7 +63,10 @@ namespace Girl.Xml
         {
             while (xr.Read())
             {
-                if (xr.NodeType != XmlNodeType.Whitespace) return true;
+                if (xr.NodeType != XmlNodeType.Whitespace)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -61,7 +75,7 @@ namespace Girl.Xml
         {
             StringWriter sw = new StringWriter();
             XmlTextWriter xw = new XmlTextWriter(sw);
-            this.Write(xw, null, obj);
+            Write(xw, null, obj);
             xw.Close();
             sw.Close();
             return sw.ToString();
