@@ -100,14 +100,23 @@
     <Compile Include="Src\About.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Src\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Src\Form1.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Src\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Src\HADoc.cs" />
     <Compile Include="Src\HAType.cs" />
     <Compile Include="Src\HAViewInfo.cs" />
     <Compile Include="Src\View.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Src\View.Designer.cs">
+      <DependentUpon>View.cs</DependentUpon>
     </Compile>
     <Compile Include="Src\ViewManager.cs" />
     <Compile Include="Tree\HAClass.cs">
