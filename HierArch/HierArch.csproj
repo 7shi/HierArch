@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectGuid>{C1F8A388-6FF5-47EF-9079-3ABFECD1DC1A}</ProjectGuid>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>HierArch</RootNamespace>
     <AssemblyName>HierArch</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile />
     <ApplicationIcon>App.ico</ApplicationIcon>
@@ -62,47 +62,65 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Girl" />
-    <Folder Include="Girl\Windows" />
-    <Folder Include="Girl\Windows\Forms" />
-    <Folder Include="Girl\Windows\API" />
-    <Folder Include="Girl\Xml" />
-    <Folder Include="Src" />
-    <Folder Include="Tree" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Girl\Windows\API\Win32API.cs" />
     <Compile Include="Girl\Windows\Forms\ApplicationDataManager.cs" />
-    <Compile Include="Girl\Windows\Forms\CenterPointDialog.cs" />
-    <Compile Include="Girl\Windows\Forms\CodeEditor.cs" />
+    <Compile Include="Girl\Windows\Forms\CenterPointDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Girl\Windows\Forms\CodeEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Girl\Windows\Forms\CodeEditorManager.cs" />
     <Compile Include="Girl\Windows\Forms\ContextManager.cs" />
-    <Compile Include="Girl\Windows\Forms\ControlEx.cs" />
-    <Compile Include="Girl\Windows\Forms\DnDTreeView.cs" />
+    <Compile Include="Girl\Windows\Forms\ControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Girl\Windows\Forms\DnDTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Girl\Windows\Forms\Document.cs" />
     <Compile Include="Girl\Windows\Forms\EditManager.cs" />
-    <Compile Include="Girl\Windows\Forms\ExTreeView.cs" />
+    <Compile Include="Girl\Windows\Forms\ExTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Girl\Windows\Forms\InternalScrollBar.cs" />
     <Compile Include="Girl\Windows\Forms\MenuItemEx.cs" />
-    <Compile Include="Girl\Windows\Forms\OpaqueSplitter.cs" />
-    <Compile Include="Girl\Windows\Forms\TabControlEx.cs" />
+    <Compile Include="Girl\Windows\Forms\OpaqueSplitter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Girl\Windows\Forms\TabControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Girl\Windows\Forms\TextBoxPlus.cs" />
     <Compile Include="Girl\Windows\Forms\WindowSize.cs" />
     <Compile Include="Girl\Xml\XmlObjectSerializer.cs" />
-    <Compile Include="Src\About.cs" />
-    <Compile Include="Src\Form1.cs" />
+    <Compile Include="Src\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Src\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Src\HADoc.cs" />
     <Compile Include="Src\HAType.cs" />
     <Compile Include="Src\HAViewInfo.cs" />
-    <Compile Include="Src\View.cs" />
+    <Compile Include="Src\View.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Src\ViewManager.cs" />
-    <Compile Include="Tree\HAClass.cs" />
+    <Compile Include="Tree\HAClass.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tree\HAClassNode.cs" />
-    <Compile Include="Tree\HAFunc.cs" />
+    <Compile Include="Tree\HAFunc.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tree\HAFuncNode.cs" />
-    <Compile Include="Tree\HATree.cs" />
+    <Compile Include="Tree\HATree.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tree\HATreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
