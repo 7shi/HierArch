@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Girl.Windows.Forms
@@ -54,6 +55,18 @@ namespace Girl.Windows.Forms
             _ = targets.Add(target);
             SetProperty(target, flags[action]);
             SetHandler(action, target);
+
+            // Dispose されたらリストから削除する
+            if (target is Component)
+            {
+                var c = target as Component;
+                c.Disposed += (sender, e) => targets.Remove(target);
+            }
+            else if (target is Control)
+            {
+                var c = target as Control;
+                c.Disposed += (sender, e) => targets.Remove(target);
+            }
         }
 
         protected virtual void SetHandler(int action, object target)
