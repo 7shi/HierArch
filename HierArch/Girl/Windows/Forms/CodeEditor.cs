@@ -33,10 +33,14 @@ namespace Girl.Windows.Forms
             _ = Focus();
         }
 
+        public static string NormalizeNewLine(string s)
+        {
+            return s.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
+        }
+
         public string Code
         {
-            get => Text.Replace("\r\n", "\r").Replace("\n", "").Replace("\r", "\r\n");
-
+            get => NormalizeNewLine(Text);
             set => Text = value;
         }
 
@@ -53,6 +57,22 @@ namespace Girl.Windows.Forms
             SelectionLength = len;
             hbar.Pos = hpos;
             vbar.Pos = vpos;
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_PASTE = 0x0302;
+            if (m.Msg == WM_PASTE)
+            {
+                try
+                {
+                    var t = Clipboard.GetText();
+                    this.Paste(NormalizeNewLine(t));
+                    return;
+                }
+                catch { }
+            }
+            base.WndProc(ref m);
         }
     }
 }
