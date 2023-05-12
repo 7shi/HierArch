@@ -319,6 +319,18 @@ namespace Girl.Windows.Forms
             return false;
         }
 
+        public static void Paste(TextBoxBase textBox, string text)
+        {
+            if (textBox is TextBox tb)
+            {
+                tb.Paste(text);
+            }
+            else
+            {
+                textBox.SelectedText = text;
+            }
+        }
+
         private bool ProcessTab(TextBoxBase textBox, bool shift)
         {
             int len = textBox.SelectionLength;
@@ -379,7 +391,7 @@ namespace Girl.Windows.Forms
             }
             sw.Close();
             sr.Close();
-            textBox.SelectedText = sw.ToString();
+            Paste(textBox, sw.ToString());
             int nlen = textBox.SelectionStart - sp;
             textBox.SelectionStart = sp;
             textBox.SelectionLength = nlen;
@@ -393,7 +405,7 @@ namespace Girl.Windows.Forms
                 rtb.SelectionColor = rtb.ForeColor;
                 rtb.SelectionFont = rtb.Font;
             }
-            textBox.SelectedText = text;
+            Paste(textBox, text);
         }
 
         #endregion
