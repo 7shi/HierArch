@@ -242,8 +242,11 @@ namespace Girl.HierArch
         public bool SaveAs()
         {
             string fn = document.FullName;
-            saveFileDialog1.InitialDirectory = Path.GetDirectoryName(fn);
-            saveFileDialog1.FileName = Path.GetFileName(fn);
+            if (!string.IsNullOrEmpty(fn))
+            {
+                saveFileDialog1.InitialDirectory = Path.GetDirectoryName(fn);
+                saveFileDialog1.FileName = Path.GetFileName(fn);
+            }
             DialogResult res = saveFileDialog1.ShowDialog(this);
             _ = view1.Focus();
             if (res == DialogResult.Cancel)
