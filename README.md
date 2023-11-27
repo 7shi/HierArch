@@ -2,7 +2,7 @@
 
 A notepad hierarchically organized in a tree
 
-![screen shot](https://raw.githubusercontent.com/7shi/HierArch/doconly/img/screenshot.png)  
+![screen shot](https://github.com/7shi/HierArch/blob/doconly/img/screenshot.png?raw=true)  
 ("Yu Gothic UI" font is used for the text.)
 
 ## Requirements
